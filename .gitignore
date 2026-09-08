@@ -1,0 +1,6 @@
+# backups
+*.backup-*
+*.bak
+# oh-my-zsh cache
+*.zwc
+.zcompdump*
