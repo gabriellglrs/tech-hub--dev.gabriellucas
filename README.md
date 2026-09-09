@@ -69,7 +69,16 @@ minhas_config_linux_terminal/
 │   ├── programacao/        # 💻 Python, Bash, automação
 │   └── banco-de-dados/     # 💾 SQL, NoSQL, admin
 │
-└── terminal/               # 🖥️ Comandos Linux do dia a dia
+├── inteligencia-artificial/ # 🤖 IA, ML, Deep Learning
+├── dados/                  # 📊 Analytics, pipelines
+├── gestao-projetos/        # 📋 Agile, Scrum, ITIL
+├── testes-qa/              # 🧪 QA, E2E, TDD
+├── apis-microservices/     # 🔗 REST, GraphQL, gRPC
+├── soft-skills/            # 📱 Comunicação, liderança
+│
+├── terminal/               # 🖥️ Comandos Linux
+│   ├── README.md           #   Do básico ao avançado (150+ comandos)
+│   └── CYBERSEG.md         #   Comandos de cybersegurança (Nmap, Hydra, sqlmap...)
 ```
 
 ---
@@ -148,6 +157,19 @@ Trilha completa **do zero ao profissional** — 11 módulos, 40+ arquivos, ~70h.
 
 ---
 
+### 🤖 Áreas Extras (✅ Estrutura)
+
+| Área | O que você vai aprender |
+|:-----|:------------------------|
+| [IA / Machine Learning](inteligencia-artificial/) | IA, ML, Deep Learning, MLOps, Prompt Eng, AI Security |
+| [Dados / Analytics](dados/) | SQL, Pandas, visualização, pipelines, governança |
+| [Gestão de Projetos](gestao-projetos/) | Agile, Scrum, Kanban, ITIL, Jira |
+| [Testes / QA](testes-qa/) | Unitários, E2E, Selenium, Cypress, TDD |
+| [APIs / Microservices](apis-microservices/) | REST, GraphQL, gRPC, gateways, segurança |
+| [Soft Skills](soft-skills/) | Comunicação, liderança, apresentação, carreira |
+
+---
+
 ## 🖥️ Terminal
 
 | Arquivo | Descrição |
@@ -155,6 +177,8 @@ Trilha completa **do zero ao profissional** — 11 módulos, 40+ arquivos, ~70h.
 | [install.sh](install.sh) | Instalador automático (zsh, plugins, ferramentas) |
 | [zsh/.zshrc](zsh/.zshrc) | Config do Zsh |
 | [zsh/.p10k.zsh](zsh/.p10k.zsh) | Config do Powerlevel10k |
+| [**Comandos Linux**](terminal/README.md) | Do básico ao avançado — 150+ comandos (navegação, permissões, awk/sed, systemd, redes, LVM) |
+| [**Cybersegurança**](terminal/CYBERSEG.md) | Comandos de pentest — Nmap, Hydra, John, Hashcat, sqlmap, Wireshark, forense, hardening |
 
 ```bash
 ./install.sh            # Só base dev
