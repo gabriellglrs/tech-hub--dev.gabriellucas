@@ -109,6 +109,12 @@ FASE 4: ESPECIALIZAÇÃO (Módulos 9-10)
           ↓
    ┌─────────────┐
    │ 10. GOVERNANÇA       │ ← GRC, Criptografia, LGPD
+   └──────┬──────┘
+          ↓
+FASE 5: IA + CYBERSEGURANÇA (Módulo 11)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   ┌─────────────┐
+   │ 11. IA NO TERMINAL   │ ← Ollama, NFGuard, CyberStrike
    └─────────────┘
 ```
 
@@ -152,16 +158,22 @@ FASE 4: ESPECIALIZAÇÃO (Módulos 9-10)
 | 9 | [Ambientes Especiais](09-ambientes/) | 3 + Labs | 6-8h | Docker, K8s, AWS, Wireless, Mobile |
 | 10 | [Governança & Criptografia](10-governanca/) | 2 + Labs | 4-5h | GRC, ISO 27001, LGPD, OpenSSL |
 
+### Fase 5: IA + Cybersegurança
+
+| # | Módulo | Arquivos | Tempo | O que você vai aprender |
+|:--|:-------|:--------:|:-----:|:------------------------|
+| 11 | [IA para Cybersegurança](11-ia-cyberseguranca/) | 2 + Labs | 4-6h | Ollama, NFGuard, CyberStrike, RAI, prompts, automação |
+
 ---
 
 ## 📊 Progresso Total
 
 | Métrica | Valor |
 |:--------|:-----:|
-| Total de módulos | 11 (0-10) |
-| Total de arquivos | 40+ |
-| Total de exercícios | 78+ |
-| Tempo estimado | ~60-70 horas |
+| Total de módulos | 12 (0-11) |
+| Total de arquivos | 44+ |
+| Total de exercícios | 84+ |
+| Tempo estimado | ~65-75 horas |
 | Nível | Iniciante → Avançado |
 
 ---
@@ -201,6 +213,7 @@ Esta trilha prepara para:
 |:--------|:----------|
 | [GLOSSARIO.md](GLOSSARIO.md) | Todos os termos técnicos explicados |
 | [INSTALACAO.md](INSTALACAO.md) | Guia completo de instalação das ferramentas |
+| [11-ia-cyberseguranca/](11-ia-cyberseguranca/) | 🤖 IA para Cybersegurança — Ollama, NFGuard, CyberStrike, prompts |
 
 ---
 

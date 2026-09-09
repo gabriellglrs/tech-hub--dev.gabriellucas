@@ -76,6 +76,24 @@ Frontend Security
 
 ---
 
+## 🤖 IA para Este Módulo
+
+```bash
+# Gerar wordlists personalizadas com IA
+ollama run codellama:13b "Gere wordlist de 200 palavras para brute force em site de e-commerce brasileiro"
+
+# Analisar output do Nikto
+nikto -h target.com -o nikto.txt
+ollama run llama3.1:8b "Analise este relatório Nikto e priorize as vulnerabilidades: $(cat nikto.txt)"
+
+# Gerar payloads SQL Injection
+ollama run codellama:13b "Gere payloads SQL Injection para login form PHP com bypass de autenticação"
+```
+
+**Ferramentas de IA para web security:** CyberStrike (modos web), numasec (`/runbook run appsec-web-triage`), NFGuard
+
+---
+
 ## ⚠️ Erros Comuns
 
 | Erro | Consequência | Como evitar |

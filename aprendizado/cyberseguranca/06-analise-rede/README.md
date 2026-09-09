@@ -81,6 +81,24 @@ Ao final deste módulo, você será capaz de:
 
 ---
 
+## 🤖 IA para Este Módulo
+
+```bash
+# Analisar captura de pacotes
+tshark -r capture.pcap -Y "http.request" > /tmp/http_requests.txt
+ollama run llama3.1:8b "Analise estes requests HTTP capturados e identifique atividade suspeita: $(cat /tmp/http_requests.txt)"
+
+# Gerar filtros Wireshark
+ollama run llama3.2 "Gere filtros Wireshark para identificar exfiltração de dados via DNS"
+
+# Interpretar logs de proxy
+ollama run mistral "Analise estes logs de proxy e identifique acessos a domínios maliciosos: $(cat proxy.log)"
+```
+
+**Ferramentas de IA para análise de rede:** NFGuard (agente Threat Intel), Riftor
+
+---
+
 ## ⚠️ Erros Comuns (e como evitar)
 
 | Erro | Consequência | Como evitar |

@@ -79,6 +79,26 @@ Ao final deste módulo, você será capaz de:
 
 ---
 
+## 🤖 IA para Este Módulo
+
+Use IA para acelerar sua análise de reconhecimento:
+
+```bash
+# Analisar resultado do Nmap com IA
+nmap -sV -sC target.txt
+ollama run llama3.1:8b "Analise este scan Nmap e identifique serviços vulneráveis: $(cat target.txt)"
+
+# Descobrir subdomínios com IA
+ollama run llama3.2 "Liste técnicas de enumeração de subdomínios para example.com com comandos exatos"
+
+# Interpretar Whois
+whois example.com | ollama run llama3.2 "Analise este Whois e extraia informações úteis para pentest"
+```
+
+**Ferramentas de IA para reconhecimento:** NFGuard (`nfguard> Encontre subdomínios de target.com`), CyberStrike, RAI
+
+---
+
 ## ⚠️ Erros Comuns (e como evitar)
 
 | Erro | Consequência | Como evitar |

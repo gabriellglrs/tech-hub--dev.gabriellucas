@@ -130,6 +130,26 @@ age -d -i chave.txt -o arquivo.txt arquivo.age
 
 ---
 
+## 🤖 IA para Este Módulo
+
+```bash
+# Gerar políticas de segurança
+ollama run llama3.2 "Gere uma política de segurança da informação para startup de 50 funcionários seguindo ISO 27001"
+
+# Explicar criptografia
+ollama run llama3.1:8b "Explique a diferença entre AES-256-GCM e AES-256-CBC para um iniciante"
+
+# Gerar comandos OpenSSL
+ollama run codellama:13b "Gere comandos OpenSSL para: criar CA, emitir certificado, verificar certificado"
+
+# Analisar compliance
+ollama run mistral "Quais controles do CIS Benchmark devo verificar primeiro em um servidor Ubuntu 24.04?"
+```
+
+**Ferramentas de IA para governança:** KaliGPT, Open Interpreter (para scripts de compliance)
+
+---
+
 ## ⚠️ Erros Comuns (e como evitar)
 
 | ❌ Erro | ✅ Solução | 💬 Por quê? |

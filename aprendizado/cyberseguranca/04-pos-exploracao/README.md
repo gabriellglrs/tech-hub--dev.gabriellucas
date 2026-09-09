@@ -92,6 +92,23 @@ Ao final deste módulo, você será capaz de:
 
 ---
 
+## 🤖 IA para Este Módulo
+
+```bash
+# Analisar saída do LinPEAS com IA
+./linpeas.sh | ollama run llama3.1:8b "Analise esta saída do LinPEAS e identifique vetores de escalação de privilégio"
+
+# Gerar comandos de movimentação lateral
+ollama run codellama:13b "Gere comandos Impacket para movimentação lateral em rede Windows com usuario:senha"
+
+# Interpretar secretsdump
+secretsdump.py domain/user:pass@target 2>&1 | ollama run llama3.2 "Analise estes hashes extraídos e sugira proximos passos"
+```
+
+**Ferramentas de IA para pós-exploração:** Nemesis (agentes especializados), RAI (`rai agents list`)
+
+---
+
 ## ⚠️ Erros Comuns (e como evitar)
 
 | Erro | Consequência | Como evitar |

@@ -135,6 +135,26 @@ rule malware_exemplo {
 
 ---
 
+## 🤖 IA para Este Módulo
+
+```bash
+# Analisar malware com IA
+ollama run deepseek-r1 "Analise este script e identifique se é malicioso: $(cat script_suspeito.sh)"
+
+# Gerar regras YARA
+ollama run codellama:13b "Gere uma regra YARA para detectar ransomware que criptografa extensões .docx, .xlsx, .pdf"
+
+# Analisar memory dump
+ollama run llama3.1:8b "Quais processos devo procurar em um memory dump para identificar malware? Liste comandos Volatility3"
+
+# Gerar relatório forense
+ollama run llama3.2 "Gere um relatório forense profissional em Markdown com: resumo, evidências, timeline, conclusões"
+```
+
+**Ferramentas de IA para resposta a incidentes:** CAI (red/blue team agents), NFGuard (geração de relatórios)
+
+---
+
 ## ⚠️ Erros Comuns (e como evitar)
 
 | ❌ Erro | ✅ Solução | 💬 Por quê? |

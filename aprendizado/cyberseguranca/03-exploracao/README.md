@@ -91,6 +91,24 @@ Ao final deste módulo, você será capaz de:
 
 ---
 
+## 🤖 IA para Este Módulo
+
+```bash
+# Gerar wordlists inteligentes com IA
+ollama run codellama:13b "Gere uma wordlist de 500 senhas comuns em português para brute force"
+
+# Analisar hashes quebrados
+ollama run llama3.2 "Analise estas senhas quebradas e identifique padrões fracos: $(cat pot.txt)"
+
+# Sugerir modos Hashcat
+hashid '$2y$10$hash'
+ollama run llama3.2 "Qual modo do Hashcat devo usar para este hash: $(hashid '$2y$10$hash')"
+```
+
+**Ferramentas de IA para exploração:** NFGuard (`nfguard> Teste SQL injection no login`), CyberMind (`cybermind tool hashcat`)
+
+---
+
 ## ⚠️ Erros Comuns (e como evitar)
 
 | Erro | Consequência | Como evitar |

@@ -115,6 +115,24 @@ p = process("./vuln")
 
 ---
 
+## 🤖 IA para Este Módulo
+
+```bash
+# Analisar binário com IA
+file programa && strings programa > /tmp/strings.txt
+ollama run llama3.1:8b "Analise estas strings de um binário e identifique funcionalidades suspeitas: $(cat /tmp/strings.txt)"
+
+# Explicar código decompilado
+ollama run codellama:13b "Explique o que esta função em C faz e se é vulnerável: [colar código Ghidra]"
+
+# Gerar exploits pwntools
+ollama run codellama:13b "Gere um exploit pwntools para buffer overflow com NX disabled. Stack offset: 76. Binary: vuln"
+```
+
+**Ferramentas de IA para reversing:** CyberMind (modos exploit e tool), Open Interpreter
+
+---
+
 ## ⚠️ Erros Comuns (e como evitar)
 
 | ❌ Erro | ✅ Solução | 💬 Por quê? |

@@ -132,6 +132,27 @@ docker run -it -p 8000:8000 opensecurity/mobsf
 
 ---
 
+## 🤖 IA para Este Módulo
+
+```bash
+# Analisar vulnerabilidades Docker com IA
+trivy image nginx:latest -f json > /tmp/trivy.json
+ollama run llama3.1:8b "Analise estas vulnerabilidades Docker e priorize as correções: $(cat /tmp/trivy.json)"
+
+# Gerar Dockerfiles seguros
+ollama run codellama:13b "Gere um Dockerfile seguro para aplicação Node.js com: multi-stage build, non-root user, health check"
+
+# Analisar Kubernetes security
+ollama run llama3.2 "Liste as melhores práticas de segurança para clusters Kubernetes e comandos para verificar cada uma"
+
+# Gerar payloads Frida
+ollama run codellama:13b "Gere um script Frida para interceptar chamadas de API em app Android"
+```
+
+**Ferramentas de IA para ambientes especiais:** CyberStrike (agentes cloud), numasec (container triage)
+
+---
+
 ## ⚠️ Erros Comuns (e como evitar)
 
 | ❌ Erro | ✅ Solução | 💬 Por quê? |

@@ -119,6 +119,24 @@ sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
 
 ---
 
+## 🤖 IA para Este Módulo
+
+```bash
+# Analisar logs de firewall com IA
+ollama run llama3.1:8b "Analise estes logs do UFW e identifique padrões de ataque: $(cat /var/log/ufw.log)"
+
+# Gerar regras Suricata
+ollama run codellama:13b "Gere uma regra Suricata para detectar扫描 de portas Nmap na rede interna"
+
+# Auditar configuração com IA
+lynis audit system --no-colors > /tmp/lynis.txt
+ollama run llama3.2 "Analise este relatório Lynis e sugira melhorias de hardening: $(cat /tmp/lynis.txt)"
+```
+
+**Ferramentas de IA para defesa:** numasec (modo AppSec), KaliGPT
+
+---
+
 ## ⚠️ Erros Comuns (e como evitar)
 
 | ❌ Erro | ✅ Solução | 💬 Por quê? |
