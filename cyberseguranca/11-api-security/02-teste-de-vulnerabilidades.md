@@ -209,6 +209,55 @@ cat endpoints.txt | nuclei -tags api -severity critical,high
 
 ---
 
+### Resumo da ordem — Por que essa sequência?
+
+Teste de API segue: **autenticar → enumerar endpoints → testar controles → explorar**.
+
+```
+PASSO 1: Analisar autenticação → Entender como protege
+├── POR QUE: Se auth fraca, qualquer outro teste é mais fácil
+├── O QUE FAZER: Testar sem token, token inválido, token de outro user
+├── COMANDO: curl http://target.com/api/users (sem header)
+├── QUANDO AVANÇAR: Quando entender o mecanismo de auth
+└── SE DER ERRADO: Se retornar 401, tente bypass com JWT manipulation
+
+        ↓
+
+PASSO 2: Enumerar endpoints → Listar tudo que existe
+├── POR QUE: Endpoints não documentados podem ter bugs
+├── FERRAMENTAS: Kiterunner, Arjun, ffuf
+├── QUANDO AVANÇAR: Quando tiver lista completa de endpoints
+└── DICAS: Teste todos os métodos (GET, POST, PUT, DELETE, PATCH)
+
+        ↓
+
+PASSO 3: Testar BOLA → Acessar dados de outros usuários
+├── POR QUE: BOLA é a vulnerabilidade #1 em APIs
+├── O QUE FAZER: Alterar IDs em endpoints que retornam dados
+├── COMANDO: curl http://target.com/api/users/2 (sendo user 1)
+├── QUANDO AVANÇAR: Se retornar dados de outro user = BOLA
+└── DICAS: Teste UUIDs, IDs negativos, 0, null
+
+        ↓
+
+PASSO 4: Testar BFLA → Acessar funções de administrador
+├── POR QUE: Funcionalidades admin podem estar acessíveis
+├── O QUE FAZER: Chamar endpoints de admin com user normal
+├── COMANDO: curl -X DELETE http://target.com/api/users/1
+├── QUANDO AVANÇAR: Se retornar 200 = BFLA encontrado
+└── SE DER ERRADO: Se bloquear, teste com header X-Admin: true
+
+        ↓
+
+PASSO 5: Rate Limiting → Verificar se bloqueia abuso
+├── POR QUE: Sem rate limit, brute force é trivial
+├── O QUE FAZER: Enviar 100+ requests rápidas
+├── QUANDO PARAR: Quando tiver resposta de todos os testes
+└── SE DER ERRADO: Se não bloquear = vulnerabilidade
+```
+
+---
+
 ## Lab Prático
 
 ### Exercício 1: BOLA Challenge

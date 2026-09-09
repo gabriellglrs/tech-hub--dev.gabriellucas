@@ -234,6 +234,47 @@ proxychains4 xfreerdp /v:10.0.0.5 /u:admin
 
 ---
 
+### Resumo da ordem — Por que essa sequência?
+
+Pivoting segue: **descobrir → conectar → tunelar → explorar**.
+
+```
+PASSO 1: Enumerar rede → Descobrir quais redes existem
+├── POR QUE: Não pode tunelar se não sabe o destino
+├── O QUE FAZER: ip a, route -n, arp -a na máquina comprometida
+├── O QUE PROCURAR: Interfaces com IPs diferentes (ex: 10.0.0.0/24)
+├── QUANDO AVANÇAR: Quando souber quais redes alcançar
+└── SE DER ERRADO: Se não tiver acesso, use nmap -sn para escanear
+
+        ↓
+
+PASSO 2: Configurar túnel → Criar caminho até a rede interna
+├── POR QUE: Rede interna não é acessível diretamente
+├── OPÇÕES: SSH tunnel (simples), Chisel (avançado), Ligolo-ng (moderno)
+├── COMANDO SSH: ssh -D 1080 user@comprometida
+├── QUANDO AVANÇAR: Quando o túnel estiver ativo
+└── DICAS: Teste com: curl --socks5 127.0.0.1:1080 http://interno
+
+        ↓
+
+PASSO 3: Proxychains → Forçar todo trafego pelo túnel
+├── POR QUE: Ferramentas como nmap não usam túnel por padrão
+├── O QUE FAZER: Editar /etc/proxychains4.conf, adicionar proxy SOCKS
+├── COMANDO: proxychains4 nmap -sV 10.0.0.0/24
+├── QUANDO AVANÇAR: Quando conseguir ver services da rede interna
+└── ERROS COMUNS: Não esqueça de: proxychains4 antes de cada comando
+
+        ↓
+
+PASSO 4: Explorar serviços internos → Acessar máquinas alvo
+├── POR QUE: Objetivo final é alcançar其他 máquinas
+├── FERRAMENTAS: proxychains + hydra, smbclient, evil-winrm
+├── QUANDO PARAR: Quando tiver acesso à máquina alvo
+└── DICAS: Salve logs de cada acesso para documentação
+```
+
+---
+
 ## Lab Prático
 
 ### Exercício 1: Pivot básico com SSH

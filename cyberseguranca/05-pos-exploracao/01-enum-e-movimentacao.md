@@ -362,3 +362,22 @@ psexec.py user@IP -hashes LMHASH:NTHASH
 export KRB5CCNAME=ticket.ccache
 psexec.py user@TARGET -k -no-pass
 ```
+
+---
+
+## Lab Prático
+
+### Exercício 1: Pós-Exploração Linux
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/linprivesc
+- **O que vai praticar:** Enumeração, escalação de privilégios, movimentação lateral em Linux
+- **Tempo estimado:** 45 min
+
+### Exercício 2: Pós-Exploração Windows
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/ice
+- **O que vai praticar:** Pivoting, dump de credenciais, exploração de rede interna
+- **Tempo estimado:** 60 min
+
+### Dica de Estudo
+> Sempre枚umerar antes de tentar escalar privilégios. Use LinPEAS/WinPEAS para automatizar.

@@ -4,6 +4,21 @@
 
 ---
 
+## Instalação das Ferramentas
+
+```bash
+# Nuclei (scan de headers de segurança)
+sudo apt install -y nuclei
+nuclei -update-templates
+
+# curl (já vem no Linux, para testes manuais)
+
+# Burp Suite (proxy para interceptar requests)
+# Download: https://portswigger.net/burp/communitydownload
+```
+
+---
+
 ## Content Security Policy (CSP)
 
 ### O que é CSP

