@@ -102,6 +102,12 @@ alias j='autojump'
 alias md='mkdir -p'
 alias hist='history -i'
 
+# Guia de comandos
+alias comandos='cat ~/minhas_config_linux_terminal/terminal/README.md | less'
+alias cyberseg='cat ~/minhas_config_linux_terminal/terminal/CYBERSEG.md | less'
+alias guia='cat ~/minhas_config_linux_terminal/terminal/README.md | less'
+alias pentest='cat ~/minhas_config_linux_terminal/terminal/CYBERSEG.md | less'
+
 # zoxide (modern cd) ou cd tradicional
 if command -v zoxide &>/dev/null; then
   eval "$(zoxide init zsh)"
