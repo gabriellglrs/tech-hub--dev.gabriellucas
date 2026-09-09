@@ -18,16 +18,28 @@
 
 ---
 
-## 📁 Trilha de Estudo
+## 📁 Estrutura
 
-| # | Arquivo | O que você vai aprender | Tempo |
-|:--|:--------|:------------------------|:-----:|
-| 1 | [01-powershell-avancado.md](01-powershell-avancado.md) | Scripts, módulos, remoting, automação | 50 min |
-| 2 | [02-active-directory.md](02-active-directory.md) | DC, OU, GPO, Kerberos, LDAP | 60 min |
-| 3 | [03-group-policy.md](03-group-policy.md) | GPO, hardening, auditoria | 45 min |
-| 4 | [04-logs-windows.md](04-logs-windows.md) | Event Viewer, Sysmon,—wevtutil | 45 min |
-| 5 | [05-hardening-windows.md](05-hardening-windows.md) | Firewall, Defender, UAC, Registry | 45 min |
-| 6 | [06-powershell-sec.md](06-powershell-sec.md) | Script Block Logging, AMSI, Constrained Language | 40 min |
+```
+windows-admin/
+├── 01-powershell/         # PowerShell e automação
+├── 02-active-directory/   # Active Directory e LDAP
+├── 03-group-policy/       # Group Policy Objects
+├── 04-logs/               # Logs e Event Viewer
+├── 05-hardening/          # Segurança do Windows
+└── 06-seguranca/          # Segurança avançada
+```
+
+## 📚 Trilha de Estudo
+
+| # | Módulo | O que você vai aprender |
+|:--|:-------|:------------------------|
+| 1 | [01-powershell](01-powershell/) | Cmdlets, scripts, remoting |
+| 2 | [02-active-directory](02-active-directory/) | DC, OU, GPO, Kerberos |
+| 3 | [03-group-policy](03-group-policy/) | GPO, hardening, auditoria |
+| 4 | [04-logs](04-logs/) | Event Viewer, Sysmon, wevtutil |
+| 5 | [05-hardening](05-hardening/) | Firewall, Defender, UAC |
+| 6 | [06-seguranca](06-seguranca/) | AMSI, LAPS, attack/defense |
 
 ---
 

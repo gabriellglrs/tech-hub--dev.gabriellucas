@@ -18,15 +18,26 @@
 
 ---
 
-## 📁 Trilha de Estudo
+## 📁 Estrutura
 
-| # | Arquivo | O que você vai aprender | Tempo |
-|:--|:--------|:------------------------|:-----:|
-| 1 | [01-fundamentos-cloud.md](01-fundamentos-cloud.md) | IaaS, PaaS, SaaS, modelos de deploy | 30 min |
-| 2 | [02-aws-basico.md](02-aws-basico.md) | EC2, S3, IAM, VPC, Security Groups | 60 min |
-| 3 | [03-azure-gcp.md](03-azure-gcp.md) | Overview Azure e GCP, diferenças | 45 min |
-| 4 | [04-seguranca-cloud.md](04-seguranca-cloud.md) | IAM, criptografia, logs, compliance | 45 min |
-| 5 | [05-ferramentas-cloud.md](05-ferramentas-cloud.md) | Pacu, ScoutSuite, Prowler, CloudSploit | 40 min |
+```
+cloud/
+├── 01-fundamentos/   # IaaS, PaaS, SaaS
+├── 02-aws/           # Amazon Web Services
+├── 03-azure-gcp/     # Azure e Google Cloud
+├── 04-seguranca/     # Segurança em cloud
+└── 05-ferramentas/   # Ferramentas de auditoria
+```
+
+## 📚 Trilha de Estudo
+
+| # | Módulo | O que você vai aprender |
+|:--|:-------|:------------------------|
+| 1 | [01-fundamentos](01-fundamentos/) | IaaS, PaaS, SaaS, modelos |
+| 2 | [02-aws](02-aws/) | EC2, S3, IAM, VPC |
+| 3 | [03-azure-gcp](03-azure-gcp/) | Azure e GCP overview |
+| 4 | [04-seguranca](04-seguranca/) | IAM, criptografia, compliance |
+| 5 | [05-ferramentas](05-ferramentas/) | Pacu, Prowler, ScoutSuite |
 
 ---
 

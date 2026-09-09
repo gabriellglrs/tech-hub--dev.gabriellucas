@@ -20,13 +20,27 @@
 
 ## 📁 Trilha de Estudo
 
-| # | Arquivo | O que você vai aprender | Tempo |
-|:--|:--------|:------------------------|:-----:|
-| 1 | [01-fundamentos-monitoramento.md](01-fundamentos-monitoramento.md) | Métricas, logs, traces, Golden Signals | 30 min |
-| 2 | [02-prometheus.md](02-prometheus.md) | Métricas, alertas, exporters, PromQL | 50 min |
-| 3 | [03-grafana.md](03-grafana.md) | Dashboards, painéis, variáveis, alertas | 45 min |
-| 4 | [04-elk-stack.md](04-elk-stack.md) | Elasticsearch, Logstash, Kibana | 55 min |
-| 5 | [05-alertmanager.md](05-alertmanager.md) | Regras de alerta, notificações, routing | 35 min |
+```
+monitoramento/
+├── 01-fundamentos/
+│   ├── 01-metricas-logs-traces.md
+│   └── 02-golden-signals.md
+├── 02-prometheus/
+│   ├── 01-instalacao.md
+│   ├── 02-promql.md
+│   └── 03-exporters.md
+├── 03-grafana/
+│   ├── 01-dashboards.md
+│   ├── 02-variaveis.md
+│   └── 03-alertas.md
+├── 04-elk/
+│   ├── 01-elasticsearch.md
+│   ├── 02-logstash.md
+│   └── 03-kibana.md
+└── 05-alertas/
+    ├── 01-regras.md
+    └── 02-notificacoes.md
+```
 
 ---
 

@@ -18,17 +18,30 @@
 
 ---
 
-## 📁 Trilha de Estudo
+## 📁 Estrutura
 
-| # | Arquivo | O que você vai aprender | Tempo |
-|:--|:--------|:------------------------|:-----:|
-| 1 | [01-gestao-usuarios.md](01-gestao-usuarios.md) | useradd, groupadd, permissões, sudo | 40 min |
-| 2 | [02-servicos-systemd.md](02-servicos-systemd.md) | systemctl, serviços, timers, journalctl | 45 min |
-| 3 | [03-discos-filesystem.md](03-discos-filesystem.md) | df, du, mount, LVM, fstab | 40 min |
-| 4 | [04-redes-linux.md](04-redes-linux.md) | ip, nmcli, netplan, /etc/network | 45 min |
-| 5 | [05-automacao-bash.md](05-automacao-bash.md) | Scripts, cron, crontab, loops | 50 min |
-| 6 | [06-hardening-linux.md](06-hardening-linux.md) | sysctl, SSH, firewall, auditd | 45 min |
-| 7 | [07-logs-monitoramento.md](07-logs-monitoramento.md) | journalctl, syslog, logrotate, atop | 40 min |
+```
+linux-admin/
+├── 01-usuarios/       # Gestão de usuários e permissões
+├── 02-servicos/       # Systemd e serviços
+├── 03-discos/         # Discos, filesystem e LVM
+├── 04-redes/          # Configuração de redes
+├── 05-automacao/      # Scripts bash e cron
+├── 06-hardening/      # Segurança do sistema
+└── 07-logs/           # Logs e monitoramento
+```
+
+## 📚 Trilha de Estudo
+
+| # | Módulo | O que você vai aprender |
+|:--|:-------|:------------------------|
+| 1 | [01-usuarios](01-usuarios/) | useradd, groupadd, permissões, sudo |
+| 2 | [02-servicos](02-servicos/) | systemctl, serviços, timers, journalctl |
+| 3 | [03-discos](03-discos/) | df, du, mount, LVM, fstab |
+| 4 | [04-redes](04-redes/) | ip, nmcli, netplan, DNS |
+| 5 | [05-automacao](05-automacao/) | Scripts, cron, paralelismo |
+| 6 | [06-hardening](06-hardening/) | sysctl, SSH, firewall |
+| 7 | [07-logs](07-logs/) | journalctl, syslog, logrotate |
 
 ---
 

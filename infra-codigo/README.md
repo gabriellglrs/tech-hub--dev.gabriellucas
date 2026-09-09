@@ -20,14 +20,23 @@
 
 ## 📁 Trilha de Estudo
 
-| # | Arquivo | O que você vai aprender | Tempo |
-|:--|:--------|:------------------------|:-----:|
-| 1 | [01-fundamentos-iac.md](01-fundamentos-iac.md) | O que é IaC, declarativo vs imperativo | 30 min |
-| 2 | [02-terraform-basico.md](02-terraform-basico.md) | Providers, resources, state, plan, apply | 60 min |
-| 3 | [03-terraform-avancado.md](03-terraform-avancado.md) | Modules, workspaces, remote state, import | 50 min |
-| 4 | [04-ansible-basico.md](04-ansible-basico.md) | Playbooks, inventários, módulos, roles | 55 min |
-| 5 | [05-ansible-avancado.md](05-ansible-avancado.md) | Vaults, templates, callbacks, towers | 45 min |
-| 6 | [06-seguranca-iac.md](06-seguranca-iac.md) | Checkov, tfsec, tflint, compliance | 40 min |
+```
+infra-codigo/
+├── 01-fundamentos/
+│   ├── 01-o-que-e-iac.md
+│   └── 02-beneficios.md
+├── 02-terraform/
+│   ├── 01-instalacao.md
+│   ├── 02-recursos.md
+│   └── 03-avancado.md
+├── 03-ansible/
+│   ├── 01-basico.md
+│   ├── 02-roles.md
+│   └── 03-avancado.md
+└── 04-seguranca/
+    ├── 01-ferramentas.md
+    └── 02-compliance.md
+```
 
 ---
 

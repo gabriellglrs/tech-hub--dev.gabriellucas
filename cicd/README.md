@@ -24,15 +24,26 @@ Código → Commit → Testes → Build → Deploy → Produção
 
 ---
 
-## 📁 Trilha de Estudo
+## 📁 Estrutura
 
-| # | Arquivo | O que você vai aprender | Tempo |
-|:--|:--------|:------------------------|:-----:|
-| 1 | [01-fundamentos-cicd.md](01-fundamentos-cicd.md) | O que é CI/CD, fluxo, benefícios | 30 min |
-| 2 | [02-github-actions.md](02-github-actions.md) | Workflows, secrets, matrix, reusable | 50 min |
-| 3 | [03-jenkins-basico.md](03-jenkins-basico.md) | Pipeline, stages, agents, plugins | 45 min |
-| 4 | [04-seguranca-cicd.md](04-seguranca-cicd.md) | SAST, DAST, secrets scanning, SCA | 40 min |
-| 5 | [05-container-scanning.md](05-container-scanning.md) | Trivy, Snyk, Clair, image signing | 35 min |
+```
+cicd/
+├── 01-fundamentos/       # Conceitos de CI/CD
+├── 02-github-actions/    # GitHub Actions
+├── 03-jenkins/           # Jenkins
+├── 04-seguranca/         # Segurança em pipelines
+└── 05-containers/        # Container scanning
+```
+
+## 📚 Trilha de Estudo
+
+| # | Módulo | O que você vai aprender |
+|:--|:-------|:------------------------|
+| 1 | [01-fundamentos](01-fundamentos/) | O que é CI/CD, fluxo, benefícios |
+| 2 | [02-github-actions](02-github-actions/) | Workflows, secrets, matrix |
+| 3 | [03-jenkins](03-jenkins/) | Pipeline, stages, plugins |
+| 4 | [04-seguranca](04-seguranca/) | SAST, DAST, secrets scanning |
+| 5 | [05-containers](05-containers/) | Trivy, Snyk, image signing |
 
 ---
 

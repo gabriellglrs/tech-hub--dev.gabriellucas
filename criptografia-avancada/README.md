@@ -20,14 +20,28 @@
 
 ## 📁 Trilha de Estudo
 
-| # | Arquivo | O que você vai aprender | Tempo |
-|:--|:--------|:------------------------|:-----:|
-| 1 | [01-pki-certificados.md](01-pki-certificados.md) | CA, certificados, trust chains, Let's Encrypt | 45 min |
-| 2 | [02-ssl-tls.md](02-ssl-tls.md) | Handshake, protocolos, configuração | 40 min |
-| 3 | [03-criptografia-disco.md](03-criptografia-disco.md) | LUKS, BitLocker, FileVault | 35 min |
-| 4 | [04-assinaturas-digitais.md](04-assinaturas-digitais.md) | GPG, SSH keys, code signing | 40 min |
-| 5 | [05-hsm-keystore.md](05-hsm-keystore.md) | HSMs, Java KeyStore, vault | 35 min |
-| 6 | [06-pos-quântica.md](06-pos-quântica.md) | Criptografia pós-quântica, NIST | 30 min |
+```
+criptografia-avancada/
+├── 01-pki/
+│   ├── 01-certificados.md
+│   └── 02-letsencrypt.md
+├── 02-ssl-tls/
+│   ├── 01-handshake.md
+│   └── 02-configuracao.md
+├── 03-disco/
+│   ├── 01-linux.md
+│   ├── 02-windows.md
+│   └── 03-macos.md
+├── 04-assinaturas/
+│   ├── 01-gpg.md
+│   └── 02-ssh-keys.md
+├── 05-hsm/
+│   ├── 01-hsm.md
+│   └── 02-keystore.md
+└── 06-pos-quântica/
+    ├── 01-ameacas.md
+    └── 02-nist.md
+```
 
 ---
 

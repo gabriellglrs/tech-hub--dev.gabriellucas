@@ -20,14 +20,29 @@
 
 ## 📁 Trilha de Estudo
 
-| # | Arquivo | O que você vai aprender | Tempo |
-|:--|:--------|:------------------------|:-----:|
-| 1 | [01-html-fundamentos.md](01-html-fundamentos.md) | Tags, formulários, semântica | 35 min |
-| 2 | [02-css-basico.md](02-css-basico.md) | Seletores, box model, responsivo | 30 min |
-| 3 | [03-javascript-basico.md](03-javascript-basico.md) | Variáveis, funções, DOM, eventos | 45 min |
-| 4 | [04-apis-rest.md](04-apis-rest.md) | GET, POST, headers, autenticação | 40 min |
-| 5 | [05-nodejs-basico.md](05-nodejs-basico.md) | Express, rotas, middleware | 40 min |
-| 6 | [06-seguranca-web.md](06-seguranca-web.md) | OWASP Top 10, headers de segurança | 45 min |
+```
+web-dev/
+├── 01-html/
+│   ├── 01-fundamentos.md
+│   └── 02-formularios.md
+├── 02-css/
+│   ├── 01-seletores.md
+│   ├── 02-box-model.md
+│   └── 03-responsivo.md
+├── 03-javascript/
+│   ├── 01-fundamentos.md
+│   ├── 02-dom.md
+│   └── 03-eventos.md
+├── 04-apis/
+│   ├── 01-rest.md
+│   └── 02-autenticacao.md
+├── 05-nodejs/
+│   ├── 01-express.md
+│   └── 02-rotas-middleware.md
+└── 06-seguranca/
+    ├── 01-owasp.md
+    └── 02-headers.md
+```
 
 ---
 
