@@ -16,7 +16,7 @@ Neste módulo, você vai aprender a **descobrir informações sobre um alvo** se
 ## Fluxo de Estudo
 
 ```
-1. 01-dns-e枚umeracao.md → Whois, Dig, Nmap, Masscan
+1. 01-dns-e-enumeracao.md → Whois, Dig, Nmap, Masscan
         ↓
 2. 02-osint-e-subdominios.md → Subfinder, Nuclei, httpx, TheHarvester
 ```
@@ -25,7 +25,7 @@ Neste módulo, você vai aprender a **descobrir informações sobre um alvo** se
 
 | # | Arquivo | O que você vai aprender | Ferramentas |
 |---|---------|------------------------|-------------|
-| 1 | [01-dns-e枚umeracao.md](01-dns-e枚umeracao.md) | Consultar DNS, descobrir portas e serviços | `Whois, Dig, Nmap, Masscan` |
+| 1 | [01-dns-e-enumeracao.md](01-dns-e-enumeracao.md) | Consultar DNS, descobrir portas e serviços | `Whois, Dig, Nmap, Masscan` |
 | 2 | [02-osint-e-subdominios.md](02-osint-e-subdominios.md) | Coletar informações públicas e subdomínios | `Subfinder, Nuclei, httpx, TheHarvester, DNSRecon` |
 
 ## Dicas Práticas

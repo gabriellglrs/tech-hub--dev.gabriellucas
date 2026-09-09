@@ -26,7 +26,7 @@ Neste módulo, você vai aprender a **defender sistemas e redes** contra ataques
 | # | Arquivo | O que você vai aprender | Ferramentas |
 |---|---------|------------------------|-------------|
 | 1 | [01-hardening-e-firewall.md](01-hardening-e-firewall.md) | Endurecer sistemas e filtrar tráfego | `Lynis, CIS Benchmark, UFW, iptables, nftables` |
-| 2 | 02-monitoramento-e-siem.md](02-monitoramento-e-siem.md) | Detectar intrusões e centralizar logs | `Suricata, Snort, Zeek, Wazuh, Elastic Stack` |
+| 2 | [02-monitoramento-e-siem.md](02-monitoramento-e-siem.md) | Detectar intrusões e centralizar logs | `Suricata, Snort, Zeek, Wazuh, Elastic Stack` |
 
 ## Dicas Práticas
 
