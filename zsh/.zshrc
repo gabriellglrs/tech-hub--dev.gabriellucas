@@ -78,7 +78,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git colored-man-pages zsh-completions zsh-autosuggestions zsh-syntax-highlighting sudo)
+plugins=(git colored-man-pages zsh-completions zsh-autosuggestions zsh-syntax-highlighting sudo autojump)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -94,6 +94,21 @@ setopt HIST_FIND_NO_DUPS
 setopt SHARE_HISTORY
 setopt INC_APPEND_HISTORY
 
+# ── FZF ──────────────────────────────────────────────────────
+# Ctrl+R → buscar histórico, Ctrl+T → buscar arquivo, Alt+C → cd
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
+export FZF_CTRL_T_OPTS="--preview 'bat --color=always --style=numbers --line-range :200 {}' 2>/dev/null"
+export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -50'"
+
+# ── Zsh Autosuggestions cor ──────────────────────────────────
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#757575'
+
+# ── Completions ──────────────────────────────────────────────
+CASE_SENSITIVE=false
+HYPHEN_INSENSITIVE=true
+COMPLETION_WAITING_DOTS="true"
+
 # ── Aliases ──────────────────────────────────────────────────
 # Geral
 alias ll='ls -lah --color=auto'
@@ -102,6 +117,7 @@ alias lt='ls -lhtr --color=auto'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias cls='clear'
+alias j='autojump'
 
 # Segurança
 alias mkdir='mkdir -pv'
@@ -130,6 +146,13 @@ alias ping3='ping -c 3'
 # Dev tools
 alias cat='batcat --paging=never 2>/dev/null || bat --paging=never 2>/dev/null || cat'
 alias grep='grep --color=auto'
+alias cat='batcat --paging=never 2>/dev/null || bat --paging=never 2>/dev/null || cat'
+alias batman='batcat --man 2>/dev/null || bat --man 2>/dev/null'
+alias tldrf='tldr --list 2>/dev/null | fzf'
+
+# ── Git Delta (diff bonito) ──────────────────────────────────
+export GIT_PAGER="delta"
+export DELTA_FEATURES="side-by-side line-numbers syntax-highlighting navigate"
 
 # ── PATH ─────────────────────────────────────────────────────
 export PATH="$HOME/.local/bin:$PATH"

@@ -26,6 +26,7 @@ fi
 if ! $COPY_ONLY; then
   step "Instalando pacotes base via apt..."
   sudo apt update
+  sudo apt install -y zsh git curl wget fzf fd-find ripgrep bat eza zoxide python3-pip unzip fontconfig autojump git-delta tldr 2>/dev/null || \
   sudo apt install -y zsh git curl wget fzf fd-find ripgrep bat eza zoxide python3-pip unzip fontconfig
   # fd/bat no Ubuntu chamam fdfind/batcat -> cria alias local
   mkdir -p ~/.local/bin
@@ -111,6 +112,7 @@ if ! $COPY_ONLY; then
   else
     echo ""
     echo "Dica cyberseg: rode ./install.sh --sec para instalar nmap/sqlmap/nikto/hydra/john/hashcat/wireshark/tcpdump/nc/socat/gobuster/ffuf/whatweb/wafw00f/responder/bettercap/mitmproxy/enum4linux (+ seclists/impacket/hashid/crunch/cewl se disponível)."
+    echo "Extras: autojump (j pasta), delta (git diff bonito), tldr (exemplos rápidos)."
   fi
 fi
 

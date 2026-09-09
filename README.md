@@ -64,6 +64,8 @@ chmod +x install.sh
 exec zsh
 ```
 
+> **Extras já inclusos:** `autojump` (navegação rápida), `delta` (git diff bonito), `tldr` (exemplos de comandos)
+
 > Só copiar sem instalar nada:
 > ```bash
 > ./install.sh --copy-only
