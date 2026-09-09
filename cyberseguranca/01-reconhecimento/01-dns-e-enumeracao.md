@@ -434,3 +434,34 @@ dnsrecon -r 192.168.1.0/24
         ↓
 7. Passar para fase de Web App Testing ou Exploração
 ```
+
+---
+
+## Lab Prático
+
+### Exercício 1: Reconhecimento Completo com Nmap
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/nmap01
+- **O que vai praticar:** Scan de portas, detecção de serviços, scripts NSE e enumeração básica com Nmap
+- **Tempo estimado:** 45 minutos
+
+### Exercício 2: DNS e Enumeração com Dig/Whois
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/dnsindemand
+- **O que vai praticar:** Consultas DNS, zone transfer, enumeração de registros e coleta de informações com Whois
+- **Tempo estimado:** 30 minutos
+
+### Exercício 3: Nmap Live Host Discovery
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/nmap02
+- **O que vai praticar:** Ping sweep, TCP/UDP scans, traceroute e evasão de firewalls
+- **Tempo estimado:** 40 minutos
+
+### Exercício 4: Nmap Scanning
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/furthernmap
+- **O que vai praticar:** Scan agressivo (-A), scan em redes, output em diferentes formatos
+- **Tempo estimado:** 45 minutos
+
+### Dica de Estudo
+> Comece sempre pelos rooms básicos de Nmap no TryHackMe. Pratique os comandos em um alvo autorizado (como as máquinas do THM) e documente seus findings em um relatório simples. Repita o fluxo completo (Whois → Dig → Nmap) até que se torne automático.

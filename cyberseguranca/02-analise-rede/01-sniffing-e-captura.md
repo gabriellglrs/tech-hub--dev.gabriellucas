@@ -487,3 +487,34 @@ socat OPENSSL-LISTEN:443,cert=server.pem,verify=0,fork TCP:localhost:80
         ↓
 5. Documentar findings
 ```
+
+---
+
+## Lab Prático
+
+### Exercício 1: Sniffing e Análise com Wireshark
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/wireshark
+- **O que vai praticar:** Captura de pacotes, filtros Wireshark, análise de protocolos e extração de dados
+- **Tempo estimado:** 45 minutos
+
+### Exercício 2: TCPDump na Prática
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/whatisnetworking
+- **O que vai praticar:** Captura com TCPDump, filtros BPF, análise de tráfego e salvamento de captures
+- **Tempo estimado:** 30 minutos
+
+### Exercício 3: Network Traffic Analysis
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/trafficanalysis
+- **O que vai praticar:** Análise de tráfego suspeito, identificação de malware e extração de credenciais
+- **Tempo estimado:** 60 minutos
+
+### Exercício 4: Netcat - The GUI Edition
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/nc
+- **O que vai praticar:** Conexões Netcat, transferência de arquivos, reverse shells e bind shells
+- **Tempo estimado:** 40 minutos
+
+### Dica de Estudo
+> Pratique criando um servidor HTTP simples com Netcat e capture o tráfego com TCPDump. Depois, analise o capture no Wireshark buscando headers, parâmetros e possíveis credenciais. Isso simula um cenário real de ataque.

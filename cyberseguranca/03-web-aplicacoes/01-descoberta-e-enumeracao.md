@@ -419,3 +419,34 @@ wpscan --url http://example.com --proxy http://127.0.0.1:8080
         ↓
 8. Passar para exploração manual ou brute force
 ```
+
+---
+
+## Lab Prático
+
+### Exercício 1: Content Discovery com Gobuster
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/dvwa
+- **O que vai praticar:** Brute force de diretórios com Gobuster, enumeração de arquivos ocultos e análise de status codes
+- **Tempo estimado:** 45 minutos
+
+### Exercício 2: Fuzzing com FFUF
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/ffuf
+- **O que vai praticar:** Fuzzing de parâmetros, vhost discovery, bypass de filtros e uso de wordlists customizadas
+- **Tempo estimado:** 40 minutos
+
+### Exercício 3: Vulnerability Scanning com Nikto
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/vulnnetwork
+- **O que vai praticar:** Scan completo de vulnerabilidades web, identificação de arquivos expostos e headers inseguros
+- **Tempo estimado:** 30 minutos
+
+### Exercício 4: WordPress Scanning com WPScan
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/wpion
+- **O que vai praticar:** Enumeração de plugins, temas e vulnerabilidades em WordPress com WPScan
+- **Tempo estimado:** 45 minutos
+
+### Dica de Estudo
+> Monte um workflow completo: WhatWeb → Gobuster → Nikto → WPScan. Documente cada passo e cruzamento de informações. Use sempre a wordlist `common.txt` primeiro e só evolua para listas maiores se necessário.

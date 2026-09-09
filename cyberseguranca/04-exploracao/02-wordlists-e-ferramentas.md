@@ -241,6 +241,37 @@ ffuf -u http://target.com/page?id=FUZZ -w /usr/share/seclists/Fuzzing/SQLi/Gener
 
 ---
 
+## Lab Prático
+
+### Exercício 1: Wordlists e SecLists
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/seclists
+- **O que vai praticar:** Navegação pelo SecLists, seleção de wordlists para diferentes tarefas e uso com ferramentas
+- **Tempo estimado:** 30 minutos
+
+### Exercício 2: Brute Force com Wordlists
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/bruteforce
+- **O que vai praticar:** Brute force de diretórios, subdomínios e senhas usando wordlists apropriadas
+- **Tempo estimado:** 45 minutos
+
+### Exercício 3: Crunch e CeWL
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/crunch
+- **O que vai praticar:** Geração de wordlists customizadas com Crunch e CeWL baseadas em contexto
+- **Tempo estimado:** 30 minutos
+
+### Exercício 4: Default Credentials
+- **Plataforma:** HackTheBox
+- **Link:** https://app.hackthebox.com/starting-point
+- **O que vai praticar:** Uso de wordlists de credenciais padrão, enumeração de usuários e exploração de credenciais default
+- **Tempo estimado:** 60 minutos
+
+### Dica de Estudo
+> Crie um workflow: comece com `common.txt` para scan rápido, depois use listas maiores se necessário. Para brute force de senhas, sempre comece pelo `Top1000.txt`. Documente quais wordlists funcionam melhor para cada tipo de alvo.
+
+---
+
 ## 📋 Resumo: qual wordlist usar
 
 | Tarefa | Wordlist |

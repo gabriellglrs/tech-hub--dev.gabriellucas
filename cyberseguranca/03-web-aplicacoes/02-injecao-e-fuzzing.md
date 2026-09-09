@@ -164,3 +164,34 @@ Se o site tem WAF, você precisa adaptar seus ataques:
 - Usar rate limiting mais baixo
 - Usar proxychains para esconder IP
 - Bypass de WAF com payloads específicos
+
+---
+
+## Lab Prático
+
+### Exercício 1: SQL Injection com SQLMap
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/sqlinjectionlm
+- **O que vai praticar:** Detecção automática de SQLi, extração de dados, bypass de WAF e exploração de bancos
+- **Tempo estimado:** 60 minutos
+
+### Exercício 2: DVWA - SQL Injection
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/dvwa
+- **O que vai praticar:** SQL Injection manual e automatizada, union-based, blind SQLi e uso do SQLMap
+- **Tempo estimado:** 45 minutos
+
+### Exercício 3: WAF Bypass
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/wafbypass
+- **O que vai praticar:** Técnicas de bypass de WAF, tamper scripts e evasão de firewalls aplicativos
+- **Tempo estimado:** 40 minutos
+
+### Exercício 4: Injection Foundations
+- **Plataforma:** HackTheBox
+- **Link:** https://app.hackthebox.com/starting-point
+- **O que vai praticar:** SQL Injection básica, identificação de vulnerabilidades e extração de dados sensiveis
+- **Tempo estimado:** 90 minutos
+
+### Dica de Estudo
+> Comece sempre pelo SQLMap em modo `--batch` para detecção rápida. Depois, prague manualmente com payloads básicos (`' OR 1=1 --`). Documente cada técnica encontrada e对应的 WAF (se houver). Use tamper scripts para bypass quando necessário.

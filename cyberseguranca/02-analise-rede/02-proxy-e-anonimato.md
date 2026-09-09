@@ -449,3 +449,34 @@ def response(flow: http.HTTPFlow):
 
 ### ⚠️ Aviso legal
 Use apenas em redes autorizadas e seus próprios dispositivos.
+
+---
+
+## Lab Prático
+
+### Exercício 1: Tor e Proxychains
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/torproxy
+- **O que vai praticar:** Configuração do Tor, uso do Proxychains para anonimato e bypass de restrições
+- **Tempo estimado:** 30 minutos
+
+### Exercício 2: Bettercap - ARP Spoofing
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/bettercap
+- **O que vai praticar:** MITM com Bettercap, ARP spoofing, sniffing de tráfego e DNS spoofing
+- **Tempo estimado:** 45 minutos
+
+### Exercício 3: Responder - LLMNR Poisoning
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/responder
+- **O que vai praticar:** Poisoning de LLMNR/NBT-NS, captura de hashes NTLM e cracking com John
+- **Tempo estimado:** 40 minutos
+
+### Exercício 4: Anonimato e Proxy
+- **Plataforma:** HackTheBox
+- **Link:** https://app.hackthebox.com/starting-point
+- **O que vai praticar:** Uso de proxy chains, evasão de detecção e manutenção de anonimato em scans
+- **Tempo estimado:** 60 minutos
+
+### Dica de Estudo
+> Configure Tor + Proxychains e verifique seu IP antes e depois. Pratique rodar ferramentas como Nmap e Gobuster via proxychains. Anote as diferenças de performance e detectabilidade entre scan direto e via Tor.

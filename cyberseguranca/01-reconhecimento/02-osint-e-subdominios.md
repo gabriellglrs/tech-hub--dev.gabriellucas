@@ -352,3 +352,34 @@ done
 # === Tudo junto (simplificado) ===
 subfinder -d target.com -silent | httpx -mc 200 -silent | nuclei -severity critical,high
 ```
+
+---
+
+## Lab Prático
+
+### Exercício 1: Subdomain Enumeration com Subfinder
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/subdomainenumeration
+- **O que vai praticar:** Enumeração passiva de subdomínios com Subfinder,.httpx e análise de resultados
+- **Tempo estimado:** 30 minutos
+
+### Exercício 2: Vulnerability Scanning com Nuclei
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/rrootme
+- **O que vai praticar:** Scan de vulnerabilidades com Nuclei, identificação de CVEs e análise de severidade
+- **Tempo estimado:** 45 minutos
+
+### Exercício 3: OSINT e Reconhecimento
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/ohsint
+- **O que vai praticar:** Coleta de informações de fontes públicas, OSINT e correlação de dados
+- **Tempo estimado:** 60 minutos
+
+### Exercício 4: Information Gathering
+- **Plataforma:** HackTheBox
+- **Link:** https://app.hackthebox.com/starting-point
+- **O que vai praticar:** Reconhecimento inicial de máquinas, enumeração de serviços e coleta de dados
+- **Tempo estimado:** 90 minutos
+
+### Dica de Estudo
+> Crie um pipeline de reconhecimento completo: Subfinder → httpx → Nuclei. Execute em múltiplos alvos para comparar resultados. Documente todos os subdomínios encontrados e classifique por risco.

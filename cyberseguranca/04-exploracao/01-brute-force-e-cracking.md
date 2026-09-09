@@ -366,3 +366,34 @@ sudo apt install -y hashid
 hashid '5d41402abc4b2a76b9719d911017c592'
 hashid -f 'hash_to_crack.txt'
 ```
+
+---
+
+## Lab Prático
+
+### Exercício 1: Brute Force com Hydra
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/hydra
+- **O que vai praticar:** Força bruta em SSH, FTP e HTTP forms com Hydra, uso de wordlists e ajuste de threads
+- **Tempo estimado:** 45 minutos
+
+### Exercício 2: Cracking de Hashes com John
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/johntheripper0
+- **O que vai praticar:** Identificação de formatos, cracking com wordlists, regras de mutação e brute force puro
+- **Tempo estimado:** 40 minutos
+
+### Exercício 3: Hashcat na Prática
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/hashcat
+- **O que vai praticar:** Cracking com GPU, máscaras, regras e diferentes formatos de hash (MD5, NTLM, bcrypt)
+- **Tempo estimado:** 50 minutos
+
+### Exercício 4: Brute Force - Credentials
+- **Plataforma:** HackTheBox
+- **Link:** https://app.hackthebox.com/starting-point
+- **O que vai praticar:** Enumeração de credenciais, brute force em serviços web e exploração de login forms
+- **Tempo estimado:** 90 minutos
+
+### Dica de Estudo
+> Comece sempre com wordlists pequenas (Top1000) antes de usar listas grandes. Identifique o formato do hash antes de crackear. Documente cada tentativa e os resultados encontrados. Use Hydra com `-t 4` para evitar bloqueios.
