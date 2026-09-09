@@ -4,6 +4,35 @@
 
 ---
 
+## 📚 O que é Segurança Wireless?
+
+**Segurança Wireless** envolve auditar e testar redes Wi-Fi para encontrar vulnerabilidades em protocolos como WPA2, WPA3 e WPS. Inclui captura de handshakes, ataques Evil Twin e bypass de proteções.
+
+### Por que isso é importante?
+
+- Redes Wi-Fi são o **ponto de entrada mais comum** em empresas
+- WPA2 ainda é amplamente usado e possui **vulnerabilidades conhecidas**
+- **Evil Twin** pode capturar credenciais de qualquer rede
+- Auditorias wireless são exigidas em **compliance e pentests**
+
+### Como funciona na prática?
+
+```
+Modo Monitor → Capturar tráfego → Identificar rede alvo → Capturar handshake
+→ Forçar deauth → Quebrar senha com wordlist → Acesso à rede
+```
+
+### Ferramentas
+
+| Ferramenta | O que faz |
+|:---|:---|
+| **aircrack-ng** | Captura e quebra de handshakes WPA2 |
+| **kismet** | Detector IDS wireless |
+| **wifite** | Automação de ataques wireless |
+| **hostapd** | Criar Evil Twin / Rogue AP |
+
+---
+
 ## 🛠️ Instalação
 
 ```bash

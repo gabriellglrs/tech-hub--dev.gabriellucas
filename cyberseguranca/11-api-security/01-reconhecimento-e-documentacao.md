@@ -4,6 +4,50 @@
 
 ---
 
+## 📚 O que é API Security?
+
+**API Security** é proteger interfaces de programação — os "canos" que conectam aplicativos. APIs expõem dados e funcionalidades, e se não forem protegidas, podem dar acesso a tudo.
+
+### Por que isso é importante?
+
+- **83% do tráfego web** hoje é via APIs
+- APIs expõem **dados sensiveis** (usuários, pagamentos)
+- Vulnerabilidades em APIs são **diferentes** de web tradicional
+- OWASP tem top 10 específico para APIs
+
+### Como funciona na prática?
+
+```
+Documentar API (Swagger/OpenAPI)
+        ↓
+Mapear endpoints (todos os caminhos)
+        ↓
+Testar autenticação (funciona?)
+        ↓
+Testar BOLA/IDOR (acesso indevido)
+        ↓
+Explorar vulnerabilidades
+```
+
+### OWASP API Security Top 10
+
+| # | Vulnerabilidade | O que é |
+|:---|:---|:---|
+| 1 | **BOLA** | Acessar dados de outros usuários |
+| 2 | **Broken Authentication** | Autenticação fraca |
+| 3 | **Excessive Data Exposure** | Retornando mais dados que deveria |
+| 4 | **Lack of Resources & Rate Limiting** | Sem limite de requisições |
+| 5 | **Broken Function Level Authorization** | Acessar funções de admin |
+
+### Diferença entre Web e API
+
+| Web Tradicional | API |
+|:---|:---|
+| Interface visual (HTML) | Dados JSON/XML |
+| XSS é comum | BOLA é comum |
+| CSRF é comum | CSRF menos comum |
+| Cookies | Tokens (JWT, API keys) |
+
 ## Instalação das Ferramentas
 
 ```bash

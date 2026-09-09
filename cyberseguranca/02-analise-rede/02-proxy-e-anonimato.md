@@ -4,6 +4,37 @@
 
 ---
 
+## 📚 O que é Proxy e Anonimato?
+
+**Proxy** é um intermediário que rota seu tráfego por outro servidor. **Anonimato** é ocultar seu IP real e identidade na rede. Juntos, permitem escapar de bloqueios geográficos, proteger sua identidade durante pentests e dificultar rastreamento.
+
+### Por que isso é importante?
+
+- **Proteção de identidade**: evita que rastreiem seus scans e ataques
+- **Bypass de geo-block**: acessa serviços restritos a regiões específicas
+- **Evasão de detecção**: dificulta que IDS/IPS identifiquem o origem do ataque
+- **Privacidade**: impede que provedores e governos monitorem seu tráfego
+
+### Como funciona na prática?
+
+| Camada | O que acontece | Resultado |
+|:---|:---|:---|
+| **Tor** | Tráfego passa por 3 nós criptografados | IP real oculto |
+| **Proxychains** | Força qualquer app a usar proxy | Apps sem suporte nativo |
+| **VPN** | Túnel criptografado completo | Todo tráfego protegido |
+| **MITM Proxy** | Intercepta e modifica tráfego | Análise e manipulação |
+
+### Ferramentas
+
+| Ferramenta | Tipo | Uso principal |
+|:---|:---|:---|
+| **Tor** | Rede anônima | Navegação anônima |
+| **Proxychains** | Wrapper | Forçar apps a usar Tor |
+| **Bettercap** | MITM framework | ARP spoofing, sniffing |
+| **mitmproxy** | Proxy interativo | Análise de tráfego HTTPS |
+
+---
+
 ## 🚀 Passo a Passo — Como usar Proxy e Anonimato
 
 Você quer **esconder seu IP** ou contornar bloqueios. Vamos configurar o Tor + Proxychains passo a passo.

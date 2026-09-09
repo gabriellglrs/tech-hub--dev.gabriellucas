@@ -4,6 +4,47 @@
 
 ---
 
+## 📚 O que é Resposta a Incidentes e Forense?
+
+**Resposta a Incidentes** é o que fazer quando um ataque **já aconteceu**. **Forense computacional** é coletar e analisar evidências digitais — como uma cena do crime, mas no mundo digital.
+
+### Por que isso é importante?
+
+- Ataques **vão acontecer** — precisa estar preparado para responder
+- Evidências mal preservadas são **inadmissíveis** em tribunal
+- Precisa saber **o que foi comprometido** e **como foi feito**
+- Ajuda a **prevenir** futuros ataques
+
+### Como funciona na prática?
+
+```
+Incidente detectado
+        ↓
+1. Preservar evidências (não alterar nada)
+        ↓
+2. Coletar (imagens de disco, memória, logs)
+        ↓
+3. Analisar (timeline, malware, logs)
+        ↓
+4. Concluir (o que aconteceu, como, quem)
+        ↓
+5. Reportar (documentação para tribunal/equipe)
+```
+
+### Ferramentas que você vai usar
+
+| Ferramenta | Para que serve |
+|:---|:---|
+| **dd/ewf** | Criar imagens de disco bit-a-bit |
+| **Volatility** | Analisar memória RAM |
+| **Autopsy** | Análise forense gráfica |
+| **Plaso/log2timeline** | Criar linha do tempo |
+| **Yara** | Identificar padrões de malware |
+
+### ⚠️ Regra de ouro
+
+> **NUNCA** trabalhe na evidência original. Sempre faça cópia e trabalhe na cópia. Evidência contaminada = caso perdido.
+
 ## Instalação das Ferramentas
 
 ```bash

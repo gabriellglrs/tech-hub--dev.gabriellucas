@@ -2,6 +2,50 @@
 
 ---
 
+## 📚 O que é Database Security?
+
+**Database Security** é proteger bancos de dados contra acesso não autorizado. Bancos guardam os dados mais sensiveis — senhas, CPFs, cartões, emails.
+
+### Por que isso é importante?
+
+- **Banco de dados = o prêmio** para o atacante
+- Um SQL Injection pode expor **milhões de registros**
+- Credenciais de banco são frequentemente **padrão ou fracas**
+- Vazamento de dados é **crime** (LGPD, GDPR)
+
+### Como funciona na prática?
+
+```
+Encontrar banco aberto (enumeração)
+        ↓
+Testar senhas fracas (brute force)
+        ↓
+Acessar banco (credenciais ou injeção)
+        ↓
+Explorar dados (tables, columns, rows)
+        ↓
+Escalation (para outros bancos/servidores)
+```
+
+### Bancos de dados mais atacados
+
+| Banco | Porta padrão | Como atacar |
+|:---|:---|:---|
+| **MySQL** | 3306 | Brute force, SQL Injection |
+| **PostgreSQL** | 5432 | Brute force,命令执行 |
+| **MongoDB** | 27017 | Sem autenticação padrão |
+| **Redis** | 6379 | Sem autenticação padrão |
+| **MSSQL** | 1433 | Pass-the-hash |
+
+### Ferramentas
+
+| Ferramenta | Para que serve |
+|:---|:---|
+| **sqlmap** | SQL Injection automático |
+| **Medusa** | Brute force em bancos |
+| **NoSQLMap** | Injeção em MongoDB |
+| **鸿客** | Análise de banco |
+
 ## Instalação das Ferramentas
 
 ```bash

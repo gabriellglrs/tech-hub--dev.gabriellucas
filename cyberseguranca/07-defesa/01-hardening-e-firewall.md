@@ -4,6 +4,45 @@
 
 ---
 
+## 📚 O que é Defesa e Hardening?
+
+**Defesa** é proteger sistemas contra ataques. **Hardening** é deixar o sistema mais resistente — fechar portas desnecessárias, atualizar, configurar corretamente.
+
+### Por que isso é importante?
+
+- Um sistema **bem configurado** é muito mais difícil de atacar
+- Muitos ataques exploram **configurações padrão** fracas
+- Hardening é mais barato que **responder a um incidente**
+- É obrigatório em empresas que seguem compliance (ISO 27001, LGPD)
+
+### Como funciona na prática?
+
+```
+Auditar o sistema (o que está errado?)
+        ↓
+Endurecer (corrigir configurações)
+        ↓
+Filtrar tráfego (firewall)
+        ↓
+Monitorar (detectar ataques)
+        ↓
+Responder (se algo der errado)
+```
+
+### Camadas de defesa
+
+| Camada | O que protege | Ferramentas |
+|:---|:---|:---|
+| **Firewall** | Filtra tráfego | UFW, iptables, nftables |
+| **Atualizações** | Corrige falhas | apt update, unattended-upgrades |
+| **Permissões** | Restringe acesso | chmod, chown, ACLs |
+| **IDS/IPS** | Detecta ataques | Suricata, Snort |
+| **SIEM** | Centraliza logs | Wazuh, ELK Stack |
+
+### Princípio da defesa em profundidade
+
+> Não confie em uma única camada. Se o firewall falhar, o IDS detecta. Se o IDS falhar, os logs mostram. **Múltiplas camadas = múltiplas chances de detectar.**
+
 ## Instalação das Ferramentas
 
 ```bash

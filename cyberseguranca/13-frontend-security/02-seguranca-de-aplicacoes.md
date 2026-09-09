@@ -4,6 +4,38 @@
 
 ---
 
+## 📚 O que é Segurança de Aplicações Frontend?
+
+**Segurança de Frontend** envolve headers HTTP e configurações do navegador que protegem contra ataques como XSS, Clickjacking e roubo de dados cross-origin. Inclui **CSP**, **CORS**, **X-Frame-Options** e flags de cookies.
+
+### Por que isso é importante?
+
+- Headers de segurança são a **primeira linha de defesa** no navegador
+- **CSP** previne XSS — mas configurações ruins podem ser bypassadas
+- **CORS** mal configurado permite **roubo de dados** entre domínios
+- **Clickjacking** engana o usuário para clicar em ações invisíveis
+
+### Como funciona na prática?
+
+| Header | Proteção contra | Exemplo |
+|:---|:---|:---|
+| **CSP** | XSS, injeção de código | `default-src 'self'` |
+| **CORS** | Roubo cross-origin | `Access-Control-Allow-Origin` |
+| **X-Frame-Options** | Clickjacking | `DENY` ou `SAMEORIGIN` |
+| **HttpOnly** | Roubo de cookies via XSS | `Set-Cookie: session=abc; HttpOnly` |
+| **Secure** | Interceptação de cookies | `Set-Cookie: session=abc; Secure` |
+
+### Ferramentas
+
+| Ferramenta | O que faz |
+|:---|:---|
+| **curl** | Verificar headers HTTP |
+| **Nuclei** | Scan automático de headers |
+| **Burp Suite** | Interceptação de tráfego |
+| **csp-evaluator** | Analisar configuração CSP |
+
+---
+
 ## Instalação das Ferramentas
 
 ```bash

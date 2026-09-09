@@ -2,6 +2,54 @@
 
 > Capturar, analisar e manipular tráfego de rede. Essencial para entender o que está acontecendo na rede.
 
+## 📚 O que é Análise de Rede (Sniffing)?
+
+**Sniffing** é capturar e analisar o tráfego que passa pela rede. É como colocar um microfone no fio da internet — você vê tudo que está sendo enviado: senhas, emails, tokens, dados sensiveis.
+
+### Por que isso é importante?
+
+- Senhas via HTTP ficam em **texto plano** (sem criptografia)
+- Tokens de sessão podem ser **roubados** e reutilizados
+- Tráfego DNS revela **quais sites** os usuários acessam
+- Atacantes podem **interceptar** dados em redes públicas (WiFi)
+
+### Como funciona na prática?
+
+```
+Seu computador ←→ Roteador ←→ Internet
+                         ↓
+                  [Sniffing acontece aqui]
+                  
+Você captura pacotes que passam pelo roteador
+```
+
+### O que você pode capturar?
+
+| Protocolo | Dados expostos | Risco |
+|:---|:---|:---|
+| HTTP | Senhas, cookies, forms | Crítico |
+| DNS | Sites acessados | Médio |
+| FTP | Senhas em texto | Crítico |
+| SMTP | Emails enviados | Alto |
+| SNMP | Configurações de rede | Alto |
+
+### Ferramentas que você vai usar
+
+| Ferramenta | Para que serve |
+|:---|:---|
+| tcpdump | Capturar pacotes no terminal |
+| Wireshark | Analisar pacotes graficamente |
+| tshark | tcpdump + filtros avançados |
+| mitmproxy | Proxy para HTTPS também |
+| bettercap | Man-in-the-middle automatizado |
+
+### ⚠️ Aviso Legal
+
+> Sniffing em redes que **não são suas** é **crime** no Brasil (Lei 12.737/2012). Use apenas em:
+> - Sua própria rede doméstica
+> - Laboratórios de estudo (TryHackMe, HackTheBox)
+> - Redes com autorização **por escrito**
+
 ---
 
 ## 🚀 Passo a Passo — Como fazer Sniffing de Rede

@@ -4,6 +4,35 @@
 
 ---
 
+## 📚 O que é Pivoting e Tunneling?
+
+**Pivoting** é usar uma máquina comprometida como ponte para acessar outras redes que não são diretamente alcançáveis. **Tunneling** é encapsular tráfego dentro de outro protocolo para atravessar firewalls e segmentos de rede.
+
+### Por que isso é importante?
+
+- A rede interna geralmente **não é acessível diretamente** da internet
+- Firewalls separam DMZ da rede corporativa
+- Permite **movimentação lateral** em ambientes segmentados
+- Essencial para atingir **objetivos de alto valor** (controladores de domínio, bancos)
+
+### Como funciona na prática?
+
+```
+SUA MÁQUINA → [SSH Tunnel] → SERVIDOR COMPROMETIDO (DMZ) → [Proxy] → REDE INTERNA
+              192.168.1.10     172.16.1.5                        10.0.0.0/24
+```
+
+### Ferramentas
+
+| Ferramenta | Tipo | Uso |
+|:---|:---|:---|
+| **SSH** | Tunneling nativo | Local/Remote/Dynamic port forwarding |
+| **Chisel** | Tunneling HTTP | Quando SSH está bloqueado |
+| **Ligolo-ng** | Tunneling moderno | Sem necessidade de SOCKS |
+| **Proxychains** | Wrapper | Forçar apps a usar o túnel |
+
+---
+
 ## O que é Pivoting
 
 Pivoting é usar uma máquina comprometida como ponto de acesso para alcançar outras redes ou máquinas que não estão diretamente acessíveis.

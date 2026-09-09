@@ -4,6 +4,37 @@
 
 ---
 
+## 📚 O que são Wordlists?
+
+**Wordlists** são listas de palavras usadas para brute force (adivinhar senhas), fuzzing (descobrir diretórios) e enumeração (encontrar usuários e subdomínios). São a base de muitos ataques de segurança.
+
+### Por que isso é importantes?
+
+- **Brute force**: testar combinações de senhas em serviços (SSH, FTP, Web)
+- **Fuzzing**: descobrir diretórios, arquivos e endpoints ocultos
+- **Enumeração**: listar subdomínios, usuários e parâmetros
+- **A wordlist certa** pode reduzir horas de trabalho para minutos
+
+### Como funciona na prática?
+
+| Tarefa | Wordlist típica | Ferramenta |
+|:---|:---|:---|
+| Senhas comuns | `Top1000.txt` | Hydra, John |
+| Diretórios web | `common.txt` | Gobuster, FFUF |
+| Subdomínios | `subdomains-top1million-5000.txt` | Gobuster DNS |
+| Senhas vazadas | `rockyou.txt` | Hashcat |
+
+### Ferramentas
+
+| Ferramenta | O que faz |
+|:---|:---|
+| **SecLists** | Coleção completa de wordlists |
+| **Crunch** | Gera wordlists por padrão |
+| **CeWL** | Gera wordlists a partir de sites |
+| **Gobuster** | Brute force de diretórios e subdomínios |
+
+---
+
 ## 🚀 Passo a Passo — Como usar Wordlists
 
 Wordlist = lista de palavras. Serve para brute force (adivinhar senhas), fuzzing (descobrir diretórios) e enumeração. Vamos aprender qual usar para cada situação.

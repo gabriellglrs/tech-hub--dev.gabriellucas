@@ -4,6 +4,37 @@
 
 ---
 
+## 📚 O que é Segurança Mobile?
+
+**Segurança Mobile** envolve analisar aplicativos Android (APK) e iOS (IPA) para encontrar vulnerabilidades como dados hardcoded, SSL pinning fraco, armazenamento inseguro e APIs expostas. Combina engenharia reversa com testes de segurança.
+
+### Por que isso é importante?
+
+- Apps mobile lidam com **dados sensiveis** (dados bancários, saúde, localização)
+- **Armazenamento inseguro** pode vazar credenciais e tokens
+- **SSL pinning fraco** permite interceptação de tráfego
+- OWASP Mobile Top 10 lista as **vulnerabilidades mais comuns**
+
+### Como funciona na prática?
+
+```
+APK/IPA → Análise Estática (MobSF, jadx) → Encontrar secrets, permissões
+        → Descompilar (apktool) → Analisar smali/Java
+        → Análise Dinâmica (Frida) → Hook em runtime, bypass pinning
+        → Interceptação (mitmproxy) → Ver tráfego HTTPS
+```
+
+### Ferramentas
+
+| Ferramenta | O que faz |
+|:---|:---|
+| **MobSF** | Scan automático SAST/DAST |
+| **apktool / jadx** | Descompilar APK |
+| **Frida / objection** | Hook runtime, bypass pinning |
+| **mitmproxy** | Interceptar HTTPS |
+
+---
+
 ## 🛠️ Instalação
 
 ```bash

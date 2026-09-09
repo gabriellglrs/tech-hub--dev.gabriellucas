@@ -4,6 +4,37 @@
 
 ---
 
+## 📚 O que é Criptografia?
+
+**Criptografia** é transformar dados em texto ilegível para proteger confidencialidade, integridade e autenticidade. Inclui **simétrica** (mesma chave), **assimétrica** (par de chaves) e **hash** (integridade).
+
+### Por que isso é importante?
+
+- **LGPD exige** criptografia de dados sensíveis em repouso e trânsito
+- TLS protege tráfego na web (HTTPS)
+- Senhas devem ser armazenadas com **hash + salt** (Argon2, bcrypt)
+- Criptografia fraca é **pior que sem criptografia** (falsa sensação de segurança)
+
+### Algoritmos seguros vs inseguros
+
+| Tipo | ✅ Seguro | ❌ Evite |
+|:---|:---|:---|
+| Simétrica | AES-GCM, ChaCha20 | DES, 3DES, RC4 |
+| Assimétrica | RSA 2048+, Ed25519 | RSA 1024, DSA |
+| Hash | SHA-256/3, BLAKE2 | MD5, SHA1 |
+| KDF senha | Argon2, bcrypt | MD5 puro |
+
+### Ferramentas
+
+| Ferramenta | O que faz |
+|:---|:---|
+| **OpenSSL** | Criptografia, TLS, hashes |
+| **GPG** | Criptografia de arquivos |
+| **hashcat** | Quebra de hashes |
+| **testssl.sh** | Testar configuração TLS |
+
+---
+
 ## 🛠️ Instalação
 
 ```bash

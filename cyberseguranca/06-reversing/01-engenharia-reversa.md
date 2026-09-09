@@ -4,6 +4,57 @@
 
 ---
 
+## 📚 O que é Engenharia Reversa?
+
+**Engenharia Reversa** é analisar um programa computador para entender **como ele funciona** por dentro, sem ter o código fonte. É como desmontar um relógio para ver como as engrenagens se encaixam.
+
+### Por que isso é importante?
+
+- Programas podem ter **malware escondido** que nenhum antivirus detecta
+- Precisa entender vulnerabilidades em **nível de binário**
+- É a base para criar **exploits avançados** (buffer overflow, ROP)
+- Empresas querem saber **o que um software faz** antes de usar
+
+### Como funciona na prática?
+
+```
+Programa compilado (binário)
+        ↓
+Ferramenta de análise (Ghidra, radare2)
+        ↓
+Código fonte aproximado (decompilado)
+        ↓
+Assembly (linguagem de máquina legível)
+        ↓
+Entender a lógica → Encontrar vulnerabilidade
+```
+
+### Ferramentas que você vai usar
+
+| Ferramenta | Para que serve |
+|:---|:---|
+| **Ghidra** | Decompilar (ver código aproximado) |
+| **radare2** | Análise no terminal |
+| **GDB/GEF** | Debug (executar passo a passo) |
+| **checksec** | Verificar proteções do binário |
+| **pwntools** | Criar exploits em Python |
+
+### Tipos de análise
+
+| Tipo | O que faz | Quando usar |
+|:---|:---|:---|
+| **Estática** | Analisa sem executar | Primeiro contato |
+| **Dinâmica** | Executa e monitora | Entender comportamento |
+| **Descompilação** | Volta para código fonte | Entender lógica |
+| **Debug** | Executa passo a passo | Encontrar bugs |
+
+### ⚠️ Aviso
+
+> Engenharia reversa **não é crime** quando feita em programas que você tem direito de analisar. Evite:
+> - Software com DRM protegido por lei
+> - Programas de terceiros sem autorização
+> - Malware em produção (use ambiente isolado)
+
 ## Instalação das Ferramentas
 
 ```bash

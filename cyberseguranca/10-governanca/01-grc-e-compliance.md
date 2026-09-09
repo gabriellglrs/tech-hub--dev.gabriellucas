@@ -4,6 +4,48 @@
 
 ---
 
+## 📚 O que é Governança, Risco e Compliance (GRC)?
+
+**Governança** é como a empresa **gerencia segurança**. **Risco** é avaliar o que pode dar errado. **Compliance** é seguir leis e normas (LGPD, ISO 27001).
+
+### Por que isso é importante?
+
+- Segurança sem governança é **reativa** (só age depois do ataque)
+- Leis como LGPD **obrigam** a proteger dados
+- ISO 27001 dá **certificação** reconhecida mundialmente
+- Auditorias revelam **falhas antes** de serem exploradas
+
+### Como funciona na prática?
+
+```
+Inventário (o que temos?)
+        ↓
+Classificação (o que é crítico?)
+        ↓
+Auditoria (o que está errado?)
+        ↓
+Controles (como corrigir?)
+        ↓
+Monitoramento (está funcionando?)
+```
+
+### Frameworks de segurança
+
+| Framework | O que é |
+|:---|:---|
+| **ISO 27001** | Padrão internacional de gestão de segurança |
+| **NIST CSF** | Framework dos EUA (Identify, Protect, Detect, Respond, Recover) |
+| **CIS Controls** | 18 controles prioritários |
+| **LGPD** | Lei brasileira de proteção de dados |
+
+### Tipos de controle
+
+| Tipo | Exemplo |
+|:---|:---|
+| **Preventivo** | Firewall bloqueia acesso |
+| **Detectivo** | IDS detecta ataque |
+| **Corretivo** | Backup restaura dados |
+
 ## 🛠️ Instalação
 
 ```bash

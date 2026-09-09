@@ -4,6 +4,37 @@
 
 ---
 
+## 📚 O que é Injeção e Exfiltração de Dados?
+
+**Injeção** é inserir código malicioso em queries de banco de dados (SQL, NoSQL) para manipular dados. **Exfiltração** é extrair dados sensíveis do banco para um servidor controlado pelo atacante.
+
+### Por que isso é importante?
+
+- Bancos de dados contêm os **dados mais valiosos** (credenciais, PII, financeiro)
+- SQL Injection permite **leitura, escrita e até shell** do servidor
+- **NoSQL injection** afeta MongoDB, CouchDB e outros NoSQL
+- Exfiltração é o **objetivo final** da maioria dos ataques
+
+### Tipos de injeção
+
+| Tipo | Como funciona | Ferramenta |
+|:---|:---|:---|
+| **UNION-based** | Combina queries para extrair dados | SQLMap |
+| **Blind SQLi** | Deduz dados por comportamento (boolean/time) | SQLMap |
+| **NoSQL Injection** | Usa operadores MongoDB ($gt, $ne) | NoSQLMap |
+| **Out-of-Band** | Extrai via DNS ou HTTP externo | SQLMap |
+
+### Ferramentas
+
+| Ferramenta | O que faz |
+|:---|:---|
+| **SQLMap** | Exploração automática de SQLi |
+| **NoSQLMap** | Injeção em bancos NoSQL |
+| **jSQL Injection** | Injeção via Java |
+| **Burp Suite** | Interceptação e manipulação |
+
+---
+
 ## Instalação das Ferramentas
 
 ```bash

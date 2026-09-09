@@ -4,6 +4,35 @@
 
 ---
 
+## 📚 O que é Monitoramento e SIEM?
+
+**IDS** (Intrusion Detection System) detecta tráfego malicioso e gera alertas. **IPS** (Intrusion Prevention System) bloqueia automaticamente ameaças. **SIEM** (Security Information and Event Management) centraliza logs de todas as fontes e correlaciona eventos para detectar ataques complexos.
+
+### Por que isso é importante?
+
+- Sem monitoramento, ataques passam **despercebidos por meses**
+- SIEM permite **correlacionar eventos** de múltiplas fontes
+- IDS/IPS é a **primeira linha de defesa** contra intrusões
+- É obrigatório em compliance (LGPD, PCI-DSS, ISO 27001)
+
+### Como funciona na prática?
+
+```
+Tráfego → IDS/IPS (Suricata/Snort) → Logs → SIEM (Wazuh/ELK) → Alerta → SOC → Resposta
+```
+
+### Ferramentas
+
+| Ferramenta | Tipo | Uso principal |
+|:---|:---|:---|
+| **Suricata** | IDS/IPS | Detecção baseada em regras |
+| **Snort** | IDS/IPS | Regras customizadas |
+| **Zeek** | NSM | Análise comportamental |
+| **Wazuh** | SIEM | Centralização e correlação |
+| **Elastic Stack** | SIEM | Busca e visualização |
+
+---
+
 ## Instalação das Ferramentas
 
 ```bash

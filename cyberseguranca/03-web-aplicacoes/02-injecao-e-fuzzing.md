@@ -4,6 +4,37 @@
 
 ---
 
+## 📚 O que é SQL Injection e Fuzzing?
+
+**SQL Injection** é inserir código SQL malicioso em inputs de aplicações web para manipular o banco de dados. **Fuzzing** é enviar dados aleatórios ou malformados para encontrar vulnerabilidades em software.
+
+### Por que isso é importante?
+
+- SQLi é uma das vulnerabilidades **mais perigosas e comuns** (OWASP Top 10)
+- Permite **extrair dados sensiveis** (senhas, dados pessoais, cartões)
+- Pode conceder **shell do servidor** em casos extremos
+- Fuzzing revela bugs que testes manuais **não encontram**
+
+### Como funciona na prática?
+
+```
+Usuário insere:  admin' OR 1=1--
+ 查询 original:   SELECT * FROM users WHERE user='admin'
+ 查询 modificada:  SELECT * FROM users WHERE user='admin' OR 1=1--
+ Resultado:       Retorna TODOS os usuários (bypass de autenticação)
+```
+
+### Ferramentas
+
+| Ferramenta | O que faz |
+|:---|:---|
+| **SQLMap** | Detecção e exploração automática de SQLi |
+| **WAFw00f** | Detecta se site usa WAF |
+| **Burp Suite** | Intercepta e manipula requests HTTP |
+| **FFUF** | Fuzzing rápido de endpoints e parâmetros |
+
+---
+
 ## SQLMap
 
 Detecção e exploração automática de SQL Injection. Uma das ferramentas mais poderosas para web security.

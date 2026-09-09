@@ -2,6 +2,52 @@
 
 > Ferramentas para manter acesso e explorar sistemas após exploração inicial.
 
+## 📚 O que é Pós-Exploração?
+
+**Pós-exploração** é tudo que você faz **depois de ganhar acesso inicial**. É como entrar na casa — agora você precisa explorar os cômodos, encontrar o cofre, pegar as chaves de outras casas.
+
+### Por que isso é importante?
+
+- Acesso inicial pode ser **limitado** (usuário normal)
+- Precisa **escalar para admin/root** para controle total
+- Pode haver **outras máquinas** na rede (movimentação lateral)
+- Objetivo final: **alcançar o alvo real** (que pode estar em outro lugar)
+
+### O que você faz na pós-exploração?
+
+```
+Acesso inicial (reverse shell)
+        ↓
+1. Enumerar → O que tem nessa máquina?
+        ↓
+2. Escalar → Ganhar root/admin
+        ↓
+3. Movimentar → Acessar outras máquinas
+        ↓
+4. Persistir → Manter acesso mesmo se bloqueado
+        ↓
+5. Exfiltrar → Levar os dados (se for o objetivo)
+```
+
+### Ferramentas por sistema operacional
+
+| Linux | Windows | Para que serve |
+|:---|:---|:---|
+| LinPEAS | WinPEAS | Enumeração automatizada |
+| smbclient.py | psexec.py | Acesso via SMB |
+| secretsdump.py | mimikatz | Dump de credenciais |
+| socat | nc | Reverse shell |
+
+### Conceitos importantes
+
+| Conceito | Significado |
+|:---|:---|
+| **Escalation** | Ganhar mais privilégios (user → root) |
+| **Lateral Movement** | Acessar outras máquinas na rede |
+| **Pivoting** | Usar máquina comprometida como ponte |
+| **Persistence** | Manter acesso após reiniciar |
+| **Exfiltration** | Enviar dados para fora da rede |
+
 ---
 
 ## 🚀 Passo a Passo — Como fazer Pós-Exploração

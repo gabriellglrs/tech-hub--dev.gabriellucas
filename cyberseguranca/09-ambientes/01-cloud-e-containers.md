@@ -4,6 +4,41 @@
 
 ---
 
+## 📚 O que é Segurança em Cloud e Containers?
+
+**Cloud Security** é proteger serviços em nuvem (AWS, Azure, GCP). **Container Security** é proteger Docker e Kubernetes — ambientes isolados que rodando aplicações.
+
+### Por que isso é importante?
+
+- **90% das empresas** usam cloud hoje
+- Containers podem ter **vulnerabilidades na imagem**
+- Kubernetes mal configurado = **porta de entrada**
+- Credenciais AWS vazadas = **conta comprometida em minutos**
+
+### Como funciona na prática?
+
+```
+Configurar CLI (AWS CLI, kubectl)
+        ↓
+Escanear imagens Docker (Trivy, Grype)
+        ↓
+Auditar Kubernetes (kube-hunter)
+        ↓
+Monitorar em runtime (Falco)
+        ↓
+Detectar ameaças (Wazuh, CloudTrail)
+```
+
+### Ferramentas
+
+| Ferramenta | Para que serve |
+|:---|:---|
+| **Trivy** | Scan de vulnerabilidades em imagens |
+| **kube-hunter** | Pentest em Kubernetes |
+| **kube-bench** | Verificar configurações CIS |
+| **Falco** | Detecção de ameaças em runtime |
+| **ScoutSuite** | Auditoria multi-cloud |
+
 ## 🛠️ Instalação
 
 ```bash

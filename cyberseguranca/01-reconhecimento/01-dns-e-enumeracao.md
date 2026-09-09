@@ -2,6 +2,54 @@
 
 > Primeira fase de qualquer pentest: mapear o alvo sem ser detectado.
 
+## 📚 O que é Reconhecimento e Enumeração?
+
+**Reconhecimento** é a fase de coletar informações sobre o alvo **sem ser detectado**. É como espiar a casa antes de entrar — você precisa saber quantas portas tem, onde ficam as janelas, quem mora lá, qual o melhor horário.
+
+**Enumeração** é ir além: descobrir **detalhes específicos** que podem ser usados para exploração — versões de serviços, usuários, subdomínios, tecnologias.
+
+### Por que isso é importante?
+
+- **90% das falhas** são descobertas na fase de reconhecimento
+- Sem saber o que existe, você não sabe **onde atacar**
+- Um bom reconhecimento **economiza horas** de exploração cega
+- Erros aqui revelam que você está atacando (pode ser bloqueado)
+
+### Como funciona na prática?
+
+```
+Fase 1: Passiva (sem contato direto)
+├── Whois → Dono do domínio
+├── Google Dork → Informações indexadas
+├── Shodan/Censys → Serviços expostos
+└── theHarvester → Emails e subdomínios
+
+Fase 2: Ativa (contato direto com o alvo)
+├── Nmap → Portas e serviços
+├── DNS enum → Subdomínios
+├── Web crawl → Páginas e diretórios
+└── Banner grab → Versões exatas
+```
+
+### O que você vai descobrir?
+
+| Tipo de informação | O que revela | Como usar |
+|:---|:---|:---|
+| IP do servidor | Onde o alvo está hospedado | Escanear com Nmap |
+| Versão do Apache | Apache 2.4.49 = vulnerável | Pesquisar CVEs |
+| Email @empresa | Usuários reais | Phishing, brute force |
+| Subdomínios | APIs, painéis internos | Acesso alternativo |
+| Tecnologias | WordPress, Laravel | Ataques específicos |
+
+### Diferença entre Reconhecimento e Enumeração
+
+| Reconhecimento | Enumeração |
+|:---|:---|
+| Coleta ampla de dados | Detalhes específicos |
+| Feito de longe (passivo) | Contato com o alvo |
+| Ex: "empresa.com usa Nginx" | Ex: "Nginx 1.18.0, PHP 8.1" |
+| Base do ataque | Pontos de entrada específicos |
+
 ---
 
 ## 🚀 Passo a Passo — Como fazer Reconhecimento

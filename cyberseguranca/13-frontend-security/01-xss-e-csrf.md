@@ -4,6 +4,48 @@
 
 ---
 
+## 📚 O que é Frontend Security?
+
+**Frontend Security** é proteger o lado do cliente — o que roda no navegador do usuário. XSS, CSRF, Clickjacking são ataques que exploram confiança do navegador.
+
+### Por que isso é importante?
+
+- O navegador **confia no site** — pode executar código malicioso
+- XSS pode roubar **senhas e tokens** de milhões de usuários
+- CSRF pode fazer **transferências bancárias** sem o usuário saber
+- Ataques frontend são **difíceis de detectar** pelo servidor
+
+### Como funciona na prática?
+
+```
+Site injeta código malicioso (XSS)
+        ↓
+Navegador executa pensando que é do site
+        ↓
+Código rouba: senhas, tokens, cookies
+        ↓
+Atacante usa os dados roubados
+```
+
+### Principais vulnerabilidades
+
+| Vulnerabilidade | O que faz | Exemplo |
+|:---|:---|:---|
+| **XSS Stored** | Código salvo no servidor | Comentário com `<script>` |
+| **XSS Reflected** | Código na URL | `?q=<script>alert(1)</script>` |
+| **CSRF** | Ação não autorizada | Transferência automática |
+| **Clickjacking** | Clique invisível | Página falsa por cima |
+| **Open Redirect** | Redirecionamento maligno | `site.com/?url=evil.com` |
+
+### Como se proteger
+
+| Proteção | O que faz |
+|:---|:---|
+| **CSP** | Bloqueia scripts não autorizados |
+| **HttpOnly cookies** | Impede JavaScript de roubar sessão |
+| **CSRF tokens** | Valida que ação veio do usuário |
+| **X-Frame-Options** | Impede ser embebido em iframe |
+
 ## Instalação das Ferramentas
 
 ```bash

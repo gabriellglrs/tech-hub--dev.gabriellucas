@@ -4,6 +4,36 @@
 
 ---
 
+## 📚 O que são Vulnerabilidades em APIs?
+
+**APIs** são frequentemente o ponto de entrada mais vulnerável de uma aplicação. **BOLA** (Broken Object Level Authorization) é a vulnerabilidade #1 — permite acessar dados de outros usuários apenas alterando IDs na requisição.
+
+### Por que isso é importante?
+
+- APIs expõem **dados sensiveis** (usuários, pedidos, pagamentos)
+- **BOLA** afeta 94% das APIs testadas (OWASP API Security Top 10)
+- Falta de **rate limiting** permite brute force e abuso
+- APIs antigas e não documentadas podem estar **acessíveis sem autenticação**
+
+### Como funciona na prática?
+
+```
+GET /api/users/1    → Retorna dados do usuário 1 ✅
+GET /api/users/2    → Retorna dados do usuário 2 ← BOLA! ❌
+GET /api/admin/users → Acesso admin sem auth ← BFLA! ❌
+```
+
+### Ferramentas
+
+| Ferramenta | O que faz |
+|:---|:---|
+| **Kiterunner** | Enumeração e fuzzing de APIs |
+| **Arjun** | Descobrir parâmetros ocultos |
+| **Nuclei** | Scan de vulnerabilidades com templates |
+| **Burp Suite** | Interceptação e manipulação de requests |
+
+---
+
 ## Instalação das Ferramentas
 
 ```bash

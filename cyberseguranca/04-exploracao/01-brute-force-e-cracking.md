@@ -2,6 +2,52 @@
 
 > Ferramentas para quebrar senhas, hashes e fazer força bruta em serviços.
 
+## 📚 O que é Exploração (Exploitation)?
+
+**Exploração** é o ato de **usar uma vulnerabilidade** para ganhar acesso não autorizado. É como encontrar uma tranca fraca e usar um grampo para abrir — você está explorando uma falha para entrar.
+
+### Por que isso é importante?
+
+- É o passo que **transforma vulnerabilidade em acesso real**
+- Sem exploração, você só tem teoria (não prova de conceito)
+- Permite testar **impacto real** da falha
+- Em pentest, é o que o cliente quer ver funcionando
+
+### Como funciona na prática?
+
+```
+Vulnerabilidade identificada (Módulo 3)
+        ↓
+Explorar a vulnerabilidade (este módulo)
+        ↓
+Ganhar acesso (shell, credenciais, dados)
+```
+
+### Tipos de exploração
+
+| Tipo | Como funciona | Ferramentas |
+|:---|:---|:---|
+| Brute Force | Testar senhas automaticamente | Hydra, Medusa |
+| Cracking | Quebrar hashes de senhas | John, Hashcat |
+| Exploit | Usar vulnerabilidade de código | Metasploit, pwntools |
+| Social Engineering | Enganar o humano | SET, GoPhish |
+
+### Brute Force vs Cracking
+
+| Brute Force | Cracking |
+|:---|:---|
+| Testa senhas em serviços | Quebrar hashes já coletados |
+| SSH, FTP, HTTP login | MD5, SHA256, NTLM |
+| Precisa de serviço ativo | Só precisa do hash |
+| Hydra, Medusa | John, Hashcat |
+
+### ⚠️ Ética e Legalidade
+
+> Exploração **sem autorização** é **crime** (Lei 12.737/2012). Use apenas em:
+> - CTFs (Capture The Flag)
+> - Labs de estudo (TryHackMe, HackTheBox)
+> - Pentest com contrato **por escrito**
+
 ---
 
 ## 🚀 Passo a Passo — Como fazer Brute Force e Cracking

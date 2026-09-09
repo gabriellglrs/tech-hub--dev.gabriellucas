@@ -4,6 +4,37 @@
 
 ---
 
+## 📚 O que é OSINT e Enumeração de Subdomínios?
+
+**OSINT** (Open Source Intelligence) é coletar informações de fontes públicas. **Subdomínios** são partes do domínio principal (api.empresa.com, mail.empresa.com) que podem revelar serviços escondidos.
+
+### Por que isso é importante?
+
+- Empresas escondem serviços em **subdomínios não documentados**
+- Emails de funcionários servem para **phishing direcionado**
+- Informações públicas podem revelar **stack tecnológico**
+- É o passo que separa um ataque genérico de um **direcionado**
+
+### O que você vai descobrir?
+
+| Tipo | O que revela | Como usar |
+|:---|:---|:---|
+| Subdomínios | APIs, painéis, VPNs | Acesso alternativo |
+| Emails | Funcionários reais | Phishing, brute force |
+| IPs | Onde hospeda | Escaneamento direto |
+| Tecnologias | Frameworks, CMS | Ataques específicos |
+
+### Ferramentas
+
+| Ferramenta | O que faz |
+|:---|:---|
+| **theHarvester** | Coleta emails e subdomínios |
+| **Subfinder** | Descobre subdomínios via DNS |
+| **Amass** | Enumeração passiva e ativa |
+| **Assetfinder** | Encontra assets relacionados |
+
+---
+
 ## 🚀 Passo a Passo — Pipeline de Recon com Go Tools
 
 Essas ferramentas são as mais modernas para reconhecimento automatizado. Vamos montar um pipeline completo.

@@ -2,6 +2,54 @@
 
 > Ferramentas para testar aplicações web: enumeração de diretórios, fuzzing, scan de vulnerabilidades e SQL Injection.
 
+## 📚 O que é Web Application Testing?
+
+**Web Application Testing** é testar sites e aplicações web para encontrar vulnerabilidades. É como verificar todas as portas e janelas de uma casa — procurando trancas fracas, janelas abertas, senhas fracas.
+
+### Por que isso é importante?
+
+- **80% dos ataques** hoje são em aplicações web
+- Sites são a "porta da frente" de qualquer empresa
+- Vulnerabilidades web podem dar acesso ao **banco de dados inteiro**
+- Ferramentas automatizadas facilitam o trabalho
+
+### Como funciona na prática?
+
+```
+Fase 1: Descobrir o que o site usa
+├── WhatWeb → CMS, framework, servidor
+├── Wafw00f → Firewall web (WAF)
+└── WPScan → Se for WordPress
+
+Fase 2: Mapear o site
+├── Gobuster → Diretórios ocultos (/admin, /backup)
+├── Nikto → Vulnerabilidades conhecidas
+└── ffuf → Parâmetros escondidos
+
+Fase 3: Testar vulnerabilidades
+├── SQLMap → SQL Injection
+├── XSS → Cross-Site Scripting
+└── Burp Suite → Proxy para interceptar requests
+```
+
+### Vulnerabilidades mais comuns em web
+
+| Vulnerabilidade | O que faz | Exemplo |
+|:---|:---|:---|
+| SQL Injection | Acessa o banco de dados | `' OR 1=1 --` |
+| XSS | Injeta JavaScript | `<script>alert(1)</script>` |
+| CSRF | Faz ações como o usuário | Transferência bancária |
+| LFI | Lê arquivos do servidor | `../../etc/passwd` |
+| IDOR | Acessa dados de outros | `/user/2` sendo user 1 |
+
+### Sites de prática
+
+| Plataforma | URL | Nível |
+|:---|:---|:---|
+| DVWA | dvwa.co.za | Iniciante |
+| PortSwigger | portswigger.net/web-security | Intermediário |
+| HackTheBox | hackthebox.com | Avançado |
+
 ---
 
 ## 🚀 Passo a Passo — Como testar uma Aplicação Web
