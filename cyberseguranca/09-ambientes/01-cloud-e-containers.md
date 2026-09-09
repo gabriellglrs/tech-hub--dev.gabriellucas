@@ -93,6 +93,47 @@ az ad sp list --all
 
 ---
 
+### Resumo da ordem — Por que essa sequência?
+
+Cloud/Containers segue: **configurar → escanear → auditar → monitorar**.
+
+```
+PASSO 1: Configurar CLI → Ter acesso às APIs cloud
+├── POR QUE: Ferramentas precisam de autenticação para acessar cloud
+├── O QUE FAZER: Instalar AWS CLI, configurar credenciais
+├── COMANDO: aws configure (preencher com Access Key)
+├── QUANDO AVANÇAR: Quando `aws s3 ls` funcionar
+└── DICAS: Use IAM roles, nunca hardcode chaves
+
+        ↓
+
+PASSO 2: Escanear containers → Encontrar vulnerabilidades
+├── POR QUE: Imagens Docker podem ter CVEs conhecidos
+├── O QUE FAZER: Usar Trivy ou Grype
+├── COMANDO: trivy image nginx:latest
+├── QUANDO AVANÇAR: Quando tiver relatório de vulnerabilidades
+└── DICAS: Atualize imagens regularmente
+
+        ↓
+
+PASSO 3: Auditar Kubernetes → Verificar configurações
+├── POR QUE: K8s mal configurado = porta de entrada
+├── O QUE FAZER: Usar kube-hunter, kube-bench
+├── COMANDO: kube-hunter --remote 10.0.0.0/24
+├── QUANDO AVANÇAR: Quando tiver relatório
+└── DICAS: Verifique RBAC, secrets, network policies
+
+        ↓
+
+PASSO 4: Monitorar → Detectar ameaças em runtime
+├── POR QUE: Vulnerabilidades em tempo real precisam de detecção
+├── O QUE FAZER: Falco para runtime, Wazuh para SIEM
+├── QUANDO PARAR: Quando tiver monitoramento ativo
+└── DICAS: Configure alertas para comportamentos anômalos
+```
+
+---
+
 ## 🧪 Labs Práticos
 
 ### TryHackMe
@@ -128,3 +169,24 @@ prowler aws --compliance cis_2.0_aws
 4. Documente o relatório de findings
 
 > **Dica:** Para labs de cloud, sempre use contas sandbox/gratuitas (AWS Free Tier, GCP Free Trial) e nunca use credenciais reais em Produção.
+
+---
+
+## Lab Prático
+
+### Exercício 1: Docker Security
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/dockersecurity
+- **O que vai praticar:** Scan de imagens, configuração segura
+- **Tempo estimado:** 45 min
+
+### Exercício 2: AWS pentesting
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/awsfundamentals
+- **O que vai praticar:** Enumeração AWS, configurações inseguras
+- **Tempo estimado:** 60 min
+
+### Dica de Estudo
+> Comece com Docker local antes de ir para cloud. Entenda como containers funcionam antes de tentar escapar.
+
+---

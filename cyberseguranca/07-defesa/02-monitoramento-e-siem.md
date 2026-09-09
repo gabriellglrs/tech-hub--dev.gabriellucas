@@ -140,6 +140,57 @@ docker run -d --name graylog -p 9000:9000 -p 12201:12201 graylog/graylog
 5. Resposta (isolamento, bloqueio, forense)
 ```
 
+### Resumo da ordem — Por que essa sequência?
+
+Monitoramento segue: **coletar → normalizar → correlacionar → alertar → responder**.
+
+```
+PASSO 1: Coletar logs → Reunir dados de todas as fontes
+├── POR QUE: Sem dados, não há detecção
+├── O QUE FAZER: Configurar syslog, agents, IDS para enviar logs
+├── FONTES: auth.log, suricata eve.json, nginx access.log
+├── QUANDO AVANÇAR: Quando tiver logs chegando
+└── DICAS: Use Filebeat/Fluentd para transportar logs
+
+        ↓
+
+PASSO 2: Normalizar → Padronizar formato
+├── POR QUE: Logs diferentes têm formatos diferentes
+├── O QUE FAZER: Usar parsers (Logstash, Fluentd)
+├── EXEMPLO: Extrair IP, timestamp, ação de cada log
+├── QUANDO AVANÇAR: Quando logs estiverem parseados
+└── DICAS: Campos comuns: src_ip, dst_ip, action, timestamp
+
+        ↓
+
+PASSO 3: Correlacionar → Encontrar padrões
+├── POR QUE: Eventos isolados podem ser normais, correlação revela ataques
+├── O QUE FAZER: Criar regras de correlação
+├── EXEMPLO: 10 tentativas SSH em 1 minuto = brute force
+├── QUANDO AVANÇAR: Quando tiver regras funcionando
+└── DICAS: Comece com regras simples (brute force, port scan)
+
+        ↓
+
+PASSO 4: Alertar → Notificar SOCs
+├── POR QUE: Correlação sem alerta é inútil
+├── O QUE FAZER: Configurar níveis de severidade
+├── SEVERIDADE: Info → Warning → Critical → Emergency
+├── QUANDO AVANÇAR: Quando alertas chegarem ao SOCs
+└── DICAS: Não gere alertas demais (alert fatigue)
+
+        ↓
+
+PASSO 5: Responder → Automatizar ação
+├── POR QUE: Resposta manual é lenta demais
+├── O QUE FAZER: Playbooks de resposta automática
+├── EXEMPLO: Bloquear IP no firewall ao detectar brute force
+├── QUANDO PARAR: Nunca — ciclo contínuo
+└── DICAS: Use Shuffle/SOAR para automação
+```
+
+---
+
 ## Lab Prático
 
 1. **TryHackMe — Suricata** — Configure regras de detecção, analise logs `eve.json` e identifique tráfego malicioso com Suricata.

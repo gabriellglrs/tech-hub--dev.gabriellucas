@@ -196,4 +196,74 @@ sudo oscap xccdf generate report results.xml > relatorio.html
 - **[ISO 27001 Toolkit](https://www.isms.online/iso-27001/)** — Templates e checklists
 - **[LGPD Guide](https://www.gov.br/anpd/)** — Portal oficial da ANPD
 
+### Resumo da ordem — Por que essa sequência?
+
+GRC segue: **identificar → classificar → proteger → monitorar → responder**.
+
+```
+PASSO 1: Inventário → Saber o que tem para proteger
+├── POR QUE: Não pode proteger o que não sabe que existe
+├── O QUE FAZER: Listar todos ativos (serviços, dados, usuários)
+├── FERRAMENTA: OpenSCAP para descoberta
+├── QUANDO AVANÇAR: Quando tiver inventário completo
+└── DICAS: Inclua dados sensíveis, não só infraestrutura
+
+        ↓
+
+PASSO 2: Classificar dados → Saber o que é crítico
+├── POR QUE: Nem tudo precisa do mesmo nível de proteção
+├── O QUE FAZER: Classificar por sensibilidade (público, interno, confidencial, secreto)
+├── REFERÊNCIA: LGPD define dados pessoais e sensíveis
+├── QUANDO AVANÇAR: Quando tiver classificação
+└── DICAS: Comece dados mais sensíveis
+
+        ↓
+
+PASSO 3: Auditar configurações → Encontrar falhas
+├── POR QUE: Configurações erradas são vulnerabilidades
+├── O QUE FAZER: Lynis para SO, OpenSCAP para compliance
+├── COMANDO: sudo lynis audit system
+├── QUANDO AVANÇAR: Quando tiver relatório
+└── DICAS: Compare com CIS Benchmark
+
+        ↓
+
+PASSO 4: Implementar controles → Corrigir falhas
+├── POR QUE: Auditoria sem correção é inútil
+├── O QUE FAZER: Aplicar controles ISO 27001, hardening
+├── QUANDO AVANÇAR: Quando implementar controles críticos
+└── DICAS: Documente cada controle implementado
+
+        ↓
+
+PASSO 5: Monitorar continuamente → Garantir conformidade
+├── POR QUE: Conformidade não é uma vez, é contínuo
+├── O QUE FAZER: Wazuh para monitoramento, relatórios periódicos
+├── QUANDO PARAR: Nunca — monitoramento é contínuo
+└── DICAS: Configure alertas para mudanças de configuração
+```
+
+---
+
 > **Dica:** Comece sempre pelo ativo crítico (dados sensíveis) e use a matriz de riscos para priorizar investimentos em segurança.
+
+---
+
+## Lab Prático
+
+### Exercício 1: GRC Fundamentals
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/grcfundamentals
+- **O que vai praticar:** Conceitos de governança, risco e compliance
+- **Tempo estimado:** 30 min
+
+### Exercício 2: ISO 27001 Implementation
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/iso27001
+- **O que vai praticar:** Declaração de Aplicabilidade, controles do Anexo A
+- **Tempo estimado:** 45 min
+
+### Dica de Estudo
+> Monte um ROPA fictício para uma empresa de e-commerce. Liste 10+ processamento de dados e identifique bases legais para cada um.
+
+---

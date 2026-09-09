@@ -87,6 +87,57 @@ bulk_extractor -o bulk_out captura.pcap
 - [ ] Log de quem acessou (data, hora, ação)
 - [ ] Cópia de trabalho, original preservado
 
+### Resumo da ordem — Por que essa sequência?
+
+Forense segue: **preservar → coletar → analisar → reportar**.
+
+```
+PASSO 1: Preservar evidências → Não alterar o estado original
+├── POR QUE: Evidências contaminadas são inadmissíveis
+├── O QUE FAZER: Fazer imagem bit-a-bit do disco/memória
+├── COMANDO: sudo dd if=/dev/sda of=disk.img bs=4M
+├── QUANDO AVANÇAR: Quando tiver imagem segura
+└── DICAS: Trabalhe sempre em cópia, nunca no original
+
+        ↓
+
+PASSO 2: Montar evidências → Acessar dados sem alterar
+├── POR QUE: Montar diretamente altera timestamps
+├── O QUE FAZER: Usar mount -o loop,ro (read-only) ou ewfmount
+├── COMANDO: sudo ewfmount evidence.E01 /mnt/evidence
+├── QUANDO AVANÇAR: Quando tiver acesso aos dados
+└── DICAS: Verifique integridade com hash: md5sum disk.img
+
+        ↓
+
+PASSO 3: Timeline → Criar linha do tempo
+├── POR QUE: Timeline revela sequência de eventos
+├── O QUE FAZER: Usar Plaso ou log2timeline
+├── COMANDO: log2timeline.py timeline.plaso disk.img
+├── QUANDO AVANÇAR: quando tiver timeline gerada
+└── DICAS: Foque em horários de atividade suspeita
+
+        ↓
+
+PASSO 4: Carregamento de memória → Analisar RAM
+├── POR QUE: Muitos dados ficam só na memória (senhas, chaves)
+├── O QUE FAZER: Usar Volatility3
+├── COMANDO: volatility3 -f mem.raw windows.pslist
+├── QUANDO AVANÇAR: Quando tiver lista de processos
+└── DICAS: Procure por processos estranhos, conexões de rede
+
+        ↓
+
+PASSO 5: Analisar malware → Entender o que foi encontrado
+├── POR QUE: Precisa saber se é malicioso e como funciona
+├── O QUE FAZER: Usar Ghidra (estático), REMnux/Cuckoo (dinâmico)
+├── COMANDO: yara -r rules/ suspicious_file
+├── QUANDO PARAR: Quando tiver relatório completo
+└── ÉTICA: Não execute malware em produção!
+```
+
+---
+
 ## Lab Prático
 
 1. **TryHackMe — Forensics: Basics** — Crie imagens forense com `dd`, analise com Autopsy/SleuthKit e recupere arquivos deletados.

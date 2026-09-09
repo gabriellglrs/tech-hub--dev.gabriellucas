@@ -57,15 +57,56 @@ proxychains4 firefox
 proxychains4 seu_comando
 ```
 
-### Resumo da ordem:
+### Resumo da ordem — Por que essa sequência?
+
+A configuração de anonimato segue a ordem: **serviço base → cliente → configuração → validação → uso**.
+
 ```
-1. sudo apt install tor          → instalar Tor
-2. sudo systemctl start tor      → iniciar Tor
-3. sudo apt install proxychains4 → instalar Proxychains
-4. sudo nano /etc/proxychains4.conf → configurar para usar Tor
-5. proxychains4 curl ifconfig.me    → testar se funciona
-6. proxychains4 nmap ...            → usar com ferramentas
+PASSO 1: Instalar Tor → Criar a rede de anonimato
+├── POR QUE: Tor é a base — ele roda como serviço e fornece o proxy SOCKS5
+├── O QUE PROCURAR: `systemctl status tor` deve mostrar "active (running)"
+├── COMANDO: sudo apt install -y tor && sudo systemctl start tor
+├── QUANDO AVANÇAR: Quando o Tor estiver rodando (porta 9050 aberta)
+└── SE DER ERRADO: Se não iniciar, verifique: sudo journalctl -u tor (logs de erro)
+
+        ↓
+
+PASSO 2: Instalar Proxychains → O cliente que força apps a usar Tor
+├── POR QUE: Nem todo app usa Tor sozinho — Proxychains intercepta as conexões
+├── O QUE PROCURAR: Comando `proxychains4` disponível no terminal
+├── COMANDO: sudo apt install -y proxychains4
+├── QUANDO AVANÇAR: Quando o comando proxychains4 existir
+└── SE DER ERRADO: Se não encontrar, tente: sudo apt update && sudo apt install proxychains4
+
+        ↓
+
+PASSO 3: Configurar Proxychains → Apontar para o Tor
+├── POR QUE: Proxychains precisa saber QUAL proxy usar (Tor roda em 127.0.0.1:9050)
+├── O QUE PROCURAR: Linha "socks5 127.0.0.1 9050" no final do /etc/proxychains4.conf
+├── COMANDO: sudo nano /etc/proxychains4.conf (mude para dynamic_chain + socks5 127.0.0.1 9050)
+├── QUANDO AVANÇAR: Quando o arquivo estiver configurado
+└── SE DER ERRADO: Se esquecer de mudar o tipo de chain, todos os proxies serão ignorados
+
+        ↓
+
+PASSO 4: Testar se funciona → Validar antes de usar
+├── POR QUE: Se não validar, pode achar que está anônimo mas não está
+├── O QUE PROCURAR: IP diferente do seu IP real
+├── COMANDO: proxychains4 curl ifconfig.me (deve mostrar IP do Tor)
+├── QUANDO AVANÇAR: Quando o IP mostrar diferente do original
+└── SE DER ERRADO: Se mostrar mesmo IP, verifique se Tor está rodando e se o config está correto
+
+        ↓
+
+PASSO 5: Usar com ferramentas → Aplicar o anonimato
+├── POR QUE: Agora que está validado, pode usar Nmap, Navegador, etc. de forma anônima
+├── O QUE PROCURAR: Ferramentas funcionando normalmente, mas com IP diferente
+├── COMANDO: proxychains4 nmap -sV -Pn -T2 target.com (-T2 é obrigatório com Tor)
+├── QUANDO AVANÇAR: Quando tiver resultados dos scans
+└── SE DER ERRADO: Se muito lento, use -T1 ou diminua threads: --max-rate 10
 ```
+
+**Dica:** Nem todas as ferramentas funcionam bem com Proxychains. Ferramentas que usam raw sockets (como部分 nmap) podem falhar.
 
 ---
 

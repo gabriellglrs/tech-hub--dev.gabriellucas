@@ -55,14 +55,56 @@ tshark -r capture.pcap -Y "http"
 tshark -r capture.pcap -Y "http.request.method == POST" -T fields -e http.file_data
 ```
 
-### Resumo da ordem:
+### Resumo da ordem — Por que essa sequência?
+
+A análise de rede segue a ordem: **capturar → filtrar → analisar → agir**.
+
 ```
-1. ip a              → descobrir interface
-2. tcpdump -i eth0   → capturar tudo
-3. tcpdump port 80   → filtrar só HTTP
-4. tcpdump -w file   → salvar em arquivo
-5. tshark -r file    → analisar com filtros
+PASSO 1: ip a → Descobrir sua interface de rede
+├── POR QUE: Precisa saber qual interface usar (eth0, wlan0, ens33)
+├── O QUE PROCURAR: IP da interface, status (UP/DOWN), nome
+├── COMANDO: ip a (mostra todas as interfaces)
+├── QUANDO AVANÇAR: Quando souber o nome da interface (ex: eth0)
+└── SE DER ERRADO: Se não tiver interface com IP, configure com dhclient ou ip addr add
+
+        ↓
+
+PASSO 2: tcpdump -i eth0 → Capturar tudo que passa na rede
+├── POR QUE: Para ver o tráfego, primeiro precisa capturar
+├── O QUE PROCURAR: Tráfego estranho, IPs desconhecidos, protocolos incomuns
+├── COMANDO: sudo tcpdump -i eth0 -nn (Ctrl+C para parar)
+├── QUANDO AVANÇAR: Quando quiser filtrar só o que interessa
+└── SE DER ERRADO: Se não capturar nada, verifique se a interface está UP: ip link set eth0 up
+
+        ↓
+
+PASSO 3: tcpdump port 80 → Filtrar só HTTP
+├── POR QUE: HTTP tem dados em texto plano (senhas, tokens)
+├── O QUE PROCURAR: Requisições GET/POST, cookies, credenciais
+├── COMANDO: sudo tcpdump -i eth0 -nn port 80
+├── QUANDO AVANÇAR: Quando quiser ver o conteúdo dos pacotes
+└── SE DER ERRADO: Se precisar de HTTPS, use port 443 (mas dados estarão criptografados)
+
+        ↓
+
+PASSO 4: tcpdump -w file → Salvar em arquivo para analisar depois
+├── POR QUE: Análise offline é mais completa e não perde dados
+├── O QUE PROCURAR: Arquivo .pcap para abrir no Wireshark
+├── COMANDO: sudo tcpdump -i eth0 -w capture.pcap
+├── QUANDO AVANÇAR: Quando tiver o arquivo salvo
+└── SE DER ERRADO: Se o arquivo estiver vazio, verifique permissões: sudo chmod 666 capture.pcap
+
+        ↓
+
+PASSO 5: tshark -r file → Analisar com filtros
+├── POR QUE: Filtros ajudam a encontrar dados específicos (senhas, URLs)
+├── O QUE PROCURAR: POST requests (envio de dados), cookies de sessão, tokens
+├── COMANDO: tshark -r capture.pcap -Y "http.request.method == POST"
+├── QUANDO AVANÇAR: Quando encontrar dados sensíveis ou padrões estranhos
+└── SE DER ERRADO: Se tshark não estiver instalado: sudo apt install tshark
 ```
+
+**Dica:** Para ver senhas em HTTP: `tshark -r capture.pcap -Y "http.request.method == POST" -T fields -e http.file_data`
 
 ---
 

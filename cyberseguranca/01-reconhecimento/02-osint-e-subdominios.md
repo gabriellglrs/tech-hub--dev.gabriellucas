@@ -59,13 +59,54 @@ cat live.txt   # veja quais estão de pé
 cat live.txt | nuclei -severity critical,high
 ```
 
-### Resumo da ordem:
+### Resumo da ordem — Por que essa sequência?
+
+O pipeline Go Tools segue a lógica: **descobrir → validar → explorar**. Cada ferramenta alimenta a próxima.
+
 ```
-1. sudo apt install golang-go     → instalar Go
-2. go install subfinder/nuclei/httpx → instalar ferramentas
-3. nuclei -update-templates       → atualizar templates
-4. subfinder | httpx | nuclei     → rodar pipeline
+PASSO 1: Instalar Go → Pré-requisito para todas as ferramentas
+├── POR QUE: Subfinder, Nuclei e httpx são escritos em Go e precisam dele para rodar
+├── O QUE PROCURAR: `go version` deve retornar uma versão instalada
+├── QUANDO AVANÇAR: Quando `go version` funcionar e ~/go/bin estiver no PATH
+└── SE DER ERRADO: Se "go: command not found", adicione: export PATH=$PATH:$(go env GOPATH)/bin
+
+        ↓
+
+PASSO 2: Instalar ferramentas (subfinder, nuclei, httpx)
+├── POR QUE: Cada ferramenta tem uma função específica no pipeline
+├── O QUE PROCURAR: Binários em ~/go/bin/ (subfinder, nuclei, httpx)
+├── QUANDO AVANÇAR: Quando os três comandos rodarem sem erro
+└── SE DER ERRADO: Se erro de compilação, verifique se o Go está atualizado: go get -u
+
+        ↓
+
+PASSO 3: Atualizar templates do Nuclei
+├── POR QUE: Templates desatualizados = vulnerabilidades novas não detectadas
+├── O QUE PROCURAR: Mensagem "Successfully updated" e contagem de templates
+├── COMANDO: nuclei -update-templates
+├── QUANDO AVANÇAR: Quando os templates estiverem atualizados
+└── SE DER ERRADO: Se falhar, verifique conexão com a internet e permissões de ~/.nuclei/
+
+        ↓
+
+PASSO 4: Rodar o pipeline (subfinder | httpx | nuclei)
+├── POR QUE: Subfinder descobre alvos, httpx valida quais estão ativos, nuclei scanea vulns
+├── O QUE PROCURAR: Subdomínios listados, URLs com status 200, vulnerabilidades encontradas
+├── COMANDO: subfinder -d target.com -silent | httpx -mc 200 -silent | nuclei -severity critical,high
+├── QUANDO AVANÇAR: Quando tiver resultados de vulnerabilidades
+└── SE DER ERRADO: Se vazio, tente sem -silent para ver erros, ou teste domínios diferentes
+
+        ↓
+
+PASSO 5: Separar etapas (para debug e análise)
+├── POR QUE: Rodar tudo junto esconde onde o problema está
+├── O QUE PROCURAR: Quantos subdomínios encontrou, quais estão vivos, quais têm vulns
+├── COMANDO: subfinder -d target.com -all -silent > subdomains.txt (depois analise cada arquivo)
+├── QUANDO AVANÇAR: Quando entender onde o pipeline falha
+└── SE DER ERRADO: Se subfinder não achar nada, verifique se o domínio existe: dig target.com
 ```
+
+**Dica:** Para ver erros, remova o `-silent` e rode cada etapa separadamente.
 
 ---
 

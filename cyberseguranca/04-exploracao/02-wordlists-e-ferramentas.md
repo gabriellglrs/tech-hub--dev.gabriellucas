@@ -267,8 +267,55 @@ ffuf -u http://target.com/page?id=FUZZ -w /usr/share/seclists/Fuzzing/SQLi/Gener
 - **O que vai praticar:** Uso de wordlists de credenciais padrão, enumeração de usuários e exploração de credenciais default
 - **Tempo estimado:** 60 minutos
 
-### Dica de Estudo
-> Crie um workflow: comece com `common.txt` para scan rápido, depois use listas maiores se necessário. Para brute force de senhas, sempre comece pelo `Top1000.txt`. Documente quais wordlists funcionam melhor para cada tipo de alvo.
+### Resumo da ordem — Por que essa sequência?
+
+Wordlists seguem a ordem: **identificar → escolher menor → escalar se necessário**.
+
+```
+PASSO 1: Identificar o tipo de tarefa → Qual wordlist usar
+├── POR QUE: Cada tarefa (diretórios, subdomínios, senhas) tem lista ideal
+├── O QUE FAZER: Mapear a tarefa antes de escolher wordlist
+├── REFERÊNCIA: Tabela no início do arquivo (Tarefa → Wordlist → Comando)
+├── QUANDO AVANÇAR: Quando souber qual lista usar
+└── DICAS: Para web use Discovery/, para DNS use Discovery/DNS/, para senhas use Passwords/
+
+        ↓
+
+PASSO 2: Começar sempre pela lista menor → Rápido e eficiente
+├── POR QUE: Listas pequenas são rápidas e já cobrem 80% dos casos
+├── O QUE FAZER: Usar common.txt (web) ou Top1000.txt (senhas)
+├── COMANDO: gobuster dir -u http://target -w /usr/share/seclists/Discovery/Web-Content/common.txt
+├── QUANDO AVANÇAR: Se não encontrar nada, usar lista maior
+└── ERROS COMUNS: Pular direto para lista grande é desperdício de tempo
+
+        ↓
+
+PASSO 3: Escalar para lista maior → Se a menor não funcionou
+├── POR QUE: Listas maiores cobrem mais opções, mas são lentas
+├── O QUE FAZER: Usar directory-list-2.3-medium.txt ou rockyou.txt
+├── COMANDO: gobuster dir -u http://target -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt -t 100
+├── QUANDO AVANÇAR: Quando encontrar resultados ou esgotar opções
+└── DICAS: Ajuste threads (-t) para equilibrar velocidade e estabilidade
+
+        ↓
+
+PASSO 4: Wordlists customizadas → Para cenários específicos
+├── POR QUE: Nem sempre listas genéricas funcionam (ex: senhas em português)
+├── O QUE FAZER: Usar Crunch para gerar padrões ou CeWL para sites
+├── COMANDO: crunch 8 8 -t @@@@2023 -o wordlist.txt
+├── QUANDO AVANÇAR: Quando listas prontas falharem
+└── DICAS: CeWL gera wordlists a partir de sites do alvo
+
+        ↓
+
+PASSO 5: Integrar com ferramentas → Usar wordlists no ataque
+├── POR QUE: Wordlist sozinha não faz nada, precisa de ferramenta
+├── O QUE FAZER: Usar com Gobuster, Hydra, FFUF, John, Hashcat
+├── REFERÊNCIA: Tabela de integração no início do arquivo
+├── QUANDO PARAR: Quando encontrar o que procura
+└── ÉTICA: Use apenas em alvos autorizados
+
+IMPORTANTE: A wordlist certa na ferramenta certa = resultado rápido!
 
 ---
 

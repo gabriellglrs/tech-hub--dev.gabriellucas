@@ -71,6 +71,62 @@ gef> checksec
 
 ## Lab Prático
 
+### Resumo da ordem — Por que essa sequência?
+
+Reversing segue: **analisar → entender → modificar**.
+
+```
+PASSO 1: Identificar o binário → Saber o que está analisando
+├── POR QUE: Tipo de binário define quais ferramentas usar
+├── O QUE FAZER: file binário, checksec binário
+├── COMANDO: file ./programa && checksec --file=./programa
+├── O QUE PROCURAR: ELF/PE (executável), arquitetura (x86/x64), proteções (NX, PIE)
+├── QUANDO AVANÇAR: Quando souber o tipo e arquitetura
+└── DICAS: Se tiver NX, não pode executar shellcode na stack
+
+        ↓
+
+PASSO 2: Descompilar → Ver código fonte aproximado
+├── POR QUE: Código fonte é mais fácil de entender que assembly
+├── O QUE FAZER: Usar Ghidra ou radare2 para decompilar
+├── FERRAMENTA: ghidra (GUI) ou r2 -A binário (terminal)
+├── O QUE PROCURAR: Funções principais, strings, chamadas de sistema
+├── QUANDO AVANÇAR: Quando entender a lógica do programa
+└── DICAS: Procure por "main", "login", "check", "password"
+
+        ↓
+
+PASSO 3: Analisar assembly → Entender como funciona por baixo
+├── POR QUE: Decompilador nem sempre mostra tudo, assembly é preciso
+├── O QUE FAZER: Usar GDB/GEF ou radare2 para debugar
+├── COMANDO: gdb ./programa (dentro: info functions, disassemble main)
+├── O QUE PROCURAR: Chamadas de sistema, comparações, loops
+├── QUANDO AVANÇAR: Quando encontrar vulnerabilidade (buffer overflow, format string)
+└── DICAS: breakpoints em funções de verificação
+
+        ↓
+
+PASSO 4: Identificar vulnerabilidade → Achar o bug
+├── POR QUE: Precisa saber O QUE explorar antes de criar exploit
+├── TIPOS COMUNS: Buffer overflow, format string, use-after-free
+├── O QUE PROCURAR: strcpy, sprintf, gets (overflow), %x (format string)
+├── QUANDO AVANÇAR: Quando tiver vulnerabilidade confirmada
+└── DICAS: Fuze para encontrar input que causa crash
+
+        ↓
+
+PASSO 5: Criar exploit → Explorar a vulnerabilidade
+├── POR QUE: O objetivo final é ganhar controle do programa
+├── O QUE FAZER: Sobrescrever return address ou controlar fluxo
+├── FERRAMENTAS: pwntools (Python), ropper (ROP gadgets)
+├── QUANDO PARAR: Quando conseguir executar comando arbitrário
+└── ÉTICA: Só teste em binários que você tem autorização!
+```
+
+---
+
+**Labs:**
+
 1. **TryHackMe — Reversing: Basics** — Pratique triagem com `strings`, `file`, `checksec` e disassembly básico no radare2 em binários CTF.
    - https://tryhackme.com/room/reversingasics
 2. **TryHackMe — Reverse Engineering: Malware** — Decompile binários no Ghidra, identifique funções perigosas e reconstrua a lógica do programa.

@@ -316,3 +316,58 @@ medusa -h target.com -u system -P /usr/share/wordlists/rockyou.txt -M oracle
 ---
 
 **Próximo:** [02-injecao-e-exfiltracao.md](02-injecao-e-exfiltracao.md)
+
+---
+
+### Resumo da ordem — Por que essa sequência?
+
+Database Security segue: **escanar → identificar → conectar → explorar**.
+
+```
+PASSO 1: Scan de portas → Encontrar bancos expostos
+├── POR QUE: Bancos de dados não devem estar expostos na internet
+├── O QUE FAZER: Usar nmap para escanear portas padrão de bancos
+├── COMANDO: nmap -sV -p 3306,5432,27017,6379,1433,1521 target.com
+├── QUANDO AVANÇAR: Quando tiver lista de portas abertas com serviços
+└── SE DER ERRADO: Se não encontrar portas, tente scan completo (-p-)
+
+        ↓
+
+PASSO 2: Identificar tipo de banco → Saber qual cliente usar
+├── POR QUE: Cada banco tem cliente e comandos diferentes
+├── O QUE FAZER: Verificar versão e tipo do serviço
+├── COMANDO: nmap -sV -p PORTA --script mysql-info target.com
+├── QUANDO AVANÇAR: Quando souber o tipo (MySQL, PostgreSQL, Mongo, Redis)
+└── DICAS: Anote a versão — pode ter CVEs conhecidas
+
+        ↓
+
+PASSO 3: Brute force → Testar credenciais padrão
+├── POR QUE: Muitos bancos ficam com senhas padrão ou fracas
+├── O QUE FAZER: Usar hydra ou medusa com wordlists
+├── COMANDO: hydra -l root -P /usr/share/wordlists/rockyou.txt target.com mysql
+├── QUANDO AVANÇAR: Quando encontrar credenciais válidas
+└── SE DER ERRADO: Se bloquear, tente com medusa (paralelo) ou nmap scripts
+
+        ↓
+
+PASSO 4: Enumerar dados → Listar bancos, tabelas, colunas
+├── POR QUE: Após acesso, precisa saber o que tem價值
+├── O QUE FAZER: Usar comandos nativos do banco
+├── COMANDO: mysql -h target -u root -p -e "SHOW DATABASES;"
+├── QUANDO AVANÇAR: Quando tiver lista de tabelas e colunas
+└── DICAS: Foque em tabelas com dados sensíveis (users, orders, payments)
+
+        ↓
+
+PASSO 5: Verificar permissões → Testar escalada
+├── POR QUE: Usuário pode ter permissões além do necessário
+├── O QUE FAZER: Testar leitura/escrita de arquivos, criação de usuários
+├── COMANDO: mysql -h target -u root -p -e "SHOW GRANTS;"
+├── QUANDO AVANÇAR: Quando souber o nível de acesso
+└── SE DER ERRADO: Se tiver FILE privilege, tente ler /etc/passwd ou escrever webshell
+```
+
+---
+
+**Próximo:** [02-injecao-e-exfiltracao.md](02-injecao-e-exfiltracao.md)

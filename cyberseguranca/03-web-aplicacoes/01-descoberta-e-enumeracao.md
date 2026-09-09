@@ -67,17 +67,83 @@ sqlmap -u "http://192.168.1.100/page?id=1" -D nomebanco --tables --batch
 sqlmap -u "http://192.168.1.100/page?id=1" -D nomebanco -T tabela --dump --batch
 ```
 
-### Resumo da ordem:
+### Resumo da ordem — Por que essa sequência?
+
+Teste web segue a ordem: **descobrir → mapear → testar → explorar**.
+
 ```
-1. whatweb   → descobrir tecnologias (CMS, framework)
-2. wafw00f   → verificar se tem WAF
-3. wpscan    → se for WordPress, scan específico
-4. gobuster  → descobrir diretórios e arquivos
-5. nikto     → scan de vulnerabilidades
-6. ffuf      → fuzzing de parâmetros
-7. sqlmap    → testar SQL Injection
-8. sqlmap --dbs → explorar se encontrou SQLi
+PASSO 1: whatweb → Descobrir tecnologias do site
+├── POR QUE: Saber o CMS/framework define quais ferramentas usar
+├── O QUE PROCURAR: WordPress, Joomla, PHP, Apache, Nginx, Laravel
+├── COMANDO: whatweb http://target.com
+├── QUANDO AVANÇAR: Quando souber o CMS/framework
+└── SE DER ERRADO: Se não detectar nada, use -v (verbose): whatweb -v http://target.com
+
+        ↓
+
+PASSO 2: wafw00f → Verificar se tem WAF (firewall web)
+├── POR QUE: Se tem WAF, seus ataques podem ser bloqueados
+├── O QUE PROCURAR: Qual WAF (Cloudflare, Akamai, ModSecurity)
+├── COMANDO: wafw00f http://target.com
+├── QUANDO AVANÇAR: Independentemente do resultado (com ou sem WAF)
+└── SE DER ERRADO: Se tiver WAF, use: proxychains4 + rate limit mais baixo
+
+        ↓
+
+PASSO 3: wpscan → Se for WordPress, scan específico
+├── POR QUE: WordPress tem vulnerabilidades específicas (plugins, temas)
+├── O QUE PROCURAR: Plugins desatualizados, temas vulneráveis, usuários
+├── COMANDO: wpscan --url http://target.com -e ap,at,u
+├── QUANDO AVANÇAR: Quando tiver lista de plugins/temas
+└── SE DER ERRADO: Se não for WordPress, pule este passo
+
+        ↓
+
+PASSO 4: gobuster → Descobrir diretórios ocultos
+├── POR QUE: Pastas como /admin, /backup, /config podem ter dados sensíveis
+├── O QUE PROCURAR: Status 200 (encontrado), 301/302 (redirecionamento), 403 (proibido)
+├── COMANDO: gobuster dir -u http://target.com -w /usr/share/seclists/Discovery/Web-Content/common.txt
+├── QUANDO AVANÇAR: Quando tiver lista de diretórios encontrados
+└── SE DER ERRADO: Se retornar 200 para tudo, use -b 404 ou --wildcard
+
+        ↓
+
+PASSO 5: nikto → Scan geral de vulnerabilidades
+├── POR QUE: Nikto detecta muitas coisas de uma vez (arquivos expostos, headers faltando)
+├── O QUE PROCURAR: .git exposto, .env visível, headers de segurança faltando
+├── COMANDO: nikto -h http://target.com
+├── QUANDO AVANÇAR: Quando tiver lista de vulnerabilidades
+└── SE DER ERRADO: Se demorar muito, use -Tuning 123bde (só testes específicos)
+
+        ↓
+
+PASSO 6: ffuf → Fuzzing de parâmetros e endpoints
+├── POR QUE: Parâmetros escondidos podem ter SQL injection ou outros bugs
+├── O QUE PROCURAR: Parâmetros como ?id=, ?search=, ?file=
+├── COMANDO: ffuf -u "http://target.com/page?id=FUZZ" -w burp-parameter-names.txt
+├── QUANDO AVANÇAR: Quando encontrar parâmetros funcionais
+└── SE DER ERRADO: Se não encontrar nada, tente wordlists maiores
+
+        ↓
+
+PASSO 7: sqlmap → Testar SQL Injection
+├── POR QUE: SQLi permite acessar banco de dados inteiro
+├── O QUE PROCURAR: Confirmação de injeção, tipos deSQL, bancos de dados
+├── COMANDO: sqlmap -u "http://target.com/page?id=1" --batch
+├── QUANDO AVANÇAR: Se encontrar SQLi, use --dbs para listar bancos
+└── SE DER ERRADO: Se não encontrar, teste com --level=5 --risk=3
+
+        ↓
+
+PASSO 8: sqlmap --dbs → Explorar se encontrou SQLi
+├── POR QUE: O objetivo final é extrair dados ou ganhar acesso
+├── O QUE PROCURAR: Bancos de dados, tabelas, dados sensíveis
+├── COMANDO: sqlmap -u "http://target.com/page?id=1" --dbs --batch
+├── QUANDO PARAR: Quando tiver acesso aos dados desejados
+└── ÉTICA: Só faça em alvos autorizados!
 ```
+
+**Dica:** Sempre comece com wordlists pequenas (common.txt) e vá aumentando se não encontrar nada.
 
 ---
 

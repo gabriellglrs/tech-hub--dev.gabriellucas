@@ -151,4 +151,57 @@ curl -b "session=abc123" http://target.com/api/users
 
 ---
 
+---
+
+### Resumo da ordem — Por que essa sequência?
+
+API Security segue: **documentar → mapear → autenticar → testar**.
+
+```
+PASSO 1: Documentação → Encontrar Swagger/OpenAPI
+├── POR QUE: Documentação revela todos os endpoints disponíveis
+├── O QUE FAZER: Acessar /swagger.json, /api-docs, /openapi.json
+├── COMANDO: curl -s http://target.com/swagger.json | jq .
+├── QUANDO AVANÇAR: Quando tiver lista de endpoints
+└── SE DER ERRADO: Se não existir, use Arjun/Kiterunner para descobrir
+
+        ↓
+
+PASSO 2: Mapear endpoints → Listar todos os caminhos
+├── POR QUE: Endpoints não documentados podem ter bugs
+├── O QUE FAZER: Usar Kiterunner ou ffuf
+├── COMANDO: kr scan http://target.com/api/ -w routes-large.kite
+├── QUANDO AVANÇAR: Quando tiver lista completa
+└── DICAS: Teste todos os métodos HTTP (GET, POST, PUT, DELETE)
+
+        ↓
+
+PASSO 3: Analisar autenticação → Ver como protege
+├── POR QUE: APIs sem auth = dados expostos
+├── O QUE FAZER: Testar sem token, com token inválido, com token de outro user
+├── COMANDO: curl http://target.com/api/users (sem header)
+├── QUANDO AVANÇAR: Quando entender o mecanismo de auth
+└── SE DER ERRADO: Se retornar 401, tente bypass com JWT manipulation
+
+        ↓
+
+PASSO 4: Testar BOLA → Acessar recursos de outros usuários
+├── POR QUE: BOLA é a vulnerabilidade #1 em APIs
+├── O QUE FAZER: Alterar IDs em endpoints que retornam dados
+├── COMANDO: curl http://target.com/api/users/2 (sendo user 1)
+├── QUANDO AVANÇAR: Se retornar dados de outro user = BOLA encontrado
+└── DICAS: Teste com UUIDs, IDs negativos, 0
+
+        ↓
+
+PASSO 5: Testar rate limiting → Verificar se bloqueia tentativas
+├── POR QUE: APIs sensíveis devem limitar tentativas
+├── O QUE FAZER: Enviar 100+ requests rápidas
+├── COMANDO: for i in $(seq 1 100); do curl -s -o /dev/null -w "%{http_code}\n" http://target.com/api/login; done
+├── QUANDO PARAR: Quando tiver resposta de todos os testes
+└── SE DER ERRADO: Se não bloquear = vulnerabilidade
+```
+
+---
+
 **Próximo:** [02-teste-de-vulnerabilidades.md](02-teste-de-vulnerabilidades.md)

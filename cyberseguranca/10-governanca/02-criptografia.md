@@ -138,4 +138,67 @@ openssl s_client -connect localhost:443 -cert cert.pem -key key.pem
 - **[OpenSSL Cookbook](https://www.feistyduck.com/books/openssl-cookbook/)** — Referência completa
 - **[Hashcat Examples](https://hashcat.net/wiki/doku.php?id=example_hashes)** — Tipos de hash e comandos
 
+### Resumo da ordem — Por que essa sequência?
+
+Criptografia segue: **entender conceitos → escolher algoritmo → implementar → testar**.
+
+```
+PASSO 1: Entender conceitos → Base teórica
+├── POR QUE: Criptografia errada é pior que sem criptografia
+├── O QUE FAZER: Estudar simétrica, assimétrica, hash, TLS
+├── REFERÊNCIA: NIST SP 800-57, OWASP Cryptographic Failures
+├── QUANDO AVANÇAR: Quando souber diferença entre os tipos
+└── DICAS: Nunca invente criptografia, use padrões
+
+        ↓
+
+PASSO 2: Escolher algoritmo → Padrão seguro
+├── POR QUE: Algoritmos fracos são quebrados facilmente
+├── O QUE FAZER: AES-GCM (simétrica), RSA 2048+/Ed25519 (assimétrica), SHA-256 (hash)
+├── EVITE: DES, 3DES, RC4, MD5, SHA1, RSA 1024
+├── QUANDO AVANÇAR: Quando escolher algoritmos adequados
+└── DICAS: Para senhas use Argon2/bcrypt, nunca MD5
+
+        ↓
+
+PASSO 3: Implementar → Usar bibliotecas testadas
+├── POR QUE: Implementação manual gera vulnerabilidades
+├── O QUE FAZER: Usar OpenSSL, libsodium, GPG
+├── COMANDO: openssl enc -aes-256-gcm -in arquivo.txt -out arquivo.enc
+├── QUANDO AVANÇAR: Quando tiver implementação funcional
+└── DICAS: Nunca implemente do zero, use bibliotecas
+
+        ↓
+
+PASSO 4: Testar → Validar segurança
+├── POR QUE: Implementação pode ter flaws sutis
+├── O QUE FAZER: Testar com known-answer tests, fuzzing
+├── COMANDO: openssl s_client -connect localhost:443
+├── QUANDO PARAR: Quando tiver confiança na implementação
+└── DICAS: Teste com ferramentas como testssl.sh
+```
+
+---
+
 > **Dica:** Nunca implemente criptografia do zero. Use bibliotecas battle-tested (OpenSSL, libsodium) e algoritmos modernos (AES-GCM, Ed25519, Argon2).
+
+---
+
+## Lab Prático
+
+### Exercício 1: Cryptopals
+- **Plataforma:** Cryptopals
+- **Link:** https://cryptopals.com/
+- **O que vai praticar:** Desafios práticos de criptografia (set 1-2)
+- **Tempo estimado:** 120 min
+
+### Exercício 2: Hashcat cracking
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/hashcrack
+- **O que vai praticar:** Quebra de hashes com hashcat e john
+- **Tempo estimado:** 45 min
+
+### Dica de Estudo
+> Comece pelos Cryptopals Set 1. Eles ensinam os fundamentos de criptografia de forma prática — XOR, ECB, CBC, etc.
+
+---

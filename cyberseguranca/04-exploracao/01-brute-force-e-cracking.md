@@ -46,13 +46,60 @@ hashcat -m 0 hash.txt /usr/share/seclists/Passwords/Top1000.txt
 hashcat -m 0 --show hash.txt
 ```
 
-### Resumo da ordem:
+### Resumo da ordem — Por que essa sequência?
+
+Exploração segue a ordem: **preparar → identificar → quebrar → usar**.
+
 ```
-1. Preparar wordlists → onde estão as listas
-2. hydra             → brute force em serviços (SSH, FTP, HTTP)
-3. hashid            → identificar tipo de hash
-4. john              → crackear hashes (mais formatos)
-5. hashcat           → crackear com GPU (mais rápido)
+PASSO 1: Preparar wordlists → Ter listas de senhas prontas
+├── POR QUE: Brute force só funciona com boas wordlists
+├── O QUE FAZER: Instalar SecLists (maior coleção de wordlists)
+├── COMANDO: sudo apt install seclists
+├── ONDE FICA: /usr/share/seclists/
+├── QUANDO AVANÇAR: Quando tiver wordlists instaladas
+└── DICAS: Comece com Top10000.txt, depois vá para listas maiores
+
+        ↓
+
+PASSO 2: hydra → Brute force em serviços (SSH, FTP, HTTP)
+├── POR QUE: Hydra testa senhas automaticamente em serviços
+├── O QUE PROCURAR: Senha encontrada, resposta "valid password"
+├── COMANDO: hydra -l admin -P passwords.txt ssh://target.com
+├── QUANDO AVANÇAR: Se encontrar senha, use ela para logar
+└── SE DER ERRADO: Se muito lento, reduza threads: -t 4
+
+        ↓
+
+PASSO 3: hashid → Identificar tipo de hash
+├── POR QUE: Cada tipo de hash tem forma diferente de crackear
+├── O QUE PROCURAR: Nome do hash (MD5, SHA256, NTLM, bcrypt)
+├── COMANDO: hashid '5f4dcc3b5aa765d61d8327deb882cf99'
+├── QUANDO AVANÇAR: Quando souber o tipo de hash
+└── SE DER ERRADO: Se não identificar, tente: hash-identifier
+
+        ↓
+
+PASSO 4: john → Crackear hashes (aceita vários formatos)
+├── POR QUE: John é o mais compatível com diferentes formatos
+├── O QUE PROCURAR: Hash crackeado (aparece ao lado do hash)
+├── COMANDO: john --wordlist=/usr/share/seclists/Passwords/Top10000.txt hash.txt
+├── QUANDO AVANÇAR: Se john não crackear, tente hashcat
+└── SE DER ERRADO: Se não reconhecer o formato, use: --format=raw-md5
+
+        ↓
+
+PASSO 5: hashcat → Crackear com GPU (mais rápido)
+├── POR QUE: GPU é 100x mais rápida que CPU para hashes
+├── O QUE PROCURAR: Hash crackeado no output
+├── COMANDO: hashcat -m 0 hash.txt wordlist.txt (-m 0 = MD5)
+├── QUANDO PARAR: Quando crackear ou esgotar wordlist
+└── SE DER ERRADO: Se não tiver GPU, use john (CPU)
+
+IMPORTANTE: Só crackee hashes que você tem autorização!
+
+---
+
+**Dica:** Para HTTP POST form (login de site): hydra -l admin -P passwords.txt http-post-form "/login:user=^USER^&pass=^PASS^:F=incorrect"
 ```
 
 ---

@@ -352,3 +352,58 @@ Permissions-Policy: camera=(), microphone=(), geolocation=()
 ---
 
 **Anterior:** [01-xss-e-csrf.md](01-xss-e-csrf.md)
+
+---
+
+### Resumo da ordem — Por que essa sequência?
+
+Segurança de Aplicações segue: **analisar headers → testar CSP → testar CORS → testar Clickjacking**.
+
+```
+PASSO 1: Analisar headers → Verificar proteções HTTP
+├── POR QUE: Headers são a primeira linha de defesa do frontend
+├── O QUE FAZER: Listar todos os headers de segurança
+├── COMANDO: curl -I http://target.com/
+├── QUANDO AVANÇAR: Quando tiver lista completa de headers
+└── SE DER ERRADO: Se faltarem headers = proteções ausentes = oportunidade
+
+        ↓
+
+PASSO 2: Testar CSP → Verificar Content Security Policy
+├── POR QUE: CSP previne XSS — mas configurações ruins podem ser bypassadas
+├── O QUE FAZER: Verificar diretivas, testar 'unsafe-inline' e 'unsafe-eval'
+├── COMANDO: curl -I http://target.com/ | grep -i content-security-policy
+├── QUANDO AVANÇAR: Quando entender o CSP configurado
+└── DICAS: Se não tem CSP = XSS mais fácil. Se tem 'unsafe-inline' = bypass possível
+
+        ↓
+
+PASSO 3: Testar CORS → Verificar Cross-Origin Resource Sharing
+├── POR QUE: CORS mal configurado permite roubar dados cross-origin
+├── O QUE FAZER: Enviar Origin diferente e verificar se é refletido
+├── COMANDO: curl -H "Origin: http://attacker.com" -I http://target.com/api/data
+├── QUANDO AVANÇAR: Se Access-Control-Allow-Origin refletir sua origin
+└── SE DER ERRADO: Se bloquear, tente subdomínio, null, ou prefixo/sufixo
+
+        ↓
+
+PASSO 4: Testar Clickjacking → Verificar se pode embeber a página
+├── POR QUE: Clickjacking engana o usuário para clicar em algo invisível
+├── O QUE FAZER: Verificar X-Frame-Options e CSP frame-ancestors
+├── COMANDO: curl -I http://target.com/ | grep -i "x-frame-options\|frame-ancestors"
+├── QUANDO AVANÇAR: Se não retornar proteção = Clickjacking possível
+└── DICAS: Teste em páginas de ação (transferência, configurações)
+
+        ↓
+
+PASSO 5: Verificar cookies → Analisar flags de segurança
+├── POR QUE: Cookies sem HttpOnly/Secure/SameSite = vulnerabilidades
+├── O QUE FAZER: Verificar todas as flags dos cookies
+├── COMANDO: curl -I http://target.com/ | grep -i set-cookie
+├── QUANDO AVANÇAR: Quando tiver análise completa dos cookies
+└── SE DER ERRADO: Se faltar HttpOnly = XSS pode roubar sessão
+```
+
+---
+
+**Anterior:** [01-xss-e-csrf.md](01-xss-e-csrf.md)

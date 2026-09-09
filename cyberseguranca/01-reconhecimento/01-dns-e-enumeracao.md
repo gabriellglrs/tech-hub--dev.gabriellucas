@@ -62,15 +62,64 @@ masscan 192.168.1.0/24 -p 80,443,22 --rate=5000
 nmap -sV -sC 192.168.1.10  # substitua pelo IP encontrado
 ```
 
-### Resumo da ordem:
+### Resumo da ordem — Por que essa sequência?
+
+O reconhecimento segue uma ordem lógica: **do mais amplo para o mais específico**. Cada passo depende do anterior.
+
 ```
-1. whois        → descobrir dono, name servers
-2. dig/dnsrecon → descobrir IPs, MX, NS
-3. theharvester → coletar emails, subdomínios
-4. ping         → confirmar que está no ar
-5. nmap         → descobrir portas e serviços
-6. nmap -A      → detalhes completos
+PASSO 1: whois → Descobrir quem é o dono do domínio
+├── POR QUE: Antes de atacar, você precisa saber quem é o alvo
+├── O QUE PROCURAR: Name servers, bloco de IPs, registrar, data de criação
+├── QUANDO AVANÇAR: Quando souber os name servers e bloco de IP
+└── SE DER ERRADO: Se não retornar nada, o domínio pode ser novo ou usar privacy protection
+
+        ↓
+
+PASSO 2: dig → Descobrir registros DNS (onde o site aponta)
+├── POR QUE: Precisa saber o IP real do servidor antes de escanear
+├── O QUE PROCURAR: Registro A (IP), MX (email), NS (name servers)
+├── COMANDO: dig +short example.com (só o IP, sem enrolação)
+├── QUANDO AVANÇAR: Quando tiver o IP do servidor
+└── SE DER ERRADO: Se não resolver, teste com dig @8.8.8.8 example.com (DNS público)
+
+        ↓
+
+PASSO 3: theharvester → Coletar emails e subdomínios
+├── POR QUE: Emails servem para phishing, subdomínios revelam serviços ocultos
+├── O QUE PROCURAR: Emails @empresa.com, subdomínios (api., admin., vpn.)
+├── COMANDO: theHarvester -d example.com -b all
+├── QUANDO AVANÇAR: Quando tiver lista de subdomínios e emails
+└── SE DER ERRADO: Tente fontes específicas: -b google, -b linkedin
+
+        ↓
+
+PASSO 4: ping → Confirmar que o servidor está no ar
+├── POR QUE: Não adianta escanear um servidor offline
+├── O QUE PROCURAR: Tempo de resposta (latência), pacotes perdidos
+├── COMANDO: ping -c 4 example.com
+├── QUANDO AVANÇAR: Quando receber respostas (mesmo que 1 de 4)
+└── SE DER ERRADO: Se bloquear ping, use nmap com -Pn (ignora ping)
+
+        ↓
+
+PASSO 5: nmap básico → Descobrir portas abertas e serviços
+├── POR QUE: Portas abertas = possíveis pontos de entrada
+├── O QUE PROCURAR: Portas 22(SSH), 80(HTTP), 443(HTTPS), 445(SMB), 3389(RDP)
+├── COMANDO: nmap -sV -sC IP (detecta versão + scripts padrão)
+├── QUANDO AVANÇAR: Quando souber quais portas estão abertas
+└── SE DER ERRADO: Se muito lento, use -T4 (mais rápido) ou -Pn (ignora ping)
+
+        ↓
+
+PASSO 6: nmap -A → Detalhes completos (versão exata, OS, scripts)
+├── POR QUE: Versão do serviço = vulnerabilidades conhecidas
+├── O QUE PROCURAR: Versão exata (Apache 2.4.49 = vulnerável!), OS detectado, scripts revelaram info
+├── COMANDO: nmap -A -p- -T4 IP (-A = tudo, -p- = todas as portas)
+├── QUANDO AVANÇAR: Quando tiver versões de todos os serviços
+└── SE DER ERRADO: Se -p- demorar muito, escaneie só portas comuns: -p 21,22,25,53,80,443,445,3389
 ```
+
+**Dica:** Salve os resultados em arquivo: `nmap -sV -sC IP -oN recon.txt` para consultar depois.
 
 ---
 

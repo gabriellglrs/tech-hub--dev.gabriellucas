@@ -136,6 +136,72 @@ sudo ufw logging on
 sudo dmesg | grep -i ufw
 ```
 
+### Resumo da ordem — Por que essa sequência?
+
+Defesa segue a ordem: **auditar → endurecer → filtrar → monitorar**.
+
+```
+PASSO 1: Lynis → Auditar o sistema atual
+├── POR QUE: Antes de corrigir, precisa saber o que está errado
+├── O QUE PROCURAR: Score baixo,Alertas de hardening, configuraçõesinseguras
+├── COMANDO: sudo lynis audit system
+├── QUANDO AVANÇAR: Quando tiver relatório completo
+└── DICAS: Salve o relatório: sudo lynis audit system --logfile /tmp/lynis.log
+
+        ↓
+
+PASSO 2: CIS Benchmark → Aplicar padrões de segurança
+├── POR QUE: CIS é o padrão mundial de hardening
+├── O QUE FAZER: Seguir recomendações do CIS para seu SO
+├── FERRAMENTA: OpenSCAP (auditoria automatizada)
+├── COMANDO: sudo oscap xccdf eval --profile cis --results results.xml /usr/share/xml/scap/ssg/content/ssg-ubuntu2204-ds.xml
+├── QUANDO AVANÇAR: Quando corrigir falhas críticas
+└── DICAS: Foque nas recomendações "high severity" primeiro
+
+        ↓
+
+PASSO 3: UFW → Configurar firewall básico
+├── POR QUE: Firewall é a primeira linha de defesa
+├── O QUE FAZER: Bloquear tudo, depois liberar o necessário
+├── COMANDOS:
+│   sudo ufw enable
+│   sudo ufw default deny incoming
+│   sudo ufw default allow outgoing
+│   sudo ufw allow 22/tcp    # SSH
+│   sudo ufw allow 80/tcp    # HTTP
+│   sudo ufw allow 443/tcp   # HTTPS
+├── QUANDO AVANÇAR: Quando tiver regras básicas
+└── ERROS COMUNS: Não esqueça de allow SSH antes de enable!
+
+        ↓
+
+PASSO 4: iptables/nftables → Regras avançadas
+├── POR QUE: UFW é limitado, iptables/nft dá controle total
+├── O QUE FAZER: Regras específicas por IP, porta, protocolo
+├── COMANDO: sudo iptables -A INPUT -s 10.0.0.0/8 -p tcp --dport 22 -j ACCEPT
+├── QUANDO AVANÇAR: Quando precisar de regras complexas
+└── DICAS: Use nftables (novo) ou iptables (clássico)
+
+        ↓
+
+PASSO 5: Suricata/Snort → Monitorar intrusões
+├── POR QUE: Firewall filtra, mas IDS detecta ataques
+├── O QUE FAZER: Instalar e configurar regras de detecção
+├── COMANDO: sudo suricata -c /etc/suricata/suricata.yaml -i eth0
+├── QUANDO AVANÇAR: Quando tiver IDS rodando
+└── DICAS: Atualize regras: suricata-update
+
+        ↓
+
+PASSO 6: Wazuh/ELK → Centralizar logs (SIEM)
+├── POR QUE: Logs dispersos são inúteis, centralizar permite correlação
+├── O QUE FAZER: Instalar Wazuh ou Elastic Stack
+├── QUANDO PARAR: Quando tiver dashboards com alertas
+└── DICAS: Wazuh é mais fácil, ELK é mais poderoso
+```
+
+---
+
 ## Lab Prático
 
 1. **TryHackMe — Blue Team** — Configure UFW para negar/liberar tráfego, audite um servidor com Lynis e aplique recomendações CIS Benchmark.

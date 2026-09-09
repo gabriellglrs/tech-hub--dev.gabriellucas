@@ -110,4 +110,76 @@ sudo wifite --kill --wpa --dict /usr/share/wordlists/rockyou.txt
 3. Quebre a senha com aircrack-ng
 4. Documente tempo e método utilizado
 
+### Resumo da ordem — Por que essa sequência?
+
+Wireless segue: **preparar → capturar → quebrar → automatizar**.
+
+```
+PASSO 1: Preparar → Modo monitor
+├── POR QUE: Precisa capturar tráfego que não é destinado ao seu device
+├── O QUE FAZER: Habilitar modo monitor na placa Wi-Fi
+├── COMANDO: sudo iw dev wlan0 set type monitor
+├── QUANDO AVANÇAR: Quando `iwconfig` mostrar modo monitor
+└── DICAS: Use placa compatível (Alfa AWUS036ACH)
+
+        ↓
+
+PASSO 2: Descobrir → Mapear redes
+├── POR QUE: Precisa saber quais redes existem e seus detalhes
+├── O QUE FAZER: airodump-ng ou Kismet
+├── COMANDO: sudo airodump-ng wlan0
+├── QUANDO AVANÇAR: Quando identificar rede alvo
+└── DICAS: Anote BSSID, canal, nome da rede
+
+        ↓
+
+PASSO 3: Capturar → Obter handshake
+├── POR QUE: Handshake é a chave para quebrar senha WPA2
+├── O QUE FAZER: Capturar com airodump + deauth para forçar reconexão
+├── COMANDO: sudo airodump-ng -c 6 --bssid XX:XX:XX:XX:XX:XX -w captura wlan0
+├── QUANDO AVANÇAR: Quando aparecer "WPA handshake"
+└── DICAS: Capture vários handshakes para garantir
+
+        ↓
+
+PASSO 4: Quebrar → Crack da senha
+├── POR QUE: Handshake criptografado precisa ser decodificado
+├── O QUE FAZER: aircrack-ng ou hashcat com wordlist
+├── COMANDO: aircrack-ng -w rockyou.txt captura-01.cap
+├── QUANDO AVANÇAR: Quando tiver senha
+└── DICAS: Use GPU (hashcat) para velocidade
+
+        ↓
+
+PASSO 5: Automatizar → Wifite
+├── POR QUE: Processo manual é lento, Wifite automatiza tudo
+├── O QUE FAZER: Usar Wifite para captura automática
+├── COMANDO: sudo wifite --kill
+├── QUANDO PARAR: Quando tiver senhas capturadas
+└── DICAS: Wifite faz tudo automaticamente (deauth + crack)
+```
+
+---
+
 > **ATENÇÃO:** Pratique apenas em redes próprias ou em lab isolado. Sniffing em redes alheias é crime (Art. 154-A do Código Penal).
+
+---
+
+## Lab Prático
+
+### Exercício 1: WPA2 Handshake Crack
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/aircrack-ng
+- **O que vai praticar:** Captura e quebra de handshake WPA2
+- **Tempo estimado:** 45 min
+
+### Exercício 2: Evil Twin Attack
+- **Plataforma:** TryHackMe
+- **Link:** https://tryhackme.com/room/wifihacking101
+- **O que vai praticar:** Criar rogue AP e capturar credenciais
+- **Tempo estimado:** 60 min
+
+### Dica de Estudo
+> Use um AP próprio (hostapd) para praticar. Nunca ataque redes sem autorização escrita.
+
+---

