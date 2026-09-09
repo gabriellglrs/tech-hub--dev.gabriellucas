@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Instala e restaura o setup Zsh + Powerlevel10k (Ubuntu/WSL2)
 # Uso:
-#   git clone https://github.com/gabriellglrs/minhas_config_linux_terminal.git
-#   cd minhas_config_linux_terminal
+#   git clone https://github.com/gabriellglrs/tech-hub_dev.gabriellucas.git
+#   cd tech-hub_dev.gabriellucas
 #   ./install.sh            # base dev (zsh, plugins, ferramentas dev)
 #   ./install.sh --sec      # base + cyberseg
 #   ./install.sh --copy-only # só copia .zshrc/.p10k sem apt

@@ -29,7 +29,7 @@ Meu **repositório pessoal** com configuração de terminal e trilhas de aprendi
 ## 📂 Estrutura
 
 ```
-minhas_config_linux_terminal/
+tech-hub_dev.gabriellucas/
 │
 ├── install.sh              # Instalador automático
 ├── zsh/                    # 🖥️ Config do terminal (Zsh + P10k)
@@ -193,8 +193,8 @@ Trilha completa **do zero ao profissional** — 11 módulos, 40+ arquivos, ~70h.
 ### Instalação
 
 ```bash
-git clone https://github.com/gabriellglrs/minhas_config_linux_terminal.git
-cd minhas_config_linux_terminal
+git clone https://github.com/gabriellglrs/tech-hub_dev.gabriellucas.git
+cd tech-hub_dev.gabriellucas
 ./install.sh            # Base dev (zsh, plugins, ferramentas)
 ./install.sh --sec      # Base + cybersegurança
 ./install.sh --wsl      # Base + integração WSL2
