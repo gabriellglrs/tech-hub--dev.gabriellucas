@@ -104,10 +104,10 @@ alias hist='history -i'
 
 # Guia de comandos (com glow para formatação bonita)
 GLOW=~/.local/bin/glow
-alias comandos='$GLOW ~/minhas_config_linux_terminal/terminal/README.md'
-alias cyberseg='$GLOW ~/minhas_config_linux_terminal/terminal/CYBERSEG.md'
-alias guia='$GLOW ~/minhas_config_linux_terminal/terminal/README.md'
-alias pentest='$GLOW ~/minhas_config_linux_terminal/terminal/CYBERSEG.md'
+alias comandos='$GLOW ~/tech-hub--dev.gabriellucas/setup/terminal/README.md'
+alias cyberseg='$GLOW ~/tech-hub--dev.gabriellucas/setup/terminal/CYBERSEG.md'
+alias guia='$GLOW ~/tech-hub--dev.gabriellucas/setup/terminal/README.md'
+alias pentest='$GLOW ~/tech-hub--dev.gabriellucas/setup/terminal/CYBERSEG.md'
 
 # zoxide (modern cd) ou cd tradicional
 if command -v zoxide &>/dev/null; then
