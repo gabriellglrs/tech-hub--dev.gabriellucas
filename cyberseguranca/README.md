@@ -4,6 +4,56 @@
 
 ---
 
+## 🌟 O que é Cybersegurança?
+
+**Cybersegurança** é proteger sistemas, redes e dados contra ataques digitais. É como a segurança de uma casa, mas no mundo digital — em vez de trancas e alarmes, temos firewalls e senhas.
+
+### Por que aprender?
+
+- **Empresas precisam de profissionais** — falta 3.5 milhões de pessoas no mundo
+- **Salários altos** — iniciantes ganham R$ 3.000-5.000, experientes R$ 10.000+
+- **Trabalho remoto** — muitas vagas home office
+- **Desafio intelectual** — sempre aprendendo coisas novas
+
+### O que você vai aprender?
+
+```
+ATACANTE (Offensive)          DEFENSOR (Defensive)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Reconhecimento → Descobrir    Proteger → Hardening
+Exploração → Entrar           Detectar → IDS/SIEM
+Pós-Exp → Escalar             Investigar → Forense
+```
+
+### Pré-requisitos (O que você precisa ter)
+
+| Pré-requisito | Por quê | Onde aprender |
+|:--------------|:--------|:-------------:|
+| **Linux básico** | Todas as ferramentas rodam em Linux | [Ubuntu Tutorial](https://ubuntu.com/tutorials) |
+| **Terminal** | Você vai digitar comandos o tempo todo | [Linux Terminal](https://linuxcommand.org/) |
+| **Redes básicas** | Entender IP, porta, DNS | [TryHackMe - Intro to Networking](https://tryhackme.com/room/introtonetworking) |
+| **HTML/HTTP** | Para entender web security | [MDN - HTTP](https://developer.mozilla.org/pt-BR/docs/Web/HTTP) |
+
+### Quanto tempo leva?
+
+| Ritmo | Duração | Recomendação |
+|:------|:--------|:-------------|
+| **Intensivo** | 2-3 meses | 4-6 horas/dia |
+| **Moderado** | 4-6 meses | 2-3 horas/dia |
+| **Flexível** | 6-12 meses | 1 hora/dia |
+
+### Plataformas de Prática (Gratuitas)
+
+| Plataforma | O que é | Link |
+|:-----------|:--------|:----:|
+| **TryHackMe** | Salas guiadas para iniciantes | [tryhackme.com](https://tryhackme.com) |
+| **HackTheBox** | Máquinas para pentest | [hackthebox.com](https://hackthebox.com) |
+| **PortSwigger** | Labs de web security | [portswigger.net](https://portswigger.net/web-security) |
+| **OverTheWire** | Desafios de Linux | [overthewire.org](https://overthewire.org) |
+| **PicoCTF** | CTF para iniciantes | [picoctf.org](https://picoctf.org) |
+
+---
+
 ## 🎯 Por que esta trilha?
 
 Esta trilha segue a **ordem real usada por profissionais** de cybersegurança (OSCP, CEH, NIST). Cada módulo é pré-requisito do próximo — não pule etapas!
@@ -136,6 +186,15 @@ Esta trilha prepara para:
 - **CEH** (Certified Ethical Hacker)
 - **CompTIA Security+**
 - **PTX** (eLearnSecurity)
+
+---
+
+## 📚 Recursos Adicionais
+
+| Arquivo | Descrição |
+|:--------|:----------|
+| [GLOSSARIO.md](GLOSSARIO.md) | Todos os termos técnicos explicados |
+| [INSTALACAO.md](INSTALACAO.md) | Guia completo de instalação das ferramentas |
 
 ---
 
