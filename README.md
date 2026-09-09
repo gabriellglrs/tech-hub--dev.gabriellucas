@@ -19,7 +19,8 @@ Meu **tech-hub pessoal** com configuração de terminal e trilhas de aprendizado
 - **🖥️ Setup** — Zsh + Powerlevel10k + Nerd Font + aliases de produtividade
 - **📚 Guia de Comandos** — 150+ comandos Linux do básico ao avançado (formatado com `glow`)
 - **🔐 Guia de Cybersegurança** — Todos os comandos de pentest (Nmap, Hydra, John, sqlmap, forense...)
-- **🛡️ Cybersegurança** — Trilha completa do zero ao profissional (11 módulos)
+- **🛡️ Cybersegurança** — Trilha completa do zero ao profissional (12 módulos com IA)
+- **🤖 IA para Segurança** — Ollama, NFGuard, CyberStrike, prompts profissionais
 - **🎯 DevOps** — Docker, Kubernetes, CI/CD, Terraform, monitoramento
 - **🧠 IA / Dados / Gestão** — Machine Learning, pipelines, Agile, soft skills
 - **🔧 Infraestrutura** — Linux admin, Windows, Cloud, Redes
@@ -53,7 +54,8 @@ tech-hub--dev.gabriellucas/
     │   ├── 07-defesa/
     │   ├── 08-resposta/
     │   ├── 09-ambientes/
-    │   └── 10-governanca/
+    │   ├── 10-governanca/
+    │   └── 11-ia-cyberseguranca/ # 🤖 IA para Cybersegurança
     │
     ├── devops/                   # 🎯 DevOps e automação
     │   ├── docker-k8s/
@@ -101,7 +103,7 @@ tech-hub--dev.gabriellucas/
 
 ### 🛡️ Cybersegurança (✅ Pronto)
 
-Trilha completa **do zero ao profissional** — 11 módulos, 40+ arquivos, ~70h.
+Trilha completa **do zero ao profissional** — 12 módulos, 44+ arquivos, ~75h.
 
 | Módulo | O que você vai aprender |
 |:-------|:------------------------|
@@ -116,6 +118,7 @@ Trilha completa **do zero ao profissional** — 11 módulos, 40+ arquivos, ~70h.
 | [08. Resposta](aprendizado/cyberseguranca/08-resposta/) | Forense, malware |
 | [09. Ambientes](aprendizado/cyberseguranca/09-ambientes/) | Docker, Cloud, Wireless |
 | [10. Governança](aprendizado/cyberseguranca/10-governanca/) | GRC, Criptografia, LGPD |
+| [11. 🤖 IA para Cybersegurança](aprendizado/cyberseguranca/11-ia-cyberseguranca/) | Ollama, NFGuard, CyberStrike, RAI, prompts |
 
 ---
 
