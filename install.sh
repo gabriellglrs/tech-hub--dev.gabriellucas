@@ -59,18 +59,58 @@ if ! $COPY_ONLY; then
 
   if $WITH_SEC; then
     step "Ferramentas cyberseg via apt..."
+    sudo apt update
     sudo apt install -y nmap masscan sqlmap nikto hydra john hashcat \
       wireshark tcpdump netcat-openbsd socat whois dnsutils iputils-ping \
-      proxychains4 gobuster ffuf python3-impacket seclists 2>/dev/null || \
+      proxychains4 gobuster ffuf python3-impacket seclists \
+      whatweb dnsrecon mitmproxy bettercap enum4linux \
+      hashid crunch cewl 2>/dev/null || \
     sudo apt install -y nmap sqlmap nikto hydra john hashcat \
-      tcpdump netcat-openbsd socat whois dnsutils proxychains4
+      tcpdump netcat-openbsd socat whois dnsutils proxychains4 \
+      whatweb dnsrecon mitmproxy hashid
+
+    step "Ferramentas cyberseg via pip..."
+    sudo pip3 install --break-system-packages wafw00f theHarvester 2>/dev/null || \
+    sudo pip3 install wafw00f theHarvester 2>/dev/null || true
+
+    step "Ferramentas cyberseg via Git..."
+    # enum4linux-ng
+    if ! command -v enum4linux-ng >/dev/null 2>&1; then
+      if [[ ! -d "/opt/enum4linux-ng" ]]; then
+        sudo git clone --depth=1 https://github.com/cddmp/enum4linux-ng.git /opt/enum4linux-ng 2>/dev/null || true
+        if [[ -d "/opt/enum4linux-ng" ]]; then
+          cd /opt/enum4linux-ng && sudo pip3 install -r requirements.txt 2>/dev/null || true
+          sudo ln -sf /opt/enum4linux-ng/enum4linux-ng.py /usr/local/bin/enum4linux-ng 2>/dev/null || true
+          cd - >/dev/null
+        fi
+      fi
+    fi
+
+    # Responder
+    if ! command -v responder >/dev/null 2>&1; then
+      if [[ ! -d "/opt/Responder" ]]; then
+        sudo git clone --depth=1 https://github.com/lgandx/Responder.git /opt/Responder 2>/dev/null || true
+        if [[ -d "/opt/Responder" ]]; then
+          sudo ln -sf /opt/Responder/Responder.py /usr/local/bin/responder 2>/dev/null || true
+        fi
+      fi
+    fi
+
+    # wpscan
+    if ! command -v wpscan >/dev/null 2>&1; then
+      sudo apt install -y wpscan 2>/dev/null || \
+      sudo gem install wpscan 2>/dev/null || true
+    fi
+
+    echo ""
     echo " -> extras via Go (subfinder/nuclei/httpx) instale sob demanda:"
+    echo "    sudo apt install -y golang-go"
     echo "    go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest"
     echo "    go install github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest"
     echo "    go install github.com/projectdiscovery/httpx/cmd/httpx@latest"
   else
     echo ""
-    echo "Dica cyberseg: rode ./install.sh --sec para instalar nmap/sqlmap/nikto/hydra/john/hashcat/wireshark/tcpdump/nc/socat/gobuster/ffuf (+ seclists/impacket se disponível)."
+    echo "Dica cyberseg: rode ./install.sh --sec para instalar nmap/sqlmap/nikto/hydra/john/hashcat/wireshark/tcpdump/nc/socat/gobuster/ffuf/whatweb/wafw00f/responder/bettercap/mitmproxy/enum4linux (+ seclists/impacket/hashid/crunch/cewl se disponível)."
   fi
 fi
 

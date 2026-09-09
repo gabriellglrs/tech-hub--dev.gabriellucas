@@ -78,38 +78,62 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git colored-man-pages zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(git colored-man-pages zsh-completions zsh-autosuggestions zsh-syntax-highlighting sudo)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-# export MANPATH="/usr/local/man:$MANPATH"
+# ── Histórico ────────────────────────────────────────────────
+HISTSIZE=50000
+SAVEHIST=50000
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_FIND_NO_DUPS
+setopt SHARE_HISTORY
+setopt INC_APPEND_HISTORY
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+# ── Aliases ──────────────────────────────────────────────────
+# Geral
+alias ll='ls -lah --color=auto'
+alias la='ls -A --color=auto'
+alias lt='ls -lhtr --color=auto'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias cls='clear'
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='nvim'
-# fi
+# Segurança
+alias mkdir='mkdir -pv'
+alias cp='cp -iv'
+alias mv='mv -iv'
+alias rm='rm -iv'
+alias ln='ln -iv'
 
-# Compilation flags
-# export ARCHFLAGS="-arch $(uname -m)"
+# Git
+alias gs='git status'
+alias gd='git diff'
+alias gl='git log --oneline -20'
+alias gp='git push'
+alias gpl='git pull'
+alias gc='git commit'
+alias gca='git commit -a'
+alias gb='git branch'
+alias gco='git checkout'
+alias gsw='git switch'
 
-# Set personal aliases, overriding those provided by Oh My Zsh libs,
-# plugins, and themes. Aliases can be placed here, though Oh My Zsh
-# users are encouraged to define aliases within a top-level file in
-# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
-# - $ZSH_CUSTOM/aliases.zsh
-# - $ZSH_CUSTOM/macos.zsh
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+# Rede
+alias myip='curl -s ifconfig.me'
+alias ports='netstat -tulanp'
+alias ping3='ping -c 3'
+
+# Dev tools
+alias cat='batcat --paging=never 2>/dev/null || bat --paging=never 2>/dev/null || cat'
+alias grep='grep --color=auto'
+
+# ── PATH ─────────────────────────────────────────────────────
+export PATH="$HOME/.local/bin:$PATH"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
