@@ -115,7 +115,7 @@ Trilha completa **do zero ao profissional** — 11 módulos, 40+ arquivos, ~70h.
 
 ---
 
-### 🎯 DevOps (✅ Estrutura)
+### 🎯 DevOps (❌ Não finalizado)
 
 | Área | O que você vai aprender |
 |:-----|:------------------------|
@@ -134,7 +134,7 @@ Trilha completa **do zero ao profissional** — 11 módulos, 40+ arquivos, ~70h.
 
 ---
 
-### 🔐 Segurança Digital (✅ Estrutura)
+### 🔐 Segurança Digital (❌ Não finalizado)
 
 | Área | O que você vai aprender |
 |:-----|:------------------------|
@@ -146,7 +146,7 @@ Trilha completa **do zero ao profissional** — 11 módulos, 40+ arquivos, ~70h.
 
 ---
 
-### 🖧 Infraestrutura (✅ Estrutura)
+### 🖧 Infraestrutura (❌ Não finalizado)
 
 | Área | O que você vai aprender |
 |:-----|:------------------------|
@@ -157,7 +157,7 @@ Trilha completa **do zero ao profissional** — 11 módulos, 40+ arquivos, ~70h.
 
 ---
 
-### 💻 Desenvolvimento (✅ Estrutura)
+### 💻 Desenvolvimento (❌ Não finalizado)
 
 | Área | O que você vai aprender |
 |:-----|:------------------------|
@@ -167,7 +167,7 @@ Trilha completa **do zero ao profissional** — 11 módulos, 40+ arquivos, ~70h.
 
 ---
 
-### 🤖 Áreas Extras (✅ Estrutura)
+### 🤖 Áreas Extras (❌ Não finalizado)
 
 | Área | O que você vai aprender |
 |:-----|:------------------------|
