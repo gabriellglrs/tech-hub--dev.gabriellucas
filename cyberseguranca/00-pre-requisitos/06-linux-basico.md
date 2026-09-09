@@ -2,6 +2,38 @@
 
 > **Todo** profissional de cybersegurança usa Linux. As ferramentas (Nmap, Hydra, Wireshark) rodam em Linux. Aqui você aprende o mínimo necessário para começar.
 
+## 📚 O que é Linux e por que importa?
+
+**Linux** é um sistema operacional open source (código aberto) usado em servidores, smartphones, cloud e **cybersegurança**. Enquanto o Windows tem interface gráfica, no Linux você usa o **terminal** (linha de comando).
+
+### Por que isso é importante?
+
+- **Todas as ferramentas de segurança** rodam em Linux (Nmap, Metasploit, Burp, Hydra...)
+- **Kali Linux** é a distribuição padrão para pentest
+- **Servidores web** rodam Linux (90%+ dos servidores do mundo)
+- **Automação** — scripts bash economizam horas de trabalho
+- **Não tem como ser bom em segurança sem saber Linux**
+
+### Como funciona na prática?
+
+```
+Terminal (linha de comando)
+├── Navegar: ls, cd, pwd
+├── Arquivos: cat, vim, nano, cp, mv, rm
+├── Processos: ps, kill, top
+├── Rede: ifconfig, ping, netstat
+├── Permissões: chmod, chown
+└── Scripting: bash, python
+```
+
+Para dominar Linux, você precisa saber:
+- **Navegação básica** — navegar entre pastas
+- **Gerenciar arquivos** — criar, copiar, mover, deletar
+- **Permissões** — quem pode fazer o quê
+- **Processos** — ver e matar processos
+- **Serviços** — iniciar, parar, verificar status
+- **Scripts bash** — automatizar tarefas
+
 ---
 
 ## 🏠 Analogia

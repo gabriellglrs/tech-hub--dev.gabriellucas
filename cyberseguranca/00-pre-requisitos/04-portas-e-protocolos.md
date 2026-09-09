@@ -1,6 +1,35 @@
 # 🚪 Portas e Protocolos
 
-> **Portas** são as "portas de entrada" de um servidor. Cada serviço (web, email, SSH) usa uma porta diferente. É como um prédio com vários apartamentos — cada porta é um apartamento diferente.
+> **Portas** são as "portas de entrada" de cada serviço em um computador. Protocolos são as "regras de comunicação". Juntos, permitem que dados cheguem ao lugar certo.
+
+## 📚 O que são Portas e Protocolos?
+
+Uma **porta** é um número que identifica um serviço específico em um computador. Um **protocolo** é o conjunto de regras que define como os dados são transmitidos.
+
+### Por que isso é importante?
+
+- **Portas abertas = serviços ativos** — cada porta é uma porta de entrada potencial
+- **Análise de portas** é o primeiro passo em qualquer pentest
+- **Firewalls bloqueiam portas** — entender portas é entender defesa
+- **Cada porta tem um serviço padrão** — port 22=SSH, port 80=HTTP, port 443=HTTPS
+
+### Como funciona na prática?
+
+```
+Computador alvo: 192.168.1.50
+
+Porta 22  → SSH        (acesso remoto)
+Porta 80  → HTTP       (web server)
+Porta 443 → HTTPS      (web seguro)
+Porta 3306 → MySQL     (banco de dados)
+Porta 4444 → Metasploit (exploit framework)
+```
+
+Para entender portas e protocolos, você precisa dominar:
+- **Portas bem-known** (0-1023)
+- **TCP vs UDP** (confiável vs rápido)
+- **Comandos** (netstat, ss, lsof, nmap)
+- **Análise de portas** para descobrir serviços
 
 ---
 

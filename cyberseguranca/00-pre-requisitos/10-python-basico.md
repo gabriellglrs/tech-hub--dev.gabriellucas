@@ -2,6 +2,44 @@
 
 > **Python** é a linguagem mais usada em cybersegurança. Você não precisa ser programador, mas precisa o básico para automatizar tarefas e entender ferramentas.
 
+## 📚 O que é Python e por que importa?
+
+**Python** é uma linguagem de programação versátil e fácil de aprender. É a linguagem mais usada em cybersegurança para automação, scripts e desenvolvimento de ferramentas.
+
+### Por que isso é importante?
+
+- **Automação** — scripts para scanear portas, quebrar senhas, coletar dados
+- **Ferramentas** — Metasploit, Scapy, requests são Python
+- **Exploits** — muitos exploits são escritos em Python
+- **Web scraping** — coletar informações automaticamente
+- **APIs** — interagir com serviços e sistemas
+
+### Como funciona na prática?
+
+```python
+# Script simples de scan de porta
+import socket
+
+def scan(ip, porta):
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.settimeout(1)
+    resultado = sock.connect_ex((ip, porta))
+    sock.close()
+    return resultado == 0
+
+# Uso
+if scan("192.168.1.1", 80):
+    print("Porta 80 ABERTA!")
+```
+
+Para usar Python em segurança, você precisa saber:
+- **Variáveis e tipos** — strings, inteiros, listas
+- **Condicionais** — if/else
+- **Laços** — for, while
+- **Funções** — organizar código
+- **Bibliotecas** — socket, requests, hashlib
+- **Arquivos** — ler e escrever dados
+
 ---
 
 ## 🏠 Analogia

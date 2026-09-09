@@ -2,6 +2,37 @@
 
 > **HTTP** é o protocolo que usa a web. Toda vez que você abre um site, seu navegador faz uma requisição HTTP. Entender HTTP é essencial para web security.
 
+## 📚 O que é HTTP e como a web funciona?
+
+**HTTP (HyperText Transfer Protocol)** é o protocolo que permite a comunicação entre seu navegador (cliente) e servidores web. Quando você acessa um site, está usando HTTP/HTTPS.
+
+### Por que isso é importante?
+
+- **90% dos ataques** envolvem aplicações web (OWASP Top 10)
+- **SQL Injection, XSS, CSRF** — todos exploram falhas HTTP
+- **Burp Suite** — ferramenta principal para web hacking opera no nível HTTP
+- **APIs** — a maioria dos sistemas modernos usa HTTP para comunicação
+
+### Como funciona na prática?
+
+```
+Seu navegador              Servidor web
+     │                         │
+     │  GET /index.html        │
+     │  ──────────────────→    │
+     │                         │
+     │  HTTP/1.1 200 OK        │
+     │  ←──────────────────    │
+     │  <html>Olá</html>       │
+```
+
+Para entender HTTP, você precisa dominar:
+- **Métodos** (GET, POST, PUT, DELETE)
+- **Headers** (Content-Type, Authorization, Cookie)
+- **Status codes** (200, 301, 403, 404, 500)
+- **Cookies e sessões**
+- **HTTPS/TLS** (HTTP seguro)
+
 ---
 
 ## 🏠 Analogia

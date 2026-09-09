@@ -2,6 +2,38 @@
 
 > Muitos alvos rodam Windows. Você precisa entender o básico do Windows para atacar e defender.
 
+## 📚 O que é Windows e por que importa?
+
+**Windows** é o sistema operacional mais usado no mundo corporativo. A maioria dos servidores, workstations e sistemas roda Windows. Para atacar ou defender, você precisa entender como funciona.
+
+### Por que isso é importante?
+
+- **80%+ dos computadores** usam Windows
+- **Active Directory** — sistema de autenticação corporativa padrão
+- **Logs de segurança** — essenciais para investigação
+- **Firewall e Defender** — sistemas de defesa nativos
+- **PowerShell** — ferramenta poderosa para automação e ataque
+
+### Como funciona na prática?
+
+```
+POWERShell (terminal do Windows)
+├── Navegação: dir, cd
+├── Arquivos: type, copy, move, del
+├── Rede: ipconfig, ping, netstat
+├── Processos: tasklist, taskkill
+├── Usuários: net user, net localgroup
+└── Logs: Get-WinEvent
+```
+
+Para entender Windows em segurança, você precisa saber:
+- **PowerShell** — terminal e automação
+- **Logs e Event Viewer** — onde ficam os registros
+- **Firewall** — regras de entrada/saída
+- **Usuários e permissões** — ACLs, grupos
+- **Registry** — configurações do sistema
+- **O que atacantes procuram** — credenciais, hashes, persistência
+
 ---
 
 ## 🏠 Analogia

@@ -1,6 +1,35 @@
 # 📍 Endereçamento IP
 
-> **IP** (Internet Protocol) é o endereço de cada dispositivo na rede. É como o CEP da sua casa — sem ele, o carteiro (dados) não sabe onde entregar.
+> **IP** é o "endereço" de cada dispositivo na rede. É como o CEP da sua casa — sem ele, o carteiro (dados) não sabe onde entregar.
+
+## 📚 O que é Endereçamento IP?
+
+O **endereçamento IP** é o sistema de identificação único de cada dispositivo conectado a uma rede. Cada computador, servidor ou dispositivo recebe um número exclusivo (o IP) que permite que outros dispositivos o encontrem e se comuniquem com ele.
+
+### Por que isso é importante?
+
+- **Todo ataque começa com um IP** — para atacar alguém, você precisa saber o endereço dele
+- **IPs revelam localização** — geolocalização, ISP, provedor
+- **Rastreamento de atacantes** — OSINT, logs, forense digital
+- **Firewalls filtram por IP** — bloquear ou permitir acesso
+
+### Como funciona na prática?
+
+```
+Seu PC (192.168.1.10)              Servidor (142.250.74.46)
+       │                                    │
+       │  "Quero acessar google.com"        │
+       │  ───────────────────────────→      │
+       │                                    │
+       │  Resposta: "Aqui está!"            │
+       │  ←───────────────────────────      │
+```
+
+Para entender endereçamento IP, você precisa dominar:
+- **Classes de IP** (A, B, C, D, E)
+- **Máscara de sub-rede** (onde termina a rede)
+- **CIDR** (notação simplificada)
+- **IP público vs privado** (quem está na internet)
 
 ---
 

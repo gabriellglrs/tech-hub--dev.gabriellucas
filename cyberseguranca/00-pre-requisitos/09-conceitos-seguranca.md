@@ -2,6 +2,42 @@
 
 > Antes de aprender a atacar, você precisa entender **o que é segurança** e **por que ataques funcionam**. Estes são os pilares de tudo.
 
+## 📚 O que são Conceitos de Segurança?
+
+**Segurança da informação** é o conjunto de práticas para proteger dados contra acesso não autorizado, destruição ou alteração. Antes de aprender a atacar, você precisa entender **o que está protegendo e por quê**.
+
+### Por que isso é importante?
+
+- **Sem fundamentos, você é perigoso** — pode causar danos sem querer
+- **Triade CIA** — toda decisão de segurança gira em torno de Confidencialidade, Integridade e Disponibilidade
+- **Vetores de ataque** — entender ajuda a escolher onde focar
+- **Malware** — conhecer tipos ajuda a identificar e prevenir
+- **ética** — saber a diferença entre hacker e cracker
+
+### Como funciona na prática?
+
+```
+TRIADE CIA
+         Confidencialidade
+               /\
+              /  \
+             / CIA \
+            /________\
+Integridade    Disponibilidade
+
+CONTROLES
+├── Preventivos (evitam o ataque)
+├── Detectivos (descobrem o ataque)
+└── Corretivos (respondem ao ataque)
+```
+
+Para entender segurança, você precisa dominar:
+- **Triade CIA** — os 3 pilares
+- **Tipos de malware** — vírus, worm, trojan, ransomware
+- **Vetores de ataque** — como os ataques acontecem
+- **Controles de segurança** — como proteger
+- **Ética e legalidade** — onde está a linha
+
 ---
 
 ## 🏠 Analogia

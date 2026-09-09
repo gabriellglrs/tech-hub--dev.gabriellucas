@@ -1,6 +1,42 @@
 # 🖥️ Máquinas Virtuais e Home Lab
 
-> **Máquinas virtuais** são computadores dentro do seu computador. É como ter vários PC's sem comprar nada. Essencial para praticar segurança sem quebrar nada.
+> **Máquinas virtuais** são computadores dentro do seu computador. É como ter vários PCs sem comprar nada. Essencial para praticar segurança sem quebrar nada.
+
+## 📚 O que são Máquinas Virtuais e Home Lab?
+
+Uma **máquina virtual (VM)** é um computador simulado dentro do seu computador real. Um **Home Lab** é seu laboratório pessoal onde você pratica ataques e defesas sem riscos.
+
+### Por que isso é importante?
+
+- **Praticar segurança** sem danar seu computador real
+- **Criar ambientes de teste** — servidores vulneráveis para atacar
+- **Snapshot** — se quebrar algo, volte ao estado anterior
+- **Isolamento** — seus experimentos não afetam a internet real
+- **Kali Linux + Metasploitable** — setup padrão para aprender
+
+### Como funciona na prática?
+
+```
+┌─────────────────────────────────────────────────┐
+│              SEU COMPUTADOR (Host)               │
+│                                                  │
+│  ┌─────────────┐  ┌─────────────┐               │
+│  │  KALI LINUX │  │ METASPLOIT  │               │
+│  │  (Atacante) │  │ (Vítima)    │               │
+│  └──────┬──────┘  └──────┬──────┘               │
+│         └───────┬────────┘                       │
+│         ┌───────┴───────┐                        │
+│         │  Rede Virtual │                        │
+│         └───────────────┘                        │
+└─────────────────────────────────────────────────┘
+```
+
+Para montar seu Home Lab, você precisa saber:
+- **VirtualBox/VMware** — criar e gerenciar VMs
+- **Redes virtuais** — Host-only, NAT, Bridged
+- **Snapshots** — salvar e restaurar estados
+- **Kali Linux** — distribuição para pentest
+- **Metasploitable** — VM vulnerável para praticar
 
 ---
 

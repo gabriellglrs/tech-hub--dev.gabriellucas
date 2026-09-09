@@ -2,6 +2,36 @@
 
 > **Rede** é quando dois ou mais computadores se conectam para trocar informações. É como uma estrada que liga cidades — por onde os carros (dados) trafegam.
 
+## 📚 O que é uma Rede?
+
+Uma **rede** é um conjunto de dispositivos (computadores, celulares, servidores, impressoras) interconectados para compartilhar dados e recursos. Sem redes, não existiria internet, WhatsApp, Netflix ou jogos online.
+
+### Por que isso é importante?
+
+- **Toda comunicação digital** acontece por redes — sem entender redes, você não entende nada de segurança
+- **Os ataques mais comuns** exploram falhas em redes (MITM, sniffing, DoS)
+- **Firewalls e IDS/IPS** funcionam monitorando tráfego de rede
+- **Cada dispositivo conectado** é um ponto de entrada potencial
+
+### Como funciona na prática?
+
+```
+Dispositivo A (seu PC)          Dispositivo B (servidor)
+       │                              │
+       │  ─── Dados (pacotes) ───→    │
+       │                              │
+       │  ←── Resposta ─────────────  │
+       │                              │
+  Placa de rede              Placa de rede
+  IP: 192.168.1.10           IP: 8.8.8.8
+```
+
+Para proteger uma rede, você precisa entender:
+- **Como os dados viajam** (roteadores, switches)
+- **Como dispositivos se identificam** (IP, MAC)
+- **Como serviços são acessados** (portas, protocolos)
+- **Onde atacar e defender** (firewall, IDS)
+
 ---
 
 ## 🏠 Analogia do Dia a Dia

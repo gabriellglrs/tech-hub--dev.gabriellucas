@@ -2,6 +2,35 @@
 
 > São **mapas** que mostram como os dados viajam pela internet. É como entender as camadas de uma onion (cebola) — cada camada tem uma função.
 
+## 📚 O que são os Modelos TCP/IP e OSI?
+
+São **modelos de referência** que dividem a comunicação de rede em camadas. Cada camada tem uma função específica e se comunica com as camadas adjacentes.
+
+### Por que isso é importante?
+
+- **Ataques acontecem em camadas específicas** — entender ajuda a saber onde atacar/defender
+- **Firewalls operam em camadas diferentes** — Layer 3 (IP), Layer 4 (TCP/UDP), Layer 7 (HTTP)
+- **Troubleshooting** — saber em qual camada está o problema acelera o diagnóstico
+- **Ferramentas atacam camadas específicas** — Wireshark (L2-4), Burp (L7), Nmap (L3-4)
+
+### Como funciona na prática?
+
+```
+Camada 7: Aplicação      → HTTP, DNS, FTP, SMTP
+Camada 6: Apresentação   → TLS/SSL, criptografia
+Camada 5: Sessão         → Sessões de conexão
+Camada 4: Transporte     → TCP (confiável), UDP (rápido)
+Camada 3: Rede           → IP, roteamento
+Camada 2: Enlace         → MAC, switches
+Camada 1: Física         → Cabos, sinais elétricos
+```
+
+Para entender os modelos, você precisa dominar:
+- **TCP/IP (4 camadas)** — modelo real da internet
+- **OSI (7 camadas)** — modelo de referência
+- **Três vias do TCP** — handshake, transmissão, encerramento
+- **Em qual camada cada ferramenta opera**
+
 ---
 
 ## 🧅 Analogia da Cebola

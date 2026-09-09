@@ -1,6 +1,35 @@
 # 🌍 DNS (Domain Name System)
 
-> **DNS** é o "telefonista" da internet. Ele traduz nomes (google.com) em IPs (142.250.74.46). Sem DNS, você teria que decorar números para acessar sites.
+> **DNS** é como uma agenda telefônica da internet. Em vez de decorar números (IPs), você digita nomes (google.com) e o DNS traduz.
+
+## 📚 O que é DNS?
+
+**DNS (Domain Name System)** é o sistema que traduz nomes de domínio (google.com) em endereços IP (142.250.74.46). Sem DNS, você precisaria decorar o IP de cada site que quer visitar.
+
+### Por que isso é importante?
+
+- **Spoofing DNS** — atacante redireciona sites para servidores maliciosos
+- **Reconhecimento** — descobrir subdomínios e infraestrutura do alvo
+- **Exfiltração** — dados podem ser escondidos em consultas DNS
+- **Tunneling** — criar túneis de comunicação através do DNS
+
+### Como funciona na prática?
+
+```
+Você digita: google.com
+        ↓
+Seu PC pergunta: "Qual o IP do google.com?"
+        ↓
+DNS respondente: "142.250.74.46"
+        ↓
+Você acessa o site usando o IP
+```
+
+Para entender DNS, você precisa dominar:
+- **Tipos de registros** (A, AAAA, MX, NS, TXT, CNAME)
+- **Consultas** (dig, nslookup, host)
+- **Enumeração de subdomínios**
+- **Ataques DNS** (cache poisoning, tunneling)
 
 ---
 
