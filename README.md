@@ -18,10 +18,24 @@ Este é meu **repositório pessoal** com tudo que preciso para trabalhar com tec
 |:-----|:----------|:------:|
 | 🖥️ **Terminal** | Configuração Zsh, Powerlevel10k, plugins | ✅ Pronto |
 | 🛡️ **Cybersegurança** | Trilha completa (11 módulos, 40+ arquivos) | ✅ Pronto |
-| 🐳 **Docker** | Containers, Dockerfile, Compose | 🚧 Planejado |
-| 🌐 **Redes** | Fundamentos, troubleshooting, comandos | 🚧 Planejado |
-| 💾 **Banco de Dados** | SQL, NoSQL, administração | 🚧 Planejado |
-| 💻 **Programação** | Python, Bash, automação | 🚧 Planejado |
+| 🐳 **Docker** | Containers, Dockerfile, Compose | ✅ Estrutura |
+| 🌐 **Redes** | TCP/IP avançado, firewalls, VPNs | ✅ Estrutura |
+| 💾 **Banco de Dados** | SQL, NoSQL, administração | ✅ Estrutura |
+| 💻 **Programação** | Python, Bash, automação, APIs | ✅ Estrutura |
+| ☁️ **Cloud** | AWS, Azure, GCP, segurança cloud | ✅ Estrutura |
+| 🐧 **Linux Admin** | Servidores, systemd, hardening | ✅ Estrutura |
+| 🪟 **Windows Admin** | AD, GPO, PowerShell avançado | ✅ Estrutura |
+| 🔄 **Git Avançado** | Branching, hooks, workflows | ✅ Estrutura |
+| 🚀 **CI/CD** | GitHub Actions, Jenkins, DevSecOps | ✅ Estrutura |
+| 📊 **Monitoramento** | Prometheus, Grafana, ELK Stack | ✅ Estrutura |
+| 🔧 **Infra como Código** | Terraform, Ansible, compliance | ✅ Estrutura |
+| 🌐 **Web Dev** | HTML, CSS, JS, APIs, OWASP | ✅ Estrutura |
+| 🔐 **Criptografia** | PKI, TLS, GPG, pós-quântica | ✅ Estrutura |
+| 🦠 **Malware Analysis** | Engenharia reversa, YARA, sandboxes | ✅ Estrutura |
+| 🕵️ **Threat Intelligence** | OSINT, MITRE ATT&CK, threat hunting | ✅ Estrutura |
+| 📱 **Mobile Security** | Android, iOS, APK analysis, Frida | ✅ Estrutura |
+| 🌐 **IoT Security** | Firmware, ICS/SCADA, hardware hacking | ✅ Estrutura |
+| 💾 **Backup & Recovery** | rsync, borg, DR plan, RTO/RPO | ✅ Estrutura |
 
 ---
 
@@ -35,33 +49,25 @@ minhas_config_linux_terminal/
 │   ├── .zshrc                  # Config do Zsh
 │   └── .p10k.zsh               # Config do Powerlevel10k
 │
-├── cyberseguranca/             # 🛡️ Trilha de Cybersegurança
-│   ├── README.md               # Índice da trilha
-│   ├── GLOSSARIO.md            # 150+ termos explicados
-│   ├── INSTALACAO.md           # Guia de instalação de ferramentas
-│   ├── CHEATSHEET-*.md         # 3 cheatsheets rápidas
-│   │
-│   ├── 00-pre-requisitos/      # 📚 Para iniciantes totais
-│   │   ├── 01-redes/           # IP, DNS, portas, TCP/IP
-│   │   ├── 02-sistemas/        # Linux, HTTP, VMs
-│   │   ├── 03-seguranca/       # CIA, malware, Python, Windows
-│   │   └── 04-ferramentas/     # Comandos de rede, editores
-│   │
-│   ├── 01-reconhecimento/      # Nmap, DNS enum, OSINT
-│   ├── 02-web-aplicacoes/      # Web, API, DB, SQL Injection, XSS
-│   ├── 03-exploracao/          # Hydra, John, Hashcat
-│   ├── 04-pos-exploracao/      # LinPEAS, escalação, pivoting
-│   ├── 05-reversing/           # Ghidra, GDB, buffer overflow
-│   ├── 06-analise-rede/        # tcpdump, Wireshark, MITM
-│   ├── 07-defesa/              # Firewalls, IDS/IPS, SIEM
-│   ├── 08-resposta/            # Forense, malware, Volatility
-│   ├── 09-ambientes/           # Docker, K8s, Cloud, Wireless
-│   └── 10-governanca/          # GRC, Criptografia, LGPD
-│
-├── docker/                     # 🐳 Docker (planejado)
-├── redes/                      # 🌐 Redes (planejado)
-├── banco-de-dados/             # 💾 BD (planejado)
-└── programacao/                # 💻 Prog (planejado)
+├── cyberseguranca/             # 🛡️ Trilha de Cybersegurança (✅)
+├── cloud/                      # ☁️ AWS, Azure, GCP
+├── linux-admin/                # 🐧 Administração Linux
+├── windows-admin/              # 🪟 Active Directory, GPO
+├── git-avancado/               # 🔄 Branches, hooks, workflows
+├── cicd/                       # 🚀 GitHub Actions, Jenkins
+├── monitoramento/              # 📊 Prometheus, Grafana, ELK
+├── infra-codigo/               # 🔧 Terraform, Ansible
+├── web-dev/                    # 🌐 HTML, CSS, JS, APIs
+├── criptografia-avancada/      # 🔐 PKI, TLS, GPG
+├── malware-analysis/           # 🦠 YARA, Ghidra, sandboxes
+├── threat-intelligence/        # 🕵️ OSINT, MITRE, hunting
+├── mobile-security/            # 📱 Android, iOS, Frida
+├── iot-security/               # 🌐 Firmware, ICS, UART
+├── backup-recovery/            # 💾 rsync, borg, DR plan
+├── docker/                     # 🐳 Containers, Compose
+├── redes/                      # 🌐 TCP/IP, firewalls, VPN
+├── banco-de-dados/             # 💾 SQL, NoSQL, admin
+└── programacao/                # 💻 Python, Bash, APIs
 ```
 
 ---
@@ -169,47 +175,97 @@ FASE 4: ESPECIALIZAÇÃO
 
 ---
 
-## 🐳 Docker (planejado)
+## 📚 Todas as Áreas
 
-| Tópico | Descrição |
-|:-------|:----------|
-| 01 - Básico | O que é container, Docker Engine, comandos essenciais |
-| 02 - Dockerfile | Criar imagens, multi-stage builds, boas práticas |
-| 03 - Compose | Multi-container, redes, volumes |
-| 04 - Segurança | Scanning de imagens, rootless, secrets |
+### ☁️ Cloud
+| Arquivo | O que você vai aprender |
+|:--------|:------------------------|
+| [Cloud](cloud/README.md) | AWS, Azure, GCP, segurança cloud, Pacu, Prowler |
 
----
+### 🐧 Administração Linux
+| Arquivo | O que você vai aprender |
+|:--------|:------------------------|
+| [Linux Admin](linux-admin/README.md) | Servidores, systemd, users, hardening, logs |
 
-## 🌐 Redes (planejado)
+### 🪟 Administração Windows
+| Arquivo | O que você vai aprender |
+|:--------|:------------------------|
+| [Windows Admin](windows-admin/README.md) | Active Directory, GPO, PowerShell avançado, Sysmon |
 
-| Tópico | Descrição |
-|:-------|:----------|
-| 01 - Fundamentos | TCP/IP, OSI, roteamento, switches |
-| 02 - Comandos | ip, ss, ping, traceroute, nslookup |
-| 03 - Troubleshooting | Diagnosticar e resolver problemas |
-| 04 - Segurança | Firewalls, VPN, segmentação |
+### 🔄 Git Avançado
+| Arquivo | O que você vai aprender |
+|:--------|:------------------------|
+| [Git Avançado](git-avancado/README.md) | Branching, GitFlow, rebase, hooks, bisect |
 
----
+### 🚀 CI/CD
+| Arquivo | O que você vai aprender |
+|:--------|:------------------------|
+| [CI/CD](cicd/README.md) | GitHub Actions, Jenkins, DevSecOps, container scanning |
 
-## 💾 Banco de Dados (planejado)
+### 📊 Monitoramento
+| Arquivo | O que você vai aprender |
+|:--------|:------------------------|
+| [Monitoramento](monitoramento/README.md) | Prometheus, Grafana, ELK Stack, alertas |
 
-| Tópico | Descrição |
-|:-------|:----------|
-| 01 - SQL básico | CREATE, SELECT, JOIN, índices |
-| 02 - Administração | Usuários, permissões, backup |
-| 03 - NoSQL | MongoDB, Redis, quando usar |
-| 04 - Segurança | SQL Injection, hardening |
+### 🔧 Infraestrutura como Código
+| Arquivo | O que você vai aprender |
+|:--------|:------------------------|
+| [IaC](infra-codigo/README.md) | Terraform, Ansible, compliance como código |
 
----
+### 🌐 Web Development
+| Arquivo | O que você vai aprender |
+|:--------|:------------------------|
+| [Web Dev](web-dev/README.md) | HTML, CSS, JavaScript, APIs, OWASP Top 10 |
 
-## 💻 Programação (planejado)
+### 🔐 Criptografia Avançada
+| Arquivo | O que você vai aprender |
+|:--------|:------------------------|
+| [Criptografia](criptografia-avancada/README.md) | PKI, TLS/SSL, GPG, criptografia de disco, pós-quântica |
 
-| Tópico | Descrição |
-|:-------|:----------|
-| 01 - Python básico | Variáveis, funções, bibliotecas |
-| 02 - Python para Sec | Scripts de automação, scanning |
-| 03 - Bash scripting | Automação no terminal |
-| 04 - APIs | Consumir e criar APIs REST |
+### 🦠 Análise de Malware
+| Arquivo | O que você vai aprender |
+|:--------|:------------------------|
+| [Malware](malware-analysis/README.md) | Engenharia reversa, YARA, sandboxes, Ghidra |
+
+### 🕵️ Threat Intelligence
+| Arquivo | O que você vai aprender |
+|:--------|:------------------------|
+| [Threat Intel](threat-intelligence/README.md) | OSINT avançado, MITRE ATT&CK, threat hunting |
+
+### 📱 Mobile Security
+| Arquivo | O que você vai aprender |
+|:--------|:------------------------|
+| [Mobile](mobile-security/README.md) | Android, iOS, APK analysis, Frida, ssl pinning |
+
+### 🌐 IoT Security
+| Arquivo | O que você vai aprender |
+|:--------|:------------------------|
+| [IoT](iot-security/README.md) | Firmware, ICS/SCADA, hardware hacking, RTL-SDR |
+
+### 💾 Backup & Recovery
+| Arquivo | O que você vai aprender |
+|:--------|:------------------------|
+| [Backup](backup-recovery/README.md) | rsync, borgbackup, DR plan, RTO/RPO |
+
+### 🐳 Docker
+| Arquivo | O que você vai aprender |
+|:--------|:------------------------|
+| [Docker](docker/README.md) | Containers, Dockerfile, Compose, segurança |
+
+### 🌐 Redes
+| Arquivo | O que você vai aprender |
+|:--------|:------------------------|
+| [Redes](redes/README.md) | TCP/IP avançado, firewalls, VPNs, troubleshooting |
+
+### 💾 Banco de Dados
+| Arquivo | O que você vai aprender |
+|:--------|:------------------------|
+| [Banco de Dados](banco-de-dados/README.md) | SQL, NoSQL, administração, SQL Injection |
+
+### 💻 Programação
+| Arquivo | O que você vai aprender |
+|:--------|:------------------------|
+| [Programação](programacao/README.md) | Python, Bash, automação, APIs REST |
 
 ---
 
