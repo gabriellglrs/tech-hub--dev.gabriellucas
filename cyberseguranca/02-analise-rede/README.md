@@ -1,53 +1,127 @@
-# Módulo 2: Análise de Rede
+# 🎯 Módulo 2: Análise de Rede
 
-> Capturar e interpretar o que está passando pela rede.
+> Seja um cirurgião de rede — intercepte, analise e entenda cada pacote que trafega.
 
----
+<div align="center">
 
-## O que você vai aprender
+| ⏱️ Tempo | 📊 Nível | 📁 Arquivos | 🔧 Ferramentas |
+|:--------:|:--------:|:-----------:|:--------------:|
+| 4-5 horas | ⭐⭐ Intermediário | 2 | 6 |
 
-Neste módulo, você vai aprender a **capturar e analisar tráfego de rede**. É como ter um "raio-x" da rede — você vê tudo que está passando por ela, incluindo senhas, dados e comunicações.
-
-## Pré-requisitos
-
-- Módulo 1 (Reconhecimento) concluído
-- Conhecimento básico de redes (TCP, UDP, HTTP, DNS)
-
-## Fluxo de Estudo
-
-```
-1. 01-sniffing-e-captura.md → Wireshark, TCPDump, Netcat, Socat
-        ↓
-2. 02-proxy-e-anonimato.md → Proxychains, Tor, Bettercap, Responder
-```
-
-## Arquivos deste Módulo
-
-| # | Arquivo | O que você vai aprender | Ferramentas |
-|---|---------|------------------------|-------------|
-| 1 | [01-sniffing-e-captura.md](01-sniffing-e-captura.md) | Capturar e filtrar tráfego de rede | `Wireshark, TCPDump, Netcat, Socat` |
-| 2 | [02-proxy-e-anonimato.md](02-proxy-e-anonimato.md) | Trafegar de forma anônima e interceptar comunicações | `Proxychains, Tor, Bettercap, Responder, mitmproxy` |
-
-## Dicas Práticas
-
-- **Wireshark é essencial** — aprenda os filtros BPF e Display
-- **Netcat é a "faca suíça"** — faça tudo: port scan, reverse shell, transferência de arquivos
-- **Proxychains + Tor = anonimato básico** — mas não é perfeito
-- **Bettercap para MITM** — ARP spoofing em rede local
-
-## Erros Comuns
-
-1. **Esquecer `sudo`** — sniffing requer permissões de root
-2. **Não filtrar** — capturar tudo gera arquivos gigantes e difíceis de analisar
-3. **Usar Tor sem entender** — Tor é lento e nem sempre anônimo o suficiente
-
-## Referências
-
-- [Wireshark Display Filter Reference](https://www.wireshark.org/docs/man-pages/wireshark-filter.html)
-- [TryHackMe - Wireshark](https://tryhackme.com/room/wireshark)
-- [HackTricks - Network](https://book.hacktricks.wiki/)
+</div>
 
 ---
 
-**Anterior:** [Módulo 1: Reconhecimento](../01-reconhecimento/)
-**Próximo:** [Módulo 3: Web & Aplicações](../03-web-aplicacoes/)
+## 🎓 Objetivos do Módulo
+
+Ao final deste módulo, você será capaz de:
+
+- [ ] Capturar e filtrar tráfego de rede em tempo real
+- [ ] Analisar pacotes para extrair credenciais e dados sensíveis
+- [ ] Interceptar comunicações com técnicas de MITM
+- [ ] Configurar proxies e VPNs para anonimato
+- [ ] Entender protocolos em todas as camadas do modelo OSI
+
+---
+
+## 📋 Pré-requisitos
+
+| Conhecimento | Necessário? | Onde aprender |
+|:-------------|:-----------:|:-------------:|
+| Linux básico | Sim | Módulo 0 do curso |
+| Redes (TCP, UDP, HTTP, DNS) | Sim | Fundamentos de Redes |
+| Módulo 1: Reconhecimento | Sim | [Módulo 1](../01-reconhecimento/) |
+
+---
+
+## 🗺️ Mapa do Módulo
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                   ANÁLISE DE REDE                       │
+├─────────────────────────────────────────────────────────┤
+│                                                         │
+│   ┌──────────────┐      ┌──────────────────────────┐   │
+│   │   SNIFFING   │      │     INTERCEPTAÇÃO        │   │
+│   │              │      │                          │   │
+│   │  • tcpdump   │      │  • mitmproxy (HTTP/S)    │   │
+│   │  • Wireshark │      │  • bettercap (ARP)       │   │
+│   │  • tshark    │      │  • Responder (LLMNR)    │   │
+│   └──────┬───────┘      └───────────┬──────────────┘   │
+│          │                          │                   │
+│          ▼                          ▼                   │
+│   ┌─────────────────────────────────────────────────┐   │
+│   │           PROXIES E ANONIMATO                   │   │
+│   │                                                 │   │
+│   │  • proxychains (rotação de proxies)             │   │
+│   │  • Tor (anonimato em camadas)                   │   │
+│   │  • VPN (tunelamento seguro)                     │   │
+│   └─────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 📚 Conteúdo
+
+| # | Arquivo | O que você vai aprender | Ferramentas | Tempo |
+|:--|:--------|:------------------------|:------------|:-----:|
+| 1 | [01-sniffing-e-captura.md](01-sniffing-e-captura.md) | Capturar e filtrar tráfego de rede | `tcpdump, Wireshark, tshark` | 2h |
+| 2 | [02-proxy-e-anonimato.md](02-proxy-e-anonimato.md) | Interceptar comunicações e usar proxies | `mitmproxy, bettercap, proxychains` | 3h |
+
+---
+
+## 💡 Dicas de Ouro
+
+> **Dica 1:** Wireshark é essencial — aprenda filtros BPF (captura) e Display (análise) para não se afogar em milhares de pacotes.
+
+> **Dica 2:** Use `tshark` em servidores sem GUI. É o Wireshark da linha de comando e funciona em qualquer lugar.
+
+> **Dica 3:** Proxychains + Tor é anonimato básico, mas não é perfeito. Para operações reais, considere VPN + Tor.
+
+---
+
+## ⚠️ Erros Comuns (e como evitar)
+
+| Erro | Consequência | Como evitar |
+|:-----|:-------------|:------------|
+| Esquecer `sudo` para sniffing | Permissão negada ou tráfego vazio | Sempre rode com privilégios de root |
+| Capturar tráfego sem filtrar | Arquivos gigantes impossíveis de analisar | Use filtros BPF desde o início (`port 80`) |
+| Usar Tor sem entender limitações | Lentidão e falsa sensação de segurança | Estude as limitações do Tor antes de depender dele |
+
+---
+
+## 🎮 Labs Recomendados
+
+| Lab | Plataforma | Dificuldade | Tempo | Link |
+|:----|:----------:|:-----------:|:-----:|:----:|
+| Wireshark | TryHackMe | ⭐⭐ | 1h | [Link](https://tryhackme.com/room/wireshark) |
+| Network Traffic Analysis | HackTheBox | ⭐⭐⭐ | 2h | [Link](https://app.hackthebox.com/) |
+
+---
+
+## 📖 Referências e Aprofundamento
+
+| Recurso | Tipo | Link |
+|:--------|:----:|:----:|
+| Wireshark Display Filter Reference | Guia | [wireshark.org](https://www.wireshark.org/docs/man-pages/wireshark-filter.html) |
+| TryHackMe - Wireshark | Lab | [tryhackme.com](https://tryhackme.com/room/wireshark) |
+| HackTricks - Network | Referência | [book.hacktricks.wiki](https://book.hacktricks.wiki/) |
+
+---
+
+## ✅ Checklist do Módulo
+
+- [ ] Li todos os arquivos
+- [ ] Instalei todas as ferramentas
+- [ ] Completei os labs práticos
+- [ ] Consigo explicar cada ferramenta
+- [ ] Sei quando usar cada uma
+
+---
+
+<div align="center">
+
+**⬅️ [Módulo 1: Reconhecimento](../01-reconhecimento/)** | **[Módulo 3: Web & Aplicações](../03-web-aplicacoes/) ➡️**
+
+</div>

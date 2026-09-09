@@ -1,54 +1,137 @@
-# Módulo 4: Exploração
+# 🎯 Módulo 4: Exploração
 
-> Quebrar senhas e explorar serviços para obter acesso.
+> Quebre qualquer senha e explore serviços para obter acesso total.
 
----
+<div align="center">
 
-## O que você vai aprender
+| ⏱️ Tempo | 📊 Nível | 📁 Arquivos | 🔧 Ferramentas |
+|:--------:|:--------:|:-----------:|:--------------:|
+| 4-5 horas | ⭐⭐ Intermediário | 2 | 6 |
 
-Neste módulo, você vai aprender a **quebrar senhas e explora serviços** para obter acesso não autorizado. É a fase onde o ataque realmente acontece — depois de descobrir o alvo, agora vamos entrar.
-
-## Pré-requisitos
-
-- Módulo 1 (Reconhecimento) concluído
-- Módulo 2 (Análise de Rede) recomendado
-- Conhecimento de autenticação (SSH, FTP, HTTP, SMB)
-
-## Fluxo de Estudo
-
-```
-1. 01-brute-force-e-cracking.md → Hydra, John, Hashcat
-        ↓
-2. 02-wordlists-e-ferramentas.md → SecLists, Crunch, CeWL
-```
-
-## Arquivos deste Módulo
-
-| # | Arquivo | O que você vai aprender | Ferramentas |
-|---|---------|------------------------|-------------|
-| 1 | [01-brute-force-e-cracking.md](01-brute-force-e-cracking.md) | Quebrar senhas e hashes de serviços | `Hydra, John, Hashcat` |
-| 2 | [02-wordlists-e-ferramentas.md](02-wordlists-e-ferramentas.md) | Usar e criar listas de senhas e usuários | `SecLists, Crunch, CeWL` |
-
-## Dicas Práticas
-
-- **Hydra para serviços** — SSH, FTP, HTTP forms, SMB, RDP
-- **John para hashes** — mais formatos suportados que Hashcat
-- **Hashcat para GPU** — muito mais rápido que John para hashes simples
-- **Comece com listas pequenas** — `Top1000.txt` antes de `rockyou.txt`
-
-## Erros Comuns
-
-1. **Usar `-t 64` no Hydra** — threads demais causam falsos positivos
-2. **Não identificar o hash** — use `hashid` antes de tentar quebrar
-3. **Esquecer regras** — John e Hashcat com `--rules` quebram mais senhas
-
-## Referências
-
-- [Hashcat Example Hashes](https://hashcat.net/wiki/doku.php?id=example_hashes)
-- [TryHackMe - Brute Force](https://tryhackme.com/room/bruteit)
-- [HackTricks - Brute Force](https://book.hacktricks.wiki/)
+</div>
 
 ---
 
-**Anterior:** [Módulo 3: Web & Aplicações](../03-web-aplicacoes/)
-**Próximo:** [Módulo 5: Pós-Exploração](../05-pos-exploracao/)
+## 🎓 Objetivos do Módulo
+
+Ao final deste módulo, você será capaz de:
+
+- [ ] Realizar ataques de brute force em serviços (SSH, FTP, HTTP)
+- [ ] Quebrar hashes de senhas com John e Hashcat
+- [ ] Criar wordlists e lists de usuários customizados
+- [ ] Identificar tipos de hash e escolher a ferramenta correta
+- [ ] Entender mecanismos de autenticação e suas fraquezas
+
+---
+
+## 📋 Pré-requisitos
+
+| Conhecimento | Necessário? | Onde aprender |
+|:-------------|:-----------:|:-------------:|
+| Linux básico | Sim | Módulo 0 do curso |
+| Redes (TCP/IP, portas) | Sim | Fundamentos de Redes |
+| Módulo 1: Reconhecimento | Sim | [Módulo 1](../01-reconhecimento/) |
+| Módulo 2: Análise de Rede | Recomendado | [Módulo 2](../02-analise-rede/) |
+
+---
+
+## 🗺️ Mapa do Módulo
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                   EXPLORAÇÃO                            │
+├─────────────────────────────────────────────────────────┤
+│                                                         │
+│   ┌─────────────────────────────────────────────────┐   │
+│   │           BRUTE FORCE                           │   │
+│   │                                                 │   │
+│   │  • Hydra ──── SSH, FTP, HTTP, SMB, RDP         │   │
+│   │  • Medusa ─── Múltiplos protocolos              │   │
+│   │  • Ncrack ─── Serviços de rede                  │   │
+│   └──────────────────────┬──────────────────────────┘   │
+│                          │                               │
+│                          ▼                               │
+│   ┌─────────────────────────────────────────────────┐   │
+│   │           QUEBRA DE HASHES                      │   │
+│   │                                                 │   │
+│   │  • hashid ──── Identificar tipo de hash         │   │
+│   │  • John ────── CPU (muitos formatos)            │   │
+│   │  • Hashcat ─── GPU (muito mais rápido)          │   │
+│   └──────────────────────┬──────────────────────────┘   │
+│                          │                               │
+│                          ▼                               │
+│   ┌─────────────────────────────────────────────────┐   │
+│   │           WORDLISTS                             │   │
+│   │                                                 │   │
+│   │  • CeWL ────── Gerar de sites web               │   │
+│   │  • Crunch ──── Gerar por padrão/charset         │   │
+│   │  • SecLists ── Coleção completa                 │   │
+│   └─────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 📚 Conteúdo
+
+| # | Arquivo | O que você vai aprender | Ferramentas | Tempo |
+|:--|:--------|:------------------------|:------------|:-----:|
+| 1 | [01-brute-force-e-cracking.md](01-brute-force-e-cracking.md) | Quebrar senhas e hashes de serviços | `Hydra, John, Hashcat, hashid` | 3h |
+| 2 | [02-wordlists-e-ferramentas.md](02-wordlists-e-ferramentas.md) | Usar e criar listas de senhas e usuários | `CeWL, Crunch, SecLists` | 2h |
+
+---
+
+## 💡 Dicas de Ouro
+
+> **Dica 1:** Sempre identifique o hash com `hashid` antes de tentar quebrar. Usar o modo errado é perda de tempo.
+
+> **Dica 2:** John com `--wordlist` e `--rules` quebra muito mais senhas que apenas lista pura. Explore as regras!
+
+> **Dica 3:** Hashcat na GPU é 10-100x mais rápido que John na CPU. Para hashes simples, sempre prefira Hashcat.
+
+---
+
+## ⚠️ Erros Comuns (e como evitar)
+
+| Erro | Consequência | Como evitar |
+|:-----|:-------------|:------------|
+| Usar `-t 64` no Hydra | Falsos positivos e bloqueio por rate-limiting | Comece com `-t 4` e aumente gradualmente |
+| Não identificar o hash | Perda de tempo tentando modos errados | Rode `hashid` ou `hash-identifier` primeiro |
+| Esquecer regras no John | Senhas complexas não quebradas | Use `--rules` ou crie regras customizadas |
+
+---
+
+## 🎮 Labs Recomendados
+
+| Lab | Plataforma | Dificuldade | Tempo | Link |
+|:----|:----------:|:-----------:|:-----:|:----:|
+| Brute It | TryHackMe | ⭐⭐ | 1h | [Link](https://tryhackme.com/room/bruteit) |
+| Jack of All Trades | TryHackMe | ⭐⭐ | 45min | [Link](https://tryhackme.com/room/jackofalltrades) |
+
+---
+
+## 📖 Referências e Aprofundamento
+
+| Recurso | Tipo | Link |
+|:--------|:----:|:----:|
+| Hashcat Example Hashes | Referência | [hashcat.net](https://hashcat.net/wiki/doku.php?id=example_hashes) |
+| TryHackMe - Brute Force | Lab | [tryhackme.com](https://tryhackme.com/room/bruteit) |
+| HackTricks - Brute Force | Referência | [book.hacktricks.wiki](https://book.hacktricks.wiki/) |
+
+---
+
+## ✅ Checklist do Módulo
+
+- [ ] Li todos os arquivos
+- [ ] Instalei todas as ferramentas
+- [ ] Completei os labs práticos
+- [ ] Consigo explicar cada ferramenta
+- [ ] Sei quando usar cada uma
+
+---
+
+<div align="center">
+
+**⬅️ [Módulo 3: Web & Aplicações](../03-web-aplicacoes/)** | **[Módulo 5: Pós-Exploração](../05-pos-exploracao/) ➡️**
+
+</div>
