@@ -49,6 +49,17 @@ if ! $COPY_ONLY; then
   command -v batcat >/dev/null && ln -sf "$(command -v batcat)" ~/.local/bin/bat 2>/dev/null || true
   success "Pacotes base instalados"
 
+  step "Glow (renderizador de markdown no terminal)..."
+  if ! command -v glow >/dev/null 2>&1 && [[ ! -f ~/.local/bin/glow ]]; then
+    GLOW_VERSION="2.0.0"
+    curl -sL "https://github.com/charmbracelet/glow/releases/download/v${GLOW_VERSION}/glow_${GLOW_VERSION}_Linux_x86_64.tar.gz" | tar xz -C /tmp/
+    mv "/tmp/glow_${GLOW_VERSION}_Linux_x86_64/glow" ~/.local/bin/glow
+    rm -rf "/tmp/glow_${GLOW_VERSION}_Linux_x86_64"
+    success "Glow instalado"
+  else
+    success "Glow já existe"
+  fi
+
   step "Oh My Zsh..."
   if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
@@ -190,6 +201,8 @@ echo ""
 success "Pronto! Reabra o terminal ou rode: exec zsh"
 echo ""
 echo "Comandos úteis:"
+echo "  comandos        - guia de Linux do básico ao avançado"
+echo "  cyberseg        - guia de comandos de cybersegurança"
 echo "  p10k configure  - reconfigurar o prompt"
 echo "  ll              - listagem detalhada"
 echo "  gs              - git status"
