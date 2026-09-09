@@ -116,6 +116,12 @@ FASE 4: ESPECIALIZAÇÃO (Módulos 9-10)
 
 ## 📚 Módulos da Trilha
 
+### Pré-Requisitos
+
+| # | Módulo | Arquivos | Tempo | O que você vai aprender |
+|:--|:-------|:--------:|:-----:|:------------------------|
+| 0 | [Pré-Requisitos](00-pre-requisitos/) | 11 | 6-7h | Redes, Linux, VMs, Python, Windows, Segurança |
+
 ### Fase 1: Fundamentos
 
 | # | Módulo | Arquivos | Tempo | O que você vai aprender |
@@ -152,10 +158,10 @@ FASE 4: ESPECIALIZAÇÃO (Módulos 9-10)
 
 | Métrica | Valor |
 |:--------|:-----:|
-| Total de módulos | 10 |
-| Total de arquivos | 30+ |
-| Total de exercícios | 60+ |
-| Tempo estimado | ~50-60 horas |
+| Total de módulos | 11 (0-10) |
+| Total de arquivos | 40+ |
+| Total de exercícios | 78+ |
+| Tempo estimado | ~60-70 horas |
 | Nível | Iniciante → Avançado |
 
 ---
