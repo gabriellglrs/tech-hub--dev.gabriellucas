@@ -4,6 +4,16 @@
 
 ---
 
+## Instalação das Ferramentas
+
+```bash
+sudo apt install -y ghidra radare2 gdb
+# Ghidra: download de https://ghidra-sre.org/
+# GEF para GDB: bash -c "$(curl -fsSL https://raw.githubusercontent.com/hugsy/gef/main/gef.sh)"
+```
+
+---
+
 ## 🚀 Passo a Passo
 
 ### Passo 1: Triagem
@@ -58,3 +68,12 @@ gef> checksec
 
 - Comece por `strings` e `ltrace/strace` antes de abrir no Ghidra
 - Procure por funções perigosas: `gets, strcpy, sprintf, system`
+
+## Lab Prático
+
+1. **TryHackMe — Reversing: Basics** — Pratique triagem com `strings`, `file`, `checksec` e disassembly básico no radare2 em binários CTF.
+   - https://tryhackme.com/room/reversingasics
+2. **TryHackMe — Reverse Engineering: Malware** — Decompile binários no Ghidra, identifique funções perigosas e reconstrua a lógica do programa.
+   - https://tryhackme.com/room/reverseengineeringmalware
+3. **Crackmes.one** — Baixe binários de dificuldade crescente, pratique reversing estático e dinâmico sem dicas.
+   - https://crackmes.one

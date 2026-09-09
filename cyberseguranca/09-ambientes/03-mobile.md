@@ -4,6 +4,24 @@
 
 ---
 
+## 🛠️ Instalação
+
+```bash
+# MobSF
+pip3 install mobsf
+
+# Frida
+pip3 install frida-tools
+
+# Apktool
+sudo apt install -y apktool
+
+# jadx (decompilar APK)
+sudo apt install -y jadx
+```
+
+---
+
 ## 🚀 Passo a Passo
 
 ### Passo 1: Análise estática (MobSF)
@@ -59,3 +77,44 @@ mitmproxy -p 8080
 - [ ] Comunicação insegura (sem pinning)
 - [ ] Autenticação fraca
 - [ ] Código ofuscado? (ou fácil de reverter)
+
+---
+
+## 🧪 Labs Práticos
+
+### TryHackMe
+- **[Mobile Hacking](https://tryhackme.com/room/androidhacking101)** — Fundamentos de análise Android
+- **[Insecure Android](https://tryhackme.com/room/insecureandroid)** — App Android com vulnerabilidades OWASP Top 10
+
+### HackTheBox
+- **[Mobile Challenges](https://app.hackthebox.com/challenges/mobile)** — Desafios de engenharia reversa mobile
+
+### Exercícios Locais
+```bash
+# Analisar APK com MobSF (via Docker)
+docker run -it --rm -p 8000:8000 opensecurity/mobile-security-framework-mobsf
+# Acesse http://localhost:8000 e faça upload de um APK
+
+# Descompilar APK com apktool
+apktool d target_app.apk -o decompiled/
+
+# Decompilar com jadx (código Java)
+jadx -d jadx_output/ target_app.apk
+
+# Hook com Frida em app-alvo
+frida-ps -U | grep target
+frida -U -f com.target.app -l hook_script.js --no-pause
+
+# Interceptar tráfego com mitmproxy
+mitmproxy -p 8080
+# Configurar proxy no emulador: 10.0.2.2:8080
+```
+
+### Desafio Integrado
+1. Pegue um APK deCTF (ex: DIVA, InsecureBankv2)
+2. Execute análise estática com MobSF
+3. Descompile e encontre hardcoded secrets
+4. Use Frida para bypass SSL pinning
+5. Documente todas as vulnerabilidades encontradas
+
+> **Dica:** Para testes dinâmicos, use emuladores Android (Genymotion) ou dispositivos físicos rooteados (Magisk).

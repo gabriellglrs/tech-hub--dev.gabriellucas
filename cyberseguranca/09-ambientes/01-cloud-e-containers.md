@@ -4,6 +4,24 @@
 
 ---
 
+## 🛠️ Instalação
+
+```bash
+# AWS CLI
+sudo apt install -y awscli
+
+# Docker
+sudo apt install -y docker.io docker-compose
+
+# Trivy (scan de containers)
+go install github.com/aquasecurity/trivy@latest
+
+# kube-hunter (scan de Kubernetes)
+pip3 install kube-hunter
+```
+
+---
+
 ## 🚀 Passo a Passo
 
 ### Passo 1: Enumeração pública (sem credencial)
@@ -72,3 +90,41 @@ az ad sp list --all
 - IAM role com `*:*`
 - Security group `0.0.0.0/0` na porta 22/3389
 - Chaves hardcoded no GitHub
+
+---
+
+## 🧪 Labs Práticos
+
+### TryHackMe
+- **[Cloud](https://tryhackme.com/room/awsfundamentals)** — AWS Fundamentals:枚举 e enumeração de serviços cloud
+- **[Docker](https://tryhackme.com/room/dockersecurity)** — Docker Security: vulnerabilidades em containers
+- **[Kubernetes](https://tryhackme.com/room/kubernetespwn)** — Kubernetes exploitation: privesc em clusters K8s
+
+### HackTheBox
+- **[Cloud](https://app.hackthebox.com/challenges/cloud)** — Desafios de cloud misconfiguration (AWS/Azure/GCP)
+- **[Containers](https://app.hackthebox.com/challenges/containers)** — Escape de container e docker breakout
+- **[Pro Labs: RastaLabs](https://app.hackthebox.com/prolabs/rastalabs)** — Ambiente enterprise com cloud e containers
+
+### Exercícios Locais
+```bash
+# Scan de imagem Docker com Trivy
+docker pull nginx:latest
+trivy image nginx:latest
+
+# Scan de manifesto Kubernetes
+trivy config ./k8s-manifests/
+
+# Enumerar buckets S3 públicos
+cloud_enum -k target_company --quickscan
+
+# Auditar configuração AWS com Prowler
+prowler aws --compliance cis_2.0_aws
+```
+
+### Desafio Integrado
+1. Suba um container vulnerable (ex: `docker run -d vulnerabledvwa`)
+2. Escaneie com Trivy e identifique CVEs
+3. Execute exploit no container
+4. Documente o relatório de findings
+
+> **Dica:** Para labs de cloud, sempre use contas sandbox/gratuitas (AWS Free Tier, GCP Free Trial) e nunca use credenciais reais em Produção.

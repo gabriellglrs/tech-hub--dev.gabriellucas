@@ -4,6 +4,18 @@
 
 ---
 
+## Instalação das Ferramentas
+
+```bash
+sudo apt install -y suricata snort zeek
+sudo suricata-update
+# Wazuh SIEM (agent):
+curl -sO https://packages.wazuh.com/4.7/wazuh-install.sh
+sudo bash wazuh-install.sh -a
+```
+
+---
+
 ## 🚀 IDS/IPS — Detecção e Prevenção de Intrusão
 
 ### Suricata (IDS/IPS mais moderno)
@@ -127,3 +139,12 @@ docker run -d --name graylog -p 9000:9000 -p 12201:12201 graylog/graylog
 4. Alerta → Ticket (TheHive, Shuffle)
 5. Resposta (isolamento, bloqueio, forense)
 ```
+
+## Lab Prático
+
+1. **TryHackMe — Suricata** — Configure regras de detecção, analise logs `eve.json` e identifique tráfego malicioso com Suricata.
+   - https://tryhackme.com/room/suricata
+2. **TryHackMe — Wazuh** — Implemente um SIEM com Wazuh, crie regras customizadas e monitore agentes em tempo real.
+   - https://tryhackme.com/room/wazuh
+3. **TryHackMe — Snort** — Escreva regras de detecção, analise PCAPs e configure modos IPS com Snort.
+   - https://tryhackme.com/room/snort

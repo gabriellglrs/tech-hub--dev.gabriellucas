@@ -4,6 +4,18 @@
 
 ---
 
+## 🛠️ Instalação
+
+```bash
+# Lynis (auditoria)
+sudo apt install -y lynis
+
+# OpenSCAP
+sudo apt install -y libopenscap8 ssg-debian
+```
+
+---
+
 ## 1. GRC — Governança, Risco e Compliance
 
 ### Passo a Passo
@@ -140,3 +152,48 @@ Comece pelo Anexo A.17 (Continuidade) e A.8 (Tecnológico) → são os que mais 
 | **GRC** | Governança e riscos | Matriz de riscos + PSI |
 | **LGPD** | Dados pessoais | ROPA + DPIA |
 | **ISO 27001** | SGSI certificável | SoA + 93 controles |
+
+---
+
+## 🧪 Labs Práticos
+
+### Exercícios de Auditoria
+```bash
+# Auditoria com Lynis
+sudo lynis audit system
+
+# Verificar compliance com OpenSCAP
+sudo oscap xccdf eval --profile xccdf_org.ssgproject.content_profile_standard \
+  --results results.xml /usr/share/xml/scap/ssg/content/ssg-debian-ds.xml
+
+# Gerar relatório HTML
+sudo oscap xccdf generate report results.xml > relatorio.html
+```
+
+### Exercícios de Compliance (Práticos)
+1. **Gap Analysis LGPD:**
+   - Crie um ROPA para uma empresa fictícia (10+ processamento de dados)
+   - Identifique bases legais para cada tipo de dado
+   - Documente gap analysis: o que falta para adequação total
+
+2. **Implementação ISO 27001:**
+   - Elabore uma Política de Segurança da Informação (PSI)
+   - Monte a Declaração de Aplicabilidade (SoA) com 10 controles do Anexo A
+   - Crie matriz de riscos para 5 cenários (ex: ransomware, vazamento de dados, phishing)
+
+3. **Auditoria com Lynis:**
+   - Execute `lynis audit system` em um servidor Linux
+   - Identifique 3 findings de alto risco
+   - Proponha remediação para cada um
+
+4. **Relatório GRC:**
+   - Simule uma empresa de e-commerce
+   - Crie: PSI, Matriz de Riscos, ROPA, Plano de Incidentes
+   - Apresente como entregável para a diretoria
+
+### Recursos
+- **[TryHackMe: GRC Fundamentals](https://tryhackme.com/room/grcfundamentals)** — Conceitos de governança
+- **[ISO 27001 Toolkit](https://www.isms.online/iso-27001/)** — Templates e checklists
+- **[LGPD Guide](https://www.gov.br/anpd/)** — Portal oficial da ANPD
+
+> **Dica:** Comece sempre pelo ativo crítico (dados sensíveis) e use a matriz de riscos para priorizar investimentos em segurança.

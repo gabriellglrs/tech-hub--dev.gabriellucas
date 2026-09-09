@@ -20,8 +20,14 @@ Esta é uma trilha de aprendizado completa para quem quer entrar no mundo da cyb
 │  3. WEB & APLICAÇÕES   → Encontrar falhas em sites          │
 │  4. EXPLORAÇÃO         → Quebrar senhas e entrar            │
 │  5. PÓS-EXPLORAÇÃO     → Explorar mais e se manter lá      │
-│  6. DEFESA             → Proteger sistemas e redes          │
-│  7. RESPOSTA           → Investigar o que aconteceu         │
+│  6. ENGENHARIA REVERSA → Entender binários e exploits       │
+│  7. DEFESA             → Proteger sistemas e redes          │
+│  8. RESPOSTA           → Investigar o que aconteceu         │
+│  9. AMBIENTES ESPECIAIS → Cloud, Mobile, Wireless           │
+│  10. GOVERNANÇA        → LGPD, ISO 27001, Criptografia     │
+│  11. API SECURITY      → BOLA, BFLA, SSRF, JWT              │
+│  12. DATABASE SECURITY → SQL/NoSQL injection, enumeração    │
+│  13. FRONTEND SECURITY → XSS, CSRF, CSP, CORS              │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -30,6 +36,8 @@ Esta é uma trilha de aprendizado completa para quem quer entrar no mundo da cyb
 
 ## Módulos da Trilha
 
+### Fase 1: Fundamentos (Módulos 1-5)
+
 | # | Módulo | Arquivos | Descrição |
 |---|--------|----------|-----------|
 | 1 | [Reconhecimento](01-reconhecimento/) | 2 | Descobrir alvos: DNS, Nmap, OSINT, subdomínios |
@@ -37,11 +45,34 @@ Esta é uma trilha de aprendizado completa para quem quer entrar no mundo da cyb
 | 3 | [Web & Aplicações](03-web-aplicacoes/) | 2 | Testar sites: Gobuster, FFUF, SQLMap, Nikto |
 | 4 | [Exploração](04-exploracao/) | 2 | Quebrar senhas: Hydra, John, Hashcat, SecLists |
 | 5 | [Pós-Exploração](05-pos-exploracao/) | 2 | Manter acesso: Impacket, Linpeas, pivoting |
+
+### Fase 2: Avançado (Módulos 6-10)
+
+| # | Módulo | Arquivos | Descrição |
+|---|--------|----------|-----------|
 | 6 | [Engenharia Reversa](06-reversing/) | 2 | Entender binários: Ghidra, Radare2, exploits |
 | 7 | [Defesa](07-defesa/) | 2 | Proteger: Hardening, IDS/IPS, SIEM, WAF |
 | 8 | [Resposta a Incidentes](08-resposta/) | 2 | Investigar: Forense computacional, análise de malware |
 | 9 | [Ambientes Especiais](09-ambientes/) | 3 | Cloud, Containers, Wireless, Mobile |
 | 10 | [Governança & Criptografia](10-governanca/) | 2 | GRC, LGPD, ISO 27001, Criptografia |
+
+### Fase 3: Especialização (Módulos 11-13)
+
+| # | Módulo | Arquivos | Descrição |
+|---|--------|----------|-----------|
+| 11 | [API Security](11-api-security/) | 2 | BOLA, BFLA, SSRF, JWT, rate limiting |
+| 12 | [Database Security](12-database-security/) | 2 | MySQL, PostgreSQL, MongoDB, SQL injection avançado |
+| 13 | [Frontend Security](13-frontend-security/) | 2 | XSS, CSRF, CSP, CORS, cookie security |
+
+---
+
+## Cheatsheets (Referência Rápida)
+
+| Arquivo | Conteúdo |
+|---------|----------|
+| [CHEATSHEET-recon-web.md](CHEATSHEET-recon-web.md) | Nmap, Gobuster, FFUF, SQLMap, Nikto |
+| [CHEATSHEET-exploracao.md](CHEATSHEET-exploracao.md) | Hydra, John, Hashcat, Netcat, Pivoting |
+| [CHEATSHEET-defesa-forense.md](CHEATSHEET-defesa-forense.md) | Lynis, UFW, Suricata, Wireshark, Forense |
 
 ---
 
@@ -68,7 +99,13 @@ INÍCIO
   │
   ├── [9] Ambientes Especiais ─────────── Cloud, Mobile, Wireless
   │
-  └── [10] Governança & Criptografia ──── LGPD, ISO 27001, Cripto
+  ├── [10] Governança & Criptografia ──── LGPD, ISO 27001, Cripto
+  │
+  ├── [11] API Security ───────────────── APIs REST, GraphQL, JWT
+  │
+  ├── [12] Database Security ──────────── Bancos SQL/NoSQL
+  │
+  └── [13] Frontend Security ──────────── XSS, CSRF, CSP
 ```
 
 ---
@@ -88,7 +125,7 @@ sudo apt update && sudo apt upgrade -y
 sudo apt install -y git curl wget
 
 # Clonar este repositório
-git clone https://github.com/SEU_USUARIO/minhas_config_linux_terminal.git
+git clone https://github.com/gabriellglrs/minhas_config_linux_terminal.git
 cd minhas_config_linux_terminal/cyberseguranca
 ```
 
@@ -112,6 +149,7 @@ cd minhas_config_linux_terminal/cyberseguranca
 3. **Crie seu laboratório** — VMs no VirtualBox ou containers no Docker
 4. **Documente o que aprende** — crie seus próprios cheatsheets
 5. **Estude ética primeiro** — sempre pergunte: "isso é legal?"
+6. **Use os labs práticos** — cada módulo tem exercícios no TryHackMe/HackTheBox
 
 ---
 
@@ -140,6 +178,12 @@ cd minhas_config_linux_terminal/cyberseguranca
 
 ### Resposta
 `Autopsy` · `Volatility` · `Plaso` · `YARA` · `Cuckoo` · `REMnux`
+
+### API & Database
+`Postman` · `Kiterunner` · `Arjun` · `SQLMap` · `NoSQLMap`
+
+### Frontend
+`XSS Hunter` · `Burp Suite` · `OWASP ZAP`
 
 ### Especializado
 `Trivy` · `Kube-bench` · `Aircrack-ng` · `MobSF` · `Frida`

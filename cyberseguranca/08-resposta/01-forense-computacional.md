@@ -4,6 +4,14 @@
 
 ---
 
+## Instalação das Ferramentas
+
+```bash
+sudo apt install -y autopsy sleuthkit volatility3 ewf-tools plaso
+```
+
+---
+
 ## 🚀 Passo a Passo
 
 ### Passo 1: Criar imagem forense (preservação)
@@ -78,3 +86,12 @@ bulk_extractor -o bulk_out captura.pcap
 - [ ] Lacre físico + termo de apreensão
 - [ ] Log de quem acessou (data, hora, ação)
 - [ ] Cópia de trabalho, original preservado
+
+## Lab Prático
+
+1. **TryHackMe — Forensics: Basics** — Crie imagens forense com `dd`, analise com Autopsy/SleuthKit e recupere arquivos deletados.
+   - https://tryhackme.com/room/forensicsbasics
+2. **TryHackMe — Volatility** — Analise dumps de memória com Volatility 3, identifique processos maliciosos e extraia artefatos de rede.
+   - https://tryhackme.com/room/volatility
+3. **NIST CFReDS** — Casos reais de forense digital com evidências para praticar cadeia de custódia e timeline analysis.
+   - https://cfreds.nist.gov

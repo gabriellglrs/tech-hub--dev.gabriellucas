@@ -4,6 +4,14 @@
 
 ---
 
+## Instalação das Ferramentas
+
+```bash
+sudo apt install -y lynis ufw iptables-persistent openscap-scanner
+```
+
+---
+
 ## 🚀 Hardening — Passo a Passo
 
 ### Passo 1: Auditoria inicial (Lynis)
@@ -127,3 +135,12 @@ sudo ufw limit 22/tcp
 sudo ufw logging on
 sudo dmesg | grep -i ufw
 ```
+
+## Lab Prático
+
+1. **TryHackMe — Blue Team** — Configure UFW para negar/liberar tráfego, audite um servidor com Lynis e aplique recomendações CIS Benchmark.
+   - https://tryhackme.com/room/blue
+2. **TryHackMe — Linux Hardening** — Pratique hardening de kernel (sysctl), políticas de senha, permissões de arquivos e configuração SSH segura.
+   - https://tryhackme.com/room/linuxhardening
+3. **CyberDefenders — IDA** — Analise alertas de firewall e correlacione com tentativas de intrusão reais.
+   - https://cyberdefenders.org
