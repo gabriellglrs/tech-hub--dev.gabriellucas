@@ -12,7 +12,17 @@
 
 ## 🎯 O que é este repo?
 
-Meu **repositório pessoal** com configuração de terminal e trilhas de aprendizado organizadas por área.
+Meu **repositório pessoal** com configuração de terminal e trilhas de aprendizado completas — **40 pastas** organizadas por área, guias de comandos e instalador automático.
+
+### O que tem dentro
+
+- **🖥️ Terminal** — Zsh + Powerlevel10k + Nerd Font + aliases de produtividade
+- **📚 Guia de Comandos** — 150+ comandos Linux do básico ao avançado (formatado com `glow`)
+- **🔐 Guia de Cybersegurança** — Todos os comandos de pentest (Nmap, Hydra, John, sqlmap, forense...)
+- **🛡️ Cybersegurança** — Trilha completa do zero ao profissional (11 módulos)
+- **🎯 DevOps** — Docker, Kubernetes, CI/CD, Terraform, monitoramento
+- **🧠 IA / Dados / Gestão** — Machine Learning, pipelines, Agile, soft skills
+- **🔧 Infraestrutura** — Linux admin, Windows, Cloud, Redes
 
 ---
 
@@ -174,16 +184,34 @@ Trilha completa **do zero ao profissional** — 11 módulos, 40+ arquivos, ~70h.
 
 | Arquivo | Descrição |
 |:--------|:----------|
-| [install.sh](install.sh) | Instalador automático (zsh, plugins, ferramentas) |
-| [zsh/.zshrc](zsh/.zshrc) | Config do Zsh |
+| [install.sh](install.sh) | Instalador automático (zsh, plugins, ferramentas, glow) |
+| [zsh/.zshrc](zsh/.zshrc) | Config do Zsh + aliases de produtividade |
 | [zsh/.p10k.zsh](zsh/.p10k.zsh) | Config do Powerlevel10k |
-| [**Comandos Linux**](terminal/README.md) | Do básico ao avançado — 150+ comandos (navegação, permissões, awk/sed, systemd, redes, LVM) |
-| [**Cybersegurança**](terminal/CYBERSEG.md) | Comandos de pentest — Nmap, Hydra, John, Hashcat, sqlmap, Wireshark, forense, hardening |
+| [**Comandos Linux**](terminal/README.md) | Do básico ao avançado — 150+ comandos |
+| [**Cybersegurança**](terminal/CYBERSEG.md) | Comandos de pentest — Nmap, Hydra, John, sqlmap... |
+
+### Instalação
 
 ```bash
-./install.sh            # Só base dev
-./install.sh --sec      # Base + cyberseg
+git clone https://github.com/gabriellglrs/minhas_config_linux_terminal.git
+cd minhas_config_linux_terminal
+./install.sh            # Base dev (zsh, plugins, ferramentas)
+./install.sh --sec      # Base + cybersegurança
+./install.sh --wsl      # Base + integração WSL2
+./install.sh --copy-only # Só copia .zshrc/.p10k (sem apt)
 ```
+
+### Comandos úteis (após instalação)
+
+| Comando | O que faz |
+|:--------|:----------|
+| `comandos` | Guia de Linux básico ao avançado (formatado com glow) |
+| `cyberseg` | Guia de comandos de cybersegurança |
+| `p10k configure` | Reconfigurar o prompt |
+| `ll` | Listagem detalhada |
+| `gs` | Git status |
+| `extract arquivo` | Extrair qualquer formato compactado |
+| `mkcd pasta` | Criar e entrar na pasta |
 
 ---
 
