@@ -144,6 +144,12 @@ nuclei -u https://target.com/api/ -severity critical,high
 
 ---
 
+## 🧪 Laboratório Prático
+
+> **Exercícios detalhados com passo a passo, macetes e links!**
+
+👉 **[Acessar LABS.md](LABS.md)** — 6+ exercícios práticos com objetivos, ferramentas, macetes e links diretos
+
 ## 🧪 Labs Recomendados
 
 ### PortSwigger API Labs

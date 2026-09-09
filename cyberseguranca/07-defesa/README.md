@@ -131,6 +131,12 @@ sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
 
 ---
 
+## 🧪 Laboratório Prático
+
+> **Exercícios detalhados com passo a passo, macetes e links!**
+
+👉 **[Acessar LABS.md](LABS.md)** — 6+ exercícios práticos com objetivos, ferramentas, macetes e links diretos
+
 ## 🧪 Labs Recomendados
 
 ### 🟢 Iniciante

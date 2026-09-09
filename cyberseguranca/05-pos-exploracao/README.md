@@ -102,6 +102,12 @@ Ao final deste módulo, você será capaz de:
 
 ---
 
+## 🧪 Laboratório Prático
+
+> **Exercícios detalhados com passo a passo, macetes e links!**
+
+👉 **[Acessar LABS.md](LABS.md)** — 6+ exercícios práticos com objetivos, ferramentas, macetes e links diretos
+
 ## 🎮 Labs Recomendados
 
 | Lab | Plataforma | Dificuldade | Tempo | Link |
