@@ -182,7 +182,7 @@ Antes de avançar para o próximo módulo, verifique:
 │                      🗺️ MAPA DA TRILHA                          │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
-│  ◀── Módulo 6: Engenharia Reversa                              │
+│  ◀── Módulo 6: Análise de Rede                                  │
 │       │                                                         │
 │       ▼                                                         │
 │  ┌─────────────────────────────────────────┐ ◀── VOCÊ ESTÁ AQUI │
@@ -197,7 +197,7 @@ Antes de avançar para o próximo módulo, verifique:
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-**⬅️ Anterior:** [Módulo 6: Engenharia Reversa](../06-reversing/)
+**⬅️ Anterior:** [Módulo 6: Análise de Rede](../06-analise-rede/)
 **➡️ Próximo:** [Módulo 8: Resposta a Incidentes](../08-resposta/)
 
 ---

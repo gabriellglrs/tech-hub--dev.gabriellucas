@@ -1,4 +1,4 @@
-# 🎯 Módulo 2: Análise de Rede
+# 🎯 Módulo 6: Análise de Rede (Sniffing)
 
 > Seja um cirurgião de rede — intercepte, analise e entenda cada pacote que trafega.
 
@@ -128,6 +128,6 @@ Ao final deste módulo, você será capaz de:
 
 <div align="center">
 
-**⬅️ [Módulo 1: Reconhecimento](../01-reconhecimento/)** | **[Módulo 3: Web & Aplicações](../03-web-aplicacoes/) ➡️**
+**⬅️ [Módulo 5: Reversing](../05-reversing/)** | **[Módulo 7: Defesa](../07-defesa/) ➡️**
 
 </div>

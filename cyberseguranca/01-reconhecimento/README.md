@@ -1,4 +1,4 @@
-# 🎯 Módulo 1: Reconhecimento
+# 🎯 Módulo 1: Reconhecimento e Enumeração
 
 > Torne-se um detetive digital — descobra tudo sobre um alvo antes de ele saber que você existe.
 
@@ -126,6 +126,6 @@ Ao final deste módulo, você será capaz de:
 
 <div align="center">
 
-**⬅️ Módulo 0: Introdução** | **[Módulo 2: Análise de Rede](../02-analise-rede/) ➡️**
+**⬅️ Módulo 0: Introdução** | **[Módulo 2: Web & Aplicações](../02-web-aplicacoes/) ➡️**
 
 </div>

@@ -1,204 +1,146 @@
-# Trilha de Aprendizado em Cybersegurança
+# 🛡️ Trilha de Aprendizado em Cybersegurança
 
-> Do zero ao avançado seguindo o fluxo de ataque real.
+> Do zero ao profissional seguindo o fluxo real de ataque e defesa.
 
 ---
 
-## O que é esta trilha?
+## 🎯 Por que esta trilha?
 
-Esta é uma trilha de aprendizado completa para quem quer entrar no mundo da cybersegurança. **Não é um cheat sheet** — é um guia progressivo que te leva do absoluto início até técnicas avançadas, sempre seguindo o **fluxo de ataque real** usado por profissionais.
+Esta trilha segue a **ordem real usada por profissionais** de cybersegurança (OSCP, CEH, NIST). Cada módulo é pré-requisito do próximo — não pule etapas!
 
-### Fluxo de Ataque
+---
+
+## 🗺️ Fluxo de Aprendizado
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    FLUXO DE ATAQUE                          │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  1. RECONHECIMENTO     → Descobrir o que existe no alvo     │
-│  2. ANÁLISE DE REDE    → Interpretar o que está passando    │
-│  3. WEB & APLICAÇÕES   → Encontrar falhas em sites          │
-│  4. EXPLORAÇÃO         → Quebrar senhas e entrar            │
-│  5. PÓS-EXPLORAÇÃO     → Explorar mais e se manter lá      │
-│  6. ENGENHARIA REVERSA → Entender binários e exploits       │
-│  7. DEFESA             → Proteger sistemas e redes          │
-│  8. RESPOSTA           → Investigar o que aconteceu         │
-│  9. AMBIENTES ESPECIAIS → Cloud, Mobile, Wireless           │
-│  10. GOVERNANÇA        → LGPD, ISO 27001, Criptografia     │
-│  11. API SECURITY      → BOLA, BFLA, SSRF, JWT              │
-│  12. DATABASE SECURITY → SQL/NoSQL injection, enumeração    │
-│  13. FRONTEND SECURITY → XSS, CSRF, CSP, CORS              │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
-
----
-
-## Módulos da Trilha
-
-### Fase 1: Fundamentos (Módulos 1-5)
-
-| # | Módulo | Arquivos | Descrição |
-|---|--------|----------|-----------|
-| 1 | [Reconhecimento](01-reconhecimento/) | 2 | Descobrir alvos: DNS, Nmap, OSINT, subdomínios |
-| 2 | [Análise de Rede](02-analise-rede/) | 2 | Capturar e interpretar tráfego: Wireshark, TCPDump, Netcat |
-| 3 | [Web & Aplicações](03-web-aplicacoes/) | 2 | Testar sites: Gobuster, FFUF, SQLMap, Nikto |
-| 4 | [Exploração](04-exploracao/) | 2 | Quebrar senhas: Hydra, John, Hashcat, SecLists |
-| 5 | [Pós-Exploração](05-pos-exploracao/) | 2 | Manter acesso: Impacket, Linpeas, pivoting |
-
-### Fase 2: Avançado (Módulos 6-10)
-
-| # | Módulo | Arquivos | Descrição |
-|---|--------|----------|-----------|
-| 6 | [Engenharia Reversa](06-reversing/) | 2 | Entender binários: Ghidra, Radare2, exploits |
-| 7 | [Defesa](07-defesa/) | 2 | Proteger: Hardening, IDS/IPS, SIEM, WAF |
-| 8 | [Resposta a Incidentes](08-resposta/) | 2 | Investigar: Forense computacional, análise de malware |
-| 9 | [Ambientes Especiais](09-ambientes/) | 3 | Cloud, Containers, Wireless, Mobile |
-| 10 | [Governança & Criptografia](10-governanca/) | 2 | GRC, LGPD, ISO 27001, Criptografia |
-
-### Fase 3: Especialização (Módulos 11-13)
-
-| # | Módulo | Arquivos | Descrição |
-|---|--------|----------|-----------|
-| 11 | [API Security](11-api-security/) | 2 | BOLA, BFLA, SSRF, JWT, rate limiting |
-| 12 | [Database Security](12-database-security/) | 2 | MySQL, PostgreSQL, MongoDB, SQL injection avançado |
-| 13 | [Frontend Security](13-frontend-security/) | 2 | XSS, CSRF, CSP, CORS, cookie security |
-
----
-
-## Cheatsheets (Referência Rápida)
-
-| Arquivo | Conteúdo |
-|---------|----------|
-| [CHEATSHEET-recon-web.md](CHEATSHEET-recon-web.md) | Nmap, Gobuster, FFUF, SQLMap, Nikto |
-| [CHEATSHEET-exploracao.md](CHEATSHEET-exploracao.md) | Hydra, John, Hashcat, Netcat, Pivoting |
-| [CHEATSHEET-defesa-forense.md](CHEATSHEET-defesa-forense.md) | Lynis, UFW, Suricata, Wireshark, Forense |
-
----
-
-## Ordem de Leitura
-
-```
-INÍCIO
-  │
-  ├── [1] Reconhecimento ──────────────── Por onde começar
-  │
-  ├── [2] Análise de Rede ─────────────── Entender o que vê na rede
-  │
-  ├── [3] Web & Aplicações ────────────── Testar sites e apps
-  │
-  ├── [4] Exploração ──────────────────── Quebrar senhas e entrar
-  │
-  ├── [5] Pós-Exploração ──────────────── Explorar após o acesso
-  │
-  ├── [6] Engenharia Reversa ──────────── Avançado: entender binários
-  │
-  ├── [7] Defesa ──────────────────────── Proteger (pode estudar em paralelo)
-  │
-  ├── [8] Resposta a Incidentes ───────── Investigar ataques
-  │
-  ├── [9] Ambientes Especiais ─────────── Cloud, Mobile, Wireless
-  │
-  ├── [10] Governança & Criptografia ──── LGPD, ISO 27001, Cripto
-  │
-  ├── [11] API Security ───────────────── APIs REST, GraphQL, JWT
-  │
-  ├── [12] Database Security ──────────── Bancos SQL/NoSQL
-  │
-  └── [13] Frontend Security ──────────── XSS, CSRF, CSP
+FASE 1: FUNDAMENTOS (Módulos 1-3)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   ┌─────────────┐
+   │ 1. RECONHECIMENTO │ ← Descobrir o que existe
+   └──────┬──────┘
+          ↓
+   ┌─────────────┐
+   │ 2. WEB & APPS     │ ← Entender aplicações web
+   └──────┬──────┘
+          ↓
+   ┌─────────────┐
+   │ 3. EXPLORAÇÃO     │ ← Quebrar senhas e entrar
+   └──────┬──────┘
+          ↓
+FASE 2: INTERMEDIÁRIO (Módulos 4-6)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   ┌─────────────┐
+   │ 4. PÓS-EXPLORAÇÃO │ ← Manter acesso e escalar
+   └──────┬──────┘
+          ↓
+   ┌─────────────┐
+   │ 5. ENGENHARIA REVERSA │ ← Entender binários
+   └──────┬──────┘
+          ↓
+   ┌─────────────┐
+   │ 6. ANÁLISE DE REDE    │ ← Capturar tráfego
+   └──────┬──────┘
+          ↓
+FASE 3: DEFESA (Módulos 7-8)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   ┌─────────────┐
+   │ 7. DEFESA            │ ← Proteger sistemas
+   └──────┬──────┘
+          ↓
+   ┌─────────────┐
+   │ 8. RESPOSTA          │ ← Investigar incidentes
+   └──────┬──────┘
+          ↓
+FASE 4: ESPECIALIZAÇÃO (Módulos 9-10)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   ┌─────────────┐
+   │ 9. AMBIENTES ESPECIAIS │ ← Cloud, Mobile, Wireless
+   └──────┬──────┘
+          ↓
+   ┌─────────────┐
+   │ 10. GOVERNANÇA       │ ← GRC, Criptografia, LGPD
+   └─────────────┘
 ```
 
 ---
 
-## Pré-requisitos
+## 📚 Módulos da Trilha
 
-- **Linux básico:** Navegar no terminal, criar/editar arquivos
-- **Uma VM Linux:** Ubuntu 22.04+ ou Kali Linux
-- **Conexão com internet:** Para instalar ferramentas
-- **Tempo:** Cada módulo leva 2-4 horas para estudar
+### Fase 1: Fundamentos
 
-### Ambiente Recomendado
+| # | Módulo | Arquivos | Tempo | O que você vai aprender |
+|:--|:-------|:--------:|:-----:|:------------------------|
+| 1 | [Reconhecimento](01-reconhecimento/) | 2 + Labs | 3-4h | DNS, Whois, Nmap, OSINT, subdomínios |
+| 2 | [Web & Aplicações](02-web-aplicacoes/) | 8 + Labs | 8-10h | Web, API, Database, Frontend, SQL Injection, XSS |
+| 3 | [Exploração](03-exploracao/) | 2 + Labs | 4-5h | Hydra, John, Hashcat, brute force |
 
-```bash
-# Ubuntu 22.04+ com as ferramentas básicas
-sudo apt update && sudo apt upgrade -y
-sudo apt install -y git curl wget
+### Fase 2: Intermediário
 
-# Clonar este repositório
-git clone https://github.com/gabriellglrs/minhas_config_linux_terminal.git
-cd minhas_config_linux_terminal/cyberseguranca
-```
+| # | Módulo | Arquivos | Tempo | O que você vai aprender |
+|:--|:-------|:--------:|:-----:|:------------------------|
+| 4 | [Pós-Exploração](04-pos-exploracao/) | 2 + Labs | 5-6h | LinPEAS, escalação, pivoting, movimentação |
+| 5 | [Engenharia Reversa](05-reversing/) | 2 + Labs | 6-8h | Ghidra, GDB, buffer overflow, exploits |
+| 6 | [Análise de Rede](06-analise-rede/) | 2 + Labs | 4-5h | tcpdump, Wireshark, MITM, proxies |
 
----
+### Fase 3: Defesa
 
-## Aviso Legal e Ético
+| # | Módulo | Arquivos | Tempo | O que você vai aprender |
+|:--|:-------|:--------:|:-----:|:------------------------|
+| 7 | [Defesa & Hardening](07-defesa/) | 2 + Labs | 5-6h | Firewalls, IDS/IPS, SIEM, UFW |
+| 8 | [Resposta a Incidentes](08-resposta/) | 2 + Labs | 5-7h | Forense, malware, Volatility |
 
-> **ATENÇÃO:** Este material é exclusivamente para fins educacionais.
+### Fase 4: Especialização
 
-- Use as ferramentas **apenas em sistemas que você tem autorização para testar**
-- Laboratórios próprios (VirtualBox, Docker, TryHackMe, HackTheBox) são o local ideal
-- O uso indevido de técnicas de cybersegurança é **crime** (Lei 12.737/2012 - Lei Carolina Dieckmann)
-- Ao estudar este material, você concorda em usar o conhecimento de forma ética e responsável
-
----
-
-## Como Usar Este Material
-
-1. **Comece pelo Módulo 1** — não pule etapas
-2. **Pratique cada comando** — não apenas leia
-3. **Crie seu laboratório** — VMs no VirtualBox ou containers no Docker
-4. **Documente o que aprende** — crie seus próprios cheatsheets
-5. **Estude ética primeiro** — sempre pergunte: "isso é legal?"
-6. **Use os labs práticos** — cada módulo tem exercícios no TryHackMe/HackTheBox
+| # | Módulo | Arquivos | Tempo | O que você vai aprender |
+|:--|:-------|:--------:|:-----:|:------------------------|
+| 9 | [Ambientes Especiais](09-ambientes/) | 3 + Labs | 6-8h | Docker, K8s, AWS, Wireless, Mobile |
+| 10 | [Governança & Criptografia](10-governanca/) | 2 + Labs | 4-5h | GRC, ISO 27001, LGPD, OpenSSL |
 
 ---
 
-## Ferramentas por Categoria
+## 📊 Progresso Total
 
-### Reconhecimento
-`Nmap` · `Masscan` · `Whois` · `Dig` · `TheHarvester` · `Subfinder` · `Nuclei` · `httpx`
-
-### Análise de Rede
-`Wireshark` · `TCPDump` · `Netcat` · `Socat` · `Bettercap` · `Responder`
-
-### Web
-`Gobuster` · `FFUF` · `Nikto` · `WPScan` · `SQLMap` · `WAFw00f` · `WhatWeb`
-
-### Exploração
-`Hydra` · `John` · `Hashcat` · `SecLists`
-
-### Pós-Exploração
-`Impacket` · `Enum4linux-ng` · `Chisel` · `Linpeas` · `Winpeas`
-
-### Engenharia Reversa
-`Ghidra` · `Radare2` · `GDB/GEF` · `Pwntools` · `AFL++`
-
-### Defesa
-`Lynis` · `UFW` · `Suricata` · `Snort` · `Wazuh` · `Elastic Stack` · `Fail2Ban`
-
-### Resposta
-`Autopsy` · `Volatility` · `Plaso` · `YARA` · `Cuckoo` · `REMnux`
-
-### API & Database
-`Postman` · `Kiterunner` · `Arjun` · `SQLMap` · `NoSQLMap`
-
-### Frontend
-`XSS Hunter` · `Burp Suite` · `OWASP ZAP`
-
-### Especializado
-`Trivy` · `Kube-bench` · `Aircrack-ng` · `MobSF` · `Frida`
-
-### Governança
-`Eramba` · `OpenSCAP` · `SimpleRisk`
+| Métrica | Valor |
+|:--------|:-----:|
+| Total de módulos | 10 |
+| Total de arquivos | 30+ |
+| Total de exercícios | 60+ |
+| Tempo estimado | ~50-60 horas |
+| Nível | Iniciante → Avançado |
 
 ---
 
-## Contribuindo
+## 🧪 Laboratórios Práticos
 
-Se encontrar erros ou quiser adicionar conteúdo, contribua pelo repositório Git.
+Cada módulo tem um arquivo `LABS.md` com exercícios detalhados:
+- Passo a passo completo
+- Macetes e dicas
+- Links diretos (TryHackMe, HackTheBox, PortSwigger)
+- Checklists de validação
 
 ---
 
-## Licença
+## 📖 Ordem de Estudo
 
-Este material é educacional. Use de forma responsável.
+1. Comece pelo **Módulo 1** e siga a ordem
+2. Não pule módulos — cada um é pré-requisito do próximo
+3. Pratique os labs antes de avançar
+4. Documente seus aprendizados
+
+---
+
+## 🎓 Certificações Relacionadas
+
+Esta trilha prepara para:
+- **OSCP** (Offensive Security)
+- **CEH** (Certified Ethical Hacker)
+- **CompTIA Security+**
+- **PTX** (eLearnSecurity)
+
+---
+
+<div align="center">
+
+**Comece agora →** [Módulo 1: Reconhecimento](01-reconhecimento/)
+
+</div>

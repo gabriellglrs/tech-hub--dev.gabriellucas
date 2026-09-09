@@ -1,4 +1,4 @@
-# 🔬 Módulo 6: Engenharia Reversa
+# 🔬 Módulo 5: Engenharia Reversa
 
 > **"Para derrotar o inimigo, você precisa entender como ele pensa."**
 
@@ -178,23 +178,23 @@ Antes de avançar para o próximo módulo, verifique:
 │                      🗺️ MAPA DA TRILHA                          │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
-│  ◀── Módulo 5: Pós-Exploração                                  │
+│  ◀── Módulo 4: Pós-Exploração                                  │
 │       │                                                         │
 │       ▼                                                         │
 │  ┌─────────────────────────────────────────┐ ◀── VOCÊ ESTÁ AQUI │
-│  │  📌 Módulo 6: Engenharia Reversa       │                   │
+│  │  📌 Módulo 5: Engenharia Reversa       │                   │
 │  │     01-engenharia-reversa.md           │                   │
 │  │     02-exploit-e-fuzzing.md            │                   │
 │  └─────────────────────────────────────────┘                   │
 │       │                                                         │
 │       ▼                                                         │
-│  Módulo 7: Defesa e Hardening ──▶                              │
+│  Módulo 6: Análise de Rede ──▶                                 │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-**⬅️ Anterior:** [Módulo 5: Pós-Exploração](../05-pos-exploracao/)
-**➡️ Próximo:** [Módulo 7: Defesa e Hardening](../07-defesa/)
+**⬅️ Anterior:** [Módulo 4: Pós-Exploração](../04-pos-exploracao/)
+**➡️ Próximo:** [Módulo 6: Análise de Rede](../06-analise-rede/)
 
 ---
 
@@ -209,4 +209,4 @@ Antes de avançar para o próximo módulo, verifique:
 
 ---
 
-> **⏱️ Tempo estimado:** 6-8 horas | **🎯 Nível:** ⭐⭐⭐ Avançado | **📁 Próximo:** Módulo 7
+> **⏱️ Tempo estimado:** 6-8 horas | **🎯 Nível:** ⭐⭐⭐ Avançado | **📁 Próximo:** Módulo 6

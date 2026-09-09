@@ -210,7 +210,7 @@ Antes de concluir a trilha, verifique:
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-**⬅️ Anterior:** [Módulo 9: Ambientes Especiais](../09-ambientes/)
+**⬅️ Anterior:** [Módulo 9: Ambientes](../09-ambientes/)
 **🏁 FIM DA TRILHA!**
 
 ---

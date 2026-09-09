@@ -1,12 +1,12 @@
-# 🎯 Módulo 4: Exploração
+# 🎯 Módulo 4: Pós-Exploração
 
-> Quebre qualquer senha e explore serviços para obter acesso total.
+> Seja o fantasma da rede — mantenha acesso, escale privilégios e domine o ambiente.
 
 <div align="center">
 
 | ⏱️ Tempo | 📊 Nível | 📁 Arquivos | 🔧 Ferramentas |
 |:--------:|:--------:|:-----------:|:--------------:|
-| 4-5 horas | ⭐⭐ Intermediário | 2 | 6 |
+| 5-6 horas | ⭐⭐⭐ Avançado | 2 | 10 |
 
 </div>
 
@@ -16,11 +16,11 @@
 
 Ao final deste módulo, você será capaz de:
 
-- [ ] Realizar ataques de brute force em serviços (SSH, FTP, HTTP)
-- [ ] Quebrar hashes de senhas com John e Hashcat
-- [ ] Criar wordlists e lists de usuários customizados
-- [ ] Identificar tipos de hash e escolher a ferramenta correta
-- [ ] Entender mecanismos de autenticação e suas fraquezas
+- [ ] Manter acesso persistente em sistemas comprometidos
+- [ ] Escalar privilégios de usuario para admin/root
+- [ ] Movimentar lateralmente entre máquinas da rede
+- [ ] Extrair credenciais e hashes de sistemas Windows
+- [ ] Criar túneis de rede para acessar redes internas
 
 ---
 
@@ -29,9 +29,9 @@ Ao final deste módulo, você será capaz de:
 | Conhecimento | Necessário? | Onde aprender |
 |:-------------|:-----------:|:-------------:|
 | Linux básico | Sim | Módulo 0 do curso |
-| Redes (TCP/IP, portas) | Sim | Fundamentos de Redes |
-| Módulo 1: Reconhecimento | Sim | [Módulo 1](../01-reconhecimento/) |
-| Módulo 2: Análise de Rede | Recomendado | [Módulo 2](../02-analise-rede/) |
+| Windows (Active Directory, SMB, WMI) | Sim | Fundamentos de Windows |
+| Módulo 3: Exploração | Sim | [Módulo 3](../03-exploracao/) |
+| Ter obtido acesso a uma máquina | Sim | Labs anteriores |
 
 ---
 
@@ -39,33 +39,34 @@ Ao final deste módulo, você será capaz de:
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│                   EXPLORAÇÃO                            │
+│                 PÓS-EXPLORAÇÃO                          │
 ├─────────────────────────────────────────────────────────┤
 │                                                         │
 │   ┌─────────────────────────────────────────────────┐   │
-│   │           BRUTE FORCE                           │   │
+│   │           ENUMERAÇÃO PÓS-ACESSO                 │   │
 │   │                                                 │   │
-│   │  • Hydra ──── SSH, FTP, HTTP, SMB, RDP         │   │
-│   │  • Medusa ─── Múltiplos protocolos              │   │
-│   │  • Ncrack ─── Serviços de rede                  │   │
+│   │  • smbclient.py ──── Enumerar shares            │   │
+│   │  • wmiexec.py ────── Executar comandos remotos  │   │
+│   │  • secretsdump.py ── Extrair hashes SAM/NTDS    │   │
+│   │  • psexec.py ─────── Shell como serviço         │   │
 │   └──────────────────────┬──────────────────────────┘   │
 │                          │                               │
 │                          ▼                               │
 │   ┌─────────────────────────────────────────────────┐   │
-│   │           QUEBRA DE HASHES                      │   │
+│   │           ESCALAÇÃO & PERSISTÊNCIA              │   │
 │   │                                                 │   │
-│   │  • hashid ──── Identificar tipo de hash         │   │
-│   │  • John ────── CPU (muitos formatos)            │   │
-│   │  • Hashcat ─── GPU (muito mais rápido)          │   │
+│   │  • evil-winrm ────── Shell WinRM persistente    │   │
+│   │  • LinPEAS ────────── Linux privilege escalation│   │
+│   │  • WinPEAS ────────── Windows privilege escalation│  │
 │   └──────────────────────┬──────────────────────────┘   │
 │                          │                               │
 │                          ▼                               │
 │   ┌─────────────────────────────────────────────────┐   │
-│   │           WORDLISTS                             │   │
+│   │           TÚNEIS & PIVOTING                     │   │
 │   │                                                 │   │
-│   │  • CeWL ────── Gerar de sites web               │   │
-│   │  • Crunch ──── Gerar por padrão/charset         │   │
-│   │  • SecLists ── Coleção completa                 │   │
+│   │  • socat ────── Túneis TCP/UDP genéricos        │   │
+│   │  • ligolo-ng ── Pivot via agente                 │   │
+│   │  • chisel ───── Proxy reverso e SOCKS            │   │
 │   └─────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────┘
 ```
@@ -76,18 +77,18 @@ Ao final deste módulo, você será capaz de:
 
 | # | Arquivo | O que você vai aprender | Ferramentas | Tempo |
 |:--|:--------|:------------------------|:------------|:-----:|
-| 1 | [01-brute-force-e-cracking.md](01-brute-force-e-cracking.md) | Quebrar senhas e hashes de serviços | `Hydra, John, Hashcat, hashid` | 3h |
-| 2 | [02-wordlists-e-ferramentas.md](02-wordlists-e-ferramentas.md) | Usar e criar listas de senhas e usuários | `CeWL, Crunch, SecLists` | 2h |
+| 1 | [01-enum-e-movimentacao.md](01-enum-e-movimentacao.md) | Enumerar redes Windows e se movimentar lateralmente | `smbclient.py, wmiexec.py, secretsdump.py, psexec.py, evil-winrm` | 3h |
+| 2 | [02-pivoting-e-tunneling.md](02-pivoting-e-tunneling.md) | Criar túneis e encontrar privesc | `socat, ligolo-ng, chisel, LinPEAS, WinPEAS` | 3h |
 
 ---
 
 ## 💡 Dicas de Ouro
 
-> **Dica 1:** Sempre identifique o hash com `hashid` antes de tentar quebrar. Usar o modo errado é perda de tempo.
+> **Dica 1:** Impacket é o canivete suíço do pentester Windows. Domine `psexec.py`, `wmiexec.py` e `secretsdump.py` — eles resolvem 90% dos cenários.
 
-> **Dica 2:** John com `--wordlist` e `--rules` quebra muito mais senhas que apenas lista pura. Explore as regras!
+> **Dica 2:** Prefira `wmiexec.py` sobre `psexec.py` quando possível. WMI gera menos logs e é mais discreto.
 
-> **Dica 3:** Hashcat na GPU é 10-100x mais rápido que John na CPU. Para hashes simples, sempre prefira Hashcat.
+> **Dica 3:** LinPEAS/WinPEAS rodam em tudo e mostram caminhos de escalada. Sempre rode primeiro para mapear o terreno.
 
 ---
 
@@ -95,9 +96,9 @@ Ao final deste módulo, você será capaz de:
 
 | Erro | Consequência | Como evitar |
 |:-----|:-------------|:------------|
-| Usar `-t 64` no Hydra | Falsos positivos e bloqueio por rate-limiting | Comece com `-t 4` e aumente gradualmente |
-| Não identificar o hash | Perda de tempo tentando modos errados | Rode `hashid` ou `hash-identifier` primeiro |
-| Esquecer regras no John | Senhas complexas não quebradas | Use `--rules` ou crie regras customizadas |
+| Não verificar o que já foi obtido | Explorar sem saber o que já tem disponível | Analise credenciais e tokens antes de avançar |
+| Usar psexec.py em tudo | Gera muitos logs e é detectável | Prefira wmiexec.py para operações discretas |
+| Esquecer de persistir | Perder acesso e ter que recomeçar | Configure backdoor ou credenciais persistentes |
 
 ---
 
@@ -111,8 +112,8 @@ Ao final deste módulo, você será capaz de:
 
 | Lab | Plataforma | Dificuldade | Tempo | Link |
 |:----|:----------:|:-----------:|:-----:|:----:|
-| Brute It | TryHackMe | ⭐⭐ | 1h | [Link](https://tryhackme.com/room/bruteit) |
-| Jack of All Trades | TryHackMe | ⭐⭐ | 45min | [Link](https://tryhackme.com/room/jackofalltrades) |
+| Active Directory | TryHackMe | ⭐⭐⭐ | 3h | [Link](https://tryhackme.com/room/diamondDistrict) |
+| Internal | HackTheBox | ⭐⭐⭐ | 2h | [Link](https://app.hackthebox.com/) |
 
 ---
 
@@ -120,9 +121,9 @@ Ao final deste módulo, você será capaz de:
 
 | Recurso | Tipo | Link |
 |:--------|:----:|:----:|
-| Hashcat Example Hashes | Referência | [hashcat.net](https://hashcat.net/wiki/doku.php?id=example_hashes) |
-| TryHackMe - Brute Force | Lab | [tryhackme.com](https://tryhackme.com/room/bruteit) |
-| HackTricks - Brute Force | Referência | [book.hacktricks.wiki](https://book.hacktricks.wiki/) |
+| Impacket Examples | Tool | [github.com/fortra/impacket](https://github.com/fortra/impacket) |
+| TryHackMe - Active Directory | Lab | [tryhackme.com](https://tryhackme.com/room/diamondDistrict) |
+| HackTricks - Windows | Referência | [book.hacktricks.wiki](https://book.hacktricks.wiki/) |
 
 ---
 
@@ -138,6 +139,6 @@ Ao final deste módulo, você será capaz de:
 
 <div align="center">
 
-**⬅️ [Módulo 3: Web & Aplicações](../03-web-aplicacoes/)** | **[Módulo 5: Pós-Exploração](../05-pos-exploracao/) ➡️**
+**⬅️ [Módulo 3: Exploração](../03-exploracao/)** | **[Módulo 5: Reversing](../05-reversing/) ➡️**
 
 </div>
