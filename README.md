@@ -19,6 +19,13 @@ Este é meu **repositório pessoal** com tudo que preciso para trabalhar com tec
 | 🖥️ **Terminal** | Configuração Zsh, Powerlevel10k, plugins | ✅ Pronto |
 | 🛡️ **Cybersegurança** | Trilha completa (11 módulos, 40+ arquivos) | ✅ Pronto |
 | 🐳 **Docker & Kubernetes** | Containers, Dockerfile, Compose, K8s, Helm | ✅ Estrutura |
+| 🎯 **DevOps** | Roadmap unificado, culturas, práticas | ✅ Estrutura |
+| 🎯 **GitOps** | ArgoCD, Flux, reconciliation contínua | ✅ Estrutura |
+| 🌐 **Service Mesh** | Istio, Linkerd, mTLS, observabilidade | ✅ Estrutura |
+| 🔐 **Secrets Management** | Vault, Sealed Secrets, External Secrets | ✅ Estrutura |
+| 🏗️ **Platform Engineering** | Backstage, IDPs, golden paths | ✅ Estrutura |
+| 📈 **SRE** | SLIs, SLOs, error budgets, incidentes | ✅ Estrutura |
+| 💥 **Chaos Engineering** | Litmus, Chaos Monkey, Game Days | ✅ Estrutura |
 | 🌐 **Redes** | TCP/IP avançado, firewalls, VPNs | ✅ Estrutura |
 | 💾 **Banco de Dados** | SQL, NoSQL, administração | ✅ Estrutura |
 | 💻 **Programação** | Python, Bash, automação, APIs | ✅ Estrutura |
@@ -65,6 +72,13 @@ minhas_config_linux_terminal/
 ├── iot-security/               # 🌐 Firmware, ICS, UART
 ├── backup-recovery/            # 💾 rsync, borg, DR plan
 ├── docker-k8s/                 # 🐳 Docker + Kubernetes
+├── devops/                     # 🎯 Roadmap DevOps unificado
+├── gitops/                     # 🎯 ArgoCD, Flux
+├── service-mesh/               # 🌐 Istio, Linkerd
+├── secrets-management/         # 🔐 Vault, Sealed Secrets
+├── platform-engineering/       # 🏗️ Backstage, IDPs
+├── sre/                        # 📈 SLIs, SLOs, incidentes
+├── chaos-engineering/          # 💥 Litmus, Game Days
 ├── redes/                      # 🌐 TCP/IP, firewalls, VPN
 ├── banco-de-dados/             # 💾 SQL, NoSQL, admin
 └── programacao/                # 💻 Python, Bash, APIs
@@ -251,6 +265,41 @@ FASE 4: ESPECIALIZAÇÃO
 | Arquivo | O que você vai aprender |
 |:--------|:------------------------|
 | [Docker & K8s](docker-k8s/README.md) | Containers, Dockerfile, Compose, Kubernetes, Helm |
+
+### 🎯 DevOps
+| Arquivo | O que você vai aprender |
+|:--------|:------------------------|
+| [DevOps](devops/README.md) | Roadmap unificado, cultura DevOps, fluxo completo |
+
+### 🎯 GitOps
+| Arquivo | O que você vai aprender |
+|:--------|:------------------------|
+| [GitOps](gitops/README.md) | ArgoCD, Flux, reconciliação contínua |
+
+### 🌐 Service Mesh
+| Arquivo | O que você vai aprender |
+|:--------|:------------------------|
+| [Service Mesh](service-mesh/README.md) | Istio, Linkerd, mTLS, observabilidade |
+
+### 🔐 Secrets Management
+| Arquivo | O que você vai aprender |
+|:--------|:------------------------|
+| [Secrets](secrets-management/README.md) | Vault, Sealed Secrets, External Secrets |
+
+### 🏗️ Platform Engineering
+| Arquivo | O que você vai aprender |
+|:--------|:------------------------|
+| [Platform Eng](platform-engineering/README.md) | Backstage, IDPs, golden paths |
+
+### 📈 SRE
+| Arquivo | O que você vai aprender |
+|:--------|:------------------------|
+| [SRE](sre/README.md) | SLIs, SLOs, error budgets, incidentes |
+
+### 💥 Chaos Engineering
+| Arquivo | O que você vai aprender |
+|:--------|:------------------------|
+| [Chaos](chaos-engineering/README.md) | Litmus, Chaos Monkey, Game Days |
 
 ### 🌐 Redes
 | Arquivo | O que você vai aprender |
