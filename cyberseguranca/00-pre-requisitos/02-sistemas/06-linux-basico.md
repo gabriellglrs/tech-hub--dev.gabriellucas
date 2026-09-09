@@ -231,6 +231,6 @@ chmod +x script.sh
 
 <div align="center">
 
-**⬅️ [Anterior: TCP/IP e OSI](05-tcp-ip-osi.md)** | **[Próximo: HTTP e Web] ➡️**
+**⬅️ [Anterior: TCP/IP e OSI](../01-redes/05-tcp-ip-osi.md)** | **[Próximo: HTTP e Web](../02-sistemas/07-http-e-web.md) ➡️**
 
 </div>

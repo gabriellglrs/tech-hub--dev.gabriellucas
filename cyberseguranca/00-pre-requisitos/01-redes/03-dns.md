@@ -165,6 +165,6 @@ DNS é frequentemente atacado:
 
 <div align="center">
 
-**⬅️ [Anterior: Endereçamento IP](02-enderecamento-ip.md)** | **[Próximo: Portas e Protocolos] ➡️**
+**⬅️ [Anterior: Endereçamento IP](../01-redes/02-enderecamento-ip.md)** | **[Próximo: Portas e Protocolos](../01-redes/04-portas-e-protocolos.md) ➡️**
 
 </div>

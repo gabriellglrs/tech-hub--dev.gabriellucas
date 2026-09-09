@@ -161,6 +161,6 @@ Antes de ir para o próximo arquivo, você deve conseguir:
 
 <div align="center">
 
-**⬅️ [Voltar ao README](README.md)** | **[Próximo: Endereçamento IP] ➡️**
+**[Próximo: Endereçamento IP](../01-redes/02-enderecamento-ip.md) ➡️**
 
 </div>

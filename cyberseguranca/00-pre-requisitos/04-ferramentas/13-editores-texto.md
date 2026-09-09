@@ -191,6 +191,6 @@ cat teste.txt
 
 <div align="center">
 
-**⬅️ [Anterior: Comandos de Rede](12-comandos-rede.md)** | **[Voltar ao README](README.md)**
+**⬅️ [Anterior: Comandos de Rede](../04-ferramentas/12-comandos-rede.md)** | **[Próximo: Módulo 1: Reconhecimento](../../01-reconhecimento/) ➡️**
 
 </div>

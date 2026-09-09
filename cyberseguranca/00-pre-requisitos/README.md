@@ -10,42 +10,31 @@ Antes de aprender a atacar ou defender, você precisa entender **como a internet
 
 ---
 
-## 📁 Arquivos deste Módulo
+## 📁 Estrutura
 
-### 🌐 Parte 1: Redes (fundação de tudo)
-
-| # | Arquivo | O que você vai aprender | Tempo |
-|:--|:--------|:------------------------|:-----:|
-| 1 | [01-o-que-e-uma-rede.md](01-o-que-e-uma-rede.md) | O que é rede, como dispositivos se comunicam | 30 min |
-| 2 | [02-enderecamento-ip.md](02-enderecamento-ip.md) | IP, máscara, sub-redes, classes | 45 min |
-| 3 | [03-dns.md](03-dns.md) | Como nomes viram IPs | 30 min |
-| 4 | [04-portas-e-protocolos.md](04-portas-e-protocolos.md) | Portas, TCP, UDP, protocolos | 40 min |
-| 5 | [05-tcp-ip-osi.md](05-tcp-ip-osi.md) | Modelos de rede simplificados | 35 min |
-
-### 🖥️ Parte 2: Sistemas Operacionais
-
-| # | Arquivo | O que você vai aprender | Tempo |
-|:--|:--------|:------------------------|:-----:|
-| 6 | [06-linux-basico.md](06-linux-basico.md) | Terminal, comandos essenciais | 45 min |
-| 7 | [07-http-e-web.md](07-http-e-web.md) | Como a web funciona | 30 min |
-| 8 | [08-maquinas-virtuais.md](08-maquinas-virtuais.md) | VirtualBox, Kali Linux, Home Lab | 40 min |
-
-### 🔐 Parte 3: Segurança e Programação
-
-| # | Arquivo | O que você vai aprender | Tempo |
-|:--|:--------|:------------------------|:-----:|
-| 9 | [09-conceitos-seguranca.md](09-conceitos-seguranca.md) | CIA triade, tipos de ataque, malware | 35 min |
-| 10 | [10-python-basico.md](10-python-basico.md) | Python para automação e scripts | 45 min |
-| 11 | [11-windows-basico.md](11-windows-basico.md) | PowerShell, logs, segurança Windows | 35 min |
-
-### 🔧 Parte 4: Ferramentas Práticas
-
-| # | Arquivo | O que você vai aprender | Tempo |
-|:--|:--------|:------------------------|:-----:|
-| 12 | [12-comandos-rede.md](12-comandos-rede.md) | ping, ifconfig, nslookup, netstat | 25 min |
-| 13 | [13-editores-texto.md](13-editores-texto.md) | nano, vim, edição de arquivos | 20 min |
-
-**Tempo total estimado: ~7-8 horas**
+```
+00-pre-requisitos/
+├── 01-redes/          ← Fundação de tudo
+│   ├── 01-o-que-e-uma-rede.md
+│   ├── 02-enderecamento-ip.md
+│   ├── 03-dns.md
+│   ├── 04-portas-e-protocolos.md
+│   └── 05-tcp-ip-osi.md
+│
+├── 02-sistemas/       ← Linux, Web, VMs
+│   ├── 06-linux-basico.md
+│   ├── 07-http-e-web.md
+│   └── 08-maquinas-virtuais.md
+│
+├── 03-seguranca/      ← CIA, Python, Windows
+│   ├── 09-conceitos-seguranca.md
+│   ├── 10-python-basico.md
+│   └── 11-windows-basico.md
+│
+└── 04-ferramentas/    ← Comandos e editores
+    ├── 12-comandos-rede.md
+    └── 13-editores-texto.md
+```
 
 ---
 
@@ -107,12 +96,12 @@ PARTE 4: FERRAMENTAS
 
 ## 💡 Dica
 
-> **Não pule este módulo!** 90% dos iniciantes que falham é porque não tem base. Invista 6-7 horas aqui e seu aprendizado será 10x mais fácil.
+> **Não pule este módulo!** 90% dos iniciantes que falham é porque não tem base. Invista 7-8 horas aqui e seu aprendizado será 10x mais fácil.
 
 ---
 
 <div align="center">
 
-**Próximo → [01: O que é uma Rede](01-o-que-e-uma-rede.md)**
+**Próximo → [Parte 1: Redes](01-redes/)**
 
 </div>

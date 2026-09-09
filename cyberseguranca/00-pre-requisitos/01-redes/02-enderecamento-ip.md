@@ -173,6 +173,6 @@ ping google.com
 
 <div align="center">
 
-**⬅️ [Anterior: O que é uma Rede](01-o-que-e-uma-rede.md)** | **[Próximo: DNS] ➡️**
+**⬅️ [Anterior: O que é uma Rede](../01-redes/01-o-que-e-uma-rede.md)** | **[Próximo: DNS](../01-redes/03-dns.md) ➡️**
 
 </div>

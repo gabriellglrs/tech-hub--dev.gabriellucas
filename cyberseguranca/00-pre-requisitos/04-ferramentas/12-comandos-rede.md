@@ -143,6 +143,6 @@ traceroute google.com
 
 <div align="center">
 
-**⬅️ [Anterior: Windows Básico](11-windows-basico.md)** | **[Próximo: Editores de Texto] ➡️**
+**⬅️ [Anterior: Windows Básico](../03-seguranca/11-windows-basico.md)** | **[Próximo: Editores de Texto](../04-ferramentas/13-editores-texto.md) ➡️**
 
 </div>

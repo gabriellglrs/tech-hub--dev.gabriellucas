@@ -209,6 +209,6 @@ curl http://example.com/api/usuarios
 
 <div align="center">
 
-**⬅️ [Anterior: Linux Básico](06-linux-basico.md)** | **[Voltar ao README](README.md)**
+**⬅️ [Anterior: Linux Básico](../02-sistemas/06-linux-basico.md)** | **[Próximo: Máquinas Virtuais](../02-sistemas/08-maquinas-virtuais.md) ➡️**
 
 </div>

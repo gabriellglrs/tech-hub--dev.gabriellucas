@@ -181,6 +181,6 @@ Integridade    Disponibilidade
 
 <div align="center">
 
-**⬅️ [Anterior: Máquinas Virtuais](08-maquinas-virtuais.md)** | **[Próximo: Python Básico] ➡️**
+**⬅️ [Anterior: Máquinas Virtuais](../02-sistemas/08-maquinas-virtuais.md)** | **[Próximo: Python Básico](../03-seguranca/10-python-basico.md) ➡️**
 
 </div>

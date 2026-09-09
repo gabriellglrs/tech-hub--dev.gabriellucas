@@ -181,6 +181,6 @@ VirtualBox → Clique na VM → Snapshots → Adicionar
 
 <div align="center">
 
-**⬅️ [Anterior: HTTP e Web](07-http-e-web.md)** | **[Próximo: Conceitos de Segurança] ➡️**
+**⬅️ [Anterior: HTTP e Web](../02-sistemas/07-http-e-web.md)** | **[Próximo: Conceitos de Segurança](../03-seguranca/09-conceitos-seguranca.md) ➡️**
 
 </div>

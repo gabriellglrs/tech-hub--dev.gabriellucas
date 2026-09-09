@@ -158,6 +158,6 @@ nc -zv 192.168.1.1 22 80 443
 
 <div align="center">
 
-**⬅️ [Anterior: DNS](03-dns.md)** | **[Próximo: TCP/IP e OSI] ➡️**
+**⬅️ [Anterior: DNS](../01-redes/03-dns.md)** | **[Próximo: TCP/IP e OSI](../01-redes/05-tcp-ip-osi.md) ➡️**
 
 </div>

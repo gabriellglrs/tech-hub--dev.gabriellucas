@@ -266,6 +266,6 @@ print(f"Senha gerada: {gerar_senha()}")
 
 <div align="center">
 
-**⬅️ [Anterior: Conceitos de Segurança](09-conceitos-seguranca.md)** | **[Próximo: Windows Básico] ➡️**
+**⬅️ [Anterior: Conceitos de Segurança](../03-seguranca/09-conceitos-seguranca.md)** | **[Próximo: Windows Básico](../03-seguranca/11-windows-basico.md) ➡️**
 
 </div>

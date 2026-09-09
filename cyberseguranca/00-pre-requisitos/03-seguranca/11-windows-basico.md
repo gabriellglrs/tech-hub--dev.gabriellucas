@@ -180,6 +180,6 @@ Get-WinEvent -LogName System -MaxEvents 10
 
 <div align="center">
 
-**⬅️ [Anterior: Python Básico](10-python-basico.md)** | **[Voltar ao README](README.md)**
+**⬅️ [Anterior: Python Básico](../03-seguranca/10-python-basico.md)** | **[Próximo: Comandos de Rede](../04-ferramentas/12-comandos-rede.md) ➡️**
 
 </div>

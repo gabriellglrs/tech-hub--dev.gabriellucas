@@ -131,6 +131,6 @@ Bits → MAC → IP → Porta → Dados (ordem reversa)
 
 <div align="center">
 
-**⬅️ [Anterior: Portas e Protocolos](04-portas-e-protocolos.md)** | **[Próximo: Linux Básico] ➡️**
+**⬅️ [Anterior: Portas e Protocolos](../01-redes/04-portas-e-protocolos.md)** | **[Próximo: Linux Básico](../02-sistemas/06-linux-basico.md) ➡️**
 
 </div>
