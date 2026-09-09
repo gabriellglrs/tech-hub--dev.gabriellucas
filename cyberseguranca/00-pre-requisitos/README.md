@@ -38,7 +38,14 @@ Antes de aprender a atacar ou defender, você precisa entender **como a internet
 | 10 | [10-python-basico.md](10-python-basico.md) | Python para automação e scripts | 45 min |
 | 11 | [11-windows-basico.md](11-windows-basico.md) | PowerShell, logs, segurança Windows | 35 min |
 
-**Tempo total estimado: ~6-7 horas**
+### 🔧 Parte 4: Ferramentas Práticas
+
+| # | Arquivo | O que você vai aprender | Tempo |
+|:--|:--------|:------------------------|:-----:|
+| 12 | [12-comandos-rede.md](12-comandos-rede.md) | ping, ifconfig, nslookup, netstat | 25 min |
+| 13 | [13-editores-texto.md](13-editores-texto.md) | nano, vim, edição de arquivos | 20 min |
+
+**Tempo total estimado: ~7-8 horas**
 
 ---
 
@@ -72,6 +79,12 @@ PARTE 3: SEGURANÇA
 10. Python Básico
         ↓
 11. Windows Básico
+
+PARTE 4: FERRAMENTAS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+12. Comandos de Rede
+        ↓
+13. Editores de Texto
         ↓
 ✅ Pronto para o Módulo 1 (Reconhecimento)!
 ```
@@ -87,6 +100,8 @@ PARTE 3: SEGURANÇA
 - [ ] Consigo criar um script Python simples
 - [ ] Entendo a triade CIA
 - [ ] Sei o que é malware e vetores de ataque
+- [ ] Consigo usar ping, ifconfig, nslookup
+- [ ] Consigo editar arquivos com nano/vim
 
 ---
 
