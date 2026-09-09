@@ -18,7 +18,7 @@ Este é meu **repositório pessoal** com tudo que preciso para trabalhar com tec
 |:-----|:----------|:------:|
 | 🖥️ **Terminal** | Configuração Zsh, Powerlevel10k, plugins | ✅ Pronto |
 | 🛡️ **Cybersegurança** | Trilha completa (11 módulos, 40+ arquivos) | ✅ Pronto |
-| 🐳 **Docker** | Containers, Dockerfile, Compose | ✅ Estrutura |
+| 🐳 **Docker & Kubernetes** | Containers, Dockerfile, Compose, K8s, Helm | ✅ Estrutura |
 | 🌐 **Redes** | TCP/IP avançado, firewalls, VPNs | ✅ Estrutura |
 | 💾 **Banco de Dados** | SQL, NoSQL, administração | ✅ Estrutura |
 | 💻 **Programação** | Python, Bash, automação, APIs | ✅ Estrutura |
@@ -64,7 +64,7 @@ minhas_config_linux_terminal/
 ├── mobile-security/            # 📱 Android, iOS, Frida
 ├── iot-security/               # 🌐 Firmware, ICS, UART
 ├── backup-recovery/            # 💾 rsync, borg, DR plan
-├── docker/                     # 🐳 Containers, Compose
+├── docker-k8s/                 # 🐳 Docker + Kubernetes
 ├── redes/                      # 🌐 TCP/IP, firewalls, VPN
 ├── banco-de-dados/             # 💾 SQL, NoSQL, admin
 └── programacao/                # 💻 Python, Bash, APIs
@@ -247,10 +247,10 @@ FASE 4: ESPECIALIZAÇÃO
 |:--------|:------------------------|
 | [Backup](backup-recovery/README.md) | rsync, borgbackup, DR plan, RTO/RPO |
 
-### 🐳 Docker
+### 🐳 Docker e Kubernetes
 | Arquivo | O que você vai aprender |
 |:--------|:------------------------|
-| [Docker](docker/README.md) | Containers, Dockerfile, Compose, segurança |
+| [Docker & K8s](docker-k8s/README.md) | Containers, Dockerfile, Compose, Kubernetes, Helm |
 
 ### 🌐 Redes
 | Arquivo | O que você vai aprender |
