@@ -47,7 +47,7 @@ Plans:
 **Plans:** 3 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — Baseline + pesquisa labs módulos 00-05 + relatórios UMD
+- [x] 02-01-PLAN.md — Baseline + pesquisa labs módulos 00-05 + relatórios UMD
 - [ ] 02-02-PLAN.md — Pesquisa labs módulos 06-11 + relatórios UMD
 - [ ] 02-03-PLAN.md — Relatório consolidado + validação certificações + PESQUISA-REPORT
 
@@ -89,6 +89,6 @@ As fases são executadas em ordem numérica: 1 → 2 → 3 → 4
 | Fase | Plans Completos | Status | Concluída |
 |------|-----------------|--------|-----------|
 | 1. Auditoria Completa | 3/3 | Complete   | 2026-09-10 |
-| 2. Pesquisa e Referências | 0/3 | Não iniciada | - |
+| 2. Pesquisa e Referências | 1/3 | In Progress|  |
 | 3. Modernização + Conteúdo Prático | 0/2 | Não iniciada | - |
 | 4. Navegação e Organização | 0/3 | Não iniciada | - |

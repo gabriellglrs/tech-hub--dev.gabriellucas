@@ -83,3 +83,65 @@ module,platform,topic,url,status
 05-reversing,PicoCTF,Reverse Engineering (40+),https://play.picoctf.org/practice,pendente
 05-reversing,PortSwigger,Limited RE labs,N/A,limitado
 05-reversing,HackTheBox,Limited RE labs,N/A,limitado
+06-analise-rede,TryHackMe,Wireshark: The Basics,https://tryhackme.com/room/wireshark,pendente
+06-analise-rede,TryHackMe,Wireshark: Packet Operations,https://tryhackme.com/room/wiresharkpacketoperations,pendente
+06-analise-rede,TryHackMe,TShark,https://tryhackme.com/room/tshark,pendente
+06-analise-rede,TryHackMe,Network Traffic Analysis,https://tryhackme.com/room/roomnetworktrafficanalysis,pendente
+06-analise-rede,TryHackMe,Forensics (pcap),https://tryhackme.com/room/forensics,pendente
+06-analise-rede,TryHackMe,Packed Light (pcap analysis),https://tryhackme.com/room/packedlight,pendente
+06-analise-rede,HackTheBox,Starting Point (Network),https://app.hackthebox.com/starting-point,✅ Ativo
+06-analise-rede,PicoCTF,Forensics (packet analysis),https://play.picoctf.org/practice,⚠️ Redirect
+06-analise-rede,OverTheWire,Bandit advanced (network concepts),ssh://bandit.labs.overthewire.org:2220,✅ Ativo
+07-defesa,TryHackMe,Wazuh,https://tryhackme.com/room/wazuhct,pendente
+07-defesa,TryHackMe,Intrusion Detection (IDS),https://tryhackme.com/room/idsevasion,pendente
+07-defesa,TryHackMe,Monday Monitor (Wazuh SIEM),https://tryhackme.com/room/mondaymonitor,pendente
+07-defesa,TryHackMe,Linux Fundamentals,https://tryhackme.com/room/linuxfundamentalspart1,pendente
+07-defesa,TryHackMe,Firewalls,https://tryhackme.com/room/firewalls,pendente
+07-defesa,HackTheBox,Active Machines (defense),https://app.hackthebox.com/machines,✅ Ativo
+07-defesa,PicoCTF,Limited defense labs,N/A,limitado
+07-defesa,OverTheWire,Limited defense labs,N/A,limitado
+08-resposta,TryHackMe,Forensics,https://tryhackme.com/room/forensics,pendente
+08-resposta,TryHackMe,Volatility Essentials,https://tryhackme.com/room/volatilityessentials,pendente
+08-resposta,TryHackMe,Memory Forensics,https://tryhackme.com/room/memoryforensics,pendente
+08-resposta,TryHackMe,Autopsy,https://tryhackme.com/room/autopsy,pendente
+08-resposta,TryHackMe,Disk Analysis & Autopsy,https://tryhackme.com/room/diskanalysisautopsy,pendente
+08-resposta,PicoCTF,Forensics (40+ challenges),https://play.picoctf.org/practice,⚠️ Redirect
+08-resposta,CyberDefenders,Blue Team Labs (forensics),https://cyberdefenders.org/,✅ Ativo
+08-resposta,HackTheBox,Starting Point (forensics),https://app.hackthebox.com/starting-point,✅ Ativo
+08-resposta,OverTheWire,Limited forensics labs,N/A,limitado
+09-ambientes,TryHackMe,Docker Security,https://tryhackme.com/room/dockersecurity,pendente
+09-ambientes,TryHackMe,Attacking & Defending K8s,https://tryhackme.com/room/attackinganddefendingkubernetes,pendente
+09-ambientes,TryHackMe,Android Hacking 101,https://tryhackme.com/room/androidhacking101,pendente
+09-ambientes,TryHackMe,WiFi Hacking 101,https://tryhackme.com/room/wifihacking101,pendente
+09-ambientes,TryHackMe,AWS Fundamentals,https://tryhackme.com/room/awsfundamentals,pendente
+09-ambientes,HackTheBox,Cloud Machines,https://app.hackthebox.com/machines,✅ Ativo
+09-ambientes,PicoCTF,Limited cloud labs,N/A,limitado
+09-ambientes,OverTheWire,Limited cloud labs,N/A,limitado
+10-governanca,TryHackMe,Compliance & GDPR,https://tryhackme.com/room/complianceandgdpr,pendente
+10-governanca,TryHackMe,OpenSSL,https://tryhackme.com/room/openssl,pendente
+10-governanca,TryHackMe,Hashing Fun,https://tryhackme.com/room/hashingfun,pendente
+10-governanca,OverTheWire,Krypton (6 levels - cryptography),ssh://krypton.labs.overthewire.org:2221,✅ Ativo
+10-governanca,PicoCTF,Cryptography (40+ challenges),https://play.picoctf.org/practice,⚠️ Redirect
+10-governanca,HackTheBox,Limited GRC labs,N/A,limitado
+11-ia-cyberseguranca,PicoCTF,AI Challenges (10+),https://play.picoctf.org/practice,⚠️ Redirect
+11-ia-cyberseguranca,TryHackMe,Limited AI security rooms,N/A,limitado
+11-ia-cyberseguranca,HackTheBox,Limited AI labs,N/A,limitado
+11-ia-cyberseguranca,OverTheWire,Limited AI labs,N/A,limitado
+11-ia-cyberseguranca,PortSwigger,Web LLM Attacks (topic existe),https://portswigger.net/web-security/all-labs,⚠️ Topic existe URL a validar
+06-analise-rede,TryHackMe,PCAP Analysis,https://tryhackme.com/room/pcapanalysis,pendente
+06-analise-rede,TryHackMe,Basic Packet Capture,https://tryhackme.com/room/basicpacketcapture,pendente
+06-analise-rede,TryHackMe,Sniff,https://tryhackme.com/room/sniff,pendente
+07-defesa,TryHackMe,Linux Fundamentals Part 2,https://tryhackme.com/room/linuxfundamentalspart2,pendente
+07-defesa,TryHackMe,Linux Fundamentals Part 3,https://tryhackme.com/room/linuxfundamentalspart3,pendente
+07-defesa,TryHackMe,SOC Level 1,https://tryhackme.com/room/soclevel1,pendente
+08-resposta,TryHackMe,Redline,https://tryhackme.com/room/redline,pendente
+08-resposta,TryHackMe,Windows Forensics 1,https://tryhackme.com/room/windowsforensics1,pendente
+08-resposta,TryHackMe,Windows Forensics 2,https://tryhackme.com/room/windowsforensics2,pendente
+09-ambientes,TryHackMe,Docker Basics,https://tryhackme.com/room/dockerbasics,pendente
+09-ambientes,TryHackMe,Kubernetes,https://tryhackme.com/room/kubernetes,pendente
+09-ambientes,TryHackMe,Cloud Security,https://tryhackme.com/room/cloudsecurity,pendente
+10-governanca,TryHackMe,Cryptography,https://tryhackme.com/room/cryptography,pendente
+10-governanca,PicoCTF,Crypto Challenges (basics),https://play.picoctf.org/practice,⚠️ Redirect
+10-governanca,OverTheWire,Krypton Level 0-5,ssh://krypton.labs.overthewire.org:2221,✅ Ativo
+11-ia-cyberseguranca,PicoCTF,AI Category (prompt injection),https://play.picoctf.org/practice,⚠️ Redirect
+11-ia-cyberseguranca,TryHackMe,AI for Cyber,https://tryhackme.com/room/aicyber,pendente
