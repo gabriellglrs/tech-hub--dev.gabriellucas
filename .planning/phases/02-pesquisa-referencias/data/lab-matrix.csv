@@ -1,0 +1,85 @@
+module,platform,topic,url,status
+00-pre-requisitos,manual,sem-LABS.md,N/A,sem-LABS.md
+00-pre-requisitos,TryHackMe,Intro to Networking,https://tryhackme.com/room/whatisnetworking,pendente
+00-pre-requisitos,TryHackMe,Intro to Networking (Room 2),https://tryhackme.com/room/introtonetworking,pendente
+00-pre-requisitos,TryHackMe,Linux Fundamentals Part 1,https://tryhackme.com/room/linuxfundamentalspart1,pendente
+00-pre-requisitos,TryHackMe,Linux Fundamentals Part 2,https://tryhackme.com/room/linuxfundamentalspart2,pendente
+00-pre-requisitos,TryHackMe,Linux Fundamentals Part 3,https://tryhackme.com/room/linuxfundamentalspart3,pendente
+00-pre-requisitos,OverTheWire,Bandit (34 levels - Linux basics),ssh://bandit.labs.overthewire.org:2220,✅ Ativo
+00-pre-requisitos,PicoCTF,General Skills (picoGym),https://play.picoctf.org/practice,pendente
+00-pre-requisitos,HackTheBox,Starting Point,https://app.hackthebox.com/starting-point,pendente
+01-reconhecimento,TryHackMe,Whois & DNS (dnsindns),https://tryhackme.com/room/dnsindns,pendente
+01-reconhecimento,TryHackMe,OSINT (ohsint),https://tryhackme.com/room/ohsint,pendente
+01-reconhecimento,TryHackMe,Nmap (Room 1),https://tryhackme.com/room/nmap01,pendente
+01-reconhecimento,TryHackMe,Nmap (Room 2),https://tryhackme.com/room/nmap,pendente
+01-reconhecimento,TryHackMe,Recon Final (gh0st),https://tryhackme.com/room/gh0st,pendente
+01-reconhecimento,TryHackMe,Passive Recon,https://tryhackme.com/room/passiverecon,pendente
+01-reconhecimento,TryHackMe,Active Recon,https://tryhackme.com/room/activerecon,pendente
+01-reconhecimento,TryHackMe,Shodan,https://tryhackme.com/room/shodan,pendente
+01-reconhecimento,PortSwigger,API Testing Labs,https://portswigger.net/web-security/api-testing,✅ Ativo
+01-reconhecimento,HackTheBox,Starting Point Machines,https://app.hackthebox.com/starting-point,pendente
+01-reconhecimento,OverTheWire,Limited recon labs,N/A,limitado
+01-reconhecimento,PicoCTF,Limited recon labs,N/A,limitado
+02-web-aplicacoes,TryHackMe,DVWA (WhatWeb/Wafw00f/Nikto/ffuf),https://tryhackme.com/room/dvwa,pendente
+02-web-aplicacoes,TryHackMe,SQL Injection (sqlinjectionlm),https://tryhackme.com/room/sqlinjectionlm,pendente
+02-web-aplicacoes,TryHackMe,OWASP Top 10,https://tryhackme.com/room/owasptop10,pendente
+02-web-aplicacoes,TryHackMe,Burp Suite Basics,https://tryhackme.com/room/burpsuitebasics,pendente
+02-web-aplicacoes,TryHackMe,Injection,https://tryhackme.com/room/injection,pendente
+02-web-aplicacoes,TryHackMe,XSS,https://tryhackme.com/room/xss,pendente
+02-web-aplicacoes,PortSwigger,SQL Injection (18 labs),https://portswigger.net/web-security/sql-injection,✅ Ativo
+02-web-aplicacoes,PortSwigger,XSS (30 labs),https://portswigger.net/web-security/cross-site-scripting,✅ Ativo
+02-web-aplicacoes,PortSwigger,CSRF (12 labs),https://portswigger.net/web-security/csrf,✅ Ativo
+02-web-aplicacoes,PortSwigger,SSRF (7 labs),https://portswigger.net/web-security/ssrf,✅ Ativo
+02-web-aplicacoes,PortSwigger,Access Control (13 labs),https://portswigger.net/web-security/access-control,✅ Ativo
+02-web-aplicacoes,PortSwigger,Authentication (14 labs),https://portswigger.net/web-security/authentication,✅ Ativo
+02-web-aplicacoes,PortSwigger,File Upload (7 labs),https://portswigger.net/web-security/file-upload,✅ Ativo
+02-web-aplicacoes,PortSwigger,Command Injection (5 labs),https://portswigger.net/web-security/os-command-injection,✅ Ativo
+02-web-aplicacoes,PortSwigger,XXE (9 labs),https://portswigger.net/web-security/xxe,✅ Ativo
+02-web-aplicacoes,PortSwigger,Insecure Deserialization (10 labs),https://portswigger.net/web-security/deserialization,✅ Ativo
+02-web-aplicacoes,PortSwigger,Path Traversal (6 labs),https://portswigger.net/web-security/file-path-traversal,✅ Ativo
+02-web-aplicacoes,PortSwigger,Business Logic (11 labs),https://portswigger.net/web-security/business-logic,✅ Ativo
+02-web-aplicacoes,PortSwigger,JWT (8 labs),https://portswigger.net/web-security/jwt,✅ Ativo
+02-web-aplicacoes,PortSwigger,OAuth (6 labs),https://portswigger.net/web-security/oauth,✅ Ativo
+02-web-aplicacoes,PortSwigger,GraphQL (5 labs),https://portswigger.net/web-security/graphql,✅ Ativo
+02-web-aplicacoes,OverTheWire,Natas Level 0,http://natas0.natas.labs.overthewire.org,✅ Ativo
+02-web-aplicacoes,OverTheWire,Natas Level 1,http://natas1.natas.labs.overthewire.org,✅ Ativo
+02-web-aplicacoes,OverTheWire,Natas Level 2,http://natas2.natas.labs.overthewire.org,✅ Ativo
+02-web-aplicacoes,OverTheWire,Natas Level 3,http://natas3.natas.labs.overthewire.org,✅ Ativo
+02-web-aplicacoes,OverTheWire,Natas Level 4,http://natas4.natas.labs.overthewire.org,✅ Ativo
+02-web-aplicacoes,OverTheWire,Natas Level 5,http://natas5.natas.labs.overthewire.org,✅ Ativo
+02-web-aplicacoes,OverTheWire,Natas Level 6,http://natas6.natas.labs.overthewire.org,✅ Ativo
+02-web-aplicacoes,OverTheWire,Natas Level 7,http://natas7.natas.labs.overthewire.org,✅ Ativo
+02-web-aplicacoes,OverTheWire,Natas Level 8,http://natas8.natas.labs.overthewire.org,✅ Ativo
+02-web-aplicacoes,OverTheWire,Natas Level 9,http://natas9.natas.labs.overthewire.org,✅ Ativo
+02-web-aplicacoes,OverTheWire,Natas Level 10,http://natas10.natas.labs.overthewire.org,✅ Ativo
+02-web-aplicacoes,PicoCTF,Web Exploitation (30+),https://play.picoctf.org/practice,pendente
+02-web-aplicacoes,HackTheBox,Starting Point (Web),https://app.hackthebox.com/starting-point,pendente
+03-exploracao,TryHackMe,Brute It (SSH),https://tryhackme.com/room/bruteit,pendente
+03-exploracao,TryHackMe,Hashing Fun,https://tryhackme.com/room/hashingfun,pendente
+03-exploracao,TryHackMe,Metasploit Intro,https://tryhackme.com/room/metasploitintro,pendente
+03-exploracao,TryHackMe,Kenobi,https://tryhackme.com/room/kenobi,pendente
+03-exploracao,TryHackMe,Ice,https://tryhackme.com/room/ice,pendente
+03-exploracao,TryHackMe,Mr Robot,https://tryhackme.com/room/mrrobot,pendente
+03-exploracao,TryHackMe,Buffer Overflow Prep,https://tryhackme.com/room/bufferoverflowprep,pendente
+03-exploracao,OverTheWire,Narnia (10 levels - binary exploitation),ssh://narnia.labs.overthewire.org:2226,✅ Ativo
+03-exploracao,OverTheWire,Behemoth (9 levels - binary exploitation),ssh://behemoth.labs.overthewire.org:2221,✅ Ativo
+03-exploracao,PicoCTF,Binary Exploitation (30+),https://play.picoctf.org/practice,pendente
+03-exploracao,PortSwigger,Limited exploit labs,N/A,limitado
+03-exploracao,HackTheBox,Starting Point (Exploit),https://app.hackthebox.com/starting-point,pendente
+04-pos-exploracao,TryHackMe,Linux Privesc,https://tryhackme.com/room/linprivesc,pendente
+04-pos-exploracao,TryHackMe,Windows Privesc,https://tryhackme.com/room/windowsprivesc20,pendente
+04-pos-exploracao,TryHackMe,BloodHound,https://tryhackme.com/room/bloodhound,pendente
+04-pos-exploracao,TryHackMe,Internal,https://tryhackme.com/room/internal,pendente
+04-pos-exploracao,TryHackMe,Overpass,https://tryhackme.com/room/overpass,pendente
+04-pos-exploracao,HackTheBox,Starting Point (AD),https://app.hackthebox.com/starting-point,pendente
+04-pos-exploracao,OverTheWire,Limited post-exploit labs,N/A,limitado
+04-pos-exploracao,PortSwigger,Limited post-exploit labs,N/A,limitado
+04-pos-exploracao,PicoCTF,Limited post-exploit labs,N/A,limitado
+05-reversing,TryHackMe,Buffer Overflow Prep (checksec/Ghidra/GDB/ROP),https://tryhackme.com/room/bufferoverflowprep,pendente
+05-reversing,TryHackMe,Gateway Intercept (GDB/Crackme),https://tryhackme.com/room/gatewayintercept,pendente
+05-reversing,TryHackMe,Ghidra,https://tryhackme.com/room/ghidra,pendente
+05-reversing,TryHackMe,Reverse Engineering,https://tryhackme.com/room/reverseengineer,pendente
+05-reversing,OverTheWire,Leviathan (8 levels - RE basics),ssh://leviathan.labs.overthewire.org:2223,✅ Ativo
+05-reversing,PicoCTF,Reverse Engineering (40+),https://play.picoctf.org/practice,pendente
+05-reversing,PortSwigger,Limited RE labs,N/A,limitado
+05-reversing,HackTheBox,Limited RE labs,N/A,limitado
