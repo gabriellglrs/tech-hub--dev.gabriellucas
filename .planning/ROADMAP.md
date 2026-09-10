@@ -48,8 +48,8 @@ Plans:
 
 Plans:
 - [x] 02-01-PLAN.md — Baseline + pesquisa labs módulos 00-05 + relatórios UMD
-- [ ] 02-02-PLAN.md — Pesquisa labs módulos 06-11 + relatórios UMD
-- [ ] 02-03-PLAN.md — Relatório consolidado + validação certificações + PESQUISA-REPORT
+- [x] 02-02-PLAN.md — Pesquisa labs módulos 06-11 + relatórios UMD
+- [x] 02-03-PLAN.md — Relatório consolidado + validação certificações + PESQUISA-REPORT
 
 ### Fase 3: Modernização + Conteúdo Prático
 **Goal**: Cada módulo processado fica completamente atualizado — ferramentas atuais, outputs documentados, labs verificáveis — processado módulo a módulo na ordem definida na Fase 1
@@ -60,11 +60,16 @@ Plans:
   2. Para cada módulo: todo comando tem output esperado documentado
   3. Para cada módulo: toda ferramenta tem bloco padronizado (instalação + uso com flags explicadas + output)
   4. Para cada módulo: LABS.md tem exercícios reais e verificáveis
-**Plans**: TBD
+**Plans:** 7 plans
 
-Plans (executados módulo a módulo):
-- [ ] 03-01: Processar módulo [N] da ordem priorizada (ferramentas + conteúdo + labs)
-- [ ] 03-02: Repetir para cada módulo restante
+Plans:
+- [ ] 03-01-PLAN.md — Módulo 10 (Governança) — reescrita completa GRC + compliance
+- [ ] 03-02-PLAN.md — Módulo 00 (Pré-requisitos) — INSTALACAO Kali + LABS.md + prática
+- [ ] 03-03-PLAN.md — Módulos 04+05 (Pós-exploração + Reversing) — BloodHound + Ghidra + outputs
+- [ ] 03-04-PLAN.md — Módulos 03+02 (Exploração + Web) — Metasploit + API security + outputs
+- [ ] 03-05-PLAN.md — Módulos 01+06 (Reconhecimento + Análise de Rede) — Subfinder + outputs
+- [ ] 03-06-PLAN.md — Módulos 07+08+09 (Defesa + Resposta + Ambientes) — outputs + Falco
+- [ ] 03-07-PLAN.md — Módulo 11 (IA) — reestruturação + CAI + prompt injection
 
 ### Fase 4: Navegação e Organização
 **Goal**: A trilha tem navegação intuitiva e glossário atualizado
@@ -89,6 +94,6 @@ As fases são executadas em ordem numérica: 1 → 2 → 3 → 4
 | Fase | Plans Completos | Status | Concluída |
 |------|-----------------|--------|-----------|
 | 1. Auditoria Completa | 3/3 | Complete   | 2026-09-10 |
-| 2. Pesquisa e Referências | 1/3 | In Progress|  |
-| 3. Modernização + Conteúdo Prático | 0/2 | Não iniciada | - |
+| 2. Pesquisa e Referências | 3/3 | Complete   | 2026-09-10 |
+| 3. Modernização + Conteúdo Prático | 0/7 | Planejada | - |
 | 4. Navegação e Organização | 0/3 | Não iniciada | - |
