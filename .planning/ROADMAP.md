@@ -44,11 +44,12 @@ Plans:
   1. Para cada módulo, existe lista de salas/labs gratuitos candidatos (TryHackMe, HackTheBox, PortSwigger, OverTheWire, PicoCTF) que cobrem o conteúdo e ainda não estão no LABS.md
   2. A ordem e tópicos dos 12 módulos foram comparados com OSCP, CEH v13, Security+ SY0-701 e trilhas de referência (THM, HTB Academy)
   3. Módulos ou tópicos totalmente ausentes das referências foram apontados com justificativa
-**Plans**: TBD
+**Plans:** 3 plans
 
 Plans:
-- [ ] 02-01: Pesquisar labs gratuitos por módulo em plataformas atuais
-- [ ] 02-02: Validar ordem e tópicos contra certificações e trilhas de referência
+- [ ] 02-01-PLAN.md — Baseline + pesquisa labs módulos 00-05 + relatórios UMD
+- [ ] 02-02-PLAN.md — Pesquisa labs módulos 06-11 + relatórios UMD
+- [ ] 02-03-PLAN.md — Relatório consolidado + validação certificações + PESQUISA-REPORT
 
 ### Fase 3: Modernização + Conteúdo Prático
 **Goal**: Cada módulo processado fica completamente atualizado — ferramentas atuais, outputs documentados, labs verificáveis — processado módulo a módulo na ordem definida na Fase 1
@@ -88,6 +89,6 @@ As fases são executadas em ordem numérica: 1 → 2 → 3 → 4
 | Fase | Plans Completos | Status | Concluída |
 |------|-----------------|--------|-----------|
 | 1. Auditoria Completa | 3/3 | Complete   | 2026-09-10 |
-| 2. Pesquisa e Referências | 0/2 | Não iniciada | - |
+| 2. Pesquisa e Referências | 0/3 | Não iniciada | - |
 | 3. Modernização + Conteúdo Prático | 0/2 | Não iniciada | - |
 | 4. Navegação e Organização | 0/3 | Não iniciada | - |
