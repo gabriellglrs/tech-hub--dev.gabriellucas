@@ -1,3 +1,11 @@
+<img width=100% src="https://capsule-render.vercel.app/api?type=waving&color=4C89F8&height=120&section=header"/>
+
+
+![LinkedIn cover - 27](https://github.com/user-attachments/assets/62db7d37-d6ad-450d-9cd1-f3ced029d379)
+
+<br>
+<br>
+
 <div align="center">
 
 # 🐧 tech-hub--dev.gabriellucas
@@ -243,3 +251,7 @@ Todas as ferramentas e técnicas são para uso em **ambientes autorizados e lega
 **Comece agora →** [Cybersegurança](aprendizado/cyberseguranca/) | [DevOps](aprendizado/devops/) | [Infraestrutura](aprendizado/infraestrutura/) | [Desenvolvimento](aprendizado/desenvolvimento/)
 
 </div>
+
+<br>
+<br>
+<img width=100% src="https://capsule-render.vercel.app/api?type=waving&color=4C89F8&height=120&section=footer"/>
