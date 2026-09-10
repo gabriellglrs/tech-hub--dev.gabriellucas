@@ -1,0 +1,301 @@
+{
+  "phase": "01-auditoria-completa",
+  "plan": "01",
+  "audit_date": "2026-09-10",
+  "rubric": {
+    "dimensions": ["correcao_tecnica", "completude", "labs", "progressao", "consistencia"],
+    "scale": "1-5",
+    "d04": "5 - Todos comandos corretos/sintaxe 2026; Instalação+uso+output em toda ferramenta; Labs reais com passo a passo verificável; Não assume nada não ensinado antes; Tom uniforme",
+    "d05": "4 - 1-2 erros menores; 80%+ ferramentas com bloco completo; Labs reais mas faltam outputs; 1-2 módulos com pequeno desvio; Tom quase uniforme",
+    "d06": "3 - Alguns erros mas conteúdo funcional; 50-79% ferramentas completas; Labs existem mas genéricos; Alguns módulos pulam etapas; Tom variado",
+    "d07": "2 - Vários erros técnicos; <50% ferramentas completas; Labs só links sem passo a passo; Vários módulos assume conhecimento avançado; Tom muito diferente",
+    "d08": "1 - Conteúdo desatualizado/incorreto; Zero comandos documentados; Sem labs ou só teoria; Progressão quebrada; Sem padronização"
+  },
+  "root_files": [
+    {
+      "file": "aprendizado/cyberseguranca/README.md",
+      "lines": 224,
+      "notes": "Guia principal bem estruturado com 12 módulos, fluxo visual, tempos estimados, plataformas de prática. PROBLEMA: Pré-requisitos mencionam 'Ubuntu Tutorial' (linha 32) conflitando com constraint KALI-ONLY. Fluxo didático não menciona módulo 00. Boa organização geral."
+    },
+    {
+      "file": "aprendizado/cyberseguranca/GLOSSARIO.md",
+      "lines": 299,
+      "notes": "Glossário abrangente com 12 categorias, 200+ termos, siglas comuns. Bem organizado, referência sólida para consistência de terminologia. Inclui lista de ferramentas. Excelente qualidade."
+    },
+    {
+      "file": "aprendizado/cyberseguranca/INSTALACAO.md",
+      "lines": 588,
+      "notes": "CRÍTICO: Linha 11 diz 'Ubuntu/Debian recomendado' — conflita diretamente com constraint KALI-ONLY do projeto. Cobertura boa de ferramentas por módulo com comandos de instalação. Script de verificação final é útil. Precisa ser reescrito para Kali."
+    },
+    {
+      "file": "aprendizado/cyberseguranca/ROADMAP.md",
+      "lines": 406,
+      "notes": "SEVERAMENTE DESATUALIZADO. Referencia 10 módulos com numeração errada (ex: '02-analise-rede' quando a pasta real é '06-analise-rede'). Não corresponde à estrutura atual de 12 módulos. Precisa ser atualizado ou removido."
+    },
+    {
+      "file": "aprendizado/cyberseguranca/prompt-gsd-trilha-cyberseguranca.md",
+      "lines": 115,
+      "notes": "Prompt original do projeto. Estabelece constraint KALI-ONLY explicitamente. Define core value: 'todo módulo deve deixar a pessoa apta a FAZER'. Documenta requisito de instalação+uso+output para cada ferramenta."
+    },
+    {
+      "file": "aprendizado/cyberseguranca/CHEATSHEET-defesa-forense.md",
+      "lines": 64,
+      "notes": "Referência rápida. Comandos Volatility usam sintaxe legada (volatility -f mem.raw imageinfo) — Volatility 3 usa sintaxe diferente (volatility3 -f mem.raw windows.info). Outros comandos (Lynis, UFW, Suricata) corretos."
+    },
+    {
+      "file": "aprendizado/cyberseguranca/CHEATSHEET-exploracao.md",
+      "lines": 44,
+      "notes": "Referência rápida. Comandos Hydra, John, Hashcat, Netcat, Socat, Pivoting corretos. Bons exemplos práticos. Sem problemas técnicos."
+    },
+    {
+      "file": "aprendizado/cyberseguranca/CHEATSHEET-recon-web.md",
+      "lines": 53,
+      "notes": "Referência rápida. Nmap, Whois/Dig, Gobuster, FFUF, SQLMap, Nikto, WhatWeb/WAFw00f — comandos corretos e atualizados. Sem problemas técnicos."
+    }
+  ],
+  "module_00_part1": [
+    {
+      "file": "00-pre-requisitos/README.md",
+      "lines": 107,
+      "correcao_tecnica": 4,
+      "completude": 3,
+      "labs": 2,
+      "progressao": 4,
+      "consistencia": 4,
+      "nota_geral": 3.4,
+      "notes": "Boa estrutura com 4 partes, ordem de estudo clara, checklist final. Checklist menciona 'PowerShell' antes do módulo 11 (Windows Básico) — progressão incorreta. Falta link para LABS.md. Pré-requisitos listados de forma geral."
+    },
+    {
+      "file": "00-pre-requisitos/01-redes/README.md",
+      "lines": 23,
+      "correcao_tecnica": 4,
+      "completude": 2,
+      "labs": 1,
+      "progressao": 4,
+      "consistencia": 4,
+      "nota_geral": 3.0,
+      "notes": "Navegação simples e funcional. Tabela com tempos. Falta LABS.md para subdiretório 01-redes. Conteúdo é só navegação, sem valor educacional próprio."
+    },
+    {
+      "file": "00-pre-requisitos/01-redes/01-o-que-e-uma-rede.md",
+      "lines": 166,
+      "correcao_tecnica": 3,
+      "completude": 3,
+      "labs": 3,
+      "progressao": 4,
+      "consistencia": 3,
+      "nota_geral": 3.2,
+      "notes": "Boa explicação conceitual com analogias. Comandos práticos incluem 'ip addr show' (Linux) e 'ipconfig' (Windows) — inconsistente com KALI-ONLY. Saída de exemplo incluída. Checkpoint prático. Falta seção de instalação de ferramentas."
+    },
+    {
+      "file": "00-pre-requisitos/01-redes/02-enderecamento-ip.md",
+      "lines": 178,
+      "correcao_tecnica": 4,
+      "completude": 3,
+      "labs": 3,
+      "progressao": 4,
+      "consistencia": 3,
+      "nota_geral": 3.4,
+      "notes": "Excelente explicação de IP, classes, máscara, CIDR. Comandos incluem Linux E Windows — inconsistente. Exercício prático com 'ip addr show'. Boas dicas. Progressão lógica do arquivo anterior."
+    },
+    {
+      "file": "00-pre-requisitos/01-redes/03-dns.md",
+      "lines": 170,
+      "correcao_tecnica": 4,
+      "completude": 4,
+      "labs": 3,
+      "progressao": 4,
+      "consistencia": 4,
+      "nota_geral": 3.8,
+      "notes": "Boa explicação de DNS com analogia clara. Tabela de registros DNS completa. Comandos dig e nslookup com saídas de exemplo. Inclui seção de segurança DNS (spoofing, poisoning, tunneling). Comandos misturam Linux/Windows."
+    },
+    {
+      "file": "00-pre-requisitos/01-redes/04-portas-e-protocolos.md",
+      "lines": 163,
+      "correcao_tecnica": 4,
+      "completude": 4,
+      "labs": 3,
+      "progressao": 4,
+      "consistencia": 4,
+      "nota_geral": 3.8,
+      "notes": "Tabela de portas completa e correta. TCP vs UDP bem explicado. Comandos 'ss -tulnp' e 'netstat -ano' com saídas de exemplo. Netcat para teste de portas. Dicas práticas. Boa consistência."
+    },
+    {
+      "file": "00-pre-requisitos/01-redes/05-tcp-ip-osi.md",
+      "lines": 136,
+      "correcao_tecnica": 4,
+      "completude": 3,
+      "labs": 2,
+      "progressao": 4,
+      "consistencia": 4,
+      "nota_geral": 3.4,
+      "notes": "Modelos TCP/IP e OSI bem explicados com analogia da cebola. Tabelas comparativas úteis. Mapeamento ferramenta→camada OSI é excelente para contexto de segurança. Falta exemplos de comandos práticos para testar camadas. Sem exercícios verificáveis."
+    }
+  ],
+  "module_00_part2": [
+    {
+      "file": "00-pre-requisitos/02-sistemas/README.md",
+      "lines": 21,
+      "correcao_tecnica": 4,
+      "completude": 2,
+      "labs": 1,
+      "progressao": 4,
+      "consistencia": 4,
+      "nota_geral": 3.0,
+      "notes": "Navegação simples. Tabela com tempos. Referencia 'Home Lab' no arquivo 08. Sem valor educacional próprio."
+    },
+    {
+      "file": "00-pre-requisitos/02-sistemas/06-linux-basico.md",
+      "lines": 236,
+      "correcao_tecnica": 4,
+      "completude": 4,
+      "labs": 4,
+      "progressao": 4,
+      "consistencia": 4,
+      "nota_geral": 4.0,
+      "notes": "Excelente cobertura de comandos Linux: navegação, arquivos, permissões, processos, rede, instalação, busca. 3 exercícios práticos com passo a passo. Explicação de permissões (chmod) muito boa. Inclui 'ifconfig' como legado ao lado de 'ip addr show'. Referencia Kali Linux explicitamente. Checkpoint claro."
+    },
+    {
+      "file": "00-pre-requisitos/02-sistemas/07-http-e-web.md",
+      "lines": 214,
+      "correcao_tecnica": 4,
+      "completude": 4,
+      "labs": 3,
+      "progressao": 4,
+      "consistencia": 4,
+      "nota_geral": 3.8,
+      "notes": "Boa explicação de HTTP com diagrama de requisição/resposta. Métodos HTTP, códigos de status, headers, cookies, APIs — tudo bem coberto. Comandos curl e wget com exemplos práticos. Conexão com segurança (OWASP Top 10, Burp Suite) bem feita."
+    },
+    {
+      "file": "00-pre-requisitos/02-sistemas/08-maquinas-virtuais.md",
+      "lines": 186,
+      "correcao_tecnica": 4,
+      "completude": 4,
+      "labs": 3,
+      "progressao": 4,
+      "consistencia": 4,
+      "nota_geral": 3.8,
+      "notes": "AUD-03 CRÍTICO: Fornece guia explícito de instalação do Kali Linux via VirtualBox com passo a passo (download .ova, importar, configurar rede, login kali/kali). Lista 3 VMs essenciais (Kali, Metasploitable, Juice Shop). Explica redes virtuais (NAT, Bridged, Host-only). Snapshots explicados. FALTA: instrução de download do Metasploitable e Juice Shop menos detalhada que Kali."
+    },
+    {
+      "file": "00-pre-requisitos/03-seguranca/README.md",
+      "lines": 21,
+      "correcao_tecnica": 4,
+      "completude": 2,
+      "labs": 1,
+      "progressao": 4,
+      "consistencia": 4,
+      "nota_geral": 3.0,
+      "notes": "Navegação simples. Tabela com tempos. Sem valor educacional próprio."
+    },
+    {
+      "file": "00-pre-requisitos/03-seguranca/09-conceitos-seguranca.md",
+      "lines": 186,
+      "correcao_tecnica": 4,
+      "completude": 2,
+      "labs": 1,
+      "progressao": 4,
+      "consistencia": 4,
+      "nota_geral": 3.0,
+      "notes": "Cobertura conceitual boa: CIA triade, tipos de ameaças, malware, vetores de ataque, controles de segurança, criptografia básica. ZERO comandos práticos — é 100% teoria. Viola core value do projeto ('apt a FAZER'). Sem exercícios verificáveis. Útil como referência conceitual mas insufficiente como módulo de ensino."
+    },
+    {
+      "file": "00-pre-requisitos/03-seguranca/10-python-basico.md",
+      "lines": 271,
+      "correcao_tecnica": 4,
+      "completude": 4,
+      "labs": 4,
+      "progressao": 4,
+      "consistencia": 4,
+      "nota_geral": 4.0,
+      "notes": "Excelente introdução a Python para segurança. Variáveis, condicionais, loops, funções, listas — todos cobertos. 3 scripts práticos de segurança (hash de senha, scanner de porta, leitor de wordlist). Tabela de bibliotecas úteis. 3 exercícios. Inclui 'Windows' como opção de instalação — menor impacto pois Python roda em ambos."
+    },
+    {
+      "file": "00-pre-requisitos/03-seguranca/11-windows-basico.md",
+      "lines": 185,
+      "correcao_tecnica": 4,
+      "completude": 3,
+      "labs": 2,
+      "progressao": 3,
+      "consistencia": 4,
+      "nota_geral": 3.2,
+      "notes": "Boa cobertura de PowerShell, logs, firewall, segurança Windows. Comandos PowerShell corretos. Tabela 'onde ficam as coisas' muito útil. PROBLEMA: Progressão assume que o leitor já tem Windows — mas o projeto é KALI-ONLY. Deveria explicar que este é o sistema ALVO, não o ambiente de prática. Sem exercícios práticos verificáveis."
+    },
+    {
+      "file": "00-pre-requisitos/04-ferramentas/README.md",
+      "lines": 20,
+      "correcao_tecnica": 4,
+      "completude": 2,
+      "labs": 1,
+      "progressao": 4,
+      "consistencia": 4,
+      "nota_geral": 3.0,
+      "notes": "Navegação simples. Tabela com tempos. Sem valor educacional próprio."
+    },
+    {
+      "file": "00-pre-requisitos/04-ferramentas/12-comandos-rede.md",
+      "lines": 148,
+      "correcao_tecnica": 4,
+      "completude": 4,
+      "labs": 4,
+      "progressao": 4,
+      "consistencia": 4,
+      "nota_geral": 4.0,
+      "notes": "Excelente cobertura de comandos de rede: ip a, ping, nslookup, dig, ss, netstat, lsof, traceroute. Dicas de 'macetes' (use ip a em vez de ifconfig, ss em vez de netstat). 4 exercícios práticos. Inclui 'ipconfig' e 'tracert' (Windows) — menor impacto pois são referências. Progressão boa."
+    },
+    {
+      "file": "00-pre-requisitos/04-ferramentas/13-editores-texto.md",
+      "lines": 196,
+      "correcao_tecnica": 4,
+      "completude": 4,
+      "labs": 4,
+      "progressao": 4,
+      "consistencia": 4,
+      "nota_geral": 4.0,
+      "notes": "Boa cobertura de nano e vim com tabelas de comandos. Inclui edição rápida com echo, sed, head, tail. 3 exercícios práticos. Tabela comparativa de editores. Progressão lógica. Sem problemas técnicos."
+    }
+  ],
+  "aud03_finding": {
+    "requirement": "AUD-03: Verificar se 00-pre-requisitos orienta instalação/configuração do Kali Linux",
+    "status": "PARCIALMENTE ATENDIDO",
+    "finding": "O arquivo 08-maquinas-virtuais.md fornece guia explícito de instalação do Kali Linux via VirtualBox com passo a passo (download .ova de kali.org, importar, configurar rede host-only, login kali/kali). Isso atende AUD-03 parcialmente.",
+    "gaps": [
+      "INSTALACAO.md (raiz) diz 'Ubuntu/Debian recomendado' — conflita com constraint KALI-ONLY",
+      "README.md raiz menciona 'Ubuntu Tutorial' nos pré-requisitos — conflita com KALI-ONLY",
+      "08-maquinas-virtuais.md diz 'sudo apt install virtualbox' referenciando Ubuntu/Debian — deveria ser mais genérico ou mencionar Kali",
+      "Falta instrução explícita de 'Primeiro instale Kali, depois tudo mais funciona' no início do módulo 00",
+      "Metasploitable e Juice Shop têm instruções de download menos detalhadas que Kali"
+    ],
+    "recommendation": "Reescrever INSTALACAO.md para Kali, adicionar nota no README.md do módulo 00 sobre Kali como pré-requisito único, e detalhar download de VMs auxiliares"
+  },
+  "module_00_summary": {
+    "total_files": 18,
+    "avg_correcao_tecnica": 3.9,
+    "avg_completude": 3.2,
+    "avg_labs": 2.6,
+    "avg_progressao": 3.9,
+    "avg_consistencia": 3.8,
+    "avg_geral": 3.5,
+    "strengths": [
+      "Boa progressão didática — cada arquivo assume conhecimento do anterior",
+      "Analogias e diagramas ajudam iniciantes",
+      "Comandos Linux corretos e atualizados na maioria dos arquivos",
+      "08-maquinas-virtuais.md fornece guia de Kali Linux",
+      "10-python-basico.md e 12-comandos-rede.md são os melhores arquivos (nota 4.0)"
+    ],
+    "weaknesses": [
+      "INCONSISTÊNCIA KALI: Múltiplos arquivos incluem comandos Windows (ipconfig, tracert, netstat -ano) sem justificar",
+      "09-conceitos-seguranca.md é 100% teoria — zero comandos práticos (viola core value)",
+      "Falta LABS.md para o módulo 00 — nenhum lab prático verificável",
+      "INSTALACAO.md recomenda Ubuntu em vez de Kali",
+      "README.md raiz menciona Ubuntu nos pré-requisitos",
+      "4 arquivos README de subdiretórios são só navegação — sem valor educacional"
+    ],
+    "critical_issues": [
+      "INSTALACAO.md precisa ser reescrito para Kali Linux (AUD-03)",
+      "09-conceitos-seguranca.md precisa de comandos práticos (core value violation)",
+      "Módulo 00 precisa de LABS.md com exercícios práticos verificáveis",
+      "Comandos Windows devem ser removidos ou claramente rotulados como 'sistema alvo'"
+    ]
+  }
+}
