@@ -32,8 +32,8 @@ Fases decimais aparecem entre seus inteiros vizinhos em ordem numérica.
 **Plans:** 3 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Root context + module 00 audit (Kali guidance, 18 files)
-- [ ] 01-02-PLAN.md — Modules 01-06 audit (offensive modules, 30 files)
+- [x] 01-01-PLAN.md — Root context + module 00 audit (Kali guidance, 18 files)
+- [x] 01-02-PLAN.md — Modules 01-06 audit (offensive modules, 30 files)
 - [ ] 01-03-PLAN.md — Modules 07-11 audit + all 5 report generation
 
 ### Fase 2: Pesquisa e Referências
@@ -87,7 +87,7 @@ As fases são executadas em ordem numérica: 1 → 2 → 3 → 4
 
 | Fase | Plans Completos | Status | Concluída |
 |------|-----------------|--------|-----------|
-| 1. Auditoria Completa | 0/3 | Não iniciada | - |
+| 1. Auditoria Completa | 2/3 | In Progress|  |
 | 2. Pesquisa e Referências | 0/2 | Não iniciada | - |
 | 3. Modernização + Conteúdo Prático | 0/2 | Não iniciada | - |
 | 4. Navegação e Organização | 0/3 | Não iniciada | - |
