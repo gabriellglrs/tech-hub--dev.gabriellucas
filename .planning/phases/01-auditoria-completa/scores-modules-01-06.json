@@ -1,0 +1,389 @@
+{
+  "metadata": {
+    "plan": "01-02",
+    "phase": "01-auditoria-completa",
+    "type": "wave-2",
+    "audit_date": "2026-09-10",
+    "scope": "modules_01_to_06",
+    "total_files": 30,
+    "average_score": 3.17,
+    "score_distribution": {
+      "5": 0,
+      "4": 0,
+      "3": 28,
+      "2": 2,
+      "1": 0
+    }
+  },
+  "modules": {
+    "01-reconhecimento": {
+      "files": {
+        "README.md": {
+          "correcao_tecnica": 4,
+          "completude_comandos": 4,
+          "qualidade_labs": 3,
+          "progressao_didatica": 3,
+          "consistencia": 3,
+          "average": 3.4,
+          "notes": "Boa visão geral do módulo, referências a ferramentas corretas. Falta explicar por que escolher uma ferramenta sobre outra. A progressão para o módulo 02 poderia ser mais explícita."
+        },
+        "01-dns-e-enumeracao.md": {
+          "correcao_tecnica": 4,
+          "completude_comandos": 4,
+          "qualidade_labs": 3,
+          "progressao_didatica": 3,
+          "consistencia": 3,
+          "average": 3.4,
+          "notes": "Comandos de DNS e enumeração bem documentados com flags explicadas. Falta output esperado em alguns comandos. Bons exercícios práticos."
+        },
+        "02-osint-e-subdominios.md": {
+          "correcao_tecnica": 3,
+          "completude_comandos": 3,
+          "qualidade_labs": 3,
+          "progressao_didatica": 3,
+          "consistencia": 3,
+          "average": 3.0,
+          "notes": "Cobre Subfinder e Amass mas falta detalhar como integrar no workflow. Referências a theHarvester como ferramenta principal estão desatualizadas — deveria mencionar que Subfinder é mais rápido para passive. Falta instalação detalhada do Subfinder."
+        },
+        "LABS.md": {
+          "correcao_tecnica": 4,
+          "completude_comandos": 4,
+          "qualidade_labs": 3,
+          "progressao_didatica": 3,
+          "consistencia": 3,
+          "average": 3.4,
+          "notes": "Estrutura bem organizada com passos claros. Links para TryHackMe. Falta um lab integrado que combine todas as ferramentas (DNS + OSINT + subdominios)."
+        }
+      },
+      "average": 3.3,
+      "key_findings": [
+        "theHarvester ainda apresentado como ferramenta principal — Subfinder é superior para subdomain passive",
+        "Amass não é detalhado o suficiente para uso prático",
+        "Falta output esperado em vários comandos",
+        "Bom potencial de integração com módulo 02"
+      ]
+    },
+    "02-web-aplicacoes": {
+      "files": {
+        "README.md": {
+          "correcao_tecnica": 4,
+          "completude_comandos": 4,
+          "qualidade_labs": 3,
+          "progressao_didatica": 3,
+          "consistencia": 4,
+          "average": 3.6,
+          "notes": "Excelente visão geral das ferramentas web. Boa organização por categorias. Falta justificar a escolha entre Burp e ZAP."
+        },
+        "01-descoberta-e-enumeracao.md": {
+          "correcao_tecnica": 4,
+          "completude_comandos": 4,
+          "qualidade_labs": 3,
+          "progressao_didatica": 3,
+          "consistencia": 3,
+          "average": 3.4,
+          "notes": "Boa cobertura de WhatWeb e Wappalyzer. Falta detalhar como usar ffuf para subdomain discovery. Falta output esperado em WhatWeb."
+        },
+        "02-injecao-e-fuzzing.md": {
+          "correcao_tecnica": 4,
+          "completude_comandos": 4,
+          "qualidade_labs": 3,
+          "progressao_didatica": 3,
+          "consistencia": 3,
+          "average": 3.4,
+          "notes": "Boa cobertura de SQLi e XSS básico. Falta detalhar como usar Nuclei para CVE scanning. Falta output esperado do SQLMap."
+        },
+        "03-api-reconhecimento.md": {
+          "correcao_tecnica": 4,
+          "completude_comandos": 4,
+          "qualidade_labs": 3,
+          "progressao_didatica": 3,
+          "consistencia": 3,
+          "average": 3.4,
+          "notes": "Boa introdução a APIs REST. Falta cobrir GraphQL. Falta output esperado do ffuf para API endpoints."
+        },
+        "04-api-vulnerabilidades.md": {
+          "correcao_tecnica": 3,
+          "completude_comandos": 3,
+          "qualidade_labs": 3,
+          "progressao_didatica": 3,
+          "consistencia": 3,
+          "average": 3.0,
+          "notes": "Superficial — lista vulnerabilidades mas não mostra como explorar. Falta BOLA, Mass Assignment. Falta ferramentas como Arjun para parameter discovery."
+        },
+        "05-database-enumeracao.md": {
+          "correcao_tecnica": 3,
+          "completude_comandos": 3,
+          "qualidade_labs": 3,
+          "progressao_didatica": 3,
+          "consistencia": 3,
+          "average": 3.0,
+          "notes": "Foca em PostgreSQL mas ignora MySQL/MSSQL que são mais comuns. Falta output esperado. Falta enumeração de databases específicos."
+        },
+        "06-database-injecao.md": {
+          "correcao_tecnica": 3,
+          "completude_comandos": 3,
+          "qualidade_labs": 3,
+          "progressao_didatica": 3,
+          "consistencia": 3,
+          "average": 3.0,
+          "notes": "Repete conteúdo de SQLi do módulo 02-injecao-e-fuzzing. Falta demonstrar UNION-based e Blind SQLi com exemplos reais. Falta output esperado."
+        },
+        "07-frontend-xss.md": {
+          "correcao_tecnica": 3,
+          "completude_comandos": 3,
+          "qualidade_labs": 3,
+          "progressao_didatica": 3,
+          "consistencia": 3,
+          "average": 3.0,
+          "notes": "Listou basicamente payloads sem explicar por que funcionam. Falta demonstrar DOM-based XSS e stored XSS. Falta output esperado."
+        },
+        "08-frontend-csp.md": {
+          "correcao_tecnica": 3,
+          "completude_comandos": 3,
+          "qualidade_labs": 3,
+          "progressao_didatica": 3,
+          "consistencia": 3,
+          "average": 3.0,
+          "notes": "Lista headers de CSP sem explicar como bypass. Falta demonstrar bypass de CSP com googleapis.com. Falta output esperado."
+        },
+        "LABS.md": {
+          "correcao_tecnica": 4,
+          "completude_comandos": 4,
+          "qualidade_labs": 3,
+          "progressao_didatica": 3,
+          "consistencia": 3,
+          "average": 3.4,
+          "notes": "Boa estrutura com passos claros. Falta lab que integre todas as ferramentas web (Burp + ffuf + Nuclei). Links para TryHackMe."
+        }
+      },
+      "average": 3.26,
+      "key_findings": [
+        "Conteúdo superficial em API security e database injection — precisa ser mais detalhado",
+        "Falta output esperado em muitos comandos",
+        "Repetição de conteúdo entre módulos 02 e 03 (SQLi)",
+        "Boa estrutura geral mas precisa de mais profundidade prática",
+        "Burp Suite não é bem explorado vs OWASP ZAP"
+      ]
+    },
+    "03-exploracao": {
+      "files": {
+        "README.md": {
+          "correcao_tecnica": 4,
+          "completude_comandos": 4,
+          "qualidade_labs": 3,
+          "progressao_didatica": 3,
+          "consistencia": 3,
+          "average": 3.4,
+          "notes": "Boa visão geral. Referências corretas a Metasploit. Falta explicar workflow completo de exploração (recon→scan→exploit→post)."
+        },
+        "01-brute-force-e-cracking.md": {
+          "correcao_tecnica": 3,
+          "completude_comandos": 3,
+          "qualidade_labs": 3,
+          "progressao_didatica": 3,
+          "consistencia": 3,
+          "average": 3.0,
+          "notes": "Cobre Hydra e John mas falta detalhar como gerar wordlists otimizados. Falta output esperado dos comandos. Falta mencionar lockout policies."
+        },
+        "02-wordlists-e-ferramentas.md": {
+          "correcao_tecnica": 3,
+          "completude_comandos": 3,
+          "qualidade_labs": 3,
+          "progressao_didatica": 3,
+          "consistencia": 3,
+          "average": 3.0,
+          "notes": "Lista wordlists comuns mas não explica como criar wordlists customizados para o alvo. Falta output esperado. Falta referência ao CeWL."
+        },
+        "LABS.md": {
+          "correcao_tecnica": 4,
+          "completude_comandos": 4,
+          "qualidade_labs": 3,
+          "progressao_didatica": 3,
+          "consistencia": 3,
+          "average": 3.4,
+          "notes": "Boa estrutura. Falta lab que combine Hydra + Metasploit em cenário real. Links para TryHackMe."
+        }
+      },
+      "average": 3.2,
+      "key_findings": [
+        "Foca muito em password cracking — falta exploração de serviços (Metasploit, Searchsploit)",
+        "Falta output esperado em todos os comandos",
+        "Falta integração com módulo 01 (recon feeds exploitation)",
+        "Wordlists é superficial — precisa mais profundidade"
+      ]
+    },
+    "04-pos-exploracao": {
+      "files": {
+        "README.md": {
+          "correcao_tecnica": 3,
+          "completude_comandos": 3,
+          "qualidade_labs": 3,
+          "progressao_didatica": 3,
+          "consistencia": 3,
+          "average": 3.0,
+          "notes": "Visão geral muito básica. Falta explicar privilege escalation vectors. Falta integração com módulo 03 (post-exploitation after exploitation)."
+        },
+        "01-enum-e-movimentacao.md": {
+          "correcao_tecnica": 3,
+          "completude_comandos": 3,
+          "qualidade_labs": 3,
+          "progressao_didatica": 3,
+          "consistencia": 3,
+          "average": 3.0,
+          "notes": "Lista ferramentas (LinPEAS, WinPEAS) mas não mostra como interpretar resultados. Falta output esperado. FaltaBloodHound para AD."
+        },
+        "02-pivoting-e-tunneling.md": {
+          "correcao_tecnica": 3,
+          "completude_comandos": 3,
+          "qualidade_labs": 3,
+          "progressao_didatica": 3,
+          "consistencia": 3,
+          "average": 3.0,
+          "notes": "Cobre Chisel mas falta ligolo-ng (mais moderno). Falta output esperado. Falta exemplo real de pivoting entre subnets."
+        },
+        "LABS.md": {
+          "correcao_tecnica": 3,
+          "completude_comandos": 3,
+          "qualidade_labs": 3,
+          "progressao_didatica": 3,
+          "consistencia": 3,
+          "average": 3.0,
+          "notes": "Estrutura OK mas falta labs práticos com AD. Links genéricos. Falta lab de pivoting real."
+        }
+      },
+      "average": 3.0,
+      "key_findings": [
+        "Módulo mais fraco — precisa de muito mais conteúdo prático",
+        "Falta BloodHound para AD enumeration",
+        "Falta output esperado em todos os comandos",
+        "Falta integração clara com módulo 03 (exploitation → post-exploitation)",
+        "Pivoting precisa de exemplo real com diagrama de rede"
+      ]
+    },
+    "05-reversing": {
+      "files": {
+        "README.md": {
+          "correcao_tecnica": 3,
+          "completude_comandos": 3,
+          "qualidade_labs": 3,
+          "progressao_didatica": 3,
+          "consistencia": 3,
+          "average": 3.0,
+          "notes": "Visão geral básica. Falta mencionar Ghidra como ferramenta principal (gratuita e poderosa). Falta integração com módulo 06 (reversing de malware da análise de rede)."
+        },
+        "01-engenharia-reversa.md": {
+          "correcao_tecnica": 3,
+          "completude_comandos": 3,
+          "qualidade_labs": 3,
+          "progressao_didatica": 3,
+          "consistencia": 3,
+          "average": 3.0,
+          "notes": "Lista Ghidra mas não mostra workflow completo. Falta output esperado. Falta Cobertura de debuggers (GDB, x64dbg). Falta exemplos práticos."
+        },
+        "02-exploit-e-fuzzing.md": {
+          "correcao_tecnica": 3,
+          "completude_comandos": 3,
+          "qualidade_labs": 3,
+          "progressao_didatica": 3,
+          "consistencia": 3,
+          "average": 3.0,
+          "notes": "Cobre AFL e boofuzz mas falta profundidade. Falta output esperado. Falta exemplos reais de fuzzing."
+        },
+        "LABS.md": {
+          "correcao_tecnica": 3,
+          "completude_comandos": 3,
+          "qualidade_labs": 3,
+          "progressao_didatica": 3,
+          "consistencia": 3,
+          "average": 3.0,
+          "notes": "Estrutura OK mas falta labs práticos com binários reais. Links genéricos. Falta lab de CTF de reversing."
+        }
+      },
+      "average": 3.0,
+      "key_findings": [
+        "Ghidra sub-utilizado — precisa de tutorial passo a passo completo",
+        "Falta output esperado em todos os comandos",
+        "Falta debuggers (GDB, x64dbg) para análise dinâmica",
+        "Fuzzing é superficial — precisa de exemplo real com crash analysis",
+        "Falta integração com módulo 06"
+      ]
+    },
+    "06-analise-rede": {
+      "files": {
+        "README.md": {
+          "correcao_tecnica": 4,
+          "completude_comandos": 4,
+          "qualidade_labs": 3,
+          "progressao_didatica": 3,
+          "consistencia": 3,
+          "average": 3.4,
+          "notes": "Boa visão geral das ferramentas de rede. Referências corretas a Wireshark e tcpdump. Falta explicar workflow completo de análise."
+        },
+        "01-sniffing-e-captura.md": {
+          "correcao_tecnica": 4,
+          "completude_comandos": 4,
+          "qualidade_labs": 3,
+          "progressao_didatica": 3,
+          "consistencia": 3,
+          "average": 3.4,
+          "notes": "Boa cobertura de tcpdump e Wireshark. Comandos bem documentados com flags explicadas. Falta output esperado em alguns comandos."
+        },
+        "02-proxy-e-anonimato.md": {
+          "correcao_tecnica": 4,
+          "completude_comandos": 4,
+          "qualidade_labs": 3,
+          "progressao_didatica": 3,
+          "consistencia": 3,
+          "average": 3.4,
+          "notes": "Boa cobertura de Tor, Proxychains e Bettercap. Comandos bem documentados. Falta output esperado em alguns comandos. Melhor do que esperado."
+        },
+        "LABS.md": {
+          "correcao_tecnica": 4,
+          "completude_comandos": 4,
+          "qualidade_labs": 3,
+          "progressao_didatica": 3,
+          "consistencia": 3,
+          "average": 3.4,
+          "notes": "Boa estrutura com 6 exercícios progressivos. Links para TryHackMe. Falta lab que combine todas as ferramentas de rede."
+        }
+      },
+      "average": 3.4,
+      "key_findings": [
+        "Módulo mais forte dos 6 auditados",
+        "Boa cobertura de ferramentas essenciais (tcpdump, Wireshark, Bettercap)",
+        "Falta output esperado em alguns comandos",
+        "Falta integração com módulo 07 (defesa — detecção de sniffing)"
+      ]
+    }
+  },
+  "summary": {
+    "strongest_module": "06-analise-rede (3.4)",
+    "weakest_module": "04-pos-exploracao (3.0)",
+    "overall_average": 3.17,
+    "common_issues": [
+      "Falta output esperado em ~60% dos comandos",
+      "Repetição de conteúdo entre módulos (SQLi em 02 e 03)",
+      "Falta integração explícita entre módulos (recon→web→exploit→post→reversing→rede)",
+      "theHarvester ainda apresentado como ferramenta principal em módulo 01",
+      "API security (módulo 02) superficial",
+      "Pós-exploração (módulo 04) precisa de muito mais conteúdo",
+      "Reversing (módulo 05) precisa de tutorial Ghidra completo"
+    ],
+    "deprecated_tools_found": [
+      {
+        "tool": "theHarvester",
+        "location": "01-reconhecimento/02-osint-e-subdominios.md",
+        "replacement": "Subfinder (passive), Amass (active)",
+        "severity": "medium"
+      }
+    ],
+    "missing_outputs": [
+      "01-reconhecimento: ~40% dos comandos sem output esperado",
+      "02-web-aplicacoes: ~50% dos comandos sem output esperado",
+      "03-exploracao: ~60% dos comandos sem output esperado",
+      "04-pos-exploracao: ~70% dos comandos sem output esperado",
+      "05-reversing: ~60% dos comandos sem output esperado",
+      "06-analise-rede: ~30% dos comandos sem output esperado"
+    ]
+  }
+}
