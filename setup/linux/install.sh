@@ -5,6 +5,7 @@
 #   cd tech-hub--dev.gabriellucas
 #   ./install.sh            # base dev (zsh, plugins, ferramentas dev)
 #   ./install.sh --sec      # base + cyberseg
+#   ./install.sh --nvim     # instala Neovim + config
 #   ./install.sh --copy-only # só copia .zshrc/.p10k sem apt
 #   ./install.sh --wsl      # otimizações específicas para WSL2
 set -euo pipefail
@@ -12,10 +13,12 @@ REPO_ROOT="$(cd "$(dirname "$0")" && pwd)"
 COPY_ONLY=false
 WITH_SEC=false
 WITH_WSL=false
+WITH_NVIM=false
 for arg in "$@"; do
   [[ "$arg" == "--copy-only" ]] && COPY_ONLY=true
   [[ "$arg" == "--sec" ]] && WITH_SEC=true
   [[ "$arg" == "--wsl" ]] && WITH_WSL=true
+  [[ "$arg" == "--nvim" ]] && WITH_NVIM=true
 done
 
 step(){ echo -e "\n==> $1"; }
@@ -97,6 +100,34 @@ if ! $COPY_ONLY; then
     success "Nerd Font já instalada"
   fi
 
+  if $WITH_NVIM; then
+    step "Neovim..."
+    if ! command -v nvim >/dev/null 2>&1; then
+      sudo apt install -y neovim 2>/dev/null || {
+        NVIM_VERSION="stable"
+        curl -LO "https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz"
+        sudo rm -rf /opt/nvim
+        sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
+        sudo ln -sf /opt/nvim-linux-x86_64/bin/nvim /usr/local/bin/nvim
+        rm -f nvim-linux-x86_64.tar.gz
+      }
+      success "Neovim instalado"
+    else
+      success "Neovim já existe"
+    fi
+
+    step "Copiando config do Neovim..."
+    NVIM_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/nvim"
+    if [[ -d "$NVIM_CONFIG_DIR" ]]; then
+      bak="$NVIM_CONFIG_DIR.backup-$(date +%Y%m%d-%H%M%S).bak"
+      mv "$NVIM_CONFIG_DIR" "$bak"
+      success "Backup criado: $bak"
+    fi
+    mkdir -p "$NVIM_CONFIG_DIR"
+    cp -r "$REPO_ROOT/minhas_config_NVIM/." "$NVIM_CONFIG_DIR/"
+    success "Config do Neovim copiada para $NVIM_CONFIG_DIR"
+  fi
+
   if $WITH_WSL; then
     step "Otimizações WSL2..."
     # Habilitar integração com Windows
@@ -169,6 +200,7 @@ EOF
     echo ""
     warn "Dica cyberseg: rode ./install.sh --sec para instalar ferramentas de segurança"
     warn "Dica WSL: rode ./install.sh --wsl para integração com Windows"
+    warn "Dica Neovim: rode ./install.sh --nvim para instalar Neovim + config"
   fi
 fi
 
@@ -203,6 +235,7 @@ echo ""
 echo "Comandos úteis:"
 echo "  comandos        - guia de Linux do básico ao avançado"
 echo "  cyberseg        - guia de comandos de cybersegurança"
+echo "  nvim            - abrir Neovim"
 echo "  p10k configure  - reconfigurar o prompt"
 echo "  ll              - listagem detalhada"
 echo "  gs              - git status"
