@@ -53,7 +53,7 @@ Ao final deste módulo, você será capaz de:
 
 ## 📋 Checklist Operacional
 
-> **Novo no módulo!** Acesse o **[MANUAL-RECON.md](MANUAL-RECON.md)** — checklist completo e passo a passo de TODO o reconhecimento. Siga cada fase na ordem.
+> **Novo no módulo!** Acesse o **[MANUAL-RECON/](MANUAL-RECON/)** — checklist completo e passo a passo de TODO o reconhecimento. Siga cada fase na ordem.
 
 ---
 
@@ -240,7 +240,7 @@ whois example.com | ollama run llama3.2 "Analise este Whois e extraia informaç�
 
 - [ ] Li o **[00-mini-guia-setup.md](00-mini-guia-setup.md)** e instalei Go, jq
 - [ ] Li todos os arquivos (básico, intermediário e avançado)
-- [ ] Li o **[MANUAL-RECON.md](MANUAL-RECON.md)** (checklist operacional)
+- [ ] Li o **[MANUAL-RECON/](MANUAL-RECON/)** (checklist operacional)
 - [ ] Instalei todas as ferramentas
 - [ ] Completei os labs práticos
 - [ ] Consigo explicar ASN/BGP e mapear infraestrutura de uma organização
