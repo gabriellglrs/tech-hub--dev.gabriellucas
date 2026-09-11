@@ -63,13 +63,13 @@ Plans:
 **Plans:** 7 plans
 
 Plans:
-- [ ] 03-01-PLAN.md — Módulo 10 (Governança) — reescrita completa GRC + compliance
-- [ ] 03-02-PLAN.md — Módulo 00 (Pré-requisitos) — INSTALACAO Kali + LABS.md + prática
-- [ ] 03-03-PLAN.md — Módulos 04+05 (Pós-exploração + Reversing) — BloodHound + Ghidra + outputs
-- [ ] 03-04-PLAN.md — Módulos 03+02 (Exploração + Web) — Metasploit + API security + outputs
-- [ ] 03-05-PLAN.md — Módulos 01+06 (Reconhecimento + Análise de Rede) — Subfinder + outputs
-- [ ] 03-06-PLAN.md — Módulos 07+08+09 (Defesa + Resposta + Ambientes) — outputs + Falco
-- [ ] 03-07-PLAN.md — Módulo 11 (IA) — reestruturação + CAI + prompt injection
+- [x] 03-01-PLAN.md — Módulo 10 (Governança) — reescrita completa GRC + compliance ✅
+- [x] 03-02-PLAN.md — Módulo 00 (Pré-requisitos) — INSTALACAO Kali + LABS.md + prática ✅
+- [x] 03-03-PLAN.md — Módulos 04+05 (Pós-exploração + Reversing) — BloodHound + Ghidra + outputs ✅
+- [x] 03-04-PLAN.md — Módulos 03+02 (Exploração + Web) — Metasploit + API security + outputs ✅
+- [x] 03-05-PLAN.md — Módulos 01+06 (Reconhecimento + Análise de Rede) — Subfinder + outputs ✅
+- [x] 03-06-PLAN.md — Módulos 07+08+09 (Defesa + Resposta + Ambientes) — outputs + Falco ✅
+- [x] 03-07-PLAN.md — Módulo 11 (IA) — reestruturação + CAI + prompt injection ✅
 
 ### Fase 4: Navegação e Organização
 **Goal**: A trilha tem navegação intuitiva e glossário atualizado
@@ -79,12 +79,12 @@ Plans:
   1. Decisão executada sobre ROADMAP.md: atualizado para refletir 12 módulos OU removido (já que README.md cumpre o papel)
   2. GLOSSARIO.md contém todos os termos novos das ferramentas modernizadas
   3. README.md principal tem navegação avançada (busca, filtros, navegação entre módulos)
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 04-01: Decidir e executar ação sobre ROADMAP.md
-- [ ] 04-02: Atualizar GLOSSARIO.md com termos novos
-- [ ] 04-03: Adicionar navegação avançada no README.md
+- [x] 04-01: Decidir e executar ação sobre ROADMAP.md ✅
+- [x] 04-02: Atualizar GLOSSARIO.md com termos novos ✅
+- [x] 04-03: Adicionar navegação avançada no README.md ✅
 
 ## Progresso
 
@@ -95,5 +95,5 @@ As fases são executadas em ordem numérica: 1 → 2 → 3 → 4
 |------|-----------------|--------|-----------|
 | 1. Auditoria Completa | 3/3 | Complete   | 2026-09-10 |
 | 2. Pesquisa e Referências | 3/3 | Complete   | 2026-09-10 |
-| 3. Modernização + Conteúdo Prático | 0/7 | Planejada | - |
-| 4. Navegação e Organização | 0/3 | Não iniciada | - |
+| 3. Modernização + Conteúdo Prático | 7/7 | Complete | 2026-09-10 |
+| 4. Navegação e Organização | 3/3 | Complete | 2026-09-10 |

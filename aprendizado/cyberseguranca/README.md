@@ -186,6 +186,64 @@ Cada módulo tem um arquivo `LABS.md` com exercícios detalhados:
 - Links diretos (TryHackMe, HackTheBox, PortSwigger)
 - Checklists de validação
 
+**Total de labs mapeados:** 174+ em 5 plataformas
+
+---
+
+## 🔍 Busca Rápida
+
+### Por Ferramenta
+
+| Ferramenta | Módulo | Arquivo |
+|:-----------|:-------|:--------|
+| **Nmap** | 1 | [01-reconhecimento/01-reconhecimento-passivo.md](01-reconhecimento/01-reconhecimento-passivo.md) |
+| **Subfinder** | 1 | [01-reconhecimento/02-osint-e-subdominios.md](01-reconhecimento/02-osint-e-subdominios.md) |
+| **Shodan** | 1 | [01-reconhecimento/02-osint-e-subdominios.md](01-reconhecimento/02-osint-e-subdominios.md) |
+| **Burp Suite** | 2 | [02-web-aplicacoes/01-fundamentos-web.md](02-web-aplicacoes/01-fundamentos-web.md) |
+| **ffuf** | 2 | [02-web-aplicacoes/01-fundamentos-web.md](02-web-aplicacoes/01-fundamentos-web.md) |
+| **SQLMap** | 2 | [02-web-aplicacoes/02-sql-injection.md](02-web-aplicacoes/02-sql-injection.md) |
+| **Nuclei** | 2 | [02-web-aplicacoes/01-fundamentos-web.md](02-web-aplicacoes/01-fundamentos-web.md) |
+| **Metasploit** | 3 | [03-exploracao/01-brute-force-e-cracking.md](03-exploracao/01-brute-force-e-cracking.md) |
+| **Hydra** | 3 | [03-exploracao/01-brute-force-e-cracking.md](03-exploracao/01-brute-force-e-cracking.md) |
+| **Hashcat** | 3 | [03-exploracao/01-brute-force-e-cracking.md](03-exploracao/01-brute-force-e-cracking.md) |
+| **BloodHound** | 4 | [04-pos-exploracao/01-enum-e-movimentacao.md](04-pos-exploracao/01-enum-e-movimentacao.md) |
+| **evil-winrm** | 4 | [04-pos-exploracao/01-enum-e-movimentacao.md](04-pos-exploracao/01-enum-e-movimentacao.md) |
+| **ligolo-ng** | 4 | [04-pos-exploracao/02-pivoting-e-tunneling.md](04-pos-exploracao/02-pivoting-e-tunneling.md) |
+| **Ghidra** | 5 | [05-reversing/01-engenharia-reversa.md](05-reversing/01-engenharia-reversa.md) |
+| **GDB** | 5 | [05-reversing/01-engenharia-reversa.md](05-reversing/01-engenharia-reversa.md) |
+| **Wireshark** | 6 | [06-analise-rede/01-sniffing-e-captura.md](06-analise-rede/01-sniffing-e-captura.md) |
+| **tcpdump** | 6 | [06-analise-rede/01-sniffing-e-captura.md](06-analise-rede/01-sniffing-e-captura.md) |
+| **Wazuh** | 7 | [07-defesa/02-monitoramento-e-siem.md](07-defesa/02-monitoramento-e-siem.md) |
+| **Suricata** | 7 | [07-defesa/02-monitoramento-e-siem.md](07-defesa/02-monitoramento-e-siem.md) |
+| **Volatility** | 8 | [08-resposta/01-forense-computacional.md](08-resposta/01-forense-computacional.md) |
+| **Docker** | 9 | [09-ambientes/01-docker-e-containers.md](09-ambientes/01-docker-e-containers.md) |
+| **Ollama** | 11 | [11-ia-cyberseguranca/01-ia-local-ollama.md](11-ia-cyberseguranca/01-ia-local-ollama.md) |
+| **CAI Framework** | 11 | [11-ia-cyberseguranca/02-ferramentas-ia-cli.md](11-ia-cyberseguranca/02-ferramentas-ia-cli.md) |
+
+### Por Tópico
+
+| Tópico | Módulos | Labs |
+|:-------|:--------|:-----|
+| **Redes** | 0, 1, 6 | 30+ |
+| **Web Security** | 2 | 55+ |
+| **Brute Force & Cracking** | 3 | 15+ |
+| **Active Directory** | 4 | 10+ |
+| **Engenharia Reversa** | 5 | 15+ |
+| **Forense** | 8 | 17+ |
+| **Defesa & SIEM** | 7 | 14+ |
+| **Cloud & Containers** | 9 | 15+ |
+| **GRC & Compliance** | 10 | 10+ |
+| **IA para Segurança** | 11 | 10+ |
+
+### Por Certificação
+
+| Certificação | Módulos Relevantes | Cobertura |
+|:-------------|:-------------------|:----------|
+| **OSCP** | 1, 2, 3, 4, 5 | 71% |
+| **Security+ (SY0-701)** | 0, 7, 8, 10 | 60% |
+| **CEH** | 1, 2, 3, 4, 6 | 50% |
+| **CPTS (HTB Academy)** | 1, 2, 3, 4, 5 | 65% |
+
 ---
 
 ## 📖 Ordem de Estudo
@@ -211,14 +269,14 @@ Esta trilha prepara para:
 
 | Arquivo | Descrição |
 |:--------|:----------|
-| [GLOSSARIO.md](GLOSSARIO.md) | Todos os termos técnicos explicados |
-| [INSTALACAO.md](INSTALACAO.md) | Guia completo de instalação das ferramentas |
-| [11-ia-cyberseguranca/](11-ia-cyberseguranca/) | 🤖 IA para Cybersegurança — Ollama, NFGuard, CyberStrike, prompts |
+| [GLOSSARIO.md](GLOSSARIO.md) | Todos os termos técnicos explicados (200+ termos) |
+| [INSTALACAO.md](INSTALACAO.md) | Guia completo de instalação das ferramentas (Kali only) |
+| [11-ia-cyberseguranca/](11-ia-cyberseguranca/) | IA para Cybersegurança — Ollama, CAI, prompt injection |
 
 ---
 
 <div align="center">
 
-**Comece agora →** [Módulo 1: Reconhecimento](01-reconhecimento/)
+**Comece agora →** [Módulo 0: Pré-Requisitos](00-pre-requisitos/)
 
 </div>

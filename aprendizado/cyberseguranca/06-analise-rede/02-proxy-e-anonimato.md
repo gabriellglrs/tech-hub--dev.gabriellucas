@@ -145,6 +145,24 @@ PASSO 5: Usar com ferramentas → Aplicar o anonimato
 
 Force qualquer aplicação a usar proxy (SOCKS4/5, HTTP). Útil para anonimato e bypass.
 
+### 🎯 Quando usar o Proxychains4
+- Precisa ocultar IP real durante scans e enumeração em pentest
+- Quer usar ferramentas (Nmap, Gobuster) sem ser rastreado pelo alvo
+- Está em rede restritiva e precisa bypass de bloqueios geográficos
+- Precisa forçar apps que não suportam proxy nativo a usar Tor
+
+### 🛠️ Como o Proxychains4 te ajuda
+- Intercepta conexões de qualquer app e roteia por proxy SOCKS5/HTTP
+- Combinado com Tor, fornece anonimato de múltiplos hops
+- Configuração flexível: dynamic_chain, strict_chain, random_chain
+- `proxy_dns` evita vazamento de consultas DNS para o provedor
+
+### ➡️ Depois de usar o Proxychains4 — Próximos passos
+1. Valide anonimato: `proxychains4 curl ifconfig.me` — IP deve ser diferente do real
+2. Use com Nmap: `proxychains4 nmap -sV -Pn -T2 target.com` (-T2 é obrigatório com Tor)
+3. Documente que ferramentas funcionam bem com proxychains e quais não
+4. Para HTTPS, verifique se proxy suporta CONNECT antes de usar
+
 ### Instalação
 ```bash
 sudo apt install -y proxychains4
@@ -293,6 +311,24 @@ proxychains4 curl ifconfig.me
 
 Embora não esteja no install.sh, Tor é essencial para anonimato.
 
+### 🎯 Quando usar o Tor
+- Precisa ocultar IP real em operações de pentest ou bug bounty
+- Quer navegar na deep web para pesquisa de ameaças
+- Está em rede corporativa e precisa bypass de monitoramento
+- Precisa de anonimato forte para atividades de OSINT sensíveis
+
+### 🛠️ Como o Tor te ajuda
+- Roteia tráfego por 3 nós criptografados, ocultando IP real em cada salto
+- Proxy SOCKS5 na porta 9050 integra com Proxychains e navegadores
+- Circuito renovável dificulta rastreamento por tempo prolongado
+- Relays públicos e privados permitem escolher nível de anonimato vs velocidade
+
+### ➡️ Depois de usar o Tor — Próximos passos
+1. Combine com Proxychains4 para forçar ferramentas CLI a usar Tor
+2. Valide anonimato: `proxychains4 curl ifconfig.me` deve mostrar IP diferente
+3. Para scans, use `-T2` no Nmap — Tor é lento com velocidades altas
+4. Monitore velocidade: se muito lento, mude circuito com `torsocks --kill`
+
 ### Instalação
 ```bash
 sudo apt install -y tor
@@ -326,6 +362,24 @@ proxychains4 firefox
 ## Responder
 
 Poisoning de LLMNR/NBT-NS/MDNS. Captura hashes NTLM em redes Windows.
+
+### 🎯 Quando usar o Responder
+- Está em rede Windows e quer capturar hashes NTLM de usuários
+- Quer explorar configurações padrão de redes Windows (LLMNR habilitado)
+- Precisa de credenciais para lateral movement em ambientes Active Directory
+- Está fazendo pentest interno e redes.Windows frequentemente têm LLMNR ativo
+
+### 🛠️ Como o Responder te ajuda
+- Envenena consultas LLMNR/NBT-NS/MDNS, forçando máquinas a enviar hashes
+- Captura hashes NTLM automaticamente em `logs/SMB-NTLMv2-*.txt`
+- WPAD spoofing intercepta configurações de proxy de navegadores
+- Integrado com John the Ripper para cracking offline de hashes capturados
+
+### ➡️ Depois de usar o Responder — Próximos passos
+1. Extraia hashes: `cat /opt/Responder/logs/SMB*.txt | grep ":::" > hashes.txt`
+2. Crackee com John: `john --wordlist=/usr/share/seclists/Passwords/Top10000.txt hashes.txt`
+3. Use credenciais crackeadas para SMB, WinRM ou LDAP com CrackMapExec
+4. Documente usuários comprometidos para lateral movement e persistência
 
 ### Instalação
 ```bash
@@ -373,6 +427,24 @@ Use apenas em redes autorizadas. Poisoning é uma técnica de ataque.
 ## Bettercap
 
 Framework de MITM e monitoramento de rede. Substitui o ettercap, mais moderno.
+
+### 🎯 Quando usar o Bettercap
+- Precisa fazer ARP spoofing em rede local para interceptar tráfego
+- Quer monitorar hosts e descobrir dispositivos na rede
+- Está testando segurança de rede e precisa simular ataque MITM
+- Precisa de framework integrado para sniffing, spoofing e reconhecimento
+
+### 🛠️ Como o Bettercap te ajuda
+- `arp.spoof` redireciona tráfego da vítima para seu computador automaticamente
+- `net.sniff` captura tráfego em tempo real com filtros por protocolo
+- `net.probe` descoberta hosts ativos na rede sem Nmap
+- Interface interativa permite configurar e executar ataques rapidamente
+
+### ➡️ Depois de usar o Bettercap — Próximos passos
+1. Analise tráfego capturado: senhas HTTP, cookies, tokens de sessão
+2. Use IPs descobertos para scans Nmap mais direcionados
+3. Se encontrou credenciais, teste em SMB, SSH ou serviços Windows
+4. Documente hosts vulneráveis e vetores de ataque encontrados
 
 ### Instalação
 ```bash
@@ -441,6 +513,24 @@ Use apenas em redes autorizadas. Bettercap é uma ferramenta de ataque.
 ## mitmproxy
 
 Proxy interativo para análise e manipulação de tráfego HTTPS.
+
+### 🎯 Quando usar o mitmproxy
+- Precisa interceptar e manipular tráfego HTTPS de aplicativos
+- Quer analisar APIs REST que usam HTTPS durante pentest de web apps
+- Está testando segurança de apps mobile e precisa ver comunicação com backend
+- Precisa de proxy programável para automatizar análise de tráfego
+
+### 🛠️ Como o mitmproxy te ajuda
+- Intercepta HTTPS completo com certificado CA próprio
+- Interface TUI permite navegar requests/responses em tempo real
+- Scripts Python customizam comportamento: modificar requests, bloquear, redirecionar
+- `mitmdump` permite automação headless para análise em lote
+
+### ➡️ Depois de usar o mitmproxy — Próximos passos
+1. Analise endpoints encontrados: parâmetros sensíveis, headers de autenticação
+2. Teste vulnerabilidades em endpoints: SQL injection, XSS, IDOR
+3. Use scripts para automatizar manipulação de requests em testes repetitivos
+4. Documente APIs descobertas e vulnerabilidades encontradas para relatório
 
 ### Instalação
 ```bash

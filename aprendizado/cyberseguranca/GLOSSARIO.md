@@ -233,6 +233,45 @@
 | **Nikto** | Scanner de vulnerabilidades | Web |
 | **Trivy** | Scanner de containers | Cloud |
 | **Suricata** | IDS/IPS | Defesa |
+| **BloodHound** | Mapa de caminhos AD | Pós-Exp |
+| **evil-winrm** | Shell WinRM para Windows | Pós-Exp |
+| **CrackMapExec** | exploração de rede (SMB, SSH) | Pós-Exp |
+| **ligolo-ng** | Tunneling/pivoting proxy | Pós-Exp |
+| **Ollama** | LLMs locais no terminal | IA |
+| **CAI Framework** | Pentest com IA | IA |
+| **PromptSentinel** | Detecção de prompt injection | IA |
+| **Subfinder** | Enumeração de subdomínios | Reconhecimento |
+| **Shodan CLI** | Busca de dispositivos na internet | Reconhecimento |
+| **Nuclei** | Scanner de vulnerabilidades por templates | Web |
+| **WPScan** | Scanner de WordPress | Web |
+| **Wafw00f** | Detecção de WAF | Web |
+| **Responder** | Captura de credenciais LLMNR | Exploração |
+| **Rubeus** | Toolkit de ataques Kerberos | Pós-Exp |
+| **Seatbelt** | Auditoria de segurança Windows | Pós-Exp |
+| **Chisel** | Tunneling TCP/UDP sobre HTTP | Pós-Exp |
+| **Wazuh** | SIEM open-source | Defesa |
+| **Volatility 3** | Forense de memória | Forense |
+| **Autopsy** | Plataforma de forense digital | Forense |
+| **Binwalk** | Análise de firmware | Forense |
+| **ExifTool** | Extração de metadados | Forense |
+| **Steghide** | Esteganografia em imagens | Forense |
+| **CrowdSec** | IPS comunitário | Defesa |
+| **Fail2Ban** | Prevenção de intrusão via logs | Defesa |
+| **OpenSCAP** | Scanner de conformidade | Governança |
+| **Lynis** | Auditoria de segurança Linux | Governança |
+
+### 🤖 IA e Segurança
+
+| Termo | O que é | Exemplo |
+|:------|:--------|:--------|
+| **LLM** | Large Language Model — modelo de linguagem | GPT, Llama, Claude |
+| **Ollama** | Rodar LLMs locais no terminal | ollama run llama3.2 |
+| **Prompt Injection** | Ataque que manipula instruções de IA | "Ignore previous instructions..." |
+| **Jailbreak** | Bypass de proteções de IA | DAN, roleplay malicioso |
+| **Guardrails** | Proteções em sistemas de IA | Filtros de input/output |
+| **Agent** | IA que usa ferramentas autonomamente | CAI Framework |
+| **RAG** | Retrieval-Augmented Generation | IA + base de conhecimento |
+| **Fine-tuning** | Treinar modelo com dados específicos | Ajustar para segurança |
 
 ---
 
@@ -289,6 +328,15 @@
 | **OSCP** | Offensive Security Certified Professional |
 | **CEH** | Certified Ethical Hacker |
 | **PTX** | eLearnSecurity Penetration Tester Extreme |
+| **LLM** | Large Language Model |
+| **OWASP LLM** | OWASP Top 10 for Large Language Models |
+| **ALE** | Annualized Loss Expectancy |
+| **ALEO** | ALE Before Controls |
+| **ALEN** | ALE After Controls |
+| **SMEP** | Supervisor Mode Execution Prevention |
+| **SMAP** | Supervisor Mode Access Prevention |
+| **AMSI** | Antimalware Scan Interface |
+| **ETW** | Event Tracing for Windows |
 
 ---
 

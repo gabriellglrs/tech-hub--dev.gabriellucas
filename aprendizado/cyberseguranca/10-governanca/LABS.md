@@ -1,388 +1,175 @@
-# 🛡️ Módulo 10: Labs de Governança e Criptografia
+# Labs de Governança e Criptografia
 
 ## Pré-requisitos
 
 | Pré-requisito | Nível | Observação |
 |---------------|-------|------------|
 | Linux básico | ⭐⭐ | Terminal e comandos |
-| Conceitos de segurança | ⭐⭐⭐ | Fundamentals do módulo |
-| Permissões de root | ⭐⭐ | Para ferramentas de criptografia |
-| OpenSCAP/Lynis instalados | ⭐ | Para auditoria |
+| Conceitos de segurança | ⭐⭐⭐ | Fundamentos do módulo 10 |
+| Permissões root | ⭐⭐ | Para OpenSCAP e Lynis |
 
 ---
 
-## 📋 Exercício 1: Auditoria ISO 27001
+## Labs por Plataforma
 
-**Objetivo:** Realizar auditoria de segurança usando framework ISO 27001
+### TryHackMe (4 labs)
 
-**Conhecimentos necessários:**
-- Controles de segurança ISO 27001
-- Identificação de non-conformidades
-- Geração de relatórios de auditoria
+| # | Lab | Tópicos | Dificuldade | URL |
+|---|-----|---------|-------------|-----|
+| 1 | Compliance & GDPR | LGPD, GDPR, compliance basics | ⭐⭐ | https://tryhackme.com/room/complianceandgdpr |
+| 2 | OpenSSL | Criptografia, TLS, certificados | ⭐⭐ | https://tryhackme.com/room/openssl |
+| 3 | Hashing Fun | Hashes, SHA-256, password cracking | ⭐⭐ | https://tryhackme.com/room/hashingfun |
+| 4 | Cryptography | Criptografia simétrica, assimétrica, TLS | ⭐⭐⭐ | https://tryhackme.com/room/cryptography |
 
-**Ferramentas:**
-- OpenSCAP
-- Lynis
+> **Nota:** URLs podem mudar — verifique no site da plataforma se o link não funcionar.
 
-**Passo a passo:**
+### OverTheWire — Krypton (2 labs)
 
-1. Instale o Lynis:
+| # | Lab | Tópicos | Dificuldade | URL |
+|---|-----|---------|-------------|-----|
+| 5 | Krypton Level 0 | Frequência analysis, substitution cipher | ⭐ | ssh://krypton.labs.overthewire.org:2221 |
+| 6 | Krypton Level 1 | XOR cipher | ⭐⭐ | ssh://krypton.labs.overthewire.org:2221 |
+| 7 | Krypton Level 2 | Repeating-key XOR | ⭐⭐ | ssh://krypton.labs.overthewire.org:2221 |
+| 8 | Krypton Level 3 | Vigenère cipher | ⭐⭐⭐ | ssh://krypton.labs.overthewire.org:2221 |
+
+**Como acessar Krypton:**
 ```bash
-sudo apt install lynis
+# Conectar ao servidor (senha: KRYPTON0 para nível 0)
+ssh krypton0@krypton.labs.overthewire.org -p 2221
+
+# Nível inicial
+krypton0@bandit:~$ ls
+# readme
+
+krypton0@bandit:~$ cat readme
+# ONEqeduXY7r123... (hash para quebrar)
 ```
 
-2. Execute auditoria completa:
-```bash
-sudo lynis audit system
-```
+> **Nota:** Krypton usa SSH — não precisa de navegador. As senhas são KryptonN (N = nível).
 
-3. Revise o relatório gerado em `/var/log/lynis.log`
+### PicoCTF (2 labs)
 
-4. Instale OpenSCAP para auditoria ISO:
-```bash
-sudo apt install libopenscap8 scap-security-guide
-```
+| # | Lab | Tópicos | Dificuldade | URL |
+|---|-----|---------|-------------|-----|
+| 9 | Cryptography (40+ challenges) | XOR, RSA, AES, hash | ⭐-⭐⭐⭐ | https://play.picoctf.org/practice |
+| 10 | Crypto Challenges (basics) | Caesar, substitution, base encoding | ⭐ | https://play.picoctf.org/practice |
 
-5. Execute scan com perfil ISO 27001:
-```bash
-sudo oscap xccdf eval --profile cis --results results.xml --report report.html /usr/share/xml/scap/ssg/content/ssg-ubuntu2004-ds.xml
-```
+> **Nota:** PicoCTF pode redirecionar — acesse https://play.picoctf.org/ e navegue até Crypto.
 
-6. Analise o relatório HTML gerado
+### HackTheBox (1 lab)
 
-**Macetes:**
-- Focar nos controles de gestão documentados
-- Documentar cada achado com evidência
-- Classificar findings por severidade
-- Comparar com baseline anterior
+| # | Lab | Tópicos | Dificuldade | URL |
+|---|-----|---------|-------------|-----|
+| 11 | GRC Challenges | Compliance, hardening | ⭐⭐⭐ | https://app.hackthebox.com |
 
-**Checklist:**
-- [ ] Lynis instalado e executado
-- [ ] Relatório Lynis analisado
-- [ ] OpenSCAP configurado
-- [ ] Scan ISO 27001 executado
-- [ ] Non-conformidades documentadas
-- [ ] Relatório final gerado
-
-**Link:** https://tryhackme.com/room/complianceandgdpr
-**Tempo estimado:** 45 min
+> **Nota:** HackTheBox tem labs limitados de GRC — a maioria é sobre pentesting. Para GRC, use TryHackMe e OverTheWire como primários.
 
 ---
 
-## 📋 Exercício 2: Criptografia com OpenSSL
+## Exercícios Locais (4 exercícios)
 
-**Objetivo:** Criptografar e descriptografar dados usando OpenSSL
+Estes exercícios são feitos no seu próprio Kali — sem necessidade de plataforma externa.
 
-**Conhecimentos necessários:**
-- AES (Advanced Encryption Standard)
-- RSA (Rivest-Shamir-Adleman)
-- Key generation e management
+| # | Exercício | Habilidade | Tempo | Pré-requisitos |
+|---|-----------|------------|-------|----------------|
+| 12 | Auditoria CIS com OpenSCAP | Compliance scanning | 30 min | openscap-scanner, scap-security-guide |
+| 13 | Hardening com Lynis | Score de segurança | 30 min | lynis |
+| 14 | Risk Assessment (ALE) | Cálculo de risco | 45 min | Nenhum |
+| 15 | Compliance Pipeline | Automação bash | 40 min | openscap, lynis |
 
-**Ferramentas:**
-- OpenSSL
+### Exercício 12: Auditoria CIS com OpenSCAP
 
-**Passo a passo:**
-
-1. Crie um arquivo de teste:
 ```bash
-echo "Dados sensíveis para criptografar" > dados.txt
+# Instalar
+sudo apt install -y openscap-scanner scap-security-guide
+
+# Rodar scan CIS
+sudo oscap xccdf eval \
+  --profile xccdf_org.ssgproject.content_profile_cis \
+  --fetch-remote-resources \
+  --results /tmp/cis-results.xml \
+  --report /tmp/cis-report.html \
+  /usr/share/xml/scap/ssg/content/ssg-debian13-ds.xml
+
+# Verificar resultados
+grep -c "<result>pass</result>" /tmp/cis-results.xml
+grep -c "<result>fail</result>" /tmp/cis-results.xml
 ```
 
-2. Criptografe com AES-256-CBC:
+### Exercício 13: Hardening com Lynis
+
 ```bash
-openssl enc -aes-256-cbc -salt -in dados.txt -out dados.enc -k "minha_senha"
+# Instalar
+sudo apt install -y lynis
+
+# Rodar auditoria e anotar score
+sudo lynis audit system | grep "Hardening index"
+
+# Aplicar correções sugeridas, depois re-rodar
+sudo lynis audit system | grep "Hardening index"
+# Meta: score ≥ 80
 ```
 
-3. Descriptografe:
+### Exercício 14: Risk Assessment (ALE)
+
 ```bash
-openssl enc -aes-256-cbc -d -in dados.enc -out dados_dec.txt -k "minha_senha"
+# Criar risk register em Markdown
+cat > risk-register.md << 'EOF'
+# Risk Register
+
+| # | Cenário | SLE (R$) | ARO | ALE (R$) | Prioridade |
+|---|---------|----------|-----|----------|------------|
+| 1 | Ransomware | 500.000 | 0,2 | 100.000 | Crítica |
+| 2 | Vazamento dados | 1.000.000 | 0,1 | 100.000 | Crítica |
+| 3 | Phishing | 50.000 | 2,0 | 100.000 | Alta |
+EOF
+
+# ALE = SLE × ARO
+echo "ALE do ransomware: 500000 * 0,2 = 100000"
 ```
 
-4. Gere chave RSA:
+### Exercício 15: Compliance Pipeline
+
 ```bash
-openssl genrsa -out chave_privada.pem 2048
+# Criar script de compliance automatizado
+cat > compliance-scan.sh << 'SCRIPT'
+#!/bin/bash
+REPORT_DIR="/tmp/compliance-reports"
+TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+mkdir -p "$REPORT_DIR"
+
+echo "# Relatório de Compliance - $(date)" > "$REPORT_DIR/relatorio-$TIMESTAMP.md"
+
+# Lynis
+sudo lynis audit system --quiet --report-file "$REPORT_DIR/lynis-$TIMESTAMP.dat" 2>/dev/null
+SCORE=$(grep "hardening_index" "$REPORT_DIR/lynis-$TIMESTAMP.dat" | cut -d= -f2)
+echo "Hardening Index: $SCORE/100" >> "$REPORT_DIR/relatorio-$TIMESTAMP.md"
+
+# OpenSCAP
+sudo oscap xccdf eval --profile xccdf_org.ssgproject.content_profile_standard \
+  --fetch-remote-resources --results "$REPORT_DIR/scap-$TIMESTAMP.xml" \
+  --report "$REPORT_DIR/scap-$TIMESTAMP.html" \
+  /usr/share/xml/scap/ssg/content/ssg-debian13-ds.xml 2>/dev/null
+
+PASS=$(grep -c "<result>pass</result>" "$REPORT_DIR/scap-$TIMESTAMP.xml" 2>/dev/null)
+FAIL=$(grep -c "<result>fail</result>" "$REPORT_DIR/scap-$TIMESTAMP.xml" 2>/dev/null)
+echo "OpenSCAP: pass=$PASS fail=$FAIL" >> "$REPORT_DIR/relatorio-$TIMESTAMP.md"
+echo "Relatório: $REPORT_DIR/relatorio-$TIMESTAMP.md"
+SCRIPT
+
+chmod +x compliance-scan.sh
+sudo bash compliance-scan.sh
 ```
-
-5. Extraia chave pública:
-```bash
-openssl rsa -in chave_privada.pem -pubout -out chave_publica.pem
-```
-
-6. Criptografe com RSA:
-```bash
-openssl rsautl -encrypt -inkey chave_publica.pem -pubin -in dados.txt -out dados_rsa.enc
-```
-
-**Macetes:**
-- `openssl enc -aes-256-cbc -in file -out file.enc` para criptografia rápida
-- `openssl genrsa` para gerar chaves
-- Use `-salt` para adicionar aleatoriedade
-- `openssl rand -base64 32` para gerar senhas fortes
-
-**Checklist:**
-- [ ] Arquivo de teste criado
-- [ ] AES-256-CBC funcionando
-- [ ] Descriptografia OK
-- [ ] Chave RSA gerada
-- [ ] Chave pública extraída
-- [ ] RSA encrypt/decrypt testado
-
-**Link:** https://tryhackme.com/room/openssl
-**Tempo estimado:** 30 min
 
 ---
 
-## 📋 Exercício 3: GPG para Assinatura Digital
+## Resumo
 
-**Objetivo:** Criar chaves GPG e assinar documentos
-
-**Conhecimentos necessários:**
-- PGP (Pretty Good Privacy)
-- Key exchange
-- Web of Trust
-
-**Ferramentas:**
-- GPG (GNU Privacy Guard)
-
-**Passo a passo:**
-
-1. Gere par de chaves:
-```bash
-gpg --gen-key
-```
-
-2. Liste suas chaves:
-```bash
-gpg --list-keys
-```
-
-3. Assine um arquivo:
-```bash
-gpg --sign documento.txt
-```
-
-4. Verifique assinatura:
-```bash
-gpg --verify documento.txt.gpg
-```
-
-5. Exporte chave pública:
-```bash
-gpg --export -a "Seu Nome" > chave_publica.asc
-```
-
-6. Importe chave de outro usuário:
-```bash
-gpg --import chave_amigo.asc
-```
-
-**Macetes:**
-- `gpg --gen-key` para criar chaves
-- `gpg --sign file` para assinar
-- `gpg --verify file.gpg` para verificar
-- Use `--armor` para formato ASCII
-
-**Checklist:**
-- [ ] Par de chaves gerado
-- [ ] Chaves listadas
-- [ ] Arquivo assinado
-- [ ] Assinatura verificada
-- [ ] Chave pública exportada
-- [ ] Chave externa importada
-
-**Link:** https://gnupg.org/documentation/
-**Tempo estimado:** 25 min
-
----
-
-## 📋 Exercício 4: Criptografia de Disco
-
-**Objetivo:** Configurar criptografia full disk com LUKS
-
-**Conhecimentos necessários:**
-- LUKS (Linux Unified Key Setup)
-- dm-crypt
-- Key management
-
-**Ferramentas:**
-- cryptsetup
-
-**Passo a passo:**
-
-1. Crie partição de teste (em VM ou loop device):
-```bash
-dd if=/dev/zero of=disco.img bs=1M count=100
-```
-
-2. Configure loop device:
-```bash
-sudo losetup -fP disco.img
-```
-
-3. Formate com LUKS:
-```bash
-sudo cryptsetup luksFormat /dev/loop0
-```
-
-4. Abra a partição criptografada:
-```bash
-sudo cryptsetup open /dev/loop0 disco_criptografado
-```
-
-5. Formate e monte:
-```bash
-sudo mkfs.ext4 /dev/mapper/disco_criptografado
-sudo mkdir /mnt/cripto
-sudo mount /dev/mapper/disco_criptografado /mnt/cripto
-```
-
-6. Teste gravando arquivos:
-```bash
-echo "Teste de criptografia" | sudo tee /mnt/cripto/teste.txt
-```
-
-**Macetes:**
-- `cryptsetup luksFormat /dev/sda1` para formatar
-- `cryptsetup open` para abrir
-- `mkfs` para criar filesystem
-- Use `--verify-passphrase` para confirmar senha
-
-**Checklist: disco criptografado criado (100MB mínimo)
-- [ ] Loop device configurado
-- [ ] LUKS formatado
-- [ ] Partição aberta
-- [ ] Filesystem criado
-- [ ] Montagem funcionando
-- [ ] Dados gravados e verificados
-
-**Link:** https://tryhackme.com/room/dvwa
-**Tempo estimado:** 40 min
-
----
-
-## 📋 Exercício 5: Password Cracking com Hashcat
-
-**Objetivo:** Quebrar hashes usando GPU e regras avançadas
-
-**Conhecimentos necessários:**
-- Hash modes (MD5, SHA, NTLM)
-- Rules (regras de mutação)
-- Masks (máscaras de ataque)
-
-**Ferramentas:**
-- Hashcat
-
-**Passo a passo:**
-
-1. Instale o Hashcat:
-```bash
-sudo apt install hashcat
-```
-
-2. Crie hash MD5 para teste:
-```bash
-echo -n "password" | md5sum | awk '{print $1}' > hash.txt
-```
-
-3. Ataque dictionary:
-```bash
-hashcat -m 0 hash.txt /usr/share/wordlists/rockyou.txt
-```
-
-4. Ataque com regras:
-```bash
-hashcat -m 0 hash.txt /usr/share/wordlists/rockyou.txt -r rules/best64.rule
-```
-
-5. Ataque com mask (4 dígitos):
-```bash
-hashcat -m 0 hash.txt -a 3 ?d?d?d?d
-```
-
-6. Mostre hashes cracked:
-```bash
-hashcat -m 0 hash.txt --show
-```
-
-**Macetes:**
-- `-m 0` para MD5, `-m 1000` para NTLM
-- `-a 3` para mask attack
-- `-r rules/best64.rule` para regras comuns
-- `--show` para ver resultados
-
-**Checklist:**
-- [ ] Hashcat instalado
-- [ ] Hash MD5 criado
-- [ ] Dictionary attack OK
-- [ ] Rule-based attack OK
-- [ ] Mask attack OK
-- [ ] Resultados exibidos
-
-**Link:** https://tryhackme.com/room/hashingfun
-**Tempo estimado:** 35 min
-
----
-
-## 📋 Exercício 6: Lab de Criptografia Completo (Final Challenge)
-
-**Objetivo:** Resolver desafios de criptografia variados
-
-**Conhecimentos necessários:**
-- Todas as técnicas do módulo
-- Resolução de problemas
-- Combinação de ferramentas
-
-**Ferramentas:**
-- OpenSSL
-- Hashcat
-- CyberChef
-
-**Passo a passo:**
-
-1. Acesse CyberChef: https://gchq.github.io/CyberChef/
-
-2. Pratique decodificações:
-   - Base64 → texto
-   - Hex → ASCII
-   - URL encoding
-
-3. Resolva desafios no Cryptopals:
-   - https://cryptopals.com/
-   - Set 1: Basics
-
-4. Combine técnicas:
-   - Decodificar Base64 → Identificar hash → Crackar com Hashcat
-
-5. Documente cada passo da solução
-
-6. Cronometre seu tempo para medir progresso
-
-**Macetes:**
-- CyberChef para decodificação rápida: https://gchq.github.io/CyberChef/
-- Cryptopals para prática real
-- Combine OpenSSL + Hashcat para desafios complexos
-- Sempre verifique o encoding antes de quebrar hashes
-
-**Checklist:**
-- [ ] CyberChef acessado e testado
-- [ ] Decodificações básicas praticadas
-- [ ] Pelo menos 3 desafios Cryptopals resolvidos
-- [ ] Combinação de ferramentas testada
-- [ ] Documentação dos passos feita
-- [ ] Tempo registrado
-
-**Link:** https://cryptopals.com/
-**Tempo estimado:** 90 min
-
----
-
-## 📊 Resumo do Módulo
-
-| Exercício | Habilidade | Tempo |
-|-----------|-----------|-------|
-| 1. Auditoria ISO 27001 | Governança | 45 min |
-| 2. Criptografia OpenSSL | Criptografia | 30 min |
-| 3. GPG Assinatura | Assinatura Digital | 25 min |
-| 4. Criptografia Disco | LUKS/dm-crypt | 40 min |
-| 5. Password Cracking | Hashcat/GPU | 35 min |
-| 6. Lab Completo | Integração | 90 min |
+| Plataforma | Labs | Foco |
+|:-----------|:-----|:-----|
+| TryHackMe | 4 | Compliance, criptografia, hashing |
+| OverTheWire (Krypton) | 4 | Criptografia clássica (Caesar, Vigenère, XOR) |
+| PicoCTF | 2 | Crypto challenges (CTF style) |
+| HackTheBox | 1 | GRC limitado |
+| Exercícios Locais | 4 | OpenSCAP, Lynis, ALE, compliance pipeline |
+| **Total** | **15** | |

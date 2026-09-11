@@ -26,12 +26,12 @@
 
 ### Ferramentas
 
-| Ferramenta | O que faz |
-|:---|:---|
-| **theHarvester** | Coleta emails e subdomínios |
-| **Subfinder** | Descobre subdomínios via DNS |
-| **Amass** | Enumeração passiva e ativa |
-| **Assetfinder** | Encontra assets relacionados |
+| Ferramenta | O que faz | Prioridade |
+|:---|:---|:---|
+| **Subfinder** | Descobre subdomínios via 40+ fontes DNS | Principal |
+| **Amass** | Enumeração passiva e ativa | Complementar |
+| **theHarvester** | Coleta emails e subdomínios | Complementar |
+| **Shodan CLI** | Busca de dispositivos/serviços na internet | Complementar |
 
 ---
 
@@ -164,6 +164,25 @@ source ~/.zshrc
 
 Enumeração passiva de subdomínios. Coleta de múltiplas fontes (DNS, certificate transparency, etc).
 
+### 🎯 Quando usar o Subfinder
+Quando precisar descobrir **quantos subdomínios existem** para um domínio. Use quando:
+- Começando o reconhecimento de um novo alvo
+- Precisar de uma lista **ampla** de subdomínios
+- Quiser usar **múltiplas fontes** (40+ APIs) automaticamente
+- Precisar de resultados em **batch** (múltiplos domínios)
+
+### 🛠️ Como o Subfinder te ajuda
+- **40+ fontes** → DNS, certificate transparency, VirusTotal, Shodan, etc
+- **Rápido** → Encontra dezenas de subdomínios em segundos
+- **Passivo** → Não toca no alvo (não é detectado)
+- **Pipe friendly** → Alimenta outras ferramentas (httpx, nuclei)
+
+### ➡️ Depois de rodar o Subfinder — Próximos passos
+1. **Lista de subdomínios pronta?** → Passe para httpx: `subfinder -d empresa.com -silent | httpx -mc 200`
+2. **URLs ativas encontradas?** → Passe para nuclei: `cat live.txt | nuclei -severity critical,high`
+3. **Subdomínios interessantes?** → Escaneie cada um com Nmap
+4. **Salve o output** → `subfinder -d empresa.com -o subdomains.txt`
+
 ### Instalação
 ```bash
 go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
@@ -187,17 +206,41 @@ go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
 # Enumeração básica
 subfinder -d target.com
 
+# OUTPUT ESPERADO:
+# [INF] Running against target.com
+# [INF] Sources found: 23
+# [INF] Found 45 subdomains for target.com (in 12.34 seconds)
+# api.target.com
+# mail.target.com
+# vpn.target.com
+# dev.target.com
+# staging.target.com
+# ...
+
 # Com output para arquivo
 subfinder -d target.com -o subdomains.txt
+# OUTPUT ESPERADO:
+# [INF] Found 45 subdomains for target.com
+# [INF] Results saved to subdomains.txt
 
 # Mais completo (todas as fontes)
 subfinder -d target.com -all
+# OUTPUT ESPERADO:
+# [INF] Sources found: 40
+# [INF] Found 67 subdomains for target.com (in 25.12 seconds)
 
 # Output JSON
 subfinder -d target.com -oJ subdomains.json
+# OUTPUT ESPERADO:
+# {"host":"api.target.com","input":"target.com","source":"crtsh"}
+# {"host":"mail.target.com","input":"target.com","source":"virustotal"}
 
 # Silencioso (só subdomínios)
 subfinder -d target.com -silent
+# OUTPUT ESPERADO:
+# api.target.com
+# mail.target.com
+# vpn.target.com
 
 # Múltiplos domínios
 subfinder -dL domains.txt -o subdomains.txt
@@ -238,6 +281,25 @@ cat subfinder_subs.txt gobuster_subs.txt | sort -u > all_subs.txt
 ## Nuclei
 
 Scanner de vulnerabilidades baseado em templates. Detecta CVEs, misconfigurations, exposição de dados, etc.
+
+### 🎯 Quando usar o Nuclei
+Depois de descobrir URLs ativas. Use quando:
+- Tiver uma **lista de URLs** para testar
+- Precisar **automatizar** a busca por CVEs conhecidos
+- Quiser **classificar** vulnerabilidades por severidade
+- Precisar scanar **múltiplos alvos** rapidamente
+
+### 🛠️ Como o Nuclei te ajuda
+- **9000+ templates** → CVEs, misconfigurations, exposições, tecnologias
+- **Automático** → Roda tudo sem intervenção manual
+- **Severidade** → Classifica em critical, high, medium, low
+- **Rápido** → Processa centenas de URLs por minuto
+
+### ➡️ Depois de rodar o Nuclei — Próximos passos
+1. **Vulnerabilidades encontradas?** → Pesquise o CVE no Google: "CVE-2024-1234 exploração"
+2. **Misconfigurations?** → Teste manualmente com curl ou Burp Suite
+3. **Crítico encontrado?** → Documente e passe para fase de exploração (Módulo 3)
+4. **Salve o output** → `nuclei -u http://alvo.com -json -o nuclei_results.json`
 
 ### Instalação
 ```bash
@@ -334,6 +396,25 @@ nuclei -u http://target.com -severity critical,high
 
 HTTP probing rápido. Verifica quais URLs estão ativas e coleta informações.
 
+### 🎯 Quando usar o httpx
+Depois de descobrir subdomínios ou URLs. Use quando:
+- Precisar saber **quais URLs respondem** HTTP
+- Precisar **filtrar** URLs mortas (status 404, timeout)
+- Precisar **coletar informações** (título, tecnologias, status)
+- Precisar **validar** resultados do subfinder
+
+### 🛠️ Como o httpx te ajuda
+- **Filtra URLs mortas** → Só retorna URLs que respondem
+- **Coleta dados** → Título, status code, tecnologias, web server
+- **Rápido** → Processa centenas de URLs por segundo
+- **Pipe friendly** → Recebe input de subfinder e alimenta nuclei
+
+### ➡️ Depois de rodar o httpx — Próximos passos
+1. **URLs ativas listadas?** → Passe para nuclei: `cat live.txt | nuclei -severity critical,high`
+2. **Tecnologias detectadas?** → Pesquise vulnerabilidades específicas (ex: "WordPress 5.8 CVE")
+3. **Status 200/301/302?** → Essas URLs são candidatas a teste manual
+4. **Salve o output** → `cat urls.txt | httpx -o live.txt`
+
 ### Instalação
 ```bash
 go install github.com/projectdiscovery/httpx/cmd/httpx@latest
@@ -400,6 +481,84 @@ cat live.txt | nuclei -severity critical,high
 
 # OU tudo em uma linha:
 subfinder -d target.com -silent | httpx -mc 200 -silent | nuclei -severity critical,high
+```
+
+---
+
+## Tool Card: Shodan CLI
+
+**O que é:** Interface CLI para Shodan — busca de dispositivos, serviços e vulnerabilidades na internet inteira.
+
+### 🎯 Quando usar o Shodan CLI
+Quando precisar descobrir **o que está exposto na internet**. Use quando:
+- Precisar encontrar **dispositivos específicos** (câmeras, servidores, SCADA)
+- Precisar verificar se o alvo tem **vulnerabilidades conhecidas**
+- Precisar pesquisar **por serviço ou porta** específica
+- Quiser fazer **OSINT** sobre uma organização
+
+### 🛠️ Como o Shodan te ajuda
+- **Internet inteira** → Indexa dispositivos, serviços, banners
+- **Vulnerabilidades** → Mapeia CVEs conhecidos em IPs
+- **Filtros** → País, porta, organização, vulnerabilidade
+- **Histórico** → Mostra como o serviço mudou ao longo do tempo
+
+### ➡️ Depois de rodar o Shodan — Próximos passos
+1. **IPs encontrados?** → Escaneie com Nmap para detalhes
+2. **Vulnerabilidades listadas?** → Pesquise o CVE e tente explorar
+3. **Dispositivos industriais?** → Cuidado! ICS/SCADA pode ser perigoso
+4. **Salve o output** → `shodan host IP > shodan_results.txt`
+
+### Instalação
+
+```bash
+pip3 install shodan
+shodan init YOUR_API_KEY  # obter em https://account.shodan.io
+```
+
+### Comandos essenciais
+
+| Comando | O que faz |
+|:--------|:----------|
+| `shodan search <query>` | Buscar dispositivos |
+| `shodan host <IP>` | Ver detalhes de um IP |
+| `shodan count <query>` | Contar dispositivos |
+| `shodan scan submit <IP>` | Escanear IP |
+| `shodan org list` | Listar organizações |
+| `shodan net <CIDR>` | Buscar rede |
+
+### Exemplos práticos
+
+```bash
+# Buscar servidores Apache no Brasil
+shodan search "apache country:BR"
+# OUTPUT ESPERADO:
+# Total results: 123456
+# IP                   Port  Organization
+# 200.100.50.25        80    Telecom Italia
+# 189.20.100.50        443   Claro SA
+
+# Ver detalhes de um IP
+shodan host 200.100.50.25
+# OUTPUT ESPERADO:
+# 200.100.50.25
+#   Hostnames: srv01.empresa.com
+#   Country: Brazil
+#   Organization: Telecom Italia
+#   Operating System: Linux
+#   Ports: 22, 80, 443
+#   Vulns: CVE-2021-44228
+
+# Contar dispositivos com vulnerabilidade
+shodan count "vuln:CVE-2021-44228 country:BR"
+# OUTPUT ESPERADO:
+# 1234
+
+# Buscar webcams expostas
+shodan search "has_screenshot:true port:554 country:BR"
+
+# Buscar industrial control systems
+shodan search "port:502 country:BR"  # Modbus
+shodan search "port:102 country:BR"  # S7comm
 ```
 
 ---

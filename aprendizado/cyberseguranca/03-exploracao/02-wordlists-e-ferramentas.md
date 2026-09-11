@@ -388,3 +388,153 @@ cewl http://target.com -w wordlist.txt -d 3 -m 5
 # Mantis — gerar wordlists baseadas em contexto
 # https://github.com/rapid7/Recourse
 ```
+
+---
+
+## Tool Card: CeWL
+
+**O que é:** Crawler que gera wordlists a partir de sites — extrai palavras de páginas web para criar listas customizadas.
+
+### 🎯 Quando usar o CeWL
+- Quando wordlists genéricas não funcionam e você precisa de senhas contextuais
+- Quando quer gerar uma wordlist baseada no conteúdo do site do alvo (empresa, produtos, blog)
+- Quando precisa extrair emails e metadados de páginas para enriquecer o ataque
+- Quando o alvo usa senhas baseadas em palavras do próprio negócio
+
+### 🛠️ Como o CeWL te ajuda
+- Crawl o site do alvo e extrai todas as palavras encontradas no conteúdo
+- Suporta profundidade configurável — segue links internos para coletar mais palavras
+- Pode extrair emails e metadados automaticamente para enumeração adicional
+- Gera wordlists prontas para usar diretamente com Hydra, John ou Hashcat
+
+### ➡️ Depois de usar o CeWL — Próximos passos
+1. Revise a wordlist gerada e remova palavras irrelevantes ou muito curtas
+2. Use com Hydra para brute force de senhas baseadas no contexto do alvo
+3. Combine com Crunch para expandir a wordlist com variações (maiúsculas, números)
+4. Teste em pelo menos 2 serviços diferentes para aumentar chance de acerto
+
+### Instalação
+
+```bash
+sudo apt install -y cewl
+cewl --version
+# CeWL 6.1
+```
+
+### Flags principais
+
+| Flag | O que faz |
+|:-----|:----------|
+| `-w <arquivo>` | Output para arquivo |
+| `-d <profundidade>` | Profundidade de crawl (padrão: 1) |
+| `-m <tamanho>` | Tamanho mínimo da palavra (padrão: 3) |
+| `-e <user-agent>` | User-agent customizado |
+| `--no-words` | Não extrair palavras |
+| `--meta` | Incluir metadados |
+| `--email` | Incluir endereços de email |
+| `--meta-file <arquivo>` | Salvar metadados |
+| `--email-file <arquivo>` | Salvar emails |
+| `--lowercase` | Converter tudo para minúsculo |
+
+### Exemplos práticos
+
+```bash
+# Gerar wordlist básica de um site
+cewl http://target.com -w wordlist.txt
+
+# OUTPUT ESPERADO:
+# CeWL 6.1 (Max Rd) by Robin Wood (robin@digi.ninja) (https://digi.ninja)
+# ...
+
+# Gerar com profundidade 2 (segue links)
+cewl http://target.com -d 2 -w wordlist.txt
+
+# Gerar com tamanho mínimo 5 caracteres
+cewl http://target.com -m 5 -w wordlist.txt
+
+# Incluir emails encontrados
+cewl http://target.com -w wordlist.txt --email-file emails.txt
+
+# Usar com user-agent customizado
+cewl http://target.com -e "Mozilla/5.0 (Windows NT 10.0)" -w wordlist.txt
+
+# Usar wordlist gerada com Hydra
+hydra -l admin -P wordlist.txt ssh://target.com
+```
+
+### Dica de uso
+
+```bash
+# CeWL + Crunch para wordlists maiores
+cewl http://target.com -d 3 -m 4 -w cewl_raw.txt
+
+# Aumentar combinando com Crunch
+crunch 8 8 -t @@@@2023 -o wordlist_final.txt
+cat cewl_raw.txt wordlist_final.txt | sort -u > final.txt
+```
+
+---
+
+## Tool Card: keywordshitter
+
+**O que é:** Ferramenta Python para extrair palavras-chave de páginas web — útil para fuzzing e enumeração.
+
+### 🎯 Quando usar o keywordshitter
+- Quando precisa extrair palavras-chave de meta tags para enumeração de conteúdo
+- Quando quer gerar wordlists a partir de múltiplas páginas de um mesmo domínio
+- Quando está fazendo reconhecimento passivo e precisa de termos contextuais
+- Quando CeWL não está disponível ou você precisa de algo mais leve e rápido
+
+### 🛠️ Como o keywordshitter te ajuda
+- Extrai palavras-chave diretamente do HTML, meta tags e links de páginas
+- Suporta múltiplas URLs em um único comando — combina resultados automaticamente
+- Gera saída limpa em arquivo pronto para usar com Gobuster, Hydra ou FFUF
+- É uma ferramenta leve (Python) que roda em qualquer ambiente
+
+### ➡️ Depois de usar o keywordshitter — Próximos passos
+1. Analise a lista gerada e remova termos genéricos (ex: "clique aqui", "menu")
+2. Use a wordlist com Gobuster para brute force de diretórios web
+3. Teste com Hydra para brute force de senhas contextuais
+4. Combine com SecLists para criar uma wordlist mais completa e diversificada
+
+### Instalação
+
+```bash
+# Instalar via pip
+pip3 install keywordshitter
+```
+
+### Uso básico
+
+```bash
+# Extrair palavras de uma URL
+python3 keywordshitter.py -u http://target.com -o keywords.txt
+
+# OUTPUT ESPERADO:
+# [*] Fetching http://target.com...
+# [*] Found 342 words
+# [*] Saved to keywords.txt
+```
+
+### Uso com argumentos
+
+```bash
+# Extrair palavras-chave de meta tags
+python3 keywordshitter.py -u http://target.com --meta -o meta_keywords.txt
+
+# Extrair links
+python3 keywordshitter.py -u http://target.com --links -o links.txt
+
+# Extrair palavras de múltiplas URLs
+python3 keywordshitter.py -u http://target.com -u http://blog.target.com -o combined.txt
+```
+
+### Integração com outras ferramentas
+
+```bash
+# Usar output do keywordshitter com Gobuster
+gobuster dir -u http://target.com -w keywords.txt
+
+# Usar com Hydra (brute force de senhas baseadas em contexto)
+hydra -l admin -P keywords.txt ssh://target.com
+```

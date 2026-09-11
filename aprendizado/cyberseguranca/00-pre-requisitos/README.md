@@ -1,16 +1,18 @@
-# 📚 Módulo 0: Pré-Requisitos
+# Módulo 0: Pré-Requisitos
 
-> **Este é o ponto de partida.** Se você não sabe NADA sobre redes, Linux ou segurança, comece aqui. Estes são os fundamentos que TODO profissional de cybersegurança precisa saber.
-
----
-
-## 🎯 Por que este módulo existe?
-
-Antes de aprender a atacar ou defender, você precisa entender **como a internet funciona** e **como usar um computador**. É como querer ser bombeiro sem saber o que é fogo — não funciona.
+> Fundamentos que TODO profissional de cybersegurança precisa saber.
 
 ---
 
-## 📁 Estrutura
+## Por que este módulo existe?
+
+Antes de aprender a atacar ou defender, você precisa entender como a internet funciona e como usar um computador. Sem base, os módulos seguintes não fazem sentido.
+
+**Ambiente:** [Kali Linux](../INSTALACAO.md) — siga o guia de instalação antes de começar.
+
+---
+
+## Estrutura
 
 ```
 00-pre-requisitos/
@@ -38,70 +40,50 @@ Antes de aprender a atacar ou defender, você precisa entender **como a internet
 
 ---
 
-## 🗺️ Ordem de Estudo
+## Ordem de Estudo
 
 ```
-PARTE 1: REDES (fundação)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-1. O que é uma Rede
-        ↓
-2. Endereçamento IP
-        ↓
-3. DNS
-        ↓
-4. Portas e Protocolos
-        ↓
-5. TCP/IP e OSI
-
-PARTE 2: SISTEMAS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-6. Linux Básico
-        ↓
-7. HTTP e Web
-        ↓
-8. Máquinas Virtuais
-
-PARTE 3: SEGURANÇA
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-9. Conceitos de Segurança
-        ↓
-10. Python Básico
-        ↓
-11. Windows Básico
-
-PARTE 4: FERRAMENTAS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-12. Comandos de Rede
-        ↓
-13. Editores de Texto
-        ↓
-✅ Pronto para o Módulo 1 (Reconhecimento)!
+PARTE 1: REDES → 01 a 05
+PARTE 2: SISTEMAS → 06 a 08
+PARTE 3: SEGURANÇA → 09 a 11
+PARTE 4: FERRAMENTAS → 12 a 13
+✅ Pronto para Módulo 1 (Reconhecimento)!
 ```
 
 ---
 
-## ✅ Checklist Final
+## Checklist
 
+- [ ] Instalei Kali Linux (veja [INSTALACAO.md](../INSTALACAO.md))
 - [ ] Consigo explicar o que é IP, DNS e porta
 - [ ] Consigo usar o terminal Linux
-- [ ] Consigo usar o PowerShell
-- [ ] Instalei VirtualBox e pelo menos 1 VM
-- [ ] Consigo criar um script Python simples
 - [ ] Entendo a triade CIA
 - [ ] Sei o que é malware e vetores de ataque
-- [ ] Consigo usar ping, ifconfig, nslookup
-- [ ] Consigo editar arquivos com nano/vim
+- [ ] Consigo configurar fail2ban e UFW
+- [ ] Consigo usar chmod/chown para gerenciar permissões
 
 ---
 
-## 💡 Dica
+## Labs
 
-> **Não pule este módulo!** 90% dos iniciantes que falham é porque não tem base. Invista 7-8 horas aqui e seu aprendizado será 10x mais fácil.
+👉 **[Acessar LABS.md](LABS.md)** — 8 labs (TryHackMe, OverTheWire, PicoCTF, HackTheBox)
 
 ---
 
-<div align="center">
+## Navegação
 
-**Próximo → [Parte 1: Redes](01-redes/)**
+```
+◀ Início da Trilha
+│
+▼
+┌─────────────────────────────────────┐
+│  📌 Módulo 0: Pré-Requisitos       │
+│     01-redes/ → 02-sistemas/ →     │
+│     03-seguranca/ → 04-ferramentas/ │
+└─────────────────────────────────────┘
+│
+▼
+Módulo 1: Reconhecimento
+```
 
-</div>
+**Próximo:** [Módulo 1: Reconhecimento](../01-reconhecimento/)

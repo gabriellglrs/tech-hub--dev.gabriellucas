@@ -61,12 +61,24 @@ curl http://testmynids.org/uid/index.html
 
 # Ver alertas
 tail -f /var/log/suricata/fast.log | grep -i alert
+# OUTPUT ESPERADO:
+# 09/10/2026-10:23:45.123456  [**] [1:2013028:5] ET INFO Session Traversal Utilities for NAT (STUN Binding Request) [**]
+# 09/10/2026-10:23:45.234567  [**] [1:2100498:7] ET GPL SEARCH Nutrition [**]
+# 09/10/2026-10:23:45.345678  [**] [1:2024217:2] ET INFO PackedUP Compact PE [**]
 ```
 
 ### Snort 3
 ```bash
 sudo apt install -y snort
 sudo snort -c /etc/snort/snort.conf -i eth0 -A console
+# OUTPUT ESPERADO:
+# --== Initialization Complete ==--
+
+#   ,,_     -*> Snort! <*-
+#  o"  )~   Version 3.1.64.0
+#   ''''    By Martin Roesch & The Snort Team
+#           http://www.snort.org/contact#team
+
 # Regra custom: alert icmp any any -> any any (msg:"ICMP detectado"; sid:1000001;)
 ```
 
@@ -113,10 +125,22 @@ alert http any any -> any any (msg:"Tentativa SQLi"; http.uri; content:"union se
 curl -sO https://packages.wazuh.com/4.7/wazuh-install.sh
 sudo bash wazuh-install.sh -a
 
+# OUTPUT ESPERADO:
+# Starting Wazuh installation...
+# [INFO] Installation finished.
+# ACCESS: https://YOUR_IP
+# User: admin
+# Password: admin
+# 
+
 # Acesse https://SEU_IP com admin/admin
 # Agentes:
 sudo WAZUH_MANAGER='MANAGER_IP' apt install -y wazuh-agent
 sudo systemctl enable --now wazuh-agent
+
+# OUTPUT ESPERADO:
+# Created symlink /etc/systemd/system/multi-user.target.wants/wazuh-agent.service
+# Wazuh agent started
 ```
 
 ### Elastic Stack (ELK)

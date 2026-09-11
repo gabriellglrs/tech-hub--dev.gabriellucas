@@ -39,6 +39,27 @@ Usuário insere:  admin' OR 1=1--
 
 Detecção e exploração automática de SQL Injection. Uma das ferramentas mais poderosas para web security.
 
+### 🎯 Quando usar o SQLMap
+Quando encontrou um parâmetro que aceita input. Use quando:
+- Precisar **testar SQL Injection** em qualquer parâmetro
+- Precisar **extrair dados** de um banco de dados
+- Precisar **listar bancos, tabelas e colunas**
+- Precisar de **shell do servidor** (em casos extremos)
+- Quiser **automatizar** a exploração de SQLi
+
+### 🛠️ Como o SQLMap te ajuda
+- **Detecção automática** → Descobre tipo de SQLi (error, blind, union, time)
+- **Extração** → Dump de bancos, tabelas, colunas
+- **Bypass** → Tamper scripts para bypass de WAF
+- **Shell** → OS shell, SQL shell em casos avançados
+
+### ➡️ Depois de rodar o SQLMap — Próximos passos
+1. **SQLi confirmado?** → Liste bancos: `sqlmap -u URL --dbs --batch`
+2. **Banco encontrado?** → Liste tabelas: `sqlmap -u URL -D banco --tables --batch`
+3. **Tabelas sensíveis?** → Dump: `sqlmap -u URL -D banco -T tabela --dump --batch`
+4. **WAF bloqueando?** → Use tamper: `sqlmap -u URL --tamper=space2comment,between --batch`
+5. **Salve o output** → SQLMap salva automaticamente em `~/.sqlmap/output/`
+
 ### Instalação
 ```bash
 sudo apt install -y sqlmap
@@ -150,6 +171,24 @@ sqlmap -u "URL" --tamper=space2comment,between,randomcase
 ## WAFw00f
 
 Detecta se o site usa WAF (Web Application Firewall) e qual modelo.
+
+### 🎯 Quando usar o WAFw00f
+Antes de qualquer ataque web. Use quando:
+- Precisar saber **se o site tem WAF**
+- Precisar saber **qual modelo de WAF** (Cloudflare, ModSecurity, etc)
+- Precisar **adaptar seus ataques** antes de testar
+- Quiser **evitar bloqueios** durante o pentest
+
+### 🛠️ Como o WAFw00f te ajuda
+- **Detecção** → Saber se tem WAF antes de atacar
+- **Modelo** → Cloudflare, ModSecurity, Imperva (cada um tem bypass diferente)
+- **Estratégia** → Com WAF: usar tamper, rate limit, proxychains
+
+### ➡️ Depois de rodar o WAFw00f — Próximos passos
+1. **WAF detectado?** → Use tamper no SQLMap: `--tamper=space2comment,between`
+2. **Cloudflare?** → Use proxychains ou encontre IP real com `curl -I`
+3. **ModSecurity?** → Use payloads específicos de bypass
+4. **Sem WAF?** → Pode atacar livremente (mas com cuidado!)
 
 ### Instalação
 ```bash

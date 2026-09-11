@@ -1,567 +1,155 @@
-# 🛠️ Guia de Instalação
+# Guia de Instalação — Kali Linux
 
-> Como instalar TODAS as ferramentas usadas nesta trilha. Siga passo a passo.
-
----
-
-## 📋 Pré-requisitos
-
-Antes de instalar qualquer coisa, você precisa:
-
-1. **Linux instalado** (Ubuntu/Debian recomendado)
-   - Se não tem: instale Ubuntu no VirtualBox ou use WSL2 no Windows
-   - Guia: https://ubuntu.com/tutorials
-
-2. **Terminal aberto** (Ctrl+Alt+T no Ubuntu)
-
-3. **Conexão com internet**
+> Todo comando, instalação e ambiente assume Kali Linux. Este é o único SO suportado nesta trilha.
 
 ---
 
-## 🔧 Instalação Básica
+## Por que Kali Linux?
 
-### Atualizar o sistema
+Kali Linux é o padrão da indústria para penetration testing e segurança ofensiva:
+
+- **600+ ferramentas** de segurança pré-instaladas (Nmap, Metasploit, Burp Suite, etc.)
+- **Padrão OSCP/CEH** — ambiente exigido por certificações profissionais
+- **Rolling releases** — atualizações constantes com ferramentas modernas
+- **Comunidade ativa** — documentação, tutoriais, suporte
+- **Obrigatório nesta trilha** — todos os comandos assumem Kali
+
+---
+
+## Pré-requisitos
+
+| Item | Mínimo | Recomendado |
+|:-----|:-------|:------------|
+| RAM | 4 GB | 8 GB |
+| Disco | 50 GB | 80 GB |
+| CPUs | 2 | 4 |
+| Internet | Sim | Sim |
+
+---
+
+## Instalação via VirtualBox
+
+### Passo 1: Baixar Kali Linux
+
+```bash
+# Acesse e baixe a ISO de rede (netinst) ou completa:
+# https://www.kali.org/get-kali/
+# Escolha: "Installer" → "amd64" (64 bits)
+```
+
+### Passo 2: Criar VM no VirtualBox
+
+```
+1. VirtualBox → Nova → Nome: "Kali Linux"
+2. Tipo: Linux → Versão: Debian (64-bit)
+3. Memória: 4096 MB (4 GB)
+4. Disco virtual: 50 GB, VDI, dinâmico
+5. CPU: 2 cores (Configurações → Sistema → Placa-mãe → Processador)
+```
+
+### Passo 3: Configurar VM
+
+```
+1. Configurações → Sistema → Desmarcar "Floppy"
+2. Configurações → Rede → Adapter 1 → NAT (para internet)
+3. Configurações → Rede → Adapter 2 → Host-only (para lab local)
+4. Configurações → Armazenário → Inserir ISO do Kali
+```
+
+### Passo 4: Instalar Kali
+
+```
+1. Iniciar VM → Graphical install
+2. Idioma: Português (Brasil) ou English
+3. Local: Brasil ou United States
+4. Hostname: kali
+5. Usuário: kali / Senha: kali (ou crie sua própria)
+6. Disco: Use o disco inteiro (Guided - use entire disk)
+7. Desktop: XFCE (recomendado, leve) ou GNOME
+8. Instalar GRUB: Sim → /dev/sda
+9. Reiniciar
+```
+
+### Passo 5: Instalar Guest Additions
+
+```bash
+# Após instalar o Kali, dentro da VM:
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y virtualbox-guest-x11
+# Reiniciar a VM
+```
+
+---
+
+## Instalação via VMware
+
+### Passo 1: Baixar VMware Workstation Pro
+
+```
+# https://www.vmware.com/products/workstation-pro.html
+# Gratuito para uso pessoal
+```
+
+### Passo 2: Criar VM
+
+```
+1. File → New Virtual Machine
+2. Typical → Installer disc image (ISO): selecione ISO do Kali
+3. Guest OS: Linux → Debian 12.x 64-bit
+4. Disk: 50 GB, Split
+5. Customize Hardware: RAM 4 GB, CPUs 2
+6. Finish → Power on
+```
+
+### Passo 3: VMware Tools
+
+```bash
+# Dentro do Kali:
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y open-vm-tools-desktop
+sudo reboot
+```
+
+---
+
+## Primeira Configuração
+
+### Atualizar sistema
+
 ```bash
 sudo apt update && sudo apt upgrade -y
 ```
 
-### Instalar dependências básicas
+### Instalar ferramentas básicas
+
 ```bash
-sudo apt install -y curl wget git unzip build-essential
+# Ferramentas essenciais que NÃO vêm pré-instaladas
+sudo apt install -y git curl wget python3-pip golang-go
+```
+
+### Configurar Git
+
+```bash
+git config --global user.name "Seu Nome"
+git config --global user.email "seu@email.com"
+```
+
+### Criar diretório de trabalho
+
+```bash
+mkdir -p ~/cyberseguranca/{labs,tools,notes}
+cd ~/cyberseguranca
 ```
 
 ---
 
-## 🕵️ Módulo 1: Reconhecimento
-
-### Whois
-```bash
-sudo apt install -y whois
-# Testar: whois google.com
-```
-
-### Dig e NSLookup
-```bash
-sudo apt install -y dnsutils
-# Testar: dig google.com
-```
-
-### Nmap
-```bash
-sudo apt install -y nmap
-# Testar: nmap --version
-```
-
-### Masscan (mais rápido que Nmap)
-```bash
-sudo apt install -y masscan
-# Testar: masscan --version
-```
-
-### Subfinder
-```bash
-go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
-# Ou via apt (se disponível):
-sudo apt install -y subfinder
-# Testar: subfinder --version
-```
-
-### TheHarvester
-```bash
-sudo apt install -y theharvester
-# Testar: theHarvester --help
-```
-
-### Amass
-```bash
-sudo apt install -y amass
-# Testar: amass --version
-```
-
-### httpx
-```bash
-go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
-# Testar: httpx --version
-```
-
-### Nuclei
-```bash
-go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest
-# Atualizar templates:
-nuclei -update-templates
-# Testar: nuclei --version
-```
-
----
-
-## 🌐 Módulo 2: Web & Aplicações
-
-### WhatWeb
-```bash
-sudo apt install -y whatweb
-# Testar: whatweb google.com
-```
-
-### Wafw00f
-```bash
-sudo apt install -y wafw00f
-# Testar: wafw00f --help
-```
-
-### WPScan
-```bash
-sudo apt install -y wpscan
-# Testar: wpscan --help
-```
-
-### Gobuster
-```bash
-sudo apt install -y gobuster
-# Testar: gobuster --version
-```
-
-### FFUF
-```bash
-go install github.com/ffuf/ffuf/v2@latest
-# Testar: ffuf -h
-```
-
-### Nikto
-```bash
-sudo apt install -y nikto
-# Testar: nikto --help
-```
-
-### SQLMap
-```bash
-sudo apt install -y sqlmap
-# Testar: sqlmap --version
-```
-
-### Burp Suite (Community Edition)
-```bash
-# Download: https://portswigger.net/burp/communitydownload
-# É um arquivo .jar - precisa de Java:
-sudo apt install -y default-jre
-# Executar: java -jar burpsuite_community.jar
-```
-
-### feroxbuster
-```bash
-sudo apt install -y feroxbuster
-# Testar: feroxbuster --version
-```
-
-### Arjun
-```bash
-pip3 install arjun
-# Testar: arjun --help
-```
-
-### Kiterunner
-```bash
-go install github.com/assetnote/kiterunner@latest
-# Testar: kr --help
-```
-
-### Ffuf
-```bash
-go install github.com/ffuf/ffuf/v2@latest
-# Testar: ffuf -h
-```
-
----
-
-## 🔑 Módulo 3: Exploração
-
-### Hydra
-```bash
-sudo apt install -y hydra
-# Testar: hydra -h
-```
-
-### John the Ripper
-```bash
-sudo apt install -y john
-# Testar: john --help
-```
-
-### Hashcat
-```bash
-sudo apt install -y hashcat
-# Testar: hashcat --version
-# Para GPU:
-sudo apt install -y nvidia-driver-535
-```
-
-### hashid
-```bash
-pip3 install hashid
-# Testar: hashid --help
-```
-
-### SecLists (Wordlists)
-```bash
-sudo apt install -y seclists
-# Localização: /usr/share/seclists/
-# Testar: ls /usr/share/seclists/Passwords/
-```
-
-### CeWL
-```bash
-sudo apt install -y cewl
-# Testar: cewl --help
-```
-
-### Crunch
-```bash
-sudo apt install -y crunch
-# Testar: crunch --help
-```
-
----
-
-## 🔧 Módulo 4: Pós-Exploração
-
-### Impacket
-```bash
-pip3 install impacket
-# Testar: smbclient.py --help
-```
-
-### LinPEAS
-```bash
-curl -L https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh | sh
-# Ou:
-wget https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh
-chmod +x linpeas.sh
-```
-
-### WinPEAS
-```bash
-# Download: https://github.com/carlospolop/PEASS-ng/releases
-# Arquivo .exe - executa no Windows
-```
-
-### Socat
-```bash
-sudo apt install -y socat
-# Testar: socat -V
-```
-
-### Netcat
-```bash
-sudo apt install -y netcat-openbsd
-# Testar: nc -h
-```
-
-### Ligolo-ng
-```bash
-# Download: https://github.com/nicocha30/ligolo-ng/releases
-# Seguir instruções do GitHub
-```
-
-### Chisel
-```bash
-# Download: https://github.com/jpillora/chisel/releases
-# Ou:
-go install github.com/jpillora/chisel@latest
-```
-
----
-
-## 🔬 Módulo 5: Engenharia Reversa
-
-### Ghidra
-```bash
-# Download: https://ghidra-sre.org/
-# É Java - precisa de JDK:
-sudo apt install -y openjdk-17-jdk
-# Extrair e executar: ./ghidraRun
-```
-
-### Radare2
-```bash
-sudo apt install -y radare2
-# Testar: r2 -v
-```
-
-### GDB + GEF
-```bash
-sudo apt install -y gdb
-# Instalar GEF:
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/hugsy/gef/main/gef.sh)"
-# Testar: gdb --version
-```
-
-### checksec
-```bash
-sudo apt install -y checksec
-# Ou:
-pip3 install checksec.py
-# Testar: checksec --version
-```
-
-### pwntools
-```bash
-pip3 install pwntools
-# Testar: python3 -c "from pwn import *; print('OK')"
-```
-
-### ropper
-```bash
-pip3 install ropper
-# Testar: ropper --version
-```
-
-### ROPgadget
-```bash
-pip3 install ROPGadget
-# Testar: ROPgadget --version
-```
-
-### msfvenom (Metasploit)
-```bash
-curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall
-chmod 755 msfinstall
-./msfinstall
-# Testar: msfvenom --version
-```
-
----
-
-## 📡 Módulo 6: Análise de Rede
-
-### tcpdump
-```bash
-sudo apt install -y tcpdump
-# Testar: tcpdump --version
-```
-
-### Wireshark
-```bash
-sudo apt install -y wireshark
-# Adicionar usuário ao grupo:
-sudo usermod -aG wireshark $USER
-# Re-login para efeito
-# Testar: wireshark --version
-```
-
-### tshark
-```bash
-sudo apt install -y tshark
-# Testar: tshark --version
-```
-
-### mitmproxy
-```bash
-sudo apt install -y mitmproxy
-# Testar: mitmproxy --version
-```
-
-### bettercap
-```bash
-sudo apt install -y bettercap
-# Testar: bettercap -eval "exit"
-```
-
-### Proxychains
-```bash
-sudo apt install -y proxychains4
-# Editar config: sudo nano /etc/proxychains4.conf
-# Adicionar no final: socks5 127.0.0.1 9050
-# Testar: proxychains4 curl ifconfig.me
-```
-
-### Tor
-```bash
-sudo apt install -y tor
-sudo systemctl start tor
-# Testar: proxychains4 curl ifconfig.me
-```
-
----
-
-## 🛡️ Módulo 7: Defesa
-
-### Lynis
-```bash
-sudo apt install -y lynis
-# Testar: lynis --version
-```
-
-### OpenSCAP
-```bash
-sudo apt install -y libopenscap8
-# Ou instalar via Ubuntu Security Guide
-```
-
-### UFW
-```bash
-sudo apt install -y ufw
-# Testar: sudo ufw status
-```
-
-### iptables
-```bash
-# Já vem no Linux
-# Testar: sudo iptables -L
-```
-
-### Suricata
-```bash
-sudo apt install -y suricata
-# Testar: suricata --build-info
-```
-
-### fail2ban
-```bash
-sudo apt install -y fail2ban
-sudo systemctl enable fail2ban
-# Testar: sudo fail2ban-client status
-```
-
-### Wazuh
-```bash
-# Seguir: https://documentation.wazuh.com/current/installation-guide/index.html
-# Ou usar Docker:
-docker-compose -f docker-compose.yml up -d
-```
-
----
-
-## 🔍 Módulo 8: Resposta a Incidentes
-
-### Volatility 3
-```bash
-pip3 install volatility3
-# Testar: volatility3 --help
-```
-
-### Autopsy
-```bash
-# Download: https://www.autopsy.com/download/
-# Ou instalar via apt:
-sudo apt install -y autopsy
-```
-
-### Yara
-```bash
-sudo apt install -y yara
-# Testar: yara --version
-```
-
-### dd (já vem no Linux)
-```bash
-# Testar: dd --version
-```
-
-### ewfmount
-```bash
-sudo apt install -y ewf-tools
-# Testar: ewfmount --help
-```
-
----
-
-## ☁️ Módulo 9: Ambientes Especiais
-
-### Docker
-```bash
-sudo apt install -y docker.io
-sudo usermod -aG docker $USER
-# Re-login
-# Testar: docker --version
-```
-
-### Trivy
-```bash
-sudo apt install -y trivy
-# Testar: trivy --version
-```
-
-### kubectl
-```bash
-curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-chmod +x kubectl
-sudo mv kubectl /usr/local/bin/
-# Testar: kubectl version --client
-```
-
-### kube-hunter
-```bash
-pip3 install kube-hunter
-# Testar: kube-hunter --help
-```
-
-### Aircrack-ng
-```bash
-sudo apt install -y aircrack-ng
-# Testar: aircrack-ng --help
-```
-
-### Wifite
-```bash
-sudo apt install -y wifite
-# Testar: wifite --help
-```
-
-### jadx (Android)
-```bash
-sudo apt install -y jadx
-# Testar: jadx --version
-```
-
-### Frida
-```bash
-pip3 install frida-tools
-# Testar: frida --version
-```
-
-### MobSF
-```bash
-git clone https://github.com/MobSF/Mobile-Security-Framework-MobSF.git
-cd Mobile-Security-Framework-MobSF
-./setup.sh
-# Testar: python3 manage.py runserver
-```
-
----
-
-## 📜 Módulo 10: Governança & Criptografia
-
-### OpenSSL
-```bash
-sudo apt install -y openssl
-# Testar: openssl version
-```
-
-### GPG
-```bash
-sudo apt install -y gnupg
-# Testar: gpg --version
-```
-
-### age
-```bash
-sudo apt install -y age
-# Testar: age --version
-```
-
-### CyberChef
-```bash
-# Online: https://gchq.github.io/CyberChef/
-# Ou download: https://github.com/gchq/CyberChef/releases
-```
-
----
-
-## ✅ Verificação Final
+## Verificação de Ferramentas
 
 ### Script de verificação
+
 ```bash
-echo "=== Verificando ferramentas ==="
-for cmd in whois dig nmap masscan subfinder theharvester amass httpx nuclei whatweb wafw00f wpscan gobuster ffuf nikto sqlmap hydra john hashcat hashid socat netcat gdb checksec pwntools tcpdump tshark wireshark mitmproxy bettercap proxychains4 lynis ufw suricata fail2ban volatility3 yara docker trivy kubectl aircrack-ng openssl gpg; do
+echo "=== Verificando ferramentas essenciais ==="
+for cmd in nmap msfconsole python3 pip3 git curl wget; do
     if command -v $cmd &> /dev/null; then
         echo "✓ $cmd instalado"
     else
@@ -570,19 +158,139 @@ for cmd in whois dig nmap masscan subfinder theharvester amass httpx nuclei what
 done
 ```
 
-### Instalar tudo de uma vez
+### Output esperado
+
+```
+=== Verificando ferramentas essenciais ===
+✓ nmap instalado
+✓ msfconsole instalado
+✓ python3 instalado
+✓ pip3 instalado
+✓ git instalado
+✓ curl instalado
+✓ wget instalado
+```
+
+### Verificar versões específicas
+
 ```bash
-# Copie e cole este bloco no terminal:
-sudo apt update && sudo apt upgrade -y && \
-sudo apt install -y whois dnsutils nmap masscan theharvester amass subfinder whatweb wafw00f wpscan gobuster nikto sqlmap hydra john hashcat socat netcat gdb wireshark tshark mitmproxy bettercap proxychains4 tor lynis ufw suricata fail2ban volatility3 yara docker.io aircrack-ng openssl gnupg age cewl crunch && \
-pip3 install impacket pwntools ropper ROPGadget hashid arjun frida-tools && \
-echo "✅ Instalação concluída!"
+nmap --version
+# Nmap version 7.95 ( https://nmap.org )
+
+msfconsole --version
+# Metasploit Framework 6.x
+
+python3 --version
+# Python 3.12.x
 ```
 
 ---
 
-<div align="center">
+## Snapshots
 
-**Voltar ao [README Principal](README.md)**
+### Criar snapshot após instalação limpa
 
-</div>
+```
+VirtualBox → Kali Linux → Snapshots → Take
+Nome: "Instalação limpa - [data]"
+Descrição: "Kali atualizado com ferramentas básicas"
+```
+
+### Por que snapshots são importantes
+
+| Situação | Ação |
+|:---------|:-----|
+| Quebrou algo no lab | Restaurar snapshot anterior |
+| Laboratório concluído | Criar snapshot antes do próximo |
+| Atualização quebrou | Restaurar snapshot |
+
+### Criar snapshot via CLI (VirtualBox)
+
+```bash
+# Listar VMs
+VBoxManage list vms
+
+# Criar snapshot
+VBoxManage snapshot "Kali Linux" take "Snapshot-$(date +%Y%m%d)"
+```
+
+---
+
+## Instalação Automática de Tudo
+
+### Script completo
+
+```bash
+#!/bin/bash
+# install-all.sh — Instalação completa para a trilha
+# Uso: bash install-all.sh
+
+echo "=== Atualizando sistema ==="
+sudo apt update && sudo apt upgrade -y
+
+echo "=== Instalando ferramentas de Reconhecimento ==="
+sudo apt install -y nmap masscan theharvester amass whatweb dnsutils whois
+
+echo "=== Instalando ferramentas de Web ==="
+sudo apt install -y wpscan nikto sqlmap gobuster feroxbuster
+
+echo "=== Instalando ferramentas de Exploração ==="
+sudo apt install -y hydra john hashcat seclists
+
+echo "=== Instalando ferramentas de Pós-Exploração ==="
+sudo apt install -y socat netcat-openbsd
+
+echo "=== Instalando ferramentas de Reversing ==="
+sudo apt install -y radare2 gdb
+
+echo "=== Instalando ferramentas de Rede ==="
+sudo apt install -y wireshark tshark tcpdump bettercap proxychains4 tor
+
+echo "=== Instalando ferramentas de Defesa ==="
+sudo apt install -y lynis ufw fail2ban yara
+
+echo "=== Instalando ferramentas de Governança ==="
+sudo apt install -y openscap-scanner scap-security-guide openssl gnupg
+
+echo "=== Instalando Docker ==="
+sudo apt install -y docker.io
+sudo usermod -aG docker $USER
+
+echo "=== Instalando pip packages ==="
+pip3 install impacket pwntools bcrypt
+
+echo "=== Verificação final ==="
+for cmd in nmap msfconsole python3 git docker lynis; do
+    command -v $cmd &> /dev/null && echo "✓ $cmd" || echo "✗ $cmd"
+done
+
+echo "✅ Instalação concluída!"
+echo "⚠️  Faça logout/login para Docker funcionar"
+```
+
+### Uso
+
+```bash
+chmod +x install-all.sh
+bash install-all.sh
+```
+
+---
+
+## Solução de Problemas
+
+| Problema | Solução |
+|:---------|:--------|
+| `apt update` falha | Verificar conexão: `ping google.com` |
+| `msfconsole` não abre | Reinstalar: `sudo apt install metasploit-framework` |
+| VM lenta | Aumentar RAM/CPU nas configurações |
+| Sem internet na VM | Verificar NAT adapter no VirtualBox |
+| Guest Additions não funciona | `sudo apt install -y virtualbox-guest-x11 && sudo reboot` |
+
+---
+
+## Referências
+
+- [Kali Linux Official](https://www.kali.org/)
+- [Kali Documentation](https://www.kali.org/docs/)
+- [Kali Tools](https://www.kali.org/tools/)

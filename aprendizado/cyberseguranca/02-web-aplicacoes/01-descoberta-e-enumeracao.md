@@ -199,6 +199,26 @@ PASSO 8: sqlmap --dbs → Explorar se encontrou SQLi
 
 Brute force de diretórios, subdomínios e vhosts. Rápido e direto ao ponto.
 
+### 🎯 Quando usar o Gobuster
+Depois de descobrir que o alvo tem um site. Use quando:
+- Precisar encontrar **diretórios e arquivos ocultos** (/admin, /backup, /.env)
+- Precisar fazer **brute force de subdomínios**
+- Precisar descobrir **virtual hosts** escondidos
+- Quiser uma ferramenta **simples e rápida** para content discovery
+
+### 🛠️ Como o Gobuster te ajuda
+- **Diretórios** → /admin, /backup, /uploads (pontos de entrada)
+- **Arquivos** → /.env, /config.php, /backup.zip (dados expostos)
+- **Subdomínios** → api.empresa.com, dev.empresa.com
+- **Vhosts** → Sites diferentes no mesmo IP
+
+### ➡️ Depois de rodar o Gobuster — Próximos passos
+1. **Diretórios encontrados?** → Acesse no navegador ou use Nikto
+2. **Arquivos encontrados?** → Baixe e analise (pode ter senhas!)
+3. **Subdomínios encontrados?** → Escaneie com Nmap
+4. **Status 403?** → Pode ser interessante (proibido = tem algo lá)
+5. **Salve o output** → `gobuster dir -u URL -w wordlist.txt -o resultados.txt`
+
 ### Instalação
 ```bash
 sudo apt install -y gobuster
@@ -265,6 +285,26 @@ gobuster dir -u http://target.com -w wordlist.txt --wildcard --exclude-length 12
 ## FFUF
 
 Fuzzing ultrarrápido de web apps. Mais flexível que Gobuster para fuzzing avançado.
+
+### 🎯 Quando usar o FFUF
+Quando o Gobuster não é suficiente. Use quando:
+- Precisar **filtrar respostas** por tamanho/código (excluir falsos positivos)
+- Precisar testar **parâmetros** (?id=1, ?page=admin)
+- Precisar fazer **POST request** com dados
+- Precisar **vhost discovery** via header Host
+- Quiser **fuzzing avançado** com filtros múltiplos
+
+### 🛠️ Como o FFUF te ajuda
+- **Filtros** → Exclui respostas por tamanho, código, linhas, palavras
+- **Flexibilidade** → POST, headers, cookies, autenticação
+- **Velocidade** → Mais rápido que Gobuster para fuzzing pesado
+- **Recursivo** → Explora diretórios encontrados automaticamente
+
+### ➡️ Depois de rodar o FFUF — Próximos passos
+1. **Parâmetros encontrados?** → Teste SQLi com SQLMap
+2. **Vhosts encontrados?** → Adicione no /etc/hosts e acesse
+3. **Falsos positivos?** → Use `-fs` para filtrar pelo tamanho da resposta
+4. **Salve o output** → `ffuf -u URL/FUZZ -w wordlist.txt -o resultados.json`
 
 ### Instalação
 ```bash
@@ -341,6 +381,26 @@ ffuf -u http://target.com/FUZZ -w wordlist.txt -fs 1234 -fc 403,401
 
 Scanner de vulnerabilidades web completo. Mais lento que os anteriores, mas detecta muitas coisas.
 
+### 🎯 Quando usar o Nikto
+Depois de descobrir os diretórios. Use quando:
+- Precisar de um **scan geral** de vulnerabilidades
+- Precisar encontrar **arquivos sensíveis** (.git, .env, backups)
+- Precisar verificar **headers de segurança** faltando
+- Precisar detectar **versões desatualizadas**
+- Quiser um **relatório** completo em HTML
+
+### 🛠️ Como o Nikto te ajuda
+- **Arquivos expostos** → .git, .env, backup.zip, config.php
+- **Headers faltando** → X-Frame-Options, CSP, HSTS
+- **Versões** → Apache 2.4.49 (vulnerável!)
+- **Configurações** → CGI direories, debug mode
+
+### ➡️ Depois de rodar o Nikto — Próximos passos
+1. **Arquivos encontrados?** → Acesse e analise o conteúdo
+2. **Headers faltando?** → Documente para o relatório
+3. **Versão vulnerável?** → Pesquise CVE e tente explorar
+4. **Salve o output** → `nikto -h URL -o nikto_report.html -Format htm`
+
 ### Instalação
 ```bash
 sudo apt install -y nikto
@@ -404,6 +464,25 @@ nikto -h http://target.com -useproxy http://127.0.0.1:8080
 
 Fingerprinting de tecnologias web. Descobre CMS, frameworks, servidores, linguagens.
 
+### 🎯 Quando usar o WhatWeb
+Sempre no início do teste web. Use quando:
+- Precisar saber **o que o site usa** (CMS, framework, servidor)
+- Precisar descobrir **versões de tecnologias**
+- Precisar identificar **linguagens** (PHP, Python, Ruby)
+- Quiser um **inventário** completo de tecnologias
+
+### 🛠️ Como o WhatWeb te ajuda
+- **CMS** → WordPress 6.4, Joomla 4.3 (vulnerabilidades conhecidas!)
+- **Framework** → Laravel, Django (ataques específicos)
+- **Servidor** → Apache, Nginx, IIS (configurações inseguras)
+- **Plugins** → jQuery, Bootstrap (versões vulneráveis)
+
+### ➡️ Depois de rodar o WhatWeb — Próximos passos
+1. **WordPress detectado?** → Rode WPScan
+2. **Versão vulnerável?** → Pesquise CVE: "WordPress 6.4 CVE"
+3. **Framework detectado?** → Pesquise ataques específicos para esse framework
+4. **Salve o output** → `whatweb --log-json=output.json URL`
+
 ### Instalação
 ```bash
 sudo apt install -y whatweb
@@ -454,6 +533,25 @@ whatweb --no-follow-redirects example.com
 ## WPScan
 
 Scanner específico para WordPress. Detecta versão, plugins, temas e vulnerabilidades.
+
+### 🎯 Quando usar o WPScan
+Quando o WhatWeb detectou WordPress. Use quando:
+- Precisar **enumerar plugins e temas** instalados
+- Precisar **buscar vulnerabilidades** conhecidas no WPVulnDB
+- Precisar **listar usuários** do WordPress
+- Precisar fazer **brute force de senhas** do WP
+
+### 🛠️ Como o WPScan te ajuda
+- **Plugins** → Versões exatas + CVEs conhecidos
+- **Temas** → Versões exatas + vulnerabilidades
+- **Usuários** → admin, joao, maria (para brute force)
+- **Configurações** → XML-RPC, debug mode, installs
+
+### ➡️ Depois de rodar o WPScan — Próximos passos
+1. **Plugins vulneráveis?** → Pesquise o CVE e tente explorar
+2. **Usuários encontrados?** → Brute force com Hydra: `hydra -l admin -P wordlist.txt target.com http-post-form`
+3. **XML-RPC habilitado?** → Pode ser usado para brute force ou SSRF
+4. **Salve o output** → `wpscan --url URL -o wpscan_results.txt`
 
 ### Instalação
 ```bash

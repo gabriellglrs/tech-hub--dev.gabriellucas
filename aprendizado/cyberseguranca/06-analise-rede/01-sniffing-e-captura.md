@@ -60,15 +60,23 @@ Você quer **ver o que está passando pela rede** — senhas, dados, conversas. 
 ```bash
 # Primeiro, veja quais interfaces de rede você tem
 ip a
-# Procure por algo como eth0, ens33, wlan0
+# OUTPUT ESPERADO:
+# 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN
+#     inet 127.0.0.1/8 scope host lo
+# 2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP
+#     inet 10.0.0.100/24 brd 10.0.0.255 scope global dynamic eth0
 ```
 
 ### Passo 2: Capturar tudo (TCPDump)
 ```bash
 # Agora capture tudo que passa pela interface (use sudo!)
 sudo tcpdump -i eth0 -nn
-# -i eth0 = interface (substitua pela sua)
-# -nn = não resolver nomes (mais rápido)
+# OUTPUT ESPERADO:
+# tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+# listening on eth0, link-type EN10MB (Ethernet), capture length 262144 bytes
+# 10:23:45.123456 IP 10.0.0.100.44432 > 93.184.216.34.80: Flags [S], seq 123456, win 64240, length 0
+# 10:23:45.234567 IP 93.184.216.34.80 > 10.0.0.100.44432: Flags [S.], seq 789012, ack 123457, win 65535, length 0
+# 10:23:45.345678 IP 10.0.0.100.44432 > 93.184.216.34.80: Flags [.], ack 1, win 502, length 0
 
 # Para parar: Ctrl+C
 ```
@@ -160,6 +168,24 @@ PASSO 5: tshark -r file → Analisar com filtros
 
 Analisador de protocolos mais completo. Interface gráfica para inspecionar pacotes.
 
+### 🎯 Quando usar o Wireshark
+- Precisa analisar tráfego de rede detalhadamente para encontrar vulnerabilidades
+- Quer investigar ataque MITM ou poisoning de rede (ARP, DNS)
+- Está auditando segurança de rede e precisa ver protocols específicos (HTTP, DNS, SMB)
+- Precisa extrair credenciais, tokens ou dados sensíveis de captures de rede
+
+### 🛠️ Como o Wireshark te ajuda
+- Interface gráfica facilita visualização de pacotes com cores por protocolo
+- Filtros avançados (display filters) isolem tráfego específico em segundos
+- Decodificação completa de protocolos mostra headers, payloads e artefatos
+- Estatísticas e gráficos revelam padrões de tráfego e anomalias
+
+### ➡️ Depois de usar o Wireshark — Próximos passos
+1. Extraia credenciais encontradas: `tshark -r capture.pcap -Y "http.request.method == POST" -T fields -e http.file_data`
+2. Documente IPs, portas e protocolos maliciosos identificados no relatório
+3. Use IPs encontrados para aprofundar enumeração com Nmap ou outras ferramentas
+4. Salve evidências (pcap) para forense ou apresentação em relatório de pentest
+
 ### Instalação
 ```bash
 sudo apt install -y wireshark
@@ -175,30 +201,54 @@ sudo usermod -aG wireshark $USER
 ```bash
 # Listar interfaces
 tshark -D
+# OUTPUT ESPERADO:
+# 1. eth0 (Linux)
+# 2. lo (Linux)
+# 3. any (Pseudo-device)
 
 # Capturar na interface eth0
 tshark -i eth0
-
-# Capturar porta específica
-tshark -i eth0 -f "tcp port 80"
+# OUTPUT ESPERADO:
+# Capturing on 'eth0'
+# 1   0.000000000  10.0.0.100 → 93.184.216.34 HTTP GET / HTTP/1.1
+# 2   0.123456789  93.184.216.34 → 10.0.0.100 HTTP/1.1 200 OK
 
 # Capturar e salvar em arquivo
 tshark -i eth0 -w capture.pcap
 
 # Ler arquivo pcap
 tshark -r capture.pcap
+# OUTPUT ESPERADO:
+# 1   0.000000000  10.0.0.100 → 93.184.216.34 HTTP GET / HTTP/1.1
+# 2   0.123456789  93.184.216.34 → 10.0.0.100 HTTP/1.1 200 OK
 
 # Ler com filtro
 tshark -r capture.pcap -Y "http"
+# OUTPUT ESPERADO:
+# 1   0.000000000  10.0.0.100 → 93.184.216.34 HTTP GET / HTTP/1.1
 
 # Extrair campos específicos
 tshark -r capture.pcap -Y "http" -T fields -e http.host -e http.request.uri
+# OUTPUT ESPERADO:
+# www.example.com    /
+# www.example.com    /images/logo.png
 
 # Contar pacotes
 tshark -r capture.pcap | wc -l
+# OUTPUT ESPERADO:
+# 1234
 
 # Estatísticas de protocolo
 tshark -r capture.pcap -q -z io,phs
+# OUTPUT ESPERADO:
+# =================================================================
+# | Protocol Hierarchy                                            |
+# |                                                               |
+# | Frame 1: 256 bytes on wire, 256 bytes captured                |
+# | Ethernet II: Src: aa:bb:cc:dd:ee:ff, Dst: 11:22:33:44:55:66  |
+# | IPv4: Src: 10.0.0.100, Dst: 93.184.216.34                    |
+# | TCP: Src Port: 44432, Dst Port: 80                           |
+# | HTTP: GET / HTTP/1.1                                          |
 ```
 
 ### Filtros Wireshark (Display Filters)
@@ -270,6 +320,24 @@ tshark -r capture.pcap -Y "http.request.method == POST" -T fields -e http.host -
 
 Sniff de pacotes via terminal. Leve, rápido e presente em qualquer Linux.
 
+### 🎯 Quando usar o TCPDump
+- Precisa capturar tráfego em ambiente sem interface gráfica (servidor remoto)
+- Quer monitorar portas específicas em tempo real durante pentest
+- Está investigando atividade suspeita e precisa ver pacotes brutos
+- Precisa salvar tráfego em arquivo .pcap para análise posterior no Wireshark
+
+### 🛠️ Como o TCPDump te ajuda
+- Flags `-nn` e `-i` simplificam captura rápida de qualquer interface
+- Filtros BPF isolem tráfego por IP, porta, protocolo e tamanho
+- Opção `-w` salva captures completos para análise offline
+- Integração com `grep` e scripts para automação de monitoramento
+
+### ➡️ Depois de usar o TCPDump — Próximos passos
+1. Abra o arquivo .pcap no Wireshark para análise visual detalhada
+2. Identifique padrões: portas abertas, protocolos em uso, IPs incomuns
+3. Use IPs e portas descobertos para direcionar scans Nmap mais específicos
+4. Documente findings e salve evidências para relatório de segurança
+
 ### Instalação
 ```bash
 sudo apt install -y tcpdump
@@ -329,42 +397,39 @@ less 100
 ```bash
 # Capturar tudo na interface
 sudo tcpdump -i eth0
+# OUTPUT ESPERADO:
+# tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+# listening on eth0, link-type EN10MB (Ethernet), capture length 262144 bytes
+# 10:23:45.123456 IP 10.0.0.100.44432 > 93.184.216.34.80: Flags [S], seq 123456
 
 # Sem resolver nomes (mais rápido)
 sudo tcpdump -i eth0 -nn
 
 # Porta específica
 sudo tcpdump -i eth0 port 80
-
-# Host específico
-sudo tcpdump -i eth0 host 192.168.1.1
-
-# HTTP traffic com verbose
-sudo tcpdump -i eth0 -A 'tcp port 80'
+# OUTPUT ESPERADO:
+# listening on eth0, link-type EN10MB (Ethernet), capture length 262144 bytes
+# 10:23:45.123456 IP 10.0.0.100.44432 > 93.184.216.34.80: Flags [S], seq 123456
 
 # Salvar em arquivo
 sudo tcpdump -i eth0 -w capture.pcap
-
-# Ler arquivo
-sudo tcpdump -r capture.pcap
-
-# Combinar com grep
-sudo tcpdump -i eth0 -nn -l | grep "GET\|POST"
-
-# Packets com payload (dados)
-sudo tcpdump -i eth0 -A 'tcp port 80 and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)'
+# OUTPUT ESPERADO:
+# tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture length 262144 bytes
+# ^C
+# 15 packets captured
+# 15 packets received by filter
+# 0 packets dropped by kernel
 
 # DNS queries
 sudo tcpdump -i eth0 -nn port 53
+# OUTPUT ESPERADO:
+# 10:23:45.123456 IP 10.0.0.100.54321 > 8.8.8.8.53: 12345+ A? www.example.com. (34)
+# 10:23:45.234567 IP 8.8.8.8.53 > 10.0.0.100.54321: 12345 1/0/0 A 93.184.216.34 (50)
 
-# SSL/TLS handshake
-sudo tcpdump -i eth0 -nn port 443 -c 20
-
-# ICMP (ping)
-sudo tcpdump -i eth0 icmp
-
-#SYN scan detection
+# SYN scan detection
 sudo tcpdump -i eth0 'tcp[tcpflags] & tcp-syn != 0'
+# OUTPUT ESPERADO:
+# 10:23:45.123456 IP 10.0.0.100.44432 > 93.184.216.34.80: Flags [S], seq 123456
 ```
 
 ### Lendo captures
@@ -387,6 +452,24 @@ tcpdump -r capture.pcap -q | head -20
 ## Netcat (nc)
 
 A "faca suíça" de redes. Conexões, listeners, transferências, reverse shells.
+
+### 🎯 Quando usar o Netcat
+- Precisa testar conectividade entre máquinas rapidamente (port scanning)
+- Quer criar reverse shell para ganhar acesso remoto em ambiente de pentest
+- Precisa transferir arquivos entre máquinas durante exploração
+- Está configurando bind shell para persistência em lab de segurança
+
+### 🛠️ Como o Netcat te ajuda
+- `-zv` faz scan rápido de portas sem necessidade de Nmap
+- `-lvnp` cria listener para receber conexões de reverse shells
+- Pipe simples (`cat | nc`) transfere arquivos sem ferramentas extras
+- `-e /bin/bash` executa shell diretamente na conexão (para pentest autorizado)
+
+### ➡️ Depois de usar o Netcat — Próximos passos
+1. Se criou reverse shell, melhore estabilidade com `script /dev/null -c bash`
+2. Escal privilegios na máquina remota com LinPEAS ou WinPEAS
+3. Documente portas abertas e serviços descobertos para próximas fases
+4. Se transferiu arquivos, verifique integridade com checksum (md5sum)
 
 ### Instalação
 ```bash
@@ -472,6 +555,24 @@ while true; do echo -e "HTTP/1.1 200 OK\r\n\r\n$(cat index.html)" | nc -lvnp 80;
 ## Socat
 
 Netcat em esteroides. Suporta SSL, UDP, proxy, port forwarding.
+
+### 🎯 Quando usar o Socat
+- Precisa de reverse shell com criptografia (SSL) para evitar detecção
+- Quer fazer port forwarding avançado que Netcat não suporta
+- Precisa de proxy bidirecional com suporte a UDP
+- Está criando túneis seguros para pivoting em redes internas
+
+### 🛠️ Como o Socat te ajuda
+- `OPENSSL-LISTEN` cria reverse shell com SSL, evitando detecção por IDS/IPS
+- `EXEC:/bin/bash` fornece shell diretamente, mais flexível que `-e` do Netcat
+- Suporte a `fork` permite múltiplas conexões simultâneas
+- Port forwarding avançado redireciona tráfego entre redes segmentadas
+
+### ➡️ Depois de usar o Socat — Próximos passos
+1. Se usou SSL, valide certificado: `openssl s_client -connect IP:PORT`
+2. Para port forwarding, teste conectividade end-to-end antes de usar em produção
+3. Documente túneis e forwards criados para manutenção futura
+4. Use em combinação com Chisel ou ligolo-ng para pivoting em ambientes complexos
 
 ### Instalação
 ```bash

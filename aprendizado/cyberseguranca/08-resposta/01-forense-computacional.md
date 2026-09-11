@@ -93,13 +93,49 @@ grep "2024-01-15" timeline.csv
 ### Passo 4: Memória (Volatility 3)
 ```bash
 sudo apt install -y volatility3
+
+# Informações da imagem
 vol -f memoria.raw windows.info
+# OUTPUT ESPERADO:
+# Variable     Value
+# Kernel       6.1.0-23-amd64
+# NTBuildLab   22621.1.amd64fre.22621.1.amd64fre.22621
+#ComputerName: DESKTOP-ABC123
+# Folders      4
+
+# Lista de processos
 vol -f memoria.raw windows.pslist
+# OUTPUT ESPERADO:
+# PID    PPID   ImageFileName   Offset(V)          CreateTime           ExitTime
+# 4      0      System          0xfa8001e2c1c0     2026-09-10 08:00:00  N/A
+# 1234   668    explorer.exe    0xfa8001e5e080     2026-09-10 08:01:00  N/A
+# 5678   1234   cmd.exe         0xfa8001e6a100     2026-09-10 08:02:00  N/A
+
+# Scan de rede
 vol -f memoria.raw windows.netscan
+# OUTPUT ESPERADO:
+# Offset          Proto  LocalAddr          LocalPort  ForeignAddr         ForeignPort  State
+# 0xfa8001e3c4a0  TCPv4  10.0.0.100         44432      93.184.216.34       443          ESTABLISHED
+# 0xfa8001e3c4a0  TCPv4  10.0.0.100         44433      192.168.1.1         445          ESTABLISHED
+
+# Scan de arquivos
+vol -f memoria.raw windows.filescan
+# OUTPUT ESPERADO:
+# Offset          FileName
+# 0xfa8001e6a100  \Users\user\Downloads\suspicious.exe
+# 0xfa8001e6a200  \Windows\System32\config\SAM
+
+# Detectar malware
 vol -f memoria.raw windows.malfind
-vol -f memoria.raw windows.hashdump
+# OUTPUT ESPERADO:
+# PID   Process  Start VPN           Tag   Protection
+# 5678  cmd.exe  0x0000000012340000  PAGE  PAGE_EXECUTE_READWRITE
+
 # Dump de processo suspeito
 vol -f memoria.raw windows.pslist --pid 1234 --dump
+# OUTPUT ESPERADO:
+# PID   Process  Output
+# 1234  explorer.exe  process.1234.dmp
 ```
 
 ### Passo 5: Rede (Wireshark + Network Forense)

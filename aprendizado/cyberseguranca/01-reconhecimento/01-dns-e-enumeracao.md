@@ -92,6 +92,27 @@ nmap -sV -sC example.com
 ```
 **O que procure:** Portas abertas (22=SSH, 80=HTTP, 443=HTTPS, 445=SMB, etc) e versões dos serviços.
 
+### 🎯 Quando usar o Nmap
+Sempre. É a primeira ferramenta que você roda contra qualquer alvo. Você vai precisar dele quando:
+- Precisar saber **quais serviços estão rodando** em um servidor
+- Precisar descobrir **versões de serviços** (para pesquisar CVEs)
+- Precisar mapear **uma rede inteira** (ex: 192.168.1.0/24)
+- Precisar identificar o **sistema operacional** do alvo
+
+### 🛠️ Como o Nmap te ajuda
+O Nmap é como um raio-x do servidor. Ele te diz:
+- **Portas abertas** = serviços ativos (cada porta é uma porta de entrada potencial)
+- **Versões** = Apache 2.4.49 (vulnerável!) vs Apache 2.4.51 (corrigido)
+- **Scripts** = verifica vulnerabilidades automaticamente com `--script vuln`
+- **SO** = Linux, Windows, versão específica
+
+### ➡️ Depois de rodar o Nmap — Próximos passos
+1. **Anote as portas abertas** → Vai usar isso no Módulo 3 (Exploração)
+2. **Pesquise CVEs** → Google: "Apache 2.4.49 CVE" → encontra falhas conhecidas
+3. **Teste serviços específicos** → SSH (Hydra), HTTP (Nikto/ffuf), SMB (enum4linux)
+4. **Escaneie todas as portas** → `nmap -p- -T4 alvo` para não perder nada
+5. **Salve o output** → `nmap -oN scan.txt alvo` para referência futura
+
 ### Passo 5: Scan agressivo (Nmap)
 ```bash
 # Se quiser mais detalhes (versão exata, scripts, OS):
@@ -248,6 +269,23 @@ sudo nmap --script-updatedb
 
 Scanner de portas mais rápido que Nmap. Ideal para varreduras em larga escala (milhares de IPs).
 
+### 🎯 Quando usar o Masscan
+Quando você precisa escanear **muitos IPs rapidamente** (redes inteiras, /24, /16). O Nmap é mais preciso, mas o Masscan é 10x mais rápido. Use quando:
+- Precisar mapear **uma rede inteira** (ex: 192.168.1.0/24)
+- Tiver **milhares de IPs** para escanear
+- Precisar descobrir **hosts vivos** antes de usar o Nmap
+- Estiver em **CTF** ou competição com tempo limitado
+
+### 🛠️ Como o Masscan te ajuda
+- **Velocidade** → Varre 65535 portas em segundos (Nmap leva minutos)
+- **Escala** → Funciona em redes /16 (65.536 IPs) sem travar
+- **Output** → Resultados em formato grepable para processar depois
+
+### ➡️ Depois de rodar o Masscan — Próximos passos
+1. **Passe os IPs para o Nmap** → `nmap -sV -p 80,443 IP_ENCONTRADO`
+2. **Investigue cada serviço** → Para cada porta aberta, rode scripts específicos
+3. **Salve o output** → `masscan -oG results.txt` para referência futura
+
 ### Instalação
 ```bash
 sudo apt install -y masscan
@@ -293,6 +331,24 @@ nmap -sV -p $(grep "80/open" masscan.txt | awk '{print $4}' | tr '\n' ',' | sed 
 
 Consulta informações de registro de domínio e IP.
 
+### 🎯 Quando usar o Whois
+Sempre no início do reconhecimento. Use quando:
+- Precisar saber **quem é o dono** de um domínio
+- Precisar descobrir **name servers** (servidores DNS)
+- Precisar do **bloco de IPs** associado ao domínio
+- Quiser saber **quando o domínio foi criado** (domínio novo = menos testado)
+
+### 🛠️ Como o Whois te ajuda
+- **Name Servers** → Revela onde o domínio está hospedado (pode ter falhas)
+- **Bloco de IPs** → Escaneie a rede inteira com Nmap
+- **Registrar** → Às vezes revela dados do dono (se não usar privacy)
+- **Datas** → Domínio novo pode ter menos segurança
+
+### ➡️ Depois de rodar o Whois — Próximos passos
+1. **Anote os name servers** → Use com `dig @ns1.example.com`
+2. **Escaneie o bloco de IPs** → `nmap -sn 200.100.50.0/24`
+3. **Pesquise o registrar** → Google: "registrar X vulnerabilidade"
+
 ### Instalação
 ```bash
 sudo apt install -y whois
@@ -323,6 +379,25 @@ whois example.com | grep -i "name server\|registrar\|creation"
 ## DNS Utils (dig, nslookup, host)
 
 Ferramentas para consultar e enumeração de registros DNS.
+
+### 🎯 Quando usar dig/nslookup/host
+Depois de rodar o Whois. Use quando:
+- Precisar descobrir o **IP real** do servidor
+- Precisar verificar **registros DNS** (A, MX, NS, TXT)
+- Precisar testar **zone transfer** (vulnerabilidade!)
+- Precisar fazer **brute force de subdomínios**
+
+### 🛠️ Como dig te ajuda
+- **Registro A** → IP do servidor (para escanear com Nmap)
+- **Registro MX** → Servidores de email (pode ter vulnerabilidades)
+- **Registro TXT** → Chaves SPF, DKIM (configuração de email)
+- **Zone transfer** → Se funcionar, revela TODOS os subdomínios!
+
+### ➡️ Depois de rodar dig — Próximos passos
+1. **IP encontrado?** → Escaneie com `nmap -sV -sC IP`
+2. **Zone transfer funcionou?** → Anote todos os subdomínios para brute force
+3. **Email server encontrado?** → Teste phishable users com theHarvester
+4. **Salve o output** → `dig example.com > dns_results.txt`
 
 ### Instalação
 ```bash
@@ -381,6 +456,22 @@ host example.com 8.8.8.8
 
 ## Ping / IPUtils
 
+### 🎯 Quando usar o Ping
+Para confirmar que o servidor **está no ar** antes de escanear. Use quando:
+- Precisar saber se o alvo **responde** a requisições
+- Precisar medir **latência** (tempo de resposta)
+- Precisar testar **conectividade** básica
+
+### 🛠️ Como o Ping te ajuda
+- **Servidor no ar** → Não adianta escanear um servidor offline
+- **Latência** → Servidor muito lento pode indicar sobrecarga ou bloqueio
+- **TTL** → Pode revelar o SO (TTL 64 = Linux, TTL 128 = Windows)
+
+### ➡️ Depois de rodar o Ping — Próximos passos
+1. **Servidor respondeu?** → Escaneie com `nmap -sV -sC IP`
+2. **Servidor NÃO respondeu?** → Use `nmap -Pn IP` (ignora ping)
+3. **TTL revelou o SO?** → Use isso para escolher ferramentas adequadas
+
 ### Instalação
 ```bash
 sudo apt install -y iputils-ping
@@ -410,6 +501,25 @@ ping -c 10 -i 0.2 192.168.1.1   # 10 pacotes, 200ms entre cada
 ## TheHarvester
 
 Coleta emails, subdomínios, hosts e IPs de fontes públicas (Google, Bing, DNS, etc).
+
+### 🎯 Quando usar o TheHarvester
+Na fase **passiva** do reconhecimento (sem tocar no alvo). Use quando:
+- Precisar de **emails** para phishing ou brute force
+- Precisar de **subdomínios** extras (além do que o Whois mostrou)
+- Precisar de **IPs** associados ao domínio
+- Estiver fazendo **OSINT** (inteligência de fontes abertas)
+
+### 🛠️ Como o TheHarvester te ajuda
+- **Emails** → `admin@empresa.com`, `joao@empresa.com` (usuários reais!)
+- **Subdomínios** → `api.empresa.com`, `vpn.empresa.com` (pontos de entrada)
+- **IPs** → Onde o domínio está hospedado
+- **Fontes** → Google, Bing, DNS, Shodan, LinkedIn (múltiplas perspectivas)
+
+### ➡️ Depois de rodar o TheHarvester — Próximos passos
+1. **Emails encontrados?** → Use para brute force com Hydra (Módulo 3)
+2. **Subdomínios encontrados?** → Escaneie cada um com `nmap -sV -sC IP`
+3. **IPs encontrados?** → Escaneie com Nmap para descobrir serviços
+4. **Salve o output** → `theHarvester -d empresa.com -b all -f report.html`
 
 ### Instalação
 ```bash
@@ -459,6 +569,25 @@ threatminer, urlscan, virustotal, zoomeye
 ## DNSRecon
 
 Enumeração DNS mais profunda que dig. Faz zone transfer, brute force, e muito mais.
+
+### 🎯 Quando usar o DNSRecon
+Quando o `dig` não é suficiente. Use quando:
+- Precisar testar **zone transfer** automaticamente
+- Precisar fazer **brute force de subdomínios** com wordlist
+- Precisar descobrir **registros SRV** (serviços Active Directory)
+- Quiser um **output JSON** para processar depois
+
+### 🛠️ Como o DNSRecon te ajuda
+- **Zone transfer** → Se funcionar, revela TODOS os subdomínios de uma vez
+- **Brute force** → Testa milhares de subdomínios com wordlist
+- **SRV records** → Descobre serviços AD (_ldap._tcp.empresa.com)
+- **Google enum** → Descobre subdomínios via Google
+
+### ➡️ Depois de rodar o DNSRecon — Próximos passos
+1. **Zone transfer funcionou?** → Anote todos os subdomínios e escaneie
+2. **Subdomínios encontrados via brute force?** → Use `httpx` para verificar quais estão ativos
+3. **Registros SRV encontrados?** → Pode indicar Active Directory (Módulo 4)
+4. **Salve o output** → `dnsrecon -d empresa.com -j output.json`
 
 ### Instalação
 ```bash
