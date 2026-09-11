@@ -259,6 +259,30 @@
 | **Fail2Ban** | Prevenção de intrusão via logs | Defesa |
 | **OpenSCAP** | Scanner de conformidade | Governança |
 | **Lynis** | Auditoria de segurança Linux | Governança |
+| **Sherlock** | Busca de usuários em 400+ redes sociais | OSINT |
+| **Maigret** | Sherlock + graus de relação entre contas | OSINT |
+| **crt.sh** | Banco de dados de certificados CT | Reconhecimento |
+| **Subzy** | Scanner de subdomain takeover | Reconhecimento |
+| **waybackurls** | Extrair URLs do Wayback Machine | Reconhecimento |
+| **gau** | GetAllURLs — URLs de múltiplas fontes | Reconhecimento |
+| **waymore** | URLs de 40+ fontes (Wayback, OTX, etc.) | Reconhecimento |
+| **LinkFinder** | Extrair endpoints de JavaScript | Reconhecimento |
+| **SecretFinder** | Encontrar secrets em JavaScript | Reconhecimento |
+| **katana** | Crawling de JavaScript (ProjectDiscovery) | Reconhecimento |
+| **cloud_enum** | Enumeração multi-cloud (S3, Azure, GCS) | Reconhecimento |
+
+### 🕵️ OSINT e Reconhecimento
+
+| Termo | O que é | Exemplo |
+|:------|:--------|:--------|
+| **Certificate Transparency** | Logs públicos de certificados SSL emitidos | crt.sh indexa todos os CTs |
+| **SAN** | Subject Alternative Name — lista de domínios no certificado | `DNS:evilcorp.com, DNS:admin.evilcorp.com` |
+| **Subdomain Takeover** | Tomar subdomínio com CNAME órfão | Bucket S3 deletado + CNAME ainda ativo |
+| **Bucket S3** | Storage público da AWS | `s3://meu-bucket` |
+| **CORS** | Cross-Origin Resource Sharing | `Access-Control-Allow-Origin` |
+| **Wayback Machine** | Arquivo histórico da web (desde 1996) | web.archive.org |
+| **Endpoint** | Ponto de acesso de uma API | `/api/v1/users` |
+| **Secret** | Chave/token hardcoded em código | `API_KEY=abc123` |
 
 ### 🤖 IA e Segurança
 
