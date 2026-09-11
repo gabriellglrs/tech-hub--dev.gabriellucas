@@ -1069,11 +1069,13 @@ cat 01-intel/wayback.txt 01-intel/gau.txt | sort -u > 01-intel/todas-urls.txt
 |---|------|---------------|:---:|
 | 1 | WHOIS completo | `01-intel/whois.txt` | [ ] |
 | 2 | Records DNS | `01-intel/dns-records.txt` | [ ] |
-| 3 | Reverse DNS | `01-intel/reverse-dns.txt` | [ ] |
-| 4 | Subdomínios (combinados) | `01-intel/subdominios-todos.txt` | [ ] |
-| 5 | Emails encontrados | `01-intel/theharvester.html` | [ ] |
-| 6 | Google Dorks | `01-intel/google-dorks.txt` | [ ] |
-| 7 | URLs históricas | `01-intel/todas-urls.txt` | [ ] |
+| 3 | ASN/BGP Mapping | `01-intel/asns.txt`, `01-intel/cidrs.txt` | [ ] |
+| 4 | Reverse DNS | `01-intel/reverse-dns.txt` | [ ] |
+| 5 | Subdomínios (combinados) | `01-intel/subdominios-todos.txt` | [ ] |
+| 6 | Emails encontrados | `01-intel/theharvester.html` | [ ] |
+| 7 | GitHub/GitLab OSINT | `01-intel/github-repos.txt` | [ ] |
+| 8 | Google Dorks | `01-intel/google-dorks.txt` | [ ] |
+| 9 | URLs históricas | `01-intel/todas-urls.txt` | [ ] |
 
 ### 📁 Sua pasta deve estar assim ao final da Fase 1:
 
@@ -1081,12 +1083,16 @@ cat 01-intel/wayback.txt 01-intel/gau.txt | sort -u > 01-intel/todas-urls.txt
 01-intel/
 ├── whois.txt              ← dados do WHOIS (empresa, IPs, nameservers)
 ├── dns-records.txt        ← records DNS (A, MX, NS, TXT)
+├── asns.txt               ← ASNs da organização
+├── cidrs.txt              ← ranges de IP (prefixos CIDR)
 ├── reverse-dns.txt        ← reverse DNS dos IPs
 ├── subdominios-todos.txt  ← TODOS os subdomínios combinados (merge dos 4)
 ├── subfinder.txt          ← subdomínios do Subfinder
 ├── amass.txt              ← subdomínios do Amass
 ├── crtsh.txt              ← subdomínios do crt.sh
 ├── theharvester.txt       ← subdomínios + emails do theHarvester
+├── github-repos.txt       ← repositórios públicos da organização
+├── github-files.txt       ← arquivos em repositórios (possíveis secrets)
 ├── google-dorks.txt       ← URLs encontradas no Google
 ├── wayback.txt            ← URLs do Wayback Machine
 ├── gau.txt                ← URLs do gau
@@ -2896,31 +2902,52 @@ log "1.2 — DNS Records..."
 dig "$DOMINIO" ANY > "$BASE_DIR/01-intel/dns-records.txt" 2>/dev/null
 dig +short "$DOMINIO" > "$BASE_DIR/01-intel/ip-direto.txt" 2>/dev/null
 
-log "1.3 — Subfinder..."
+log "1.3 — ASN/BGP Mapping..."
+# Descobrir ASN pela organização (extrair do WHOIS)
+ORG=$(grep -i "Organization\|OrgName\|registrant" "$BASE_DIR/01-intel/whois.txt" 2>/dev/null | head -1 | sed 's/.*: //')
+if [ -n "$ORG" ]; then
+    curl -s "https://api.bgpview.io/search?query_term=$ORG" | jq -r '.data.asns[].asn' 2>/dev/null > "$BASE_DIR/01-intel/asns.txt"
+    # Para cada ASN, obter prefixos CIDR
+    while read asn; do
+        curl -s "https://api.bgpview.io/asn/AS${asn}/prefixes" | jq -r '.data.ipv4_prefixes[].prefix' 2>/dev/null
+    done < "$BASE_DIR/01-intel/asns.txt" > "$BASE_DIR/01-intel/cidrs.txt"
+fi
+
+log "1.4 — Subfinder..."
 subfinder -d "$DOMINIO" -silent > "$BASE_DIR/01-intel/subfinder.txt" 2>/dev/null
 
-log "1.4 — Amass passivo..."
+log "1.5 — Amass passivo..."
 amass enum -passive -d "$DOMINIO" -o "$BASE_DIR/01-intel/amass.txt" 2>/dev/null
 
-log "1.5 — crt.sh..."
+log "1.6 — crt.sh..."
 curl -s "https://crt.sh/?q=$DOMINIO&output=json" | jq -r '.[].name_value' 2>/dev/null | sort -u > "$BASE_DIR/01-intel/crtsh.txt"
 
-log "1.6 — theHarvester..."
+log "1.7 — theHarvester..."
 theHarvester -d "$DOMINIO" -b google,bing,crtsh -f "$BASE_DIR/01-intel/theharvester.html" 2>/dev/null
 
-log "1.7 — Combinar subdomínios..."
+log "1.8 — GitHub/GitLab OSINT..."
+# Buscar repositórios públicos da organização
+curl -s "https://api.github.com/search/repositories?q=$DOMINIO+in:name&sort=stars&order=desc" | jq -r '.items[].full_name' 2>/dev/null > "$BASE_DIR/01-intel/github-repos.txt"
+# Buscar possíveis secrets no código (apenas indicadores, não exploração)
+if [ -s "$BASE_DIR/01-intel/github-repos.txt" ]; then
+    head -5 "$BASE_DIR/01-intel/github-repos.txt" | while read repo; do
+        curl -s "https://api.github.com/repos/$repo/contents/" | jq -r '.[].name' 2>/dev/null
+    done > "$BASE_DIR/01-intel/github-files.txt"
+fi
+
+log "1.9 — Combinar subdomínios..."
 cat "$BASE_DIR/01-intel/subfinder.txt" "$BASE_DIR/01-intel/amass.txt" "$BASE_DIR/01-intel/crtsh.txt" 2>/dev/null | grep -i "$DOMINIO" | sort -u > "$BASE_DIR/01-intel/subdominios-todos.txt"
 
 SUB_COUNT=$(wc -l < "$BASE_DIR/01-intel/subdominios-todos.txt" 2>/dev/null || echo "0")
 log "Subdomínios encontrados: $SUB_COUNT"
 
-log "1.8 — Wayback URLs..."
+log "1.10 — Wayback URLs..."
 echo "$DOMINIO" | waybackurls > "$BASE_DIR/01-intel/wayback.txt" 2>/dev/null
 
-log "1.9 — gau URLs..."
+log "1.11 — gau URLs..."
 echo "$DOMINIO" | gau > "$BASE_DIR/01-intel/gau.txt" 2>/dev/null
 
-log "1.10 — Combinar URLs..."
+log "1.12 — Combinar URLs..."
 cat "$BASE_DIR/01-intel/wayback.txt" "$BASE_DIR/01-intel/gau.txt" 2>/dev/null | sort -u > "$BASE_DIR/01-intel/todas-urls.txt"
 
 URL_COUNT=$(wc -l < "$BASE_DIR/01-intel/todas-urls.txt" 2>/dev/null || echo "0")

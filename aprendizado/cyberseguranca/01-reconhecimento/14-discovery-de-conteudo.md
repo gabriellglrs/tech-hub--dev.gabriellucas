@@ -396,6 +396,126 @@ ffuf -u https://target.com/FUZZ -w wordlist.txt -maxtime 60
 
 ---
 
+## 🧰 Wordlists Customizadas — CeWL e Geração Contextual
+
+### Por que wordlist contextual > wordlist genérica?
+
+Wordlists genéricas (`common.txt`) funcionam para sites genéricos. Mas cada empresa tem:
+- **Produtos próprios** (nomes de produtos, versões)
+- **Funcionalidades específicas** (nomes de endpoints únicos)
+- **Tecnologias próprias** (frameworks internos)
+- **Estrutura de pastas** (nomenclatura específica)
+
+Uma wordlist gerada a partir do próprio site do alvo é **muito mais eficiente**.
+
+### CeWL — Gerar Wordlist a partir de um Site
+
+**CeWL (Custom Word List generator)** crawla um site e gera uma wordlist com as palavras encontradas no conteúdo.
+
+```bash
+# Instalar CeWL
+sudo apt install cewl -y
+
+# Gerar wordlist básica
+cewl https://target.com -w wordlist.txt
+
+# Gerar com profundidade maior (mais links)
+cewl https://target.com -d 2 -w wordlist.txt
+
+# Gerar com emails
+cewl https://target.com --email_file emails.txt -w wordlist.txt
+
+# Gerar com números
+cewl https://target.com --with-numbers -w wordlist.txt
+
+# Gerar com comprimento mínimo
+cewl https://target.com -m 5 -w wordlist.txt
+
+# OUTPUT ESPERADO (wordlist.txt):
+# target
+# api
+# login
+# dashboard
+# admin
+# products
+# users
+# ...
+```
+
+**Flags explicadas:**
+- `-d 2` — Profundidade de crawl (2 níveis de links)
+- `--email_file` — Extrai emails encontrados
+- `--with-numbers` — Inclui palavras com números
+- `-m 5` — Comprimento mínimo de 5 caracteres
+
+### Geração Contextual
+
+```bash
+# Gerar wordlist a partir de nomes de produtos da empresa
+# Se a empresa vende "ProductA", "ProductB", "ProductC"
+echo -e "producta\nproductb\ncustomera\ncustomerb" > custom.txt
+
+# Adicionar termos comuns da empresa
+echo -e "admin\nlogin\napi\ndashboard\nportal\ndev\nstaging\ntest" >> custom.txt
+
+# Gerar variações
+for word in admin login api; do
+  echo "$word"
+  echo "${word}1"
+  echo "${word}2"
+  echo "${word}_old"
+  echo "${word}_new"
+  echo "dev_$word"
+  echo "staging_$word"
+done >> custom.txt
+
+# Usar com Gobuster
+gobuster dir -u https://target.com -w custom.txt
+```
+
+### Combinação: CeWL + Palavras-chave
+
+```bash
+# 1. Gerar wordlist do site
+cewl https://target.com -d 2 -w cewl_words.txt
+
+# 2. Adicionar palavras-chave específicas
+cat >> cewl_words.txt << EOF
+admin
+login
+api
+dashboard
+portal
+internal
+staging
+dev
+test
+backup
+config
+.env
+.git
+EOF
+
+# 3. Remover duplicatas
+sort -u cewl_words.txt > wordlist_final.txt
+
+# 4. Usar
+gobuster dir -u https://target.com -w wordlist_final.txt
+ffuf -u https://target.com/FUZZ -w wordlist_final.txt
+```
+
+### Quando usar cada abordagem
+
+| Situação | Abordagem | Por quê |
+|:---------|:----------|:--------|
+| **Site genérico** | `common.txt` | Rápido, cobre o básico |
+| **Site específico** | CeWL | Palavras relevantes ao site |
+| **Empresa conhecida** | CeWL + contextual | Palavras da empresa + do site |
+| **API** | Wordlist de API | Endpoints específicos de API |
+| **Login** | Wordlist de credenciais | Usuários/senhas comuns |
+
+---
+
 ## 📚 Referências
 
 - [Gobuster GitHub](https://github.com/OJ/gobuster)
@@ -403,6 +523,7 @@ ffuf -u https://target.com/FUZZ -w wordlist.txt -maxtime 60
 - [ffuf GitHub](https://github.com/ffuf/ffuf)
 - [ffuf Kali](https://www.kali.org/tools/ffuf)
 - [SecLists](https://github.com/danielmiessler/SecLists)
+- [CeWL GitHub](https://github.com/digininja/CeWL)
 - [OWASP Content Discovery](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/05-Enumerate_Infrastructure_and_Application_Admin_Interfaces)
 
 ---

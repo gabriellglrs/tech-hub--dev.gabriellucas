@@ -663,6 +663,96 @@ dnsrecon -r 192.168.1.0/24
 
 ---
 
+## 🧠 Exercícios de Raciocínio
+
+### Exercício 1: Análise de Whois
+
+**Cenário:** Você fez `whois example.com` e recebeu:
+
+```
+Domain Name: EXAMPLE.COM
+Registrar: GoDaddy.com, LLC
+Updated Date: 2025-01-15
+Creation Date: 2010-03-20
+Registry Expiry Date: 2026-03-20
+Name Server: NS1.GODADDY.COM
+Name Server: NS2.GODADDY.COM
+Registrant Organization: Example Corp
+Registrant State/Province: California
+```
+
+**Pergunta:** O que você pode concluir? Quais seriam seus próximos passos?
+
+**Raciocínio esperado:**
+1. **Empresa real:** Example Corp está em California → pode ter operação nos EUA
+2. **Domínio antigo:** Criado em 2010 → empresa estabelecida
+3. **Expira em 2026:** Pode ser renovado ou abandonado
+4. **GoDaddy:** Registrar popular → pode ter painel de gerenciamento exposto
+5. **Próximo passo:** Verificar subdomínios, DNS records, portas abertas
+
+### Exercício 2: Zone Transfer
+
+**Cenário:** Você executou `dig axfr example.com @ns1.example.com` e a zona de transferência funcionou. O output mostrou:
+
+```
+example.com.    3600    IN    SOA    ns1.example.com. admin.example.com. 2026091101 3600 900 604800 86400
+example.com.    3600    IN    NS     ns1.example.com.
+example.com.    3600    IN    NS     ns2.example.com.
+example.com.    3600    IN    A      203.0.113.10
+mail.example.com. 3600  IN    A      203.0.113.20
+dev.example.com. 3600   IN    A      203.0.113.30
+staging.example.com. 3600 IN A      203.0.113.40
+vpn.example.com. 3600   IN    A      203.0.113.50
+```
+
+**Pergunta:** O que você pode concluir? Qual a prioridade de escaneamento?
+
+**Raciocínio esperado:**
+1. **Vulnerabilidade:** Zone transfer exposta → qualquer pessoa pode ver todos os subdomínios
+2. **Ativos encontrados:** 6 subdomínios com IPs diferentes
+3. **Prioridade:** VPN (203.0.113.50) → porta de entrada para rede interna
+4. **Depois:** dev/staging → podem ter versões não-patcheadas
+5. **Email:** mail.example.com → pode ser phishing target
+6. **Próximo passo:** Nmap em todos os IPs, priorizando VPN
+
+### Exercício 3: DNS Inconsistente
+
+**Cenário:** Você consultou DNS e encontrou:
+
+```
+$ dig api.example.com +short
+10.0.0.50
+
+$ dig api.example.com @8.8.8.8 +short
+203.0.113.100
+```
+
+**Pergunta:** Por que os IPs são diferentes? O que isso significa?
+
+**Raciocínio esperado:**
+1. **DNS split:** A empresa usa DNS diferente para rede interna vs externa
+2. **10.0.0.50:** IP interno (RFC 1918) → acessível apenas na rede da empresa
+3. **203.0.113.100:** IP externo → acessível pela internet
+4. **Risco:** O IP externo pode ser mais protegido, mas o interno pode ter menos segurança
+5. **Próximo passo:** Escanear o IP externo, verificar se há acesso ao interno
+
+### Exercício 4: Decisão de Ferramenta
+
+**Cenário:** Você precisa descobrir subdomínios de `target.com`. Pode usar:
+- `dig` (manual, lento)
+- `dnsrecon` (automático, com brute force)
+- `subfinder` (passivo, rápido)
+
+**Pergunta:** Qual você escolheria? Por quê?
+
+**Raciocínio esperado:**
+1. **Primeiro:** subfinder (passivo, rápido, não toca no alvo)
+2. **Depois:** dnsrecon com brute force (ativo, mais completo)
+3. **Por quê:** Comece passivo, depois vá para ativo
+4. **Regra:** Passivo primeiro → menos rastro → mais seguro
+
+---
+
 ## Lab Prático
 
 ### Exercício 1: Reconhecimento Completo com Nmap

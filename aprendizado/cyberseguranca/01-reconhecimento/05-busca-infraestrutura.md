@@ -1,10 +1,240 @@
 # 🌐 Busca de Infraestrutura
 
-> Motores de busca para dispositivos, serviços e vulnerabilidades na internet inteira — Censys, FOFA, ZoomEye.
+> Mapeie a infraestrutura completa de uma organização — de ASN a dispositivos individuais.
+
+<div align="center">
+
+| ⏱️ Tempo | 📊 Nível | 🔧 Ferramentas |
+|:--------:|:--------:|:--------------:|
+| 1h30min | ⭐⭐ Intermediário | `BGPView, whois, amass, Censys, FOFA, ZoomEye` |
+
+</div>
 
 ---
 
-## 📚 O que é Busca de Infraestrutura?
+## 📚 Parte 1: ASN e BGP — A Chave para a Infraestrutura Completa
+
+### O que é ASN?
+
+**ASN (Autonomous System Number)** é um número único que identifica uma organização na internet. Cada empresa grande (Google, Amazon, sua empresa de internet) tem pelo menos um ASN.
+
+**Por que isso importa?**
+
+Quando você pesquisa apenas `example.com`, encontra apenas o que está no DNS. Mas a empresa pode ter **dezenas de ranges de IPs** que não aparecem em DNS — servidores internos, ambientes de staging, infraestrutura adquirida de outra empresa, data centers esquecidos.
+
+```
+EMPRESA (Target Inc)
+    ↓
+ASN (AS12345)
+    ↓
+PREFIXOS / CIDRs
+    ├── 203.0.113.0/24
+    ├── 198.51.100.0/22
+    └── 192.0.2.0/23
+    ↓
+HOSTS (cada IP dentro desses ranges)
+    ↓
+SERVIÇOS (portas abertas, serviços rodando)
+    ↓
+SUPERFÍCIE DE ATAQUE COMPLETA
+```
+
+### Conceitos Fundamentais
+
+| Conceito | O que é | Exemplo |
+|:---------|:--------|:--------|
+| **ASN** | Número único de identificação de uma organização na internet | AS12345 |
+| **Prefixo/CIDR** | Bloco de IPs anunciado por um ASN | 203.0.113.0/24 |
+| **BGP** | Protocolo que roteia tráfego entre ASNs (como os "correios" da internet) | — |
+| **PEERINGDB** | Banco de dados público de redes e seus ASNs | peeringdb.com |
+| **BGPView** | API pública para consultar rotas BGP | bgpview.io |
+
+### Relação: Empresa → ASN → Ranges → Hosts
+
+```
+Target Inc (empresa)
+    │
+    ├── Tem ASN AS12345
+    │   ├── Anuncia prefixo 203.0.113.0/24 (256 IPs)
+    │   ├── Anuncia prefixo 198.51.100.0/22 (1024 IPs)
+    │   └── Total: 1280 IPs potenciais para escanear
+    │
+    ├── Tem ASN AS67890 (aquisição)
+    │   └── Anuncia prefixo 192.0.2.0/23 (512 IPs)
+    │
+    └── Total de superfície: 1792 IPs
+        └── Cada IP pode ter portas abertas
+            └── Cada porta pode ter serviços vulneráveis
+```
+
+### Como Descobrir o ASN de uma Organização
+
+#### Método 1: BGPView API (mais confiável)
+
+```bash
+# Buscar ASN pelo nome da organização
+curl -s "https://api.bgpview.io/search?query_term=Target+Inc" | \
+  jq '.data.asns[] | {asn: .asn, name: .name, description: .description}'
+
+# OUTPUT ESPERADO:
+# {
+#   "asn": 12345,
+#   "name": "TARGET-INC",
+#   "description": "Target Inc, US"
+# }
+```
+
+**O que significa?** A organização "Target Inc" está associada ao ASN AS12345. Esse ASN é a porta de entrada para toda a infraestrutura pública da empresa.
+
+#### Método 2: amass intel
+
+```bash
+# Descobrir ASN de uma organização
+amass intel -org "Target Inc" -o amass_asns.txt
+
+# OUTPUT:
+# AS12345 | TARGET-INC | Target Inc
+# AS67890 | TARGET-CDN | Target content delivery
+```
+
+#### Método 3: whois por organização
+
+```bash
+whois -h whois.radb.net -- '-i origin AS12345'
+```
+
+### De ASN para Ranges de IPs
+
+```bash
+# Puxar todos os prefixos IPv4 do ASN
+ASN=12345
+curl -s "https://api.bgpview.io/asn/AS${ASN}/prefixes" | \
+  jq -r '.data.ipv4_prefixes[].prefix' > cidr_ranges.txt
+
+# OUTPUT ESPERADO (cidr_ranges.txt):
+# 203.0.113.0/24
+# 198.51.100.0/22
+# 192.0.2.0/23
+
+# Ver quantos ranges foram encontrados
+wc -l cidr_ranges.txt
+# 3 cidr_ranges.txt
+
+# Para múltiplos ASNs (se a empresa tem mais de um)
+for asn in 12345 67890; do
+  curl -s "https://api.bgpview.io/asn/AS${asn}/prefixes" | \
+    jq -r '.data.ipv4_prefixes[].prefix'
+done | sort -u > all_cidrs.txt
+```
+
+**O que significa?** Cada linha é um bloco de IPs que pertence à organização. Esses ranges são onde a empresa hospeda sua infraestrutura.
+
+### IPs sem DNS — Os Ativos "Invisíveis"
+
+Muitos servidores não têm registro DNS. Esses são os mais difíceis de encontrar — e muitas vezes os mais vulneráveis:
+
+```bash
+# Encontrar IPs sem PTR record (sem DNS reverso)
+while read ip; do
+  ptr=$(dig +short -x "$ip" 2>/dev/null)
+  if [ -z "$ptr" ]; then
+    echo "Sem PTR: $ip"
+  fi
+done < discovered_ips.txt
+
+# OUTPUT:
+# Sem PTR: 203.0.113.50
+# Sem PTR: 203.0.113.128
+```
+
+**Por que isso importa?** IPs sem DNS reverso são frequentemente:
+- Servidores internos que foram expostos acidentalmente
+- Ambientes de staging/teste que ninguém lembrou de remover
+- Infraestrutura de empresas adquiridas que ainda não foi integrada
+- Servidores "órfãos" que ninguém gerencia
+
+### Fluxo Completo de ASN Mapping
+
+```
+PASSO 1: Nome da empresa → ASN
+├── BGPView API: "Target Inc" → AS12345
+├── amass intel: amass intel -org "Target Inc"
+└── Output: lista de ASNs
+
+        ↓
+
+PASSO 2: ASN → Prefixos CIDR
+├── BGPView API: AS12345 → 203.0.113.0/24, 198.51.100.0/22
+├── amass intel: amass intel -asn 12345
+└── Output: lista de ranges
+
+        ↓
+
+PASSO 3: CIDRs → Hosts ativos
+├── Nmap host discovery: nmap -sn 203.0.113.0/24
+├── validação de hosts
+└── Output: lista de IPs ativos
+
+        ↓
+
+PASSO 4: Hosts → Serviços
+├── Nmap port scan: nmap -sV -sC IP
+├── Service detection
+└── Output: portas abertas, versões
+
+        ↓
+
+PASSO 5: Correlacionar com DNS
+├── Subdomínios apontam para esses IPs?
+├── Alguns IPs não têm subdomínio? (ativos "invisíveis")
+└── Output: superfície de ataque completa
+```
+
+### Ferramentas para ASN Mapping
+
+| Ferramenta | Tipo | O que faz | Custo |
+|:-----------|:-----|:----------|:------|
+| **BGPView** | API web | Busca ASN por nome, lista prefixos | Gratuito |
+| **amass intel** | CLI | ASN mapping integrado ao Amass | Gratuito |
+| **Metabigor** | CLI | Org → ASN → CIDR automatizado | Gratuito |
+| **bgp.he.net** | Web | Interface visual de BGP | Gratuito |
+| **PEERINGDB** | Web/API | Banco de dados de redes | Gratuito |
+| **ASNHunter** | CLI | Multi-source ASN recon | Gratuito |
+
+### Exercício Prático: ASN Mapping
+
+**Objetivo:** Mapeie a infraestrutura da organização "Example Corp"
+
+```bash
+# Passo 1: Encontrar ASN
+curl -s "https://api.bgpview.io/search?query_term=Example+Corp" | \
+  jq '.data.asns[] | {asn: .asn, name: .name}'
+
+# Passo 2: Listar prefixos (substitua ASNUMERO pelo ASN encontrado)
+curl -s "https://api.bgpview.io/asn/ASNUMERO/prefixes" | \
+  jq -r '.data.ipv4_prefixes[].prefix' > ranges.txt
+
+# Passo 3: Contar ranges
+wc -l ranges.txt
+
+# Passo 4: Escanear um range específico
+nmap -sn -Pn 203.0.113.0/24 -oG hosts.txt
+```
+
+### Interpretação dos Resultados
+
+| Resultado | O que significa | Próximo passo |
+|:----------|:----------------|:--------------|
+| ASN encontrado com 1 range pequeno (/24) | Empresa pequena ou division específica | Escaneie o range completo |
+| ASN encontrado com múltiplos ranges | Infraestrutura robusta | Priorize ranges maiores |
+| IP sem DNS reverso | Possível ativo "invisível" | Escaneie com Nmap |
+| IP com PTR para outro domínio | Possível aquisição ou infra compartilhada | Verifique relação com a empresa |
+
+---
+
+## 📚 Parte 2: Motores de Busca de Infraestrutura
+
+> Motores de busca para dispositivos, serviços e vulnerabilidades na internet inteira — Censys, FOFA, ZoomEye.
 
 **Busca de infraestrutura** é usar motores de busca especializados para encontrar **dispositivos, serviços e vulnerabilidades** expostos na internet. É como o Google, mas para servidores, câmeras, bancos de dados e qualquer coisa conectada.
 
@@ -85,6 +315,79 @@ shodan search "port:27017 country:BR" # MongoDB
 shodan count "vuln:CVE-2021-44228 country:BR"
 ```
 
+#### Shodan Queries Avançadas para Bug Bounty
+
+```bash
+# Buscar por organização específica
+shodan search "org:'Target Inc'"
+
+# Buscar por dominio específico
+shodan search "hostname:target.com"
+
+# Buscar por certificado SSL (encontra subdomínios)
+shodan search "ssl.cert.subject.CN:target.com"
+
+# Buscar por certificado SHA256 (encontra todos os IPs com mesmo certificado)
+shodan search "ssl.cert.sha256:abc123..."
+
+# Buscar por tecnologia específica
+shodan search "product:nginx hostname:target.com"
+shodan search "product:Apache hostname:target.com"
+shodan search "product:Microsoft-IIS hostname:target.com"
+
+# Buscar por vulnerabilidade específica
+shodan search "vuln:CVE-2021-44228 org:'Target Inc'"
+
+# Buscar portas comuns de admin
+shodan search "port:8080,8443,9090 org:'Target Inc'"
+
+# Buscar FTP anônimo
+shodan search "port:21 anonymous" 
+
+# Buscar MongoDB exposto
+shodan search "port:27017 product:MongoDB"
+
+# Buscar Elasticsearch exposto
+shodan search "port:9200 product:Elasticsearch"
+
+# Buscar Docker exposto
+shodan search "port:2375 product:Docker"
+
+# Combinar filtros
+shodan search "org:'Target Inc' port:443 ssl:true"
+```
+
+#### Interpretando Output do Shodan
+
+```bash
+shodan host 203.0.113.50
+```
+
+**OUTPUT:**
+```
+203.0.113.50
+Hostnames: api.target.com
+Country: United States
+Organization: Target Inc
+City: San Jose, California
+
+Ports:
+  22/tcp  open  ssh         OpenSSH 8.9p1
+  80/tcp  open  http        nginx 1.18.0
+  443/tcp open  https       nginx 1.18.0
+  3306/tcp open  mysql       MySQL 8.0.28
+
+Vulns:
+  CVE-2021-44228 (Log4Shell) - CVSS: 10.0
+  CVE-2022-22965 (Spring4Shell) - CVSS: 9.8
+```
+
+**O que significa?**
+- **22/tcp ssh OpenSSH 8.9p1** → SSH exposto, versão específica
+- **80/443 nginx 1.18.0** → Web server com versão conhecida
+- **3306/mysql MySQL 8.0.28** → Banco de dados exposto externamente (CRÍTICO)
+- **CVEs** → Vulnerabilidades conhecidas nesse IP
+
 ### Passo 2: Censys
 
 ```bash
@@ -110,6 +413,42 @@ censys host 200.100.50.25
 # Buscar em inventário
 censys inventory
 ```
+
+#### Censys Queries Avançadas
+
+```bash
+# Buscar por organização
+censys search "autonomous_system.organization:Target Inc"
+
+# Buscar por domínio em certificado
+censys search "services.tls.certificates.leaf.names:target.com"
+
+# Buscar por tecnologia
+censys search "services.software.product:nginx AND services.port:443"
+
+# Buscar por CVE
+censys search "services.vulnerabilities.cve:CVE-2021-44228"
+
+# Buscar por IP específico
+censys search "ip:203.0.113.0/24"
+
+# Buscar por porta e serviço
+censys search "services.port:3306 AND services.service_name:MySQL"
+
+# Buscar hosts com mais de X portas
+censys search "services.count>5 AND autonomous_system.asn:12345"
+```
+
+#### Censys vs Shodan — Quando usar cada?
+
+| Cenário | Shodan | Censys |
+|:--------|:-------|:-------|
+| Busca rápida por porta/país | ✅ Melhor | ⚠️ Mais lento |
+| Dados históricos | ⚠️ Limitado | ✅ Excelente |
+| Certificados SSL | ⚠️ Básico | ✅ Detalhado |
+| API para automação | ✅ Boa | ✅ Excelente |
+| CVE hunting | ✅ Bom | ✅ Melhor |
+| Organização/ASN | ⚠️ Limitado | ✅ Melhor |
 
 ### Passo 3: FOFA
 

@@ -109,46 +109,311 @@ nuclei -u https://api.evilcorp.com -t http/misconfigurations/cors/
 
 ---
 
-### 3. Descoberta de APIs
+### 3. Descoberta de APIs — Metodologia Completa
 
-#### 404 Link Finder — Encontrar endpoints via 404
+#### Por que APIs são críticas em 2026?
 
-```bash
-# Se o site retorna 404 para endpoints não existentes, use:
-ffuf -u https://evilcorp.com/FUZZ -w /usr/share/seclists/Discovery/Web-Content/api/api-endpoints.txt -mc 200,201,202,204
+APIs são o **vetor de ataque #1** em aplicações web modernas. A maioria dos sites hoje é uma "SPA" (Single Page Application) que consome dados de APIs. Encontrar e mapear essas APIs é essencial.
 
-# Resultado esperado:
-/api/v1          [Status: 200, Size: 1234]
-/api/v2          [Status: 200, Size: 5678]
-/api/users       [Status: 200, Size: 9012]
-/api/admin       [Status: 403, Size: 345]
+```
+SITE WEB (aparente)
+    ↓
+SPA (Single Page Application)
+    ↓
+CONSUME APIs (ocultas)
+    ├── /api/v1/users
+    ├── /api/v2/admin
+    ├── /graphql
+    ├── /api/internal
+    └── /api/mobile
 ```
 
-#### Swagger/OpenAPI Discovery
+#### Passo 1: Descobrir Documentação Exposta
 
 ```bash
-# Procurar documentação de API
-for path in swagger.json openapi.json api-docs swagger-ui swagger/docs/v1; do
+# Procurar documentação de API (Swagger/OpenAPI)
+for path in \
+  swagger.json \
+  openapi.json \
+  api-docs \
+  swagger-ui \
+  swagger-ui.html \
+  swagger/docs/v1 \
+  api/swagger \
+  v1/api-docs \
+  v2/api-docs \
+  api/v1/swagger.json \
+  api/v2/swagger.json \
+  docs/api \
+  redoc \
+  graphiql; do
     status=$(curl -s -o /dev/null -w "%{http_code}" "https://evilcorp.com/$path")
-    echo "$status https://evilcorp.com/$path"
+    if [ "$status" != "404" ]; then
+        echo "$status https://evilcorp.com/$path"
+    fi
 done
 
-# Resultado esperado:
-200 https://evilcorp.com/swagger.json     ← DOCUMENTAÇÃO EXPOSTA!
-200 https://evilcorp.com/api-docs         ← DOCUMENTAÇÃO EXPOSTA!
-404 https://evilcorp.com/swagger-ui
-404 https://evilcorp.com/openapi.json
+# OUTPUT ESPERADO:
+# 200 https://evilcorp.com/swagger.json     ← DOCUMENTAÇÃO EXPOSTA!
+# 200 https://evilcorp.com/api-docs         ← DOCUMENTAÇÃO EXPOSTA!
+# 200 https://evilcorp.com/graphiql         ← GraphQL EXPOSTO!
 ```
 
-#### API Endpoint Enumeration
+**O que significa?** Se encontrar `swagger.json` ou `openapi.json`, você tem a **lista completa de endpoints, parâmetros e modelos** da API. Isso é como ter o manual do sistema.
+
+#### Passo 2: Descobrir Versões de API
 
 ```bash
-# Enumerar endpoints de API comuns
-for endpoint in /api/v1 /api/v2 /graphql /api/internal /api/admin; do
-    status=$(curl -s -o /dev/null -w "%{http_code}" "https://evilcorp.com$endpoint")
-    echo "$status https://evilcorp.com$endpoint"
+# Enumerar versões de API
+for version in v1 v2 v3 v4 internal beta alpha; do
+    for path in /api/$version /api/$version/ /api/$version/docs; do
+        status=$(curl -s -o /dev/null -w "%{http_code}" "https://evilcorp.com$path")
+        if [ "$status" != "404" ]; then
+            echo "$status https://evilcorp.com$path"
+        fi
+    done
 done
+
+# OUTPUT ESPERADO:
+# 200 https://evilcorp.com/api/v1
+# 200 https://evilcorp.com/api/v2
+# 200 https://evilcorp.com/api/internal
 ```
+
+**Por que testar versões?** Versões antigas (`/api/v1`) frequentemente:
+- Não têm patches de segurança
+- Possuem endpoints removidos que ainda funcionam
+- Têm autenticação mais fraca
+
+#### Passo 3: Descobrir Endpoints de API
+
+```bash
+# Encontrar endpoints de API com wordlists específicas
+ffuf -u https://evilcorp.com/FUZZ \
+  -w /usr/share/seclists/Discovery/Web-Content/api/api-endpoints.txt \
+  -mc 200,201,202,204 \
+  -fc 404
+
+# Usar wordlist customizada de APIs
+ffuf -u https://evilcorp.com/api/FUZZ \
+  -w /usr/share/seclists/Discovery/Web-Content/api/api-endpoints.txt \
+  -mc 200,201,202,204
+
+# Buscar parâmetros de API
+ffuf -u "https://evilcorp.com/api/users?FUZZ=test" \
+  -w /usr/share/seclists/Discovery/Web-Content/burp-parameter-names.txt \
+  -mc 200
+```
+
+#### Passo 4: GraphQL Discovery
+
+```bash
+# Verificar se GraphQL está exposto
+curl -s -X POST https://evilcorp.com/graphql \
+  -H "Content-Type: application/json" \
+  -d '{"query": "{ __schema { queryType { name } mutationType { name } types { name } } }"}'
+
+# OUTPUT ESPERADO (se introspection habilitada):
+# {
+#   "data": {
+#     "__schema": {
+#       "queryType": { "name": "Query" },
+#       "mutationType": { "name": "Mutation" },
+#       "types": [
+#         { "name": "User" },
+#         { "name": "Post" },
+#         { "name": "Comment" }
+#       ]
+#     }
+#   }
+# }
+
+# Listar tipos disponíveis
+curl -s -X POST https://evilcorp.com/graphql \
+  -H "Content-Type: application/json" \
+  -d '{"query": "{ __schema { types { name kind } } }"}' | jq '.data.__schema.types[].name'
+
+# Descobrir campos de um tipo
+curl -s -X POST https://evilcorp.com/graphql \
+  -H "Content-Type: application/json" \
+  -d '{"query": "{ __type(name: \"User\") { fields { name type { name } } } }"}'
+```
+
+**O que significa?** Se a introspection GraphQL estiver habilitada, você tem a **estrutura completa da API** — todos os tipos, campos e resolvers.
+
+#### Passo 5: Parâmetros Ocultos
+
+```bash
+# Descobrir parâmetros aceitos pela API
+curl -s "https://evilcorp.com/api/users" | jq '.'  # Ver estrutura
+
+# Testar parâmetros comuns
+for param in id user_id admin debug verbose format type action sort order limit offset page fields select include expand; do
+    status=$(curl -s -o /dev/null -w "%{http_code}" "https://evilcorp.com/api/users?$param=1")
+    if [ "$status" != "404" ] && [ "$status" != "400" ]; then
+        echo "$status ?$param=1"
+    fi
+done
+
+# OUTPUT ESPERADO:
+# 200 ?id=1
+# 200 ?user_id=1
+# 200 ?admin=1
+```
+
+#### Passo 6: Headers de API
+
+```bash
+# Headers comuns de API
+curl -s -I https://evilcorp.com/api/users \
+  -H "Accept: application/json" \
+  -H "X-API-Key: test" \
+  -H "Authorization: Bearer test"
+
+# Verificar headers de resposta
+curl -s -D- https://evilcorp.com/api/users | head -20
+
+# Headers que revelam tecnologia:
+# X-Powered-By: Express
+# X-Runtime: 0.123
+# X-API-Version: 2.1
+# X-Rate-Limit: 100
+```
+
+#### Passo 7: Ferramentas Automatizadas
+
+```bash
+# Arjun — Descobridor de parâmetros
+pip3 install arjun
+arjun -u https://evilcorp.com/api/users -m GET POST
+
+# Kiterunner — Fuzzing de API
+# https://github.com/assetnote/kiterunner
+kr scan https://evilcorp.com/ -w routes-large.kite -x 20
+
+# httpx — Probe de endpoints
+echo "https://evilcorp.com/api/v1" | httpx -mc 200,201,202,204
+```
+
+### Fluxo Completo de API Discovery
+
+```
+PASSO 1: Documentação exposta
+├── swagger.json → Lista completa de endpoints
+├── openapi.json → Schema da API
+└── graphiql → GraphQL introspection
+
+        ↓
+
+PASSO 2: Versões de API
+├── /api/v1 → Versão antiga (possivelmente vulnerável)
+├── /api/v2 → Versão atual
+└── /api/internal → API interna (acesso restrito?)
+
+        ↓
+
+PASSO 3: Endpoints
+├── /api/users → CRUD de usuários
+├── /api/admin → Endpoints administrativos
+└── /api/config → Configurações expostas
+
+        ↓
+
+PASSO 4: Parâmetros
+├── ?id=1 → IDOR potencial
+├── ?debug=true → Informações expostas
+└── ?format=json → Data leakage
+
+        ↓
+
+PASSO 5: Autenticação
+├── Sem auth → Acesso anônimo
+├── Token fraco → Bypass possível
+└── API key em header → Key leaking
+```
+
+### Interpretação dos Resultados
+
+| Descoberta | Impacto | Ação |
+|:-----------|:--------|:-----|
+| **swagger.json exposto** | Documentação completa da API | Ler todos os endpoints |
+| **GraphQL introspection habilitada** | Estrutura completa da API | Mapear todos os tipos/campos |
+| **Versão antiga (/api/v1)** | Possivelmente sem patches | Testar vulnerabilidades conhecidas |
+| **Parâmetro debug=true** | Informações internas expostas | Coletar dados |
+| **API key em header** | Chave pode ser válida | Verificar (autorizado apenas) |
+| **200 em /api/admin** | Acesso administrativo pode ser possível | Investigar autenticação |
+
+---
+
+## 🧠 Exercícios de Raciocínio
+
+### Exercício 1: Análise de Swagger
+
+**Cenário:** Você encontrou `https://api.targetcorp.com/swagger.json`. Ao analisar o arquivo, encontra:
+
+```json
+{
+  "paths": {
+    "/api/v1/users": { "get": {}, "post": {} },
+    "/api/v1/users/{id}": { "get": {}, "put": {}, "delete": {} },
+    "/api/v1/admin/users": { "get": {}, "delete": {} },
+    "/api/v1/internal/config": { "get": {} },
+    "/graphql": { "post": {} }
+  }
+}
+```
+
+**Pergunta:** Quais endpoints são mais interessantes? Por quê?
+
+**Raciocínio esperado:**
+1. **`/api/v1/admin/users`** → Endpoint administrativo! Pode ter menos proteção
+2. **`/api/v1/internal/config`** → API interna! Pode expor configurações sensíveis
+3. **`/graphql`** → GraphQL pode ter introspection habilitada
+4. **`/api/v1/users/{id}`** → Possível IDOR se não validar permissão
+
+**Próximo passo:**
+```bash
+# Testar admin endpoint
+curl -s https://api.targetcorp.com/api/v1/admin/users | jq '.[0]'
+
+# Testar GraphQL introspection
+curl -s -X POST https://api.targetcorp.com/graphql \
+  -H "Content-Type: application/json" \
+  -d '{"query": "{ __schema { types { name } } }"}'
+```
+
+### Exercício 2: CORS Vulnerável
+
+**Cenário:** Você testou CORS em `https://api.targetcorp.com/users` e recebeu:
+
+```
+Access-Control-Allow-Origin: https://evil.com
+Access-Control-Allow-Credentials: true
+```
+
+**Pergunta:** Isso é vulnerável? Como você provaria o impacto?
+
+**Raciocínio esperado:**
+1. **Sim, vulnerável** → Reflete qualquer origem + credenciais
+2. **Impacto** → Site malicioso pode ler dados de usuários autenticados
+3. **PoC** → Criar página HTML que faça requisição com cookies
+4. **Dados expostos** → Informações pessoais, tokens, etc.
+
+### Exercício 3: API Interna
+
+**Cenário:** Ao escanear subdomínios, você encontrou `internal-api.targetcorp.com`. Retorna 404 para `/`, mas `/api/health` retorna 200 com:
+
+```json
+{"status": "ok", "version": "2.1.0", "database": "connected"}
+```
+
+**Pergunta:** O que você faria? Por quê?
+
+**Raciocínio esperado:**
+1. **API interna exposta** → Não deveria ser acessível externamente
+2. **Versão exposta** → 2.1.0 pode ter CVEs conhecidos
+3. **Status do banco** → Informação sensível (pode indicar tipo de DB)
+4. **Próximo passo** → Enumerar mais endpoints, verificar autenticação
 
 ---
 
