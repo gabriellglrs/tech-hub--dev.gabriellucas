@@ -6,7 +6,7 @@
 
 | ⏱️ Tempo | 📊 Nível | 📁 Arquivos | 🔧 Ferramentas |
 |:--------:|:--------:|:-----------:|:--------------:|
-| 8-10 horas | ⭐→⭐⭐⭐ | 12 | 35+ |
+| 12-14 horas | ⭐→⭐⭐⭐ | 19 | 50+ |
 
 </div>
 
@@ -30,6 +30,13 @@ Ao final deste módulo, você será capaz de:
 - [ ] Fazer OSINT de pessoas com Sherlock e Maigret
 - [ ] Analisar JavaScript para encontrar endpoints e secrets
 - [ ] Testar CORS e descobrir APIs ocultas
+- [ ] Identificar tecnologias web com fingerprinting (WhatWeb, Wappalyzer)
+- [ ] Encontrar diretórios e endpoints ocultos (Gobuster, ffuf)
+- [ ] Enumerar subdomínios profundamente com Amass
+- [ ] Detectar WAFs antes de escanear (Wafw00f)
+- [ ] Realizar banner grabbing de serviços (Netcat/Ncat)
+- [ ] Manter anonimato durante reconhecimento (ProxyChains, Tor)
+- [ ] Escrever relatórios profissionais de reconhecimento
 
 ---
 
@@ -39,6 +46,12 @@ Ao final deste módulo, você será capaz de:
 |:-------------|:-----------:|:-------------:|
 | Linux básico (terminal, pacotes) | Sim | Módulo 0 do curso |
 | Redes (IP, porta, DNS, HTTP) | Sim | Fundamentos de Redes |
+
+---
+
+## 📋 Checklist Operacional
+
+> **Novo no módulo!** Acesse o **[MANUAL-RECON.md](MANUAL-RECON.md)** — checklist completo e passo a passo de TODO o reconhecimento. Siga cada fase na ordem.
 
 ---
 
@@ -60,6 +73,9 @@ Ao final deste módulo, você será capaz de:
 │   │  04 OSINT Frameworks    →  Maltego, Recon-ng, SpiderFoot│  │
 │   │  05 Busca Infraestrutura→  Censys, FOFA, ZoomEye      │   │
 │   │  06 Certificate Transp. →  crt.sh, openssl, SANs      │   │
+│   │  13 Fingerprinting Web  →  WhatWeb, Wappalyzer, httpx  │   │
+│   │  17 Banner Grabbing     →  Netcat, Ncat, curl          │   │
+│   │  18 OPSEC e Anonimato   →  ProxyChains, Tor            │   │
 │   └────────────────────────────────────────────────────────┘   │
 │                              │                                  │
 │                              ▼                                  │
@@ -70,6 +86,10 @@ Ao final deste módulo, você será capaz de:
 │   │  10 OSINT Pessoas       →  Sherlock, Maigret, ExifTool │   │
 │   │  11 JavaScript Analysis →  LinkFinder, SecretFinder    │   │
 │   │  12 CORS e APIs         →  CORS test, API discovery    │   │
+│   │  14 Discovery Conteúdo  →  Gobuster, ffuf              │   │
+│   │  15 Subdomain Enum Adv. →  Amass                       │   │
+│   │  16 Detecção de WAF     →  Wafw00f, Nikto, WPScan     │   │
+│   │  19 Relatório           →  Template e boas práticas    │   │
 │   └────────────────────────────────────────────────────────┘   │
 │                              │                                  │
 │                              ▼                                  │
@@ -98,6 +118,9 @@ Ao final deste módulo, você será capaz de:
 | 4 | [04-osint-frameworks.md](04-osint-frameworks.md) | Automatizar coleta com frameworks | `Maltego, Recon-ng, SpiderFoot` | 1h |
 | 5 | [05-busca-infraestrutura.md](05-busca-infraestrutura.md) | Buscar dispositivos na internet | `Censys, FOFA, ZoomEye` | 1h |
 | 6 | [06-certificate-transparency.md](06-certificate-transparency.md) | Subdomínios nos certificados SSL | `crt.sh, openssl` | 30min |
+| 13 | [13-fingerprinting-web.md](13-fingerprinting-web.md) | Identificar tecnologias do alvo | `WhatWeb, Wappalyzer, httpx` | 40min |
+| 17 | [17-banner-grabbing-e-servidores.md](17-banner-grabbing-e-servidores.md) | Identificar versões de serviços | `Netcat, Ncat, curl, Nmap` | 35min |
+| 18 | [18-opsec-e-anonimato.md](18-opsec-e-anonimato.md) | Proteger identidade durante recon | `ProxyChains, Tor, VPN` | 35min |
 
 ### ⭐⭐⭐ Avançado
 
@@ -109,6 +132,10 @@ Ao final deste módulo, você será capaz de:
 | 10 | [10-osint-pessoas.md](10-osint-pessoas.md) | Buscar pessoas em redes sociais | `Sherlock, Maigret, ExifTool` | 45min |
 | 11 | [11-javascript-analysis.md](11-javascript-analysis.md) | Endpoints e secrets em JavaScript | `LinkFinder, SecretFinder, katana` | 45min |
 | 12 | [12-cors-e-api.md](12-cors-e-api.md) | Testar CORS e descobrir APIs | `curl, ffuf, nuclei` | 45min |
+| 14 | [14-discovery-de-conteudo.md](14-discovery-de-conteudo.md) | Encontrar diretórios e endpoints ocultos | `Gobuster, ffuf, wordlists` | 50min |
+| 15 | [15-subdomain-enum-avancado.md](15-subdomain-enum-avancado.md) | Enumeração DNS profunda com Amass | `Amass` | 45min |
+| 16 | [16-deteccao-waf.md](16-deteccao-waf.md) | Detectar WAFs e scanner vulnerabilidades | `Wafw00f, Nikto, WPScan` | 40min |
+| 19 | [19-relatorio-de-reconhecimento.md](19-relatorio-de-reconhecimento.md) | Documentar descobertas profissionalmente | `Markdown, Pandoc` | 30min |
 
 ---
 
@@ -120,7 +147,13 @@ Ao final deste módulo, você será capaz de:
 
 > **Dica 3:** Documente tudo em arquivos separados. Um `results/` organizado salva horas de retrabalho depois.
 
-> **Dica 4:** Para bug bounty, foque nos arquivos 06-12 (nível avançado) — são onde estão os findings de maior impacto.
+> **Dica 4:** Para bug bounty, foque nos arquivos 06-12 e 14-16 (nível avançado) — são onde estão os findings de maior impacto.
+
+> **Dica 5:** Sempre rode WhatWeb antes de qualquer scan web — saber o que o alvo usa define suas próximas ferramentas.
+
+> **Dica 6:** Use Gobuster para scan rápido e ffuf para cenários complexos (POST fuzzing, filtros, recursão).
+
+> **Dica 7:** Em pentest autorizado, use ProxyChains+Tor para manter anonimato. O Nmap SYN scan (`-sS`) NÃO funciona via proxy — use `-sT`.
 
 ---
 
@@ -191,11 +224,13 @@ whois example.com | ollama run llama3.2 "Analise este Whois e extraia informaç�
 ## ✅ Checklist do Módulo
 
 - [ ] Li todos os arquivos (básico, intermediário e avançado)
+- [ ] Li o **[MANUAL-RECON.md](MANUAL-RECON.md)** (checklist operacional)
 - [ ] Instalei todas as ferramentas
 - [ ] Completei os labs práticos
 - [ ] Consigo explicar cada ferramenta
 - [ ] Sei quando usar cada uma
 - [ ] Consigo montar um relatório completo de reconhecimento
+- [ ] Consigo seguir o fluxo completo: Intel Passiva → Enum Ativa → Fingerprint → Discovery → Vulns → Validação → Relatório
 
 ---
 

@@ -4,7 +4,7 @@
 
 | Pré-requisito | Nível | Observação |
 |---------------|-------|------------|
-| Kali Linux | ⭐⭐ | Com Nmap, Subfinder, httpx, Nuclei, Recon-ng, sherlock, exiftool |
+| Kali Linux | ⭐⭐ | Com Nmap, Subfinder, httpx, Nuclei, Recon-ng, sherlock, exiftool, whatweb, gobuster, ffuf, amass, wafw00f, nikto, wpscan, proxychains4, ncat |
 | Linux básico | ⭐ | Comandos de terminal |
 | Redes básicas | ⭐ | IP, portas, DNS |
 | Go (golang) | ⭐ | Para instalar waybackurls, katana, subzy |
@@ -56,6 +56,16 @@
 | 20 | Sherlock OSINT | Buscar usuário em 400+ redes sociais | ⭐⭐ | `sherlock "target_username" --print-found --csv` |
 | 21 | JavaScript Analysis | Extrair endpoints de arquivos JS | ⭐⭐⭐ | `katana -u https://target.com -jc -d 3 \| grep "\.js$" \| xargs -I {} python3 linkfinder.py -i {} -o cli` |
 | 22 | CORS Testing | Testar CORS misconfiguration | ⭐⭐⭐ | `curl -s -I -H "Origin: https://evil.com" https://target.com/ \| grep -i "access-control"` |
+| 23 | WhatWeb Fingerprinting | Identificar tecnologias de um site | ⭐ | `whatweb -a 3 -v http://testphp.vulnweb.com` |
+| 24 | Gobuster Discovery | Encontrar diretórios ocultos | ⭐⭐ | `gobuster dir -u http://target.com -w /usr/share/wordlists/dirb/common.txt -t 50 -x php,html,txt` |
+| 25 | ffuf Vhost Discovery | Descobrir virtual hosts internos | ⭐⭐⭐ | `ffuf -u http://target.com -H "Host: FUZZ.target.com" -w /usr/share/wordlists/dirb/common.txt -fs 4242` |
+| 26 | Amass Deep Enum | Enumeração DNS profunda com brute force | ⭐⭐⭐ | `amass enum -v -src -ip -brute -d target.com` |
+| 27 | Wafw00f Detection | Detectar WAF protegendo o alvo | ⭐ | `wafw00f -v http://target.com` |
+| 28 | Nikto Web Scan | Scan de vulnerabilidades web | ⭐⭐ | `nikto -h http://target.com` |
+| 29 | WPScan WordPress | Enumerar plugins e vulnerabilidades WP | ⭐⭐ | `wpscan --url http://target.com -e vp --plugins-detection mixed` |
+| 30 | Netcat Banner Grab | Pegar banner de serviços | ⭐ | `ncat -v target.com 22` + `ncat -v target.com 25` |
+| 31 | ProxyChains Anonimato | Scan anônimo via Tor | ⭐⭐⭐ | `proxychains4 curl -s https://api.ipify.org` + `proxychains4 nmap -sT -Pn target.com` |
+| 32 | Relatório Completo | Documentar todo o recon em Markdown | ⭐⭐ | Criar `relatorio.md` seguindo o template do arquivo 19 |
 
 ---
 
@@ -66,5 +76,5 @@
 | TryHackMe | 10 | Nmap, DNS, OSINT, Shodan, Google Dorking, recon completo |
 | PortSwigger | 1 | API testing |
 | HackTheBox | 1 | Starting point recon |
-| Local | 10 | Pipeline completo, Google Dorks, Recon-ng, CT, Takeover, Cloud, Wayback, Sherlock, JS, CORS |
-| **Total** | **22** | |
+| Local | 20 | Pipeline completo, Google Dorks, Recon-ng, CT, Takeover, Cloud, Wayback, Sherlock, JS, CORS, WhatWeb, Gobuster, ffuf, Amass, Wafw00f, Nikto, WPScan, Netcat, ProxyChains, Relatório |
+| **Total** | **32** | |
