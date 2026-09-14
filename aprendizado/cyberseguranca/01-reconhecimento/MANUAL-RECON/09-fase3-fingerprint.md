@@ -198,6 +198,14 @@ Apache HTTP Server 2.4.41 - 'mod_cgid' RCE                                      
 | `cves-encontradas.txt` | Fase 5 | Buscar vulnerabilidades específicas |
 | `httpx-tech.txt` | Fase 5 | Confirmar versões para Nuclei |
 
+### 🔗 O que deste arquivo alimenta no Módulo 02 — Web & Aplicações:
+| Arquivo da Fase 3 | Usado no Módulo 02 | Ferramenta WEB | Para quê |
+|--------------------|--------------------|----------------|----------|
+| `whatweb-principal.txt` | `02-recon-api.md` (Passo 2.4 — Decisão de payloads) | WhatWeb, WPScan | Se WordPress → WPScan com plugins de `05-vulns/wpscan.txt`; se PHP → payloads PHP; se Python → SSTI |
+| `httpx-tech.txt` | `04-cliente.md` (XSS) | searchsploit, Burp Repeater | Se jQuery < 3.5.0 → XSS conhecido; se Angular < 1.8.3 → sandbox escape |
+| `waf-principal.txt` | `02-recon-api.md` (antes de scans) | ffuf, sqlmap | Se WAF presente → reduzir threads (`-t 10`), adicionar delay, usar encoding |
+| `cves-encontradas.txt` | `10-nuclei.md` (Passo 10.2) | nuclei | Rodar templates específicos das CVEs encontradas com `-tags cve-XXXX` |
+
 **Se completou tudo → Avance para Fase 4**
 
 ---
