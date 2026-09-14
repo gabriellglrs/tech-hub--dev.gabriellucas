@@ -22,6 +22,15 @@ Se qualquer um desses pilares falha → o sistema é comprometido.
 
 ## 5A: Enumeração de Usuários
 
+### 📡 Endpoints de Login do Reconhecimento (Módulo 01)
+
+Se o Módulo 01 extraiu endpoints de JavaScript em `04-discovery/js-endpoints.txt`, filtre os que contenham `login`, `auth`, `signin`, `register` — esses são os primeiros alvos para enumeração de usuários e brute force. Endpoints comuns encontrados em JS:
+- `/api/auth/login`
+- `/api/v2/admin/login`
+- `/api/users/authenticate`
+
+Teste enumeração nesses endpoints antes de buscar novos.
+
 ### Passo 5A.1 — Teste de Mensagens de Erro
 
 **O que você vai fazer:** Verificar se a aplicação revela se um usuário existe ou não através de mensagens de erro diferentes.

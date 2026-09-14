@@ -20,6 +20,17 @@ Imagine que você pede para alguém mandar uma carta para um endereço. Se essa 
 
 ## 6A.1 — Teste Básico de SSRF
 
+### 📡 Candidatos a SSRF do Reconhecimento (Módulo 01)
+
+Se o Módulo 01 identificou URLs com parâmetros em `04-discovery/urls-com-parametros.txt`, filtre as que aceitam URLs como valor:
+- `?url=http://...`
+- `?fetch=http://...`
+- `?image_url=http://...`
+- `?feed_url=http://...`
+- `?webhook=http://...`
+
+Esses parâmetros são candidatos imediatos a SSRF — teste-os diretamente no Burp Repeater antes de buscar novos endpoints.
+
 **O que você vai fazer:** Verificar se a aplicação aceita URLs e faz requests para elas no lado do servidor.
 
 **No Burp Repeater:**

@@ -194,6 +194,8 @@ https?://.*target\.com:.*
 
 **⚠️ IMPORTANTE:** Quando o Burp perguntar "Out-of-scope items have been seen. Do you want to add them to scope?", selecione **Yes** para todos os hosts do alvo.
 
+**📡 Subdomínios do Reconhecimento (Módulo 01):** Se você completou o Módulo 01, importe cada URL de `~/recon/targets/<alvo>/02-enum/vivos-filtrados.txt` como **Scope Individual** no Burp (Target → Scope → Add) para garantir que subdomínios como `admin.target.com` e `api.target.com` estejam no escopo antes de iniciar o Spider.
+
 **❌ Se der errado:**
 | Problema | Causa | Alternativa |
 |----------|-------|-------------|

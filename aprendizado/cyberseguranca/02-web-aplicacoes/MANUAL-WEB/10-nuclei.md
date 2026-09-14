@@ -6,6 +6,16 @@
 
 ---
 
+### 📡 Nuclei no Reconhecimento (Módulo 01)
+
+Se o Módulo 01 já executou Nuclei contra o alvo, os resultados estão em:
+```
+~/recon/targets/<alvo>/05-vulns/nuclei.txt
+```
+Antes de rodar novamente, revise os achados anteriores — se já existem findings critical/high, você pode focar os templates específicos (`-tags sqli,xss,ssrf`) ao invés de rodar todos os 9000+ templates do zero. Use os resultados anteriores como baseline para medir o que mudou desde o recon.
+
+---
+
 ### Passo 10.1 — Verificar Instalação e Atualização
 
 **O que você vai fazer:** Confirmar que o Nuclei está instalado e com os templates atualizados.
@@ -97,7 +107,13 @@ sqli, xss, ssrf, rce, lfi, rfi, upload, auth, misconfiguration, exposure
 **O que você vai fazer:** Escanear múltiplas URLs de uma vez.
 
 ```bash
-# Criar arquivo de URLs
+# Usar a lista de subdomínios vivos do recon como input
+nuclei -l ~/recon/targets/<alvo>/02-enum/vivos-filtrados.txt -o relatorio/nuclei-multi.txt
+```
+
+**Alternativa (sem dados do recon):**
+```bash
+# Criar arquivo de URLs manualmente
 echo "https://target.com" > relatorio/urls.txt
 echo "https://api.target.com" >> relatorio/urls.txt
 echo "https://admin.target.com" >> relatorio/urls.txt

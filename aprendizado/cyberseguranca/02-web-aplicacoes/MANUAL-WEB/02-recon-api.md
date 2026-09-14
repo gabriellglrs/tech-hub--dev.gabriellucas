@@ -6,6 +6,16 @@
 
 ---
 
+### 📡 Subdomínios do Reconhecimento (Módulo 01)
+
+Se você completou o Módulo 01, a lista de subdomínios vivos está em:
+```
+~/recon/targets/<alvo>/02-enum/vivos-filtrados.txt
+```
+Cada URL com status 200/301/302 nesse arquivo é um alvo para este teste. Importe-os no Burp Suite (**Target → Scope → Add**) para garantir que todos estejam no escopo antes de iniciar o Spider.
+
+---
+
 ### Passo 2.1 — Spider/Crawl Automatizado do Site
 
 **O que você vai fazer:** Usar o Burp Spider para rastrear automaticamente todo o site, descobrindo páginas, links, formulários e endpoints que você não encontraria manualmente.
@@ -54,6 +64,17 @@ https://target.com/
 
 ---
 
+### 📡 Diretórios do Reconhecimento (Módulo 01)
+
+Se o Módulo 01 já executou Gobuster e ffuf, os diretórios encontrados estão em:
+```
+~/recon/targets/<alvo>/04-discovery/gobuster-basico.txt
+~/recon/targets/<alvo>/04-discovery/ffuf-extensoes.json
+```
+Use esses resultados para PULAR para o teste desses caminhos diretamente — não repita o fuzzing do zero. Foque nos diretórios de maior risco: /admin, /api, /backup, /config, e nos arquivos sensíveis: .env, config.bak, database.sql.
+
+---
+
 ### Passo 2.2 — Enumeração de Conteúdo Oculto com ffuf
 
 **O que você vai fazer:** Usar força bruta para descobrir diretórios, arquivos e endpoints que o Spider não encontrou (por não terem links apontando para eles).
@@ -74,6 +95,8 @@ ffuf -u https://target.com/FUZZ \
 - `-mc 200,301,302,403`: filtrar por status codes (200=encontrado, 301/302=redirecionado, 403=proibido mas existe)
 - `-o`: salvar output em arquivo
 - `-of json`: formato JSON para análise posterior
+
+**📡 Arquivos sensíveis do Reconhecimento (Módulo 01):** Se o Módulo 01 já executou ffuf com extensões e encontrou `.env`, `config.bak`, `database.sql`, teste esses arquivos diretamente no Burp Repeater antes de rodar fuzzing novo — acesse `https://target.com/.env`, `https://target.com/config.bak` etc. e verifique se retornam conteúdo.
 
 **✅ Output esperado:**
 ``        /[ Status: 200, Size: 1234, Words: 89, Lines: 32, Duration: 45ms]|
@@ -160,6 +183,19 @@ http://mail.target.com [200] [Webmail]
 
 ---
 
+### 📡 Fingerprinting e WAF do Reconhecimento (Módulo 01)
+
+Se você completou o fingerprinting no Módulo 01, os resultados estão em:
+```
+~/recon/targets/<alvo>/03-fingerprint/whatweb-principal.txt
+~/recon/targets/<alvo>/03-fingerprint/httpx-tech.txt
+```
+Carregue esses dados aqui para confirmar — se já sabe que o alvo usa WordPress 6.4 com PHP 7.4, pode pular direto para os testes específicos (WPScan, payloads PHP) sem repetir o WhatWeb.
+
+**⚠️ Verificação de WAF:** Antes de iniciar qualquer scan, verifique se o Módulo 01 detectou WAF em `03-fingerprint/waf-principal.txt`. Se Cloudflare ou AWS WAF estiver presente, reduza threads no ffuf (`-t 10`), adicione delay (`-delay 100ms`) e use payloads com encoding para evitar bloqueio.
+
+---
+
 ### Passo 2.4 — Identificar Tecnologias com WhatWeb
 
 **O que você vai fazer:** Identificar o servidor web, frameworks, linguagens e CMS usados. Isso ajuda a escolher os payloads corretos nas fases seguintes.
@@ -179,6 +215,12 @@ whatweb https://target.com -v > relatorio/whatweb.txt
 - **jQuery[3.5.1]** → versão do jQuery → pode ter XSS conhecido
 - **MetaGenerator[WordPress]** → confirma WordPress
 - **email[admin@target.com]** → email encontrado → usar para OSINT
+
+**📡 Decisão de payloads via Fingerprint (Módulo 01):** Se o recon já identificou as tecnologias em `03-fingerprint/whatweb-principal.txt` ou `03-fingerprint/httpx-tech.txt`, use essa informação para escolher o caminho correto:
+- **WordPress detectado** → pule para WPScan e teste plugins listados em `05-vulns/wpscan.txt`
+- **PHP detectado** → foque em payloads PHP (SQLi com `<?php`, SSTI Jinja2)
+- **Python/Jinja2 detectado** → foque em SSTI (`{{7*7}}`, `{{config.items()}}`)
+- **jQuery < 3.5.0** → pesquise XSS conhecido (`searchsploit jquery <versão>`)
 
 **❌ Se der errado:**
 | Problema | Causa | Alternativa |
@@ -280,6 +322,16 @@ Allow: GET, POST, PUT, DELETE
 === /api/config ===
 Allow: GET
 ```
+
+---
+
+### 📡 Endpoints de API do Reconhecimento (Módulo 01)
+
+Se o Módulo 01 extraiu endpoints de JavaScript via LinkFinder ou katana, a lista está em:
+```
+~/recon/targets/<alvo>/04-discovery/js-endpoints.txt
+```
+Esses endpoints (ex: `/api/v1/users`, `/api/v2/admin`, `/api/auth/login`) já foram descobertos via análise estática — teste-os diretamente no Burp Repeater para injection, auth bypass e métodos HTTP, sem depender apenas do Spider.
 
 ---
 

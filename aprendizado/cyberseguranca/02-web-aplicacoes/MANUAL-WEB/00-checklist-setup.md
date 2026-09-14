@@ -194,6 +194,24 @@ drwxr-xr-x  3 gabriel-lucas gabriel-lucas 4096 Sep 12 14:30 ..
 
 ---
 
+### 📡 Dados do Reconhecimento (Módulo 01)
+
+Se você completou o Módulo 01 de Reconhecimento, já possui dados valiosos que aceleram este teste. Verifique os seguintes arquivos antes de prosseguir:
+
+**Subdomínios vivos (para definir escopo):**
+```
+~/recon/targets/<alvo>/02-enum/vivos-filtrados.txt
+```
+Cada URL com status 200/301/302 nesse arquivo é um alvo potencial para este teste web. Use-os para preencher o escopo no Burp Suite (Fase 1).
+
+**⚠️ Secrets expostos em JavaScript (achado crítico):**
+```
+~/recon/targets/<alvo>/04-discovery/js-secrets.txt
+```
+Se o Módulo 01 encontrou API keys, tokens ou credenciais em arquivos JavaScript, documente IMEDIATAMENTE como achado de severidade CRÍTICA — isso pode render acesso direto sem necessidade de exploração adicional.
+
+---
+
 ### Passo 0.7 — Verificar Conectividade com o Alvo
 
 **O que você vai fazer:** Confirmar que você consegue acessar o alvo e que ele está respondendo.

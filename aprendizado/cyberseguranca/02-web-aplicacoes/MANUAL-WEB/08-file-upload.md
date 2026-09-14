@@ -20,6 +20,10 @@ Quando o servidor aceita upload de arquivos mas não valida corretamente:
 
 ## 8A.1 — Upload de Webshell
 
+### 📡 Diretórios de Upload do Reconhecimento (Módulo 01)
+
+Se o Módulo 01 encontrou diretórios de upload em `04-discovery/gobuster-basico.txt` (ex: `/uploads`, `/upload`, `/files`, `/media`, `/attachments`), teste upload nesses caminhos primeiro — eles indicam onde o servidor armazena arquivos e podem ter menos validação que endpoints novos.
+
 **O que você vai fazer:** Testar se a aplicação aceita upload de arquivos PHP ou outras extensões perigosas.
 
 ```http

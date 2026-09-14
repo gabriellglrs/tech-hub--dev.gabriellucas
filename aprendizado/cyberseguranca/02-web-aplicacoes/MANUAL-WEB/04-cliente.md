@@ -6,6 +6,23 @@
 
 ---
 
+### 📡 Headers de Segurança do Reconhecimento (Módulo 01)
+
+Se o Módulo 01 coletou os headers HTTP, os dados estão em:
+```
+~/recon/targets/<alvo>/02-enum/headers.txt
+```
+Verifique quais headers de segurança estão AUSENTES — cada ausência é um vetor de teste:
+
+| Header ausente | Vetor de teste |
+|----------------|----------------|
+| `X-Frame-Options` | Clickjacking (Fase 4C) |
+| `Content-Security-Policy` | XSS com maior probabilidade de sucesso (Fase 4A) |
+| `Strict-Transport-Security` | Downgrade HTTP → interceptação de tráfego |
+| `X-Content-Type-Options` | MIME sniffing → upload de conteúdo malicioso |
+
+---
+
 ## O que são Vulnerabilidades de Cliente?
 
 Diferente de SQLi e Command Injection (que atacam o SERVIDOR), vulnerabilidades de cliente atacam o NAVEGADOR do usuário:
@@ -22,6 +39,15 @@ Diferente de SQLi e Command Injection (que atacam o SERVIDOR), vulnerabilidades 
 ---
 
 ## 4A: Cross-Site Scripting (XSS)
+
+### 📡 XSS com Base no Fingerprint (Módulo 01)
+
+Se o recon identificou bibliotecas frontend em `03-fingerprint/httpx-tech.txt`, pesquise XSS conhecido antes de testar manualmente:
+- **jQuery < 3.5.0** → `searchsploit jquery <versão>` — XSS em `$.htmlPrefilter` e manipulação de `location.hash`
+- **Angular.js < 1.8.3** → sandbox escape via `angular.service`
+- **Bootstrap < 5.3** → XSS em tooltips/popovers com `data-bs-toggle`
+
+Cada versão identificada no recon é um vetor de teste específico — não teste payloads genéricos quando existem CVEs documentadas para a stack do alvo.
 
 ### Passo 4A.1 — Teste Básico Reflected XSS
 

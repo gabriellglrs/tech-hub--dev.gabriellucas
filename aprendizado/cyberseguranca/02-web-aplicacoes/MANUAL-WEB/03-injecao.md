@@ -6,6 +6,18 @@
 
 ---
 
+### 📡 Candidatos a Injeção do Reconhecimento (Módulo 01)
+
+Se o Módulo 01 identificou URLs com parâmetros, a lista está em:
+```
+~/recon/targets/<alvo>/04-discovery/urls-com-parametros.txt
+```
+Essas URLs (ex: `page?id=5`, `search?q=test`, `api/users?id=123`) são candidatas imediatas a SQLi, XSS e SSRF — comece os testes de injeção por aqui antes de buscar novos parâmetros.
+
+**WordPress — plugins vulneráveis:** Se o Módulo 01 executou WPScan e encontrou plugins vulneráveis, os resultados estão em `05-vulns/wpscan.txt`. Priorize os testes de SQLi nos parâmetros dos plugins listados — plugins desatualizados são vetores de entrada comuns. A lista de usuários enumerados pode ser reaproveitada como wordlist de usuários no Módulo 03 (arquivo `03-brute-force-e-spraying.md`), caso o pentest também inclua testes de rede/AD.
+
+---
+
 ## O que é Injeção?
 
 Imagine que o servidor faz uma pergunta ao banco de dados:
@@ -175,6 +187,8 @@ sqlmap -u "https://target.com/api/users?id=1" --batch --risk=2 --level=3
 | `--batch` | Responde automaticamente "yes" a todas as perguntas |
 | `--risk=2` | Usa testes mais agressivos (nível 1=seguro, 3=todos) |
 | `--level=3` | Testa mais parâmetros e payloads (nível 1=básico, 5=todos) |
+
+**📡 Conexão direta ao banco (Módulo 01):** Se o recon identificou MySQL/PostgreSQL exposto na porta 3306/5432 em `02-enum/nmap-services.txt`, o SQLMap pode tentar conexão direta: `sqlmap -h <IP> -p 3306` — bancos expostos à internet frequentemente têm credenciais padrão ou fracos.
 
 **✅ Output esperado (VULNERÁVEL — trecho principal):**
 ```
