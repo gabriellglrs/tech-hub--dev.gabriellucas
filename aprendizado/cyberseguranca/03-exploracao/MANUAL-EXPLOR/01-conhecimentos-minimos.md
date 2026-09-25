@@ -62,9 +62,9 @@ Você precisa conseguir operar no terminal sem travar:
 |--------|----------------------------------|------------------|
 | **01 — Reconhecimento** | Mapeamento de portas, serviços, versões e vulnerabilidades em `~/recon/targets/<alvo>/` | **Fase 1** importa `nmap-services.txt`, `nmap-vuln.txt`, `resumo-severidade.md` |
 | **01 — Reconhecimento** | Emails e usuários coletados no OSINT | **Fase 1** vira `usernames-candidatos.txt` |
-| **02 — Web & Aplicações** | URLs de login, formulários, campos e endpoints descobertos | **Fase 1** vira `alvos-login-web.txt` |
+| **02 — Web & Aplicações** | URLs de login, formulários, campos e endpoints descobertos (ver também **[MANUAL-WEB/](../../02-web-aplicacoes/MANUAL-WEB/)**) | **Fase 1** vira `alvos-login-web.txt` |
 | **02 — Web & Aplicações** | Credenciais/segredos encontrados em JS, .env, params | **Fase 1** vira candidatos a senha |
-| **03 — Exploração** (conteúdo) | Ter lido `01-brute-force-e-cracking.md` e `02-wordlists-e-ferramentas.md` | As fases 3, 4 e 5 são a versão "passo a passo operacional" daquele conteúdo |
+| **03 — Exploração** (conteúdo) | Ter lido `01-preparacao-e-wordlists.md`, `03-brute-force-e-spraying.md` e `08-metasploit-e-msfvenom.md` | As fases 3, 4 e 5 são a versão "passo a passo operacional" daquele conteúdo |
 
 ### ✅ Checklist mínimo para continuar
 
