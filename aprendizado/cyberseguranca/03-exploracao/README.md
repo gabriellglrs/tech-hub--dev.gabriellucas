@@ -79,6 +79,8 @@ Ao final deste módulo, você será capaz de:
 | 1 | [01-brute-force-e-cracking.md](01-brute-force-e-cracking.md) | Quebrar senhas e hashes de serviços | `Hydra, John, Hashcat, hashid` | 3h |
 | 2 | [02-wordlists-e-ferramentas.md](02-wordlists-e-ferramentas.md) | Usar e criar listas de senhas e usuários | `CeWL, Crunch, SecLists` | 2h |
 
+> **Novo no módulo!** Acesse o **[MANUAL-EXPLOR/](MANUAL-EXPLOR/)** — checklist operacional das 7 fases da exploração, alimentado pelos Módulos 01 e 02. Siga cada fase na ordem.
+
 ---
 
 ## 💡 Dicas de Ouro
@@ -147,6 +149,7 @@ ollama run llama3.2 "Qual modo do Hashcat devo usar para este hash: $(hashid '$2
 ## ✅ Checklist do Módulo
 
 - [ ] Li todos os arquivos
+- [ ] Li o **[MANUAL-EXPLOR/](MANUAL-EXPLOR/)** (checklist operacional das 7 fases)
 - [ ] Instalei todas as ferramentas
 - [ ] Completei os labs práticos
 - [ ] Consigo explicar cada ferramenta
