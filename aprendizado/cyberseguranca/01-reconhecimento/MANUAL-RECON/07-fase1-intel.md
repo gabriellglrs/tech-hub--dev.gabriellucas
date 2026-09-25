@@ -461,9 +461,9 @@ cat 01-intel/wayback.txt 01-intel/gau.txt | sort -u > 01-intel/todas-urls.txt
 ### 🔗 O que deste arquivo alimenta no Módulo 02 — Web & Aplicações:
 | Arquivo da Fase 1 | Usado no Módulo 02 | Ferramenta WEB | Para quê |
 |--------------------|--------------------|----------------|----------|
-| `subdominios-todos.txt` | `02-recon-api.md` (Passo 2.3 — subdomínios) | subfinder, httpx | Se já tem a lista completa, pule a enumeração e vá direto para validar quais respondem HTTP |
-| `todas-urls.txt` | `03-injecao.md` (início — candidatos), `06-ssrf.md` (6A.1) | sqlmap, Burp Repeater | URLs históricas com parâmetros são candidatas imediatas a injeção e SSRF |
-| `theharvester.txt` | `05-auth.md` (5A — Enumeração) | Burp Intruder, Hydra | Emails encontrados podem ser usados como wordlist de usuários para enumeração e brute force |
+| `subdominios-todos.txt` | `08-fase2-descoberta.md` (Passo 2.3 — subdomínios) | subfinder, httpx | Se já tem a lista completa, pule a enumeração e vá direto para validar quais respondem HTTP |
+| `todas-urls.txt` | `09-fase3-injecao.md` (início — candidatos), `11-fase5-especializados.md` (Passo 5A.1) | sqlmap, Burp Repeater | URLs históricas com parâmetros são candidatas imediatas a injeção e SSRF |
+| `theharvester.txt` | `10-fase4-cliente-auth.md` (Passo 4E — Enumeração) | Burp Intruder, Hydra | Emails encontrados podem ser usados como wordlist de usuários para enumeração e brute force |
 
 **Se completou tudo → Avance para Fase 2**
 

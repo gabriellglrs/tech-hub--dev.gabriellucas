@@ -48,7 +48,7 @@ cd "$BASE_DIR" || exit 1
 
 # === CRIAR ESTRUTURA ===
 log "Criando estrutura de exploração para $ALVO..."
-mkdir -p {08-alimentacao,09-vetores,10-bruteforce,11-cracking,12-exploracao,13-validacao,14-relatorio,logs}
+mkdir -p {15-alimentacao,16-vetores,17-bruteforce,18-cracking,19-exploracao,20-validacao,21-relatorio,logs}
 log "Estrutura criada em: $BASE_DIR"
 echo ""
 
@@ -71,32 +71,32 @@ if [ $MISSING -gt 0 ]; then
 fi
 
 log "1.2 — Extraindo serviços..."
-grep "open" 02-enum/nmap-services.txt 2>/dev/null | grep -v "Nmap scan" | awk '{print $1": "$3" "$4}' > 08-alimentacao/alvos-servicos.txt
+grep "open" 02-enum/nmap-services.txt 2>/dev/null | grep -v "Nmap scan" | awk '{print $1": "$3" "$4}' > 15-alimentacao/alvos-servicos.txt
 
 log "1.3 — Extraindo CVEs..."
-grep -iE "CVE-|VULNERABLE" 05-vulns/nmap-vuln.txt 2>/dev/null | sort -u > 08-alimentacao/alvos-cve.txt
-cp 06-validacao/resumo-severidade.md 08-alimentacao/severidade-recon.md 2>/dev/null
+grep -iE "CVE-|VULNERABLE" 05-vulns/nmap-vuln.txt 2>/dev/null | sort -u > 15-alimentacao/alvos-cve.txt
+cp 06-validacao/resumo-severidade.md 15-alimentacao/severidade-recon.md 2>/dev/null
 
 log "1.4 — Extraindo logins web (Módulo 02)..."
 grep -iE "login|signin|admin|wp-login|auth|panel|dashboard" 04-discovery/gobuster-basico.txt 2>/dev/null \
-  | awk '{print $2}' | sort -u > 08-alimentacao/alvos-login-web.txt
+  | awk '{print $2}' | sort -u > 15-alimentacao/alvos-login-web.txt
 
 log "1.5 — Gerando usernames candidatos..."
-grep -oE "^[a-zA-Z0-9._-]+@" 01-intel/theharvester.txt 2>/dev/null | sed 's/@.*//' | sort -u > 08-alimentacao/usernames-candidatos.txt
-cat /usr/share/seclists/Usernames/top-usernames-shortlist.txt 08-alimentacao/usernames-candidatos.txt 2>/dev/null | sort -u > 08-alimentacao/usernames-todos.txt
+grep -oE "^[a-zA-Z0-9._-]+@" 01-intel/theharvester.txt 2>/dev/null | sed 's/@.*//' | sort -u > 15-alimentacao/usernames-candidatos.txt
+cat /usr/share/seclists/Usernames/top-usernames-shortlist.txt 15-alimentacao/usernames-candidatos.txt 2>/dev/null | sort -u > 15-alimentacao/usernames-todos.txt
 
 log "1.6 — Consolidando hashes e credenciais..."
-grep -rhoE "[a-f0-9]{32}|[a-f0-9]{40}|[a-f0-9]{64}" 01-intel/ 04-discovery/ 2>/dev/null | sort -u > 08-alimentacao/hashes-suspeitos.txt
-grep -rhoiE "(password|passwd|pwd|secret|token|api_key)[\"' ]*[:=][\"' ]*[^\s\"']+" 04-discovery/ 2>/dev/null | sort -u > 08-alimentacao/credenciais-texto.txt
-cp 04-discovery/js-secrets.txt 08-alimentacao/segredos-js.txt 2>/dev/null
+grep -rhoE "[a-f0-9]{32}|[a-f0-9]{40}|[a-f0-9]{64}" 01-intel/ 04-discovery/ 2>/dev/null | sort -u > 15-alimentacao/hashes-suspeitos.txt
+grep -rhoiE "(password|passwd|pwd|secret|token|api_key)[\"' ]*[:=][\"' ]*[^\s\"']+" 04-discovery/ 2>/dev/null | sort -u > 15-alimentacao/credenciais-texto.txt
+cp 04-discovery/js-secrets.txt 15-alimentacao/segredos-js.txt 2>/dev/null
 
 log "1.7 — Gerando wordlist do alvo (CeWL)..."
-cewl "http://$ALVO" -d 2 -m 5 -w 08-alimentacao/cewl-alvo.txt 2>/dev/null
-cat /usr/share/seclists/Passwords/Leaked-Databases/Top1000.txt 08-alimentacao/cewl-alvo.txt 2>/dev/null | sort -u > 08-alimentacao/wordlist-bruteforce.txt
+cewl "http://$ALVO" -d 2 -m 5 -w 15-alimentacao/cewl-alvo.txt 2>/dev/null
+cat /usr/share/seclists/Passwords/Leaked-Databases/Top1000.txt 15-alimentacao/cewl-alvo.txt 2>/dev/null | sort -u > 15-alimentacao/wordlist-bruteforce.txt
 
-SVC_COUNT=$(wc -l < 08-alimentacao/alvos-servicos.txt 2>/dev/null || echo "0")
-USR_COUNT=$(wc -l < 08-alimentacao/usernames-todos.txt 2>/dev/null || echo "0")
-HASH_COUNT=$(wc -l < 08-alimentacao/hashes-suspeitos.txt 2>/dev/null || echo "0")
+SVC_COUNT=$(wc -l < 15-alimentacao/alvos-servicos.txt 2>/dev/null || echo "0")
+USR_COUNT=$(wc -l < 15-alimentacao/usernames-todos.txt 2>/dev/null || echo "0")
+HASH_COUNT=$(wc -l < 15-alimentacao/hashes-suspeitos.txt 2>/dev/null || echo "0")
 log "Serviços: $SVC_COUNT | Usuários: $USR_COUNT | Hashes: $HASH_COUNT"
 log "Fase 1 concluída."
 echo ""
@@ -105,36 +105,36 @@ echo ""
 log "========== FASE 2: PRIORIZAÇÃO DE VETORES =========="
 
 log "2.1 — Searchsploit por CVE..."
-grep -oE "CVE-[0-9]{4}-[0-9]+" 08-alimentacao/alvos-cve.txt 2>/dev/null | sort -u | while read cve; do
-    echo "=== $cve ===" >> 09-vetores/searchsploit-cves.txt
-    searchsploit --cve "$cve" >> 09-vetores/searchsploit-cves.txt 2>/dev/null
+grep -oE "CVE-[0-9]{4}-[0-9]+" 15-alimentacao/alvos-cve.txt 2>/dev/null | sort -u | while read cve; do
+    echo "=== $cve ===" >> 16-vetores/searchsploit-cves.txt
+    searchsploit --cve "$cve" >> 16-vetores/searchsploit-cves.txt 2>/dev/null
 done
 
 log "2.2 — Searchsploit por serviço..."
-> 09-vetores/searchsploit-servicos.txt
+> 16-vetores/searchsploit-servicos.txt
 grep -oiE "OpenSSH [0-9.]+|vsftpd [0-9.]+|Apache [0-9.]+|Samba [0-9.]+" 02-enum/nmap-services.txt 2>/dev/null \
   | sort -u | while read svc; do
-    echo "=== $svc ===" >> 09-vetores/searchsploit-servicos.txt
-    searchsploit $svc >> 09-vetores/searchsploit-servicos.txt 2>/dev/null
+    echo "=== $svc ===" >> 16-vetores/searchsploit-servicos.txt
+    searchsploit $svc >> 16-vetores/searchsploit-servicos.txt 2>/dev/null
 done
 
 log "2.3 — Criando matriz de vetores..."
-cat > 09-vetores/matriz-vetores.md << MATRIZ
+cat > 16-vetores/matriz-vetores.md << MATRIZ
 # Matriz de Vetores — $ALVO (gerada automaticamente em $(date))
 
 ## Prioridade 1 — CVEs com exploit (PREENCHER manualmente a partir de searchsploit-cves.txt)
 | Vetor | CVE/Exploit | Ferramenta | Fase | Status |
 |-------|-------------|-----------|:----:|:------:|
-(revise 09-vetores/searchsploit-cves.txt e preencha)
+(revise 16-vetores/searchsploit-cves.txt e preencha)
 
 ## Prioridade 2 — Brute force de serviço
-$(grep "ssh\|ftp\|smb" 08-alimentacao/alvos-servicos.txt 2>/dev/null | sed 's/^/| /;s/$/ | Hydra | 3 | [ ] |/')
+$(grep "ssh\|ftp\|smb" 15-alimentacao/alvos-servicos.txt 2>/dev/null | sed 's/^/| /;s/$/ | Hydra | 3 | [ ] |/')
 
 ## Prioridade 3 — Brute force HTTP
-$(sed 's/^/| /;s/$/ | Hydra http-post-form | 3 | [ ] |/' 08-alimentacao/alvos-login-web.txt 2>/dev/null)
+$(sed 's/^/| /;s/$/ | Hydra http-post-form | 3 | [ ] |/' 15-alimentacao/alvos-login-web.txt 2>/dev/null)
 
 ## Prioridade 4 — Cracking
-$(wc -l < 08-alimentacao/hashes-suspeitos.txt 2>/dev/null || echo "0") hash(s) pendente(s) → Fase 4
+$(wc -l < 15-alimentacao/hashes-suspeitos.txt 2>/dev/null || echo "0") hash(s) pendente(s) → Fase 4
 
 ## Vetores descartados
 | Vetor | Motivo |
@@ -143,7 +143,7 @@ $(wc -l < 08-alimentacao/hashes-suspeitos.txt 2>/dev/null || echo "0") hash(s) p
 MATRIZ
 
 log "2.4 — Criando escopo (EDITE antes de atacar!)"
-cat > 09-vetores/escopo.md << ESCOPO
+cat > 16-vetores/escopo.md << ESCOPO
 # Escopo Autorizado — $ALVO
 
 ## IN (autorizado)
@@ -165,9 +165,9 @@ echo ""
 log "========== PREPARO DAS FASES 3 E 4 =========="
 
 log "3.x — Listas prontas (o ATAQUE é manual, com escopo revisado):"
-log "  Hydra SSH:  hydra -L 08-alimentacao/usernames-todos.txt -P 08-alimentacao/wordlist-bruteforce.txt -t 4 -f ssh://<IP>"
+log "  Hydra SSH:  hydra -L 15-alimentacao/usernames-todos.txt -P 15-alimentacao/wordlist-bruteforce.txt -t 4 -f ssh://<IP>"
 log "  Hydra HTTP: veja 09-fase3-bruteforce.md Passo 3.4 (precisa dos campos do form)"
-log "  Cracking:   john --wordlist=... --rules 08-alimentacao/hashes-suspeitos.txt"
+log "  Cracking:   john --wordlist=... --rules 15-alimentacao/hashes-suspeitos.txt"
 echo ""
 
 # === RESUMO FINAL ===
@@ -178,8 +178,8 @@ log ""
 log "Estrutura: $BASE_DIR"
 log ""
 log "PRÓXIMOS PASSOS (MANUAIS):"
-log "1. REVISE 09-vetores/escopo.md — confirme o que pode atacar"
-log "2. PREENCHA 09-vetores/matriz-vetores.md com base nos searchsploit"
+log "1. REVISE 16-vetores/escopo.md — confirme o que pode atacar"
+log "2. PREENCHA 16-vetores/matriz-vetores.md com base nos searchsploit"
 log "3. FASE 3 (manual): rode o Hydra conforme 09-fase3-bruteforce.md"
 log "4. FASE 4 (manual): crackeie hashes conforme 10-fase4-cracking.md"
 log "5. FASE 5 (manual): Metasploit conforme 11-fase5-exploracao.md"
@@ -204,8 +204,8 @@ nordvpn connect
 ./exploit.sh evilcorp
 
 # Depois, revise manualmente:
-cat 09-vetores/matriz-vetores.md
-cat 09-vetores/escopo.md    # EDITE antes de qualquer ataque!
+cat 16-vetores/matriz-vetores.md
+cat 16-vetores/escopo.md    # EDITE antes de qualquer ataque!
 ```
 
 > ⚠️ **Por que o script para antes do ataque?** Hydra e Metasploit têm consequências reais (lockout, sessões abertas, impacto). Automação cega nessa etapa = contas travadas e escopo violado. As fases de decisão continuam manuais por design.

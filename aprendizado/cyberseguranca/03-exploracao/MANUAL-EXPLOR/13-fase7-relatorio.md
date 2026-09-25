@@ -4,12 +4,17 @@
 **Objetivo:** Documentar TUDO de forma que outra pessoa consiga replicar e entender — do recon ao acesso.
 **Por quê:** O relatório é o ÚNICO entregável que o cliente/equipe vê. Se não está no relatório, não aconteceu.
 
+> **📡 Dados usados nos passos abaixo (de onde vêm):**
+> - **MANUAL-RECON:** `07-relatorio/` (relatório de reconhecimento) + `06-validacao/resumo-severidade.md` — o relatório de exploração **complementa**, não repete
+> - **MANUAL-WEB:** `14-relatorio/final/RELATORIO-SEGURANCA.md` + `13-validacao/evidencias.md` — vulnerabilidades web já validadas entram como "confirmadas no Módulo 02", sem re-descrever o passo a passo
+> - **Fases deste manual:** `17-bruteforce/`, `18-cracking/`, `19-exploracao/`, `20-validacao/resumo-severidade-exploracao.md`
+
 ---
 
 ### Passo 7.1 — Criar Estrutura do Relatório
 
 ```bash
-cat > 14-relatorio/relatorio-exploracao.md << 'EOF'
+cat > 21-relatorio/relatorio-exploracao.md << 'EOF'
 # Relatório de Exploração
 
 | Campo | Valor |
@@ -71,7 +76,7 @@ Tempo total até controle total: **1h12** (EternalBlue via Metasploit).
 
 | Vetor | CVE | Ferramenta | Nível | Evidência |
 |-------|-----|-----------|-------|-----------|
-| Samba 445 (10.0.0.1) | CVE-2017-0144 | Metasploit eternalblue | NT AUTHORITY\SYSTEM | 12-exploracao/evidencias.md |
+| Samba 445 (10.0.0.1) | CVE-2017-0144 | Metasploit eternalblue | NT AUTHORITY\SYSTEM | 19-exploracao/evidencias.md |
 
 **Output da evidência:**
 ```
@@ -127,15 +132,18 @@ CeWL, SecLists, curl, ncat (Nmap do Módulo 01 para base de dados)
 
 ## 8. Anexos
 
-- 08-alimentacao/ — dados importados dos Módulos 01 e 02
-- 09-vetores/ — matriz de decisão
-- 10-bruteforce/ — outputs do Hydra
-- 11-cracking/ — resultados do John/Hashcat
-- 12-exploracao/ — logs do Metasploit e evidências
-- 13-validacao/ — validação de cada acesso
+- 07-relatorio/ — relatório de reconhecimento (Módulo 01, MANUAL-RECON)
+- 13-validacao/evidencias.md — vulns web validadas (Módulo 02, MANUAL-WEB)
+- 14-relatorio/final/ — relatório web completo (Módulo 02, MANUAL-WEB)
+- 15-alimentacao/ — dados importados dos Módulos 01 e 02
+- 16-vetores/ — matriz de decisão
+- 17-bruteforce/ — outputs do Hydra
+- 18-cracking/ — resultados do John/Hashcat
+- 19-exploracao/ — logs do Metasploit e evidências
+- 20-validacao/ — validação de cada acesso
 EOF
 
-echo "Relatório criado: 14-relatorio/relatorio-exploracao.md"
+echo "Relatório criado: 21-relatorio/relatorio-exploracao.md"
 ```
 
 ---
@@ -159,7 +167,7 @@ echo "Relatório criado: 14-relatorio/relatorio-exploracao.md"
 
 | # | Item | Arquivo gerado | ☑ |
 |---|------|---------------|:---:|
-| 1 | Relatório completo | `14-relatorio/relatorio-exploracao.md` | [ ] |
+| 1 | Relatório completo | `21-relatorio/relatorio-exploracao.md` | [ ] |
 | 2 | Resumo executivo escrito | Seção 1 | [ ] |
 | 3 | Credenciais/acessos documentados | Seção 4.1 e 4.2 | [ ] |
 | 4 | Falhas documentadas | Seção 4.4 | [ ] |
@@ -169,7 +177,7 @@ echo "Relatório criado: 14-relatorio/relatorio-exploracao.md"
 ### 📁 Sua pasta deve estar assim ao final da Fase 7:
 
 ```
-14-relatorio/
+21-relatorio/
 └── relatorio-exploracao.md    ← relatório completo e profissional
 ```
 

@@ -31,7 +31,7 @@
 | **Padrão (COMECE AQUI)** | `top-usernames-shortlist.txt` | `/usr/share/seclists/Usernames/top-usernames-shortlist.txt` | ~30 |
 | **Usuários comuns** | `names.txt` | `/usr/share/seclists/Usernames/names.txt` | ~60.000 |
 | **Variações de root/admin** | `roots.txt` | `/usr/share/seclists/Usernames/roots.txt` | ~100 |
-| **Do próprio alvo** | `usernames-candidatos.txt` | `08-alimentacao/` (gerado na Fase 1) | 10-200 |
+| **Do próprio alvo** | `usernames-candidatos.txt` | `15-alimentacao/` (gerado na Fase 1) | 10-200 |
 
 > 💡 **A melhor wordlist de usuários é a que veio DO ALVO** — emails do theHarvester (Módulo 01) e usuários descobertos no Módulo 02. Gere na Fase 1.
 
@@ -47,17 +47,17 @@
 
 ```bash
 # CeWL — extrai palavras do site do alvo (vira candidato a senha)
-cewl http://evilcorp.com -d 2 -m 5 -w 11-cracking/cewl-evilcorp.txt
+cewl http://evilcorp.com -d 2 -m 5 -w 18-cracking/cewl-evilcorp.txt
 # -d 2 = profundidade de links, -m 5 = mínimo de 5 caracteres
 
 # Crunch — gera por padrão (ex: 4 dígitos + "2024")
-crunch 8 8 -t @@@@2024 -o 11-cracking/crunch-2024.txt
+crunch 8 8 -t @@@@2024 -o 18-cracking/crunch-2024.txt
 # @ = letra minúscula, % = número, ^ = símbolo
 
 # Unir tudo e deduplicar (wordlist final do alvo)
 cat /usr/share/seclists/Passwords/Leaked-Databases/Top1000.txt \
-    11-cracking/cewl-evilcorp.txt \
-    11-cracking/crunch-2024.txt | sort -u > 11-cracking/wordlist-final.txt
+    18-cracking/cewl-evilcorp.txt \
+    18-cracking/crunch-2024.txt | sort -u > 18-cracking/wordlist-final.txt
 ```
 
 **❌ Se der errado:**

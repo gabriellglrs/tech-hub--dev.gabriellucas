@@ -8,32 +8,40 @@
 
 ### Passo 1.1 — Verificar que os dados dos módulos anteriores existem
 
-**O que você vai fazer:** Confirmar que o recon do Módulo 01 foi feito neste alvo. Sem ele, não há Fase 1.
+**O que você vai fazer:** Confirmar que o recon do Módulo 01 e os testes web do Módulo 02 (MANUAL-WEB) foram feitos neste alvo. Sem eles, não há Fase 1.
 
 ```bash
 # Entrar na pasta do alvo
 cd ~/recon/targets/evilcorp
 
-# Ver a estrutura completa (01 a 07 deve existir)
+# Ver a estrutura completa (01 a 14 deve existir: 01-07 = Módulo 01, 08-14 = Módulo 02)
 ls -la
 
-# Verificar os 3 arquivos MÍNIMOS do Módulo 01
+# Verificar os 3 arquivos MÍNIMOS do Módulo 01 (MANUAL-RECON)
 ls -la 02-enum/nmap-services.txt 05-vulns/nmap-vuln.txt 06-validacao/resumo-severidade.md
+
+# Verificar os arquivos do Módulo 02 (MANUAL-WEB) — a Fase 1 também importa deles
+ls -la 09-descoberta/logins-formularios.txt 09-descoberta/logins-web.txt 08-alimentacao/secrets-web.txt 2>/dev/null
 ```
 
 **✅ Output esperado:**
 ```
-02-enum/nmap-services.txt     ← portas, serviços e versões
-05-vulns/nmap-vuln.txt        ← vulnerabilidades detectadas pelo Nmap NSE
-06-validacao/resumo-severidade.md ← vulnerabilidades confirmadas por severidade
+02-enum/nmap-services.txt     ← portas, serviços e versões (MANUAL-RECON)
+05-vulns/nmap-vuln.txt        ← vulnerabilidades detectadas pelo Nmap NSE (MANUAL-RECON)
+06-validacao/resumo-severidade.md ← vulnerabilidades confirmadas por severidade (MANUAL-RECON)
+
+09-descoberta/logins-formularios.txt ← campos de login web (MANUAL-WEB, Passo 2.9)
+09-descoberta/logins-web.txt         ← caminhos de login/painel (MANUAL-WEB, Passo 2.9)
+08-alimentacao/secrets-web.txt       ← segredos críticos de JS (MANUAL-WEB, Passo 1.7)
 ```
 
-**O que procurar:** Se os 3 arquivos existem e não estão vazios, você pode avançar.
+**O que procurar:** Se os 3 arquivos do Módulo 01 existem e não estão vazios, você pode avançar. Os arquivos do Módulo 02 são obrigatórios para o Passo 1.4 (formulários) — se não existirem, preencha-os manualmente ou complete o MANUAL-WEB antes.
 
 **❌ Se der errado:**
 | Problema | Causa | Alternativa |
 |----------|-------|-------------|
-| `No such file or directory` | Recon não rodou neste alvo | Volte ao Módulo 01 e complete as fases 2, 5 e 6 |
+| `No such file or directory` (Módulo 01) | Recon não rodou neste alvo | Volte ao Módulo 01 e complete as fases 2, 5 e 6 |
+| `logins-formularios.txt` não existe | Você não fez o MANUAL-WEB (Fase 2) | Preencha manualmente no Passo 1.4 — abra os logins no navegador (F12 → Network) |
 | Arquivo vazio (0 bytes) | Scan falhou | Rode o scan de novo: `nmap -sV -oN 02-enum/nmap-services.txt <ip>` |
 | Pasta `targets/` não existe | Você nunca fez recon | `mkdir -p ~/recon/targets/evilcorp` e comece pelo Módulo 01 |
 
@@ -45,14 +53,14 @@ ls -la 02-enum/nmap-services.txt 05-vulns/nmap-vuln.txt 06-validacao/resumo-seve
 
 ```bash
 # Criar a pasta da fase
-mkdir -p 08-alimentacao
+mkdir -p 15-alimentacao
 
 # Extrair linhas com "open" do Nmap → alvos-servicos.txt
 grep "open" 02-enum/nmap-services.txt | grep -v "Nmap scan" | \
-  awk '{print $1": "$3" "$4}' > 08-alimentacao/alvos-servicos.txt
+  awk '{print $1": "$3" "$4}' > 15-alimentacao/alvos-servicos.txt
 
 # Ver o que temos
-cat 08-alimentacao/alvos-servicos.txt
+cat 15-alimentacao/alvos-servicos.txt
 ```
 
 **✅ Output esperado (exemplo real):**
@@ -84,13 +92,13 @@ cat 08-alimentacao/alvos-servicos.txt
 
 ```bash
 # CVEs detectadas pelo Nmap NSE
-grep -iE "CVE-|VULNERABLE" 05-vulns/nmap-vuln.txt | sort -u > 08-alimentacao/alvos-cve.txt
+grep -iE "CVE-|VULNERABLE" 05-vulns/nmap-vuln.txt | sort -u > 15-alimentacao/alvos-cve.txt
 
 # Resumo de severidade do recon (já validado na Fase 6 do Módulo 01)
-cp 06-validacao/resumo-severidade.md 08-alimentacao/severidade-recon.md
+cp 06-validacao/resumo-severidade.md 15-alimentacao/severidade-recon.md
 
 # Ver
-cat 08-alimentacao/alvos-cve.txt
+cat 15-alimentacao/alvos-cve.txt
 ```
 
 **✅ Output esperado (exemplo real):**
@@ -117,25 +125,32 @@ VULNERABLE: OpenSSH 7.2p2 User Enumeration (CVE-2018-15473)
 
 ### Passo 1.4 — Importar superfície de login web (do Módulo 02)
 
-**O que você vai fazer:** Pegar as URLs de login, formulários e endpoints que você descobriu no Módulo 02 (Burp, Gobuster, ffuf) e virar a lista de alvos HTTP do Hydra.
+**O que você vai fazer:** Pegar as URLs de login, formulários e endpoints que você descobriu no Módulo 02 (MANUAL-WEB — Burp, Gobuster, ffuf) e virar a lista de alvos HTTP do Hydra. Os arquivos já foram gerados lá: aqui é só importar.
 
 ```bash
-# 1) URLs de login/painéis descobertas no discovery (Módulo 01) e web (Módulo 02)
-grep -iE "login|signin|admin|wp-login|auth|panel|dashboard" 04-discovery/gobuster-basico.txt \
-  | awk '{print $2}' | sort -u > 08-alimentacao/alvos-login-web.txt
+# 0) IMPORTAR os arquivos prontos do MANUAL-WEB (Passo 2.9 do Módulo 02)
+#    - 09-descoberta/logins-formularios.txt ← campos e mensagem de erro de cada form
+#    - 09-descoberta/logins-web.txt         ← caminhos de login/painel
+cp 09-descoberta/logins-formularios.txt 15-alimentacao/formularios.txt 2>/dev/null
+cp 09-descoberta/logins-web.txt 15-alimentacao/alvos-login-web.txt 2>/dev/null
 
-# 2) Se você documentou formulários no Módulo 02, copie para cá
+# 1) Complementar com URLs de login/painéis do discovery (Módulo 01)
+grep -iE "login|signin|admin|wp-login|auth|panel|dashboard" 04-discovery/gobuster-basico.txt \
+  | awk '{print $2}' | sort -u >> 15-alimentacao/alvos-login-web.txt
+sort -u 15-alimentacao/alvos-login-web.txt -o 15-alimentacao/alvos-login-web.txt
+
+# 2) Só se você NÃO fez o Módulo 02: criar formularios.txt manualmente
 #    (formato: URL;campo_usuario;campo_senha;mensagem_de_erro)
-# Exemplo de arquivo manual:
-cat > 08-alimentacao/formularios.txt << 'EOF'
+# Se o arquivo já veio do Passo 0 acima, NÃO sobrescreva!
+[ -s 15-alimentacao/formularios.txt ] || cat > 15-alimentacao/formularios.txt << 'EOF'
 http://evilcorp.com/login;username;password;Invalid credentials
 http://evilcorp.com/wp-login.php;log;pwd;ERROR: The password you entered
 http://evilcorp.com/admin/;user;pass;Login failed
 EOF
 
 # Ver o que temos
-cat 08-alimentacao/alvos-login-web.txt
-cat 08-alimentacao/formularios.txt
+cat 15-alimentacao/alvos-login-web.txt
+cat 15-alimentacao/formularios.txt
 ```
 
 **✅ Output esperado (alvos-login-web.txt):**
@@ -176,19 +191,19 @@ http://evilcorp.com/wp-login.php;log;pwd;ERROR: The password you entered
 ```bash
 # Emails do theHarvester (Módulo 01) → usuários
 grep -oE "^[a-zA-Z0-9._-]+@" 01-intel/theharvester.txt 2>/dev/null | \
-  sed 's/@.*//' | sort -u > 08-alimentacao/usernames-candidatos.txt
+  sed 's/@.*//' | sort -u > 15-alimentacao/usernames-candidatos.txt
 
 # Se não tem theHarvester.txt, tente de outras fontes do recon:
 grep -rhoiE "(admin|root|test|user|suporte|dev)[a-z0-9._-]*" 01-intel/ 02-enum/ 2>/dev/null | \
-  sort -u >> 08-alimentacao/usernames-candidatos.txt
+  sort -u >> 15-alimentacao/usernames-candidatos.txt
 
 # Juntar com a lista padrão do SecLists
 cat /usr/share/seclists/Usernames/top-usernames-shortlist.txt \
-    08-alimentacao/usernames-candidatos.txt | sort -u > 08-alimentacao/usernames-todos.txt
+    15-alimentacao/usernames-candidatos.txt | sort -u > 15-alimentacao/usernames-todos.txt
 
 # Ver quantos temos
-wc -l 08-alimentacao/usernames-todos.txt
-cat 08-alimentacao/usernames-candidatos.txt
+wc -l 15-alimentacao/usernames-todos.txt
+cat 15-alimentacao/usernames-candidatos.txt
 ```
 
 **✅ Output esperado (usernames-candidatos.txt):**
@@ -205,30 +220,39 @@ suporte
 **❌ Se der errado:**
 | Problema | Causa | Alternativa |
 |----------|-------|-------------|
-| Output vazio | Sem emails no recon | Use só a lista padrão: `cp /usr/share/seclists/Usernames/top-usernames-shortlist.txt 08-alimentacao/usernames-todos.txt` |
+| Output vazio | Sem emails no recon | Use só a lista padrão: `cp /usr/share/seclists/Usernames/top-usernames-shortlist.txt 15-alimentacao/usernames-todos.txt` |
 | Lista grande demais (>100) | grep pegou lixo | Edite e mantenha os 10-30 mais prováveis |
 
 ---
 
 ### Passo 1.6 — Consolidar hashes e segredos (Módulos 01 e 02)
 
-**O que você vai fazer:** Reunir tudo que parece SENHA ou HASH para a Fase 4 (cracking) — segredos de JS/.env do Módulo 02, hashes do recon.
+**O que você vai fazer:** Reunir tudo que parece SENHA ou HASH para a Fase 4 (cracking) — segredos de JS/.env do Módulo 02 (MANUAL-WEB Passo 1.7), hashes extraídos por SQLi no Módulo 02 (MANUAL-WEB Fase 3), hashes do recon.
 
 ```bash
-# 1) Segredos encontrados no JS (Módulo 01 / 02)
-cp 04-discovery/js-secrets.txt 08-alimentacao/segredos-js.txt 2>/dev/null
+# 1) Segredos encontrados no JS (Módulo 01 / 02) — arquivo gerado pelo MANUAL-WEB Passo 1.7
+cp 08-alimentacao/secrets-web.txt 15-alimentacao/segredos-js.txt 2>/dev/null
+cp 04-discovery/js-secrets.txt 15-alimentacao/segredos-js.txt 2>/dev/null   # fallback Módulo 01
 
-# 2) Procurar padrões de hash (MD5/SHA) em QUALQUER arquivo do recon
+# 2) Hashes/senhas extraídos por SQLi no Módulo 02 (MANUAL-WEB Fase 3 — sqlmap --dump)
+#    tabelas de usuário em dump costumam ter hash por linha (MD5/SHA/bcrypt)
+if [ -s 10-injecao/sqlmap-dump.txt ]; then
+  grep -rhoE "[a-f0-9]{32}|[a-f0-9]{40}|[a-f0-9]{64}" 10-injecao/sqlmap-dump.txt | \
+    sort -u >> 15-alimentacao/hashes-suspeitos.txt
+fi
+
+# 3) Procurar padrões de hash (MD5/SHA) em QUALQUER arquivo do recon
 grep -rhoE "[a-f0-9]{32}|[a-f0-9]{40}|[a-f0-9]{64}" 01-intel/ 04-discovery/ 2>/dev/null | \
-  sort -u > 08-alimentacao/hashes-suspeitos.txt
+  sort -u >> 15-alimentacao/hashes-suspeitos.txt
+sort -u 15-alimentacao/hashes-suspeitos.txt -o 15-alimentacao/hashes-suspeitos.txt 2>/dev/null
 
-# 3) Procurar senhas/credenciais em configs expostas
+# 4) Procurar senhas/credenciais em configs expostas (Módulo 01 + segredos do Módulo 02)
 grep -rhoiE "(password|passwd|pwd|secret|token|api_key)[\"' ]*[:=][\"' ]*[^\s\"']+" \
-  04-discovery/ 2>/dev/null | sort -u > 08-alimentacao/credenciais-texto.txt
+  04-discovery/ 08-alimentacao/ 2>/dev/null | sort -u > 15-alimentacao/credenciais-texto.txt
 
 # Ver
-echo "=== Hashes ==="; head -5 08-alimentacao/hashes-suspeitos.txt
-echo "=== Credenciais ==="; cat 08-alimentacao/credenciais-texto.txt
+echo "=== Hashes ==="; head -5 15-alimentacao/hashes-suspeitos.txt
+echo "=== Credenciais ==="; cat 15-alimentacao/credenciais-texto.txt
 ```
 
 **✅ Output esperado (credenciais-texto.txt):**
@@ -257,21 +281,21 @@ api_key: "sk_live_abc123"
 
 ```bash
 # Extrair palavras do site (profundidade 2, mínimo 5 caracteres)
-cewl http://evilcorp.com -d 2 -m 5 -w 08-alimentacao/cewl-alvo.txt 2>/dev/null
+cewl http://evilcorp.com -d 2 -m 5 -w 15-alimentacao/cewl-alvo.txt 2>/dev/null
 
 # Ver quantas palavras gerou
-wc -l 08-alimentacao/cewl-alvo.txt
+wc -l 15-alimentacao/cewl-alvo.txt
 
 # Juntar com Top1000 para a wordlist final do brute force
 cat /usr/share/seclists/Passwords/Leaked-Databases/Top1000.txt \
-    08-alimentacao/cewl-alvo.txt | sort -u > 08-alimentacao/wordlist-bruteforce.txt
-wc -l 08-alimentacao/wordlist-bruteforce.txt
+    15-alimentacao/cewl-alvo.txt | sort -u > 15-alimentacao/wordlist-bruteforce.txt
+wc -l 15-alimentacao/wordlist-bruteforce.txt
 ```
 
 **✅ Output esperado:**
 ```
-147 08-alimentacao/cewl-alvo.txt
-1147 08-alimentacao/wordlist-bruteforce.txt
+147 15-alimentacao/cewl-alvo.txt
+1147 15-alimentacao/wordlist-bruteforce.txt
 ```
 
 **O que procurar:** Palavras da empresa: `evilcorp`, `portal`, `financeiro`, `logistica` — combine com anos/símbolos na Fase 4.
@@ -288,28 +312,29 @@ wc -l 08-alimentacao/wordlist-bruteforce.txt
 
 | # | Item | Arquivo gerado | ☑ |
 |---|------|---------------|:---:|
-| 1 | Dados do Módulo 01 verificados | `nmap-services.txt`, `nmap-vuln.txt`, `resumo-severidade.md` | [ ] |
-| 2 | Serviços extraídos | `08-alimentacao/alvos-servicos.txt` | [ ] |
-| 3 | CVEs extraídas | `08-alimentacao/alvos-cve.txt` | [ ] |
-| 4 | Logins web importados (Módulo 02) | `08-alimentacao/alvos-login-web.txt` | [ ] |
-| 5 | Formulários HTTP documentados | `08-alimentacao/formularios.txt` | [ ] |
-| 6 | Usernames candidatos | `08-alimentacao/usernames-todos.txt` | [ ] |
-| 7 | Hashes/segredos consolidados | `08-alimentacao/hashes-suspeitos.txt` | [ ] |
-| 8 | Wordlist do alvo gerada | `08-alimentacao/wordlist-bruteforce.txt` | [ ] |
+| 1 | Dados do Módulo 01 (MANUAL-RECON) verificados | `nmap-services.txt`, `nmap-vuln.txt`, `resumo-severidade.md` | [ ] |
+| 2 | Arquivos do Módulo 02 (MANUAL-WEB) localizados | `09-descoberta/logins-*.txt`, `08-alimentacao/secrets-web.txt` | [ ] |
+| 3 | Serviços extraídos | `15-alimentacao/alvos-servicos.txt` | [ ] |
+| 4 | CVEs extraídas | `15-alimentacao/alvos-cve.txt` | [ ] |
+| 5 | Logins web importados (Módulo 02) | `15-alimentacao/alvos-login-web.txt` | [ ] |
+| 6 | Formulários HTTP importados (Módulo 02) | `15-alimentacao/formularios.txt` | [ ] |
+| 7 | Usernames candidatos | `15-alimentacao/usernames-todos.txt` | [ ] |
+| 8 | Hashes/segredos consolidados (Módulos 01 + 02) | `15-alimentacao/hashes-suspeitos.txt` | [ ] |
+| 9 | Wordlist do alvo gerada | `15-alimentacao/wordlist-bruteforce.txt` | [ ] |
 
 ### 📁 Sua pasta deve estar assim ao final da Fase 1:
 
 ```
-08-alimentacao/
-├── alvos-servicos.txt        ← IP:porta:serviço (do Nmap do Módulo 01)
-├── alvos-cve.txt             ← CVEs confirmadas (do Módulo 01)
-├── severidade-recon.md       ← cópia do resumo de severidade (Módulo 01)
-├── alvos-login-web.txt       ← URLs de login (Módulo 02)
-├── formularios.txt           ← campos de cada form HTTP (Módulo 02)
-├── usernames-candidatos.txt  ← usuários do OSINT (Módulo 01)
+15-alimentacao/
+├── alvos-servicos.txt        ← IP:porta:serviço (← 02-enum/nmap-services.txt, MANUAL-RECON)
+├── alvos-cve.txt             ← CVEs confirmadas (← 05-vulns/nmap-vuln.txt, MANUAL-RECON)
+├── severidade-recon.md       ← cópia do resumo de severidade (← 06-validacao/, MANUAL-RECON)
+├── alvos-login-web.txt       ← URLs de login (← 09-descoberta/logins-web.txt, MANUAL-WEB)
+├── formularios.txt           ← campos de cada form HTTP (← 09-descoberta/logins-formularios.txt, MANUAL-WEB)
+├── usernames-candidatos.txt  ← usuários do OSINT (← 01-intel/theharvester.txt, MANUAL-RECON)
 ├── usernames-todos.txt       ← candidatos + lista padrão SecLists
-├── segredos-js.txt           ← segredos de JS (Módulos 01/02)
-├── hashes-suspeitos.txt      ← hashes para crackear (Fase 4)
+├── segredos-js.txt           ← segredos de JS (← 08-alimentacao/secrets-web.txt, MANUAL-WEB)
+├── hashes-suspeitos.txt      ← hashes p/ Fase 4 (← 04-discovery/js-secrets.txt + 10-injecao/sqlmap-dump.txt)
 ├── credenciais-texto.txt     ← senhas em texto puro (usar direto no Hydra)
 ├── cewl-alvo.txt             ← palavras do site do alvo
 └── wordlist-bruteforce.txt   ← wordlist final (Top1000 + CeWL)
@@ -327,15 +352,15 @@ wc -l 08-alimentacao/wordlist-bruteforce.txt
 - Sem CVEs → comum. Siga: brute force (Fases 3-4) independe de CVE.
 
 ### 🔗 O que deste arquivo alimenta nas próximas fases:
-| Arquivo da Fase 1 | Usado na Fase | Para quê |
-|--------------------|---------------|----------|
-| `alvos-servicos.txt` | Fase 2 | Escolher quais serviços viram vetor |
-| `alvos-cve.txt` | Fase 2 e 5 | Cruzar CVE com exploit pronto |
-| `alvos-login-web.txt` + `formularios.txt` | Fase 3 | Hydra http-post-form |
-| `usernames-todos.txt` | Fase 3 | `-L` do Hydra |
-| `wordlist-bruteforce.txt` | Fase 3 e 4 | `-P` do Hydra / wordlist do John |
-| `hashes-suspeitos.txt` | Fase 4 | Input do hashid/John/Hashcat |
-| `credenciais-texto.txt` | Fase 3 e 5 | Senhas para testar direto |
-| `severidade-recon.md` | Fase 5 | Priorizar o que explorar |
+| Arquivo da Fase 1 | Usado na Fase | Para quê | Origem original |
+|--------------------|---------------|----------|-----------------|
+| `alvos-servicos.txt` | Fase 2 | Escolher quais serviços viram vetor | MANUAL-RECON `02-enum/nmap-services.txt` |
+| `alvos-cve.txt` | Fase 2 e 5 | Cruzar CVE com exploit pronto | MANUAL-RECON `05-vulns/nmap-vuln.txt` |
+| `alvos-login-web.txt` + `formularios.txt` | Fase 3 | Hydra http-post-form | MANUAL-WEB `09-descoberta/logins-*.txt` |
+| `usernames-todos.txt` | Fase 3 | `-L` do Hydra | MANUAL-RECON `01-intel/theharvester.txt` |
+| `wordlist-bruteforce.txt` | Fase 3 e 4 | `-P` do Hydra / wordlist do John | CeWL + SecLists |
+| `hashes-suspeitos.txt` | Fase 4 | Input do hashid/John/Hashcat | MANUAL-RECON `04-discovery/js-secrets.txt` + MANUAL-WEB `10-injecao/sqlmap-dump.txt` |
+| `credenciais-texto.txt` | Fase 3 e 5 | Senhas para testar direto | MANUAL-RECON `04-discovery/` + MANUAL-WEB `08-alimentacao/secrets-web.txt` |
+| `severidade-recon.md` | Fase 5 | Priorizar o que explorar | MANUAL-RECON `06-validacao/resumo-severidade.md` |
 
 **Se completou tudo → Avance para [Fase 2 — Priorização de Vetores](08-fase2-vetores.md)**

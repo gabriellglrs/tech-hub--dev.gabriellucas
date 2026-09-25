@@ -526,4 +526,4 @@ PASSO 5: Verificar cookies → Analisar flags de segurança
 
 ---
 
-**Anterior:** [01-xss-e-csrf.md](01-xss-e-csrf.md)
+**Anterior:** [15-business-logic.md](15-business-logic.md)

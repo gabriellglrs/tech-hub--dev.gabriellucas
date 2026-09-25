@@ -24,7 +24,24 @@ Ao final das 7 fases deste manual, a estrutura COMPLETA (Módulo 01 + 02 + 03) d
 │   └── resumo-severidade.md      ← origem de severidade-recon.md
 ├── 07-relatorio/                 ← Módulo 01
 │   └── relatorio-recon.md
-├── 08-alimentacao/               ← Fase 1 (Exploração)
+├── 08-alimentacao/               ← Fase 1 (Web — MANUAL-WEB)
+│   ├── escopo-web.txt
+│   ├── dirs-web.txt
+│   └── waf-web.txt
+├── 09-descoberta/                ← Fase 2 (Web)
+│   ├── parametros.txt
+│   └── logins-formularios.txt    ← origem de formularios.txt
+├── 10-injecao/                   ← Fase 3 (Web)
+│   ├── sqli-test.txt
+│   └── sqlmap-dump.txt           ← origem de hashes
+├── 11-cliente-auth/              ← Fase 4 (Web)
+│   └── user-enumeration.txt      ← origem de usernames
+├── 12-especializados/            ← Fase 5 (Web)
+├── 13-validacao/                 ← Fase 6 (Web)
+│   └── evidencias.md
+├── 14-relatorio/                 ← Fase 7 (Web)
+│   └── final/RELATORIO-SEGURANCA.md
+├── 15-alimentacao/               ← Fase 1 (Exploração)
 │   ├── alvos-servicos.txt
 │   ├── alvos-cve.txt
 │   ├── alvos-login-web.txt
@@ -34,31 +51,31 @@ Ao final das 7 fases deste manual, a estrutura COMPLETA (Módulo 01 + 02 + 03) d
 │   ├── hashes-suspeitos.txt
 │   ├── cewl-alvo.txt
 │   └── wordlist-bruteforce.txt
-├── 09-vetores/                   ← Fase 2 (Exploração)
+├── 16-vetores/                   ← Fase 2 (Exploração)
 │   ├── searchsploit-cves.txt
 │   ├── matriz-vetores.md
 │   └── escopo.md
-├── 10-bruteforce/                ← Fase 3 (Exploração)
+├── 17-bruteforce/                ← Fase 3 (Exploração)
 │   ├── hydra-ssh.txt
 │   ├── hydra-http-login.txt
 │   └── credenciais-encontradas.md
-├── 11-cracking/                  ← Fase 4 (Exploração)
+├── 18-cracking/                  ← Fase 4 (Exploração)
 │   ├── hashid-resultados.txt
 │   ├── john-resultados.txt
 │   ├── hashcat-*.txt
 │   └── hashes-crackeados.md
-├── 12-exploracao/                ← Fase 5 (Exploração)
+├── 19-exploracao/                ← Fase 5 (Exploração)
 │   ├── msf-logs.txt
 │   ├── sessao-1.txt
 │   └── evidencias.md
-├── 13-validacao/                 ← Fase 6 (Exploração)
+├── 20-validacao/                 ← Fase 6 (Exploração)
 │   ├── validacao-acessos.md
 │   └── resumo-severidade-exploracao.md
-└── 14-relatorio/                 ← Fase 7 (Exploração)
+└── 21-relatorio/                 ← Fase 7 (Exploração)
     └── relatorio-exploracao.md
 ```
 
-**Total de arquivos esperados:** ~60-70 arquivos organizados por fase (35-40 do recon + 25-30 da exploração).
+**Total de arquivos esperados:** ~100-120 arquivos organizados por fase (35-40 do recon + 25-30 do web + 25-30 da exploração).
 
 ---
 
@@ -76,8 +93,8 @@ Este manual é a **junção operacional** dos dois anteriores. Cada fase da expl
 | `usernames-candidatos.txt` | 01 — Recon | `01-intel/theharvester.txt` (emails) |
 | `segredos-js.txt` | 01/02 — Recon+Web | `04-discovery/js-secrets.txt` |
 | `hashes-suspeitos.txt` | 01/02 — Recon+Web | `.env`, configs, JS expostos |
-| `alvos-login-web.txt` | 02 — Web | `04-discovery/gobuster-basico.txt` (caminhos login/admin) |
-| `formularios.txt` | 02 — Web | Formulários documentados no Burp/navegador |
+| `alvos-login-web.txt` | 02 — Web | `08-alimentacao/dirs-web.txt` + `04-discovery/gobuster-basico.txt` (caminhos login/admin) |
+| `formularios.txt` | 02 — Web | `09-descoberta/logins-formularios.txt` (documentado na Fase 2 do MANUAL-WEB) |
 | `cewl-alvo.txt` | 02 — Web | Conteúdo do site (palavras do próprio alvo) |
 
 ### O que CADA fase gera para a próxima
@@ -109,10 +126,10 @@ Assim como o recon alimentou a exploração, a exploração alimenta a pós-expl
 
 | Dado necessário | De onde vem | Onde está | Status ☑ |
 |-----------------|-------------|-----------|:---:|
-| **Sessão/shell obtida** | Fase 5 | `12-exploracao/sessao-1.txt` | [ ] |
-| **Nível de acesso atual** | Fase 6 | `13-validacao/validacao-acessos.md` | [ ] |
-| **Credenciais válidas** | Fases 3 e 4 | `10-bruteforce/credenciais-encontradas.md` | [ ] |
-| **Hashes do alvo (hashdump)** | Fase 5 | `12-exploracao/evidencias.md` | [ ] |
+| **Sessão/shell obtida** | Fase 5 | `19-exploracao/sessao-1.txt` | [ ] |
+| **Nível de acesso atual** | Fase 6 | `20-validacao/validacao-acessos.md` | [ ] |
+| **Credenciais válidas** | Fases 3 e 4 | `17-bruteforce/credenciais-encontradas.md` | [ ] |
+| **Hashes do alvo (hashdump)** | Fase 5 | `19-exploracao/evidencias.md` | [ ] |
 | **Serviços de rede vivos** | Módulo 01 | `02-enum/nmap-services.txt` | [ ] |
 | **IPs internos alcançáveis** | Módulo 01 | `02-enum/ips.txt` | [ ] |
 
@@ -122,10 +139,10 @@ Assim como o recon alimentou a exploração, a exploração alimenta a pós-expl
 
 ```
 MÍNIMO PARA AVANÇAR PARA O MÓDULO 04:
-├── 12-exploracao/evidencias.md              ← sessão aberta + sysinfo/getuid
-├── 10-bruteforce/credenciais-encontradas.md ← credenciais validadas
-├── 13-validacao/validacao-acessos.md        ← nível de acesso confirmado
-└── 14-relatorio/relatorio-exploracao.md     ← tudo documentado
+├── 19-exploracao/evidencias.md              ← sessão aberta + sysinfo/getuid
+├── 17-bruteforce/credenciais-encontradas.md ← credenciais validadas
+├── 20-validacao/validacao-acessos.md        ← nível de acesso confirmado
+└── 21-relatorio/relatorio-exploracao.md     ← tudo documentado
 ```
 
 **Se tem esses 4 arquivos → PODE avançar para o Módulo 04.**

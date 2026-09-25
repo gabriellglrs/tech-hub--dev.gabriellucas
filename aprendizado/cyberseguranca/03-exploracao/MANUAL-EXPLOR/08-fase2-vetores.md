@@ -4,6 +4,11 @@
 **Objetivo:** Cruzar os dados importados (Fase 1) com exploits conhecidos e decidir QUAL ataque usar em QUAL alvo — antes de gastar uma única tentativa.
 **Por quê:** Explorar na ordem errada = horas perdidas e alarmes disparados. O vetor certo primeiro = acesso em minutos.
 
+> **📡 Dados usados neste passo (de onde vêm):**
+> - **MANUAL-RECON:** `02-enum/nmap-scan.xml` + `05-vulns/nmap-vuln.txt` (CVEs) + `06-validacao/resumo-severidade.md` (severidades já confirmadas) — importados na Fase 1 como `15-alimentacao/alvos-cve.txt` e `severidade-recon.md`
+> - **MANUAL-WEB:** `13-validacao/evidencias.md` e `13-validacao/findings-todos.txt` (vulns web JÁ confirmadas) — não re-descubra o que o Módulo 02 já provou; aqui você só decide a ordem de exploração
+> - **Saídas da Fase 1:** `15-alimentacao/alvos-servicos.txt`, `alvos-login-web.txt`, `formularios.txt`, `hashes-suspeitos.txt`, `credenciais-texto.txt`
+
 ---
 
 ### Passo 2.1 — Cruzar CVEs com o Searchsploit
@@ -13,21 +18,21 @@
 ```bash
 # 1) Searchsploit direto do output do Nmap (formato XML)
 #    (Se você salvou o Nmap em XML no Módulo 01:)
-searchsploit --nmap 02-enum/nmap-scan.xml > 09-vetores/searchsploit-nmap.txt 2>/dev/null
+searchsploit --nmap 02-enum/nmap-scan.xml > 16-vetores/searchsploit-nmap.txt 2>/dev/null
 
 # 2) Buscar por cada CVE encontrada na Fase 1
-grep -oE "CVE-[0-9]{4}-[0-9]+" 08-alimentacao/alvos-cve.txt | sort -u | while read cve; do
-    echo "=== $cve ===" >> 09-vetores/searchsploit-cves.txt
-    searchsploit --cve "$cve" >> 09-vetores/searchsploit-cves.txt 2>/dev/null
+grep -oE "CVE-[0-9]{4}-[0-9]+" 15-alimentacao/alvos-cve.txt | sort -u | while read cve; do
+    echo "=== $cve ===" >> 16-vetores/searchsploit-cves.txt
+    searchsploit --cve "$cve" >> 16-vetores/searchsploit-cves.txt 2>/dev/null
 done
 
 # 3) Buscar por serviço/versão (quando não há CVE, mas há versão velha)
-searchsploit vsftpd 3.0.3 >> 09-vetores/searchsploit-servicos.txt
-searchsploit openssh 7.2 >> 09-vetores/searchsploit-servicos.txt
-searchsploit samba 4.11 >> 09-vetores/searchsploit-servicos.txt
+searchsploit vsftpd 3.0.3 >> 16-vetores/searchsploit-servicos.txt
+searchsploit openssh 7.2 >> 16-vetores/searchsploit-servicos.txt
+searchsploit samba 4.11 >> 16-vetores/searchsploit-servicos.txt
 
 # Ver resultados
-cat 09-vetores/searchsploit-cves.txt
+cat 16-vetores/searchsploit-cves.txt
 ```
 
 **✅ Output esperado (exemplo real):**
@@ -63,7 +68,7 @@ Microsoft Windows - SMB EternalBlue RCE                  | windows/remote/41891.
 **O que você vai fazer:** Para cada alvo/vetor da Fase 1, classificar o caminho de ataque. É a "lista de tarefas" das fases 3, 4 e 5.
 
 ```bash
-cat > 09-vetores/matriz-vetores.md << 'EOF'
+cat > 16-vetores/matriz-vetores.md << 'EOF'
 # Matriz de Vetores — evilcorp.com
 
 ## Prioridade 1 — Exploração direta (CVE com exploit)
@@ -95,7 +100,7 @@ cat > 09-vetores/matriz-vetores.md << 'EOF'
 | RDP 3389 | Sem usuários válidos conhecidos |
 EOF
 
-cat 09-vetores/matriz-vetores.md
+cat 16-vetores/matriz-vetores.md
 ```
 
 **✅ Output esperado:** a matriz acima preenchida com OS SEUS dados (IPs, serviços e URLs reais do seu alvo).
@@ -144,7 +149,7 @@ BAIXO IMPACTO (só se sobrar tempo)
 
 ```bash
 # Criar arquivo de escopo (se ainda não tem)
-cat > 09-vetores/escopo.md << 'EOF'
+cat > 16-vetores/escopo.md << 'EOF'
 # Escopo Autorizado — evilcorp.com
 
 ## IN (autorizado)
@@ -168,15 +173,15 @@ EOF
 
 | # | Item | Arquivo gerado | ☑ |
 |---|------|---------------|:---:|
-| 1 | Searchsploit cruzado com CVEs/serviços | `09-vetores/searchsploit-cves.txt` | [ ] |
-| 2 | Matriz de decisão preenchida | `09-vetores/matriz-vetores.md` | [ ] |
+| 1 | Searchsploit cruzado com CVEs/serviços | `16-vetores/searchsploit-cves.txt` | [ ] |
+| 2 | Matriz de decisão preenchida | `16-vetores/matriz-vetores.md` | [ ] |
 | 3 | Vetores descartados justificados | na própria matriz | [ ] |
-| 4 | Escopo confirmado por vetor | `09-vetores/escopo.md` | [ ] |
+| 4 | Escopo confirmado por vetor | `16-vetores/escopo.md` | [ ] |
 
 ### 📁 Sua pasta deve estar assim ao final da Fase 2:
 
 ```
-09-vetores/
+16-vetores/
 ├── searchsploit-nmap.txt     ← exploits sugeridos pelo output do Nmap
 ├── searchsploit-cves.txt     ← exploits por CVE
 ├── searchsploit-servicos.txt ← exploits por serviço/versão

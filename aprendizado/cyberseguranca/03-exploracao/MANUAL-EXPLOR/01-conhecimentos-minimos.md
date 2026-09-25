@@ -9,7 +9,7 @@ Você precisa conseguir operar no terminal sem travar:
 | Habilidade | Exemplo | Por quê |
 |------------|---------|---------|
 | Navegar em pastas | `cd ~/recon/targets/evilcorp` | Todo o trabalho fica em pastas organizadas |
-| Criar pastas | `mkdir -p 08-alimentacao 09-vetores` | Cada fase tem sua pasta |
+| Criar pastas | `mkdir -p 15-alimentacao 16-vetores` | Cada fase tem sua pasta |
 | Redirecionar output | `hydra ... > saida.txt` | Todo resultado precisa ser salvo |
 | Concatenar arquivos | `cat a.txt b.txt \| sort -u > c.txt` | Combinar wordlists e resultados |
 | Editar arquivo | `nano arquivo.txt` | Corrigir wordlists e relatórios |

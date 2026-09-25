@@ -321,11 +321,11 @@ const AWS_ACCESS_KEY = "AKIA1234567890ABCDEF";
 ### 🔗 O que deste arquivo alimenta no Módulo 02 — Web & Aplicações:
 | Arquivo da Fase 4 | Usado no Módulo 02 | Ferramenta WEB | Para quê |
 |--------------------|--------------------|----------------|----------|
-| `gobuster-basico.txt` | `02-recon-api.md` (Passo 2.2), `08-file-upload.md` (8A.1) | ffuf, Burp Repeater | Testar diretórios /admin, /api, /backup sem repetir fuzzing; testar upload em /uploads, /files |
-| `ffuf-extensoes.json` | `02-recon-api.md` (Passo 2.2) | Burp Repeater | Acessar .env, config.bak, database.sql diretamente |
-| `urls-com-parametros.txt` | `03-injecao.md` (início), `06-ssrf.md` (6A.1) | sqlmap, Burp Repeater | Candidatas imediatas a SQLi/XSS; filtrar `?url=`, `?fetch=` para SSRF |
-| `js-endpoints.txt` | `02-recon-api.md` (Passo 2.7), `05-auth.md` (5A) | Burp Repeater | Testar endpoints de API para injection; filtrar /login, /auth para enumeração |
-| `js-secrets.txt` | `00-checklist-setup.md` (antes de testar) | Nenhum teste | Documentar como achado CRÍTICO imediato (API key, token) |
+| `gobuster-basico.txt` | `08-fase2-descoberta.md` (Passo 2.2), `11-fase5-especializados.md` (Passo 5C.1) | ffuf, Burp Repeater | Testar diretórios /admin, /api, /backup sem repetir fuzzing; testar upload em /uploads, /files |
+| `ffuf-extensoes.json` | `08-fase2-descoberta.md` (Passo 2.2) | Burp Repeater | Acessar .env, config.bak, database.sql diretamente |
+| `urls-com-parametros.txt` | `09-fase3-injecao.md` (início), `11-fase5-especializados.md` (Passo 5A.1) | sqlmap, Burp Repeater | Candidatas imediatas a SQLi/XSS; filtrar `?url=`, `?fetch=` para SSRF |
+| `js-endpoints.txt` | `08-fase2-descoberta.md` (Passo 2.7), `10-fase4-cliente-auth.md` (Passo 4E) | Burp Repeater | Testar endpoints de API para injection; filtrar /login, /auth para enumeração |
+| `js-secrets.txt` | `07-fase1-alimentacao.md` (secrets-web.txt) | Nenhum teste | Documentar como achado CRÍTICO imediato (API key, token) |
 
 **Se completou tudo → Avance para Fase 5**
 

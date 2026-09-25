@@ -190,6 +190,6 @@ MÓDULO 11 — IA
 - Documentado tudo em um relatório profissional
 - Sido capaz de justificar cada achado com evidências
 
-**Próximo módulo:** [02 - Web & Aplicações](../02-web-aplicacoes/README.md)
+**Próximo módulo:** [02 - Web & Aplicações](../../02-web-aplicacoes/README.md)
 
 ---

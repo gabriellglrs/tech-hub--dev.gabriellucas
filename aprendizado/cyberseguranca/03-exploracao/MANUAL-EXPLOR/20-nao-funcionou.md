@@ -47,10 +47,10 @@ grep -E "^[a-f0-9]{32}$" hashes.txt   # sobrou só MD5 válidos?
 john --wordlist=/usr/share/wordlists/rockyou.txt --rules hashes.txt
 
 # 3. Tente a wordlist do alvo
-hashcat -m 0 hashes.txt 08-alimentacao/wordlist-bruteforce.txt -r /usr/share/hashcat/rules/best64.rule
+hashcat -m 0 hashes.txt 15-alimentacao/wordlist-bruteforce.txt -r /usr/share/hashcat/rules/best64.rule
 
 # 4. Se esgotou tudo: a senha é forte. DOCUMENTE:
-echo "Hash X: não crackeável com wordlists atuais (rockyou + best64)" >> 11-cracking/hashes-crackeados.md
+echo "Hash X: não crackeável com wordlists atuais (rockyou + best64)" >> 18-cracking/hashes-crackeados.md
 ```
 
 **Resultado válido:** "não crackeado" é um achado legítimo — não invente sucesso.
@@ -79,20 +79,20 @@ msf6 > set PAYLOAD windows/x64/shell/reverse_tcp
 
 ```bash
 # 1. Revise a Fase 1 — os dados importaram mesmo?
-ls -la 08-alimentacao/
-wc -l 08-alimentacao/alvos-servicos.txt
+ls -la 15-alimentacao/
+wc -l 15-alimentacao/alvos-servicos.txt
 
 # 2. Confira se há serviços de login
-cat 08-alimentacao/alvos-servicos.txt | grep -iE "ssh|ftp|smb|rdp|http"
+cat 15-alimentacao/alvos-servicos.txt | grep -iE "ssh|ftp|smb|rdp|http"
 
 # 3. Confira logins web
-cat 08-alimentacao/alvos-login-web.txt
+cat 15-alimentacao/alvos-login-web.txt
 
 # 4. Sem nada? Rode um scan novo pontual
 nmap -sV -p- -oN 02-enum/nmap-services.txt 10.0.0.1
 
 # 5. Alvo realmente protegido → documente:
-echo "- Alvo sem serviços de login expostos e sem CVEs exploráveis" >> 14-relatorio/relatorio-exploracao.md
+echo "- Alvo sem serviços de login expostos e sem CVEs exploráveis" >> 21-relatorio/relatorio-exploracao.md
 ```
 
 ### Cenário 6: "Fui banido / IP bloqueado no meio"

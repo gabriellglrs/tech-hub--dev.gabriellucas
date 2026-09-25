@@ -4,6 +4,11 @@
 **Objetivo:** Confirmar cada acesso obtido, medir o impacto REAL e parar exatamente no limite do escopo.
 **Por quê:** "Talvez tenha funcionado" não é resultado. Um acesso não validado no relatório = falso positivo. E ir além do escopo = problema jurídico.
 
+> **📡 Dados usados nos passos abaixo (de onde vêm):**
+> - **Acessos a validar:** saídas das Fases 3 (`17-bruteforce/credenciais-encontradas.md`), 4 (`18-cracking/hashes-crackeados.md`) e 5 (`19-exploracao/evidencias.md`)
+> - **MANUAL-WEB:** `13-validacao/evidencias.md` — vulns web já validadas no Módulo 02: NÃO duplique aqui; só cruze se um acesso desta fase depender delas (ex.: credencial obtida via XSS)
+> - **MANUAL-RECON:** `06-validacao/resumo-severidade.md` como baseline de severidade (mesma escala CRÍTICO/ALTO/MÉDIO/BAIXO)
+
 ---
 
 ### Passo 6.1 — Validar cada acesso obtido
@@ -21,7 +26,7 @@
 
 ```bash
 # Gerar arquivo de validação
-cat > 13-validacao/validacao-acessos.md << 'EOF'
+cat > 20-validacao/validacao-acessos.md << 'EOF'
 # Validação de Acessos — evilcorp.com
 
 ## Acesso 1: SSH admin@10.0.0.1
@@ -41,7 +46,7 @@ cat > 13-validacao/validacao-acessos.md << 'EOF'
 ## Acesso 3: Sessão Meterpreter (MS17-010)
 - [ ] sysinfo coletado
 - [ ] getuid = NT AUTHORITY\SYSTEM
-- [ ] Evidência: 12-exploracao/evidencias.md
+- [ ] Evidência: 19-exploracao/evidencias.md
 - Impacto: controle TOTAL da máquina
 - Severidade: CRÍTICO
 EOF
@@ -108,7 +113,7 @@ exit          # em cada shell/ssh aberto
 ps aux | grep -E "hydra|msfconsole|nc " | grep -v grep
 
 # 4) Salvar logs finais
-ls -la 10-bruteforce/ 11-cracking/ 12-exploracao/ 13-validacao/
+ls -la 17-bruteforce/ 18-cracking/ 19-exploracao/ 20-validacao/
 
 # 5) Limpar histórico (OPSEC)
 history -c && history -w
@@ -131,7 +136,7 @@ history -c && history -w
 ### Passo 6.4 — Organizar por severidade (para o relatório)
 
 ```bash
-cat > 13-validacao/resumo-severidade-exploracao.md << 'EOF'
+cat > 20-validacao/resumo-severidade-exploracao.md << 'EOF'
 # Resumo de Severidade — Exploração
 
 ## CRÍTICO
@@ -153,7 +158,7 @@ cat > 13-validacao/resumo-severidade-exploracao.md << 'EOF'
 - Nenhum lockout ativado durante os testes
 - Fail2ban detectou IP após 300 tentativas (SSH)
 EOF
-cat 13-validacao/resumo-severidade-exploracao.md
+cat 20-validacao/resumo-severidade-exploracao.md
 ```
 
 ---
@@ -162,16 +167,16 @@ cat 13-validacao/resumo-severidade-exploracao.md
 
 | # | Item | Arquivo gerado | ☑ |
 |---|------|---------------|:---:|
-| 1 | Todo acesso validado manualmente | `13-validacao/validacao-acessos.md` | [ ] |
+| 1 | Todo acesso validado manualmente | `20-validacao/validacao-acessos.md` | [ ] |
 | 2 | Falsos positivos removidos | revisado | [ ] |
 | 3 | Impacto documentado (sem extrapolar) | `validacao-acessos.md` | [ ] |
 | 4 | Sessões e processos encerrados | `ps aux` limpo | [ ] |
-| 5 | Severidades organizadas | `13-validacao/resumo-severidade-exploracao.md` | [ ] |
+| 5 | Severidades organizadas | `20-validacao/resumo-severidade-exploracao.md` | [ ] |
 
 ### 📁 Sua pasta deve estar assim ao final da Fase 6:
 
 ```
-13-validacao/
+20-validacao/
 ├── validacao-acessos.md                 ← cada acesso com evidência e impacto
 └── resumo-severidade-exploracao.md      ← achados por severidade
 ```

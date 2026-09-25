@@ -39,8 +39,8 @@ admin@evilcorp-web01:~$
 
 ```bash
 # Teste 1: Ver o resultado consolidado
-john --show 08-alimentacao/hashes-suspeitos.txt
-hashcat -m 0 --show 08-alimentacao/hashes-suspeitos.txt
+john --show 15-alimentacao/hashes-suspeitos.txt
+hashcat -m 0 --show 15-alimentacao/hashes-suspeitos.txt
 
 # Teste 2: Recalcular o hash da senha encontrada e comparar
 echo -n "password" | md5sum

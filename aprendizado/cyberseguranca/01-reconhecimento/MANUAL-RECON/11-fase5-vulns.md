@@ -308,8 +308,8 @@ subzy run --targets 02-enum/resolvidos.txt --concurrency 50 > 05-vulns/subzy.txt
 ### 🔗 O que deste arquivo alimenta no Módulo 02 — Web & Aplicações:
 | Arquivo da Fase 5 | Usado no Módulo 02 | Ferramenta WEB | Para quê |
 |--------------------|--------------------|----------------|----------|
-| `nuclei.txt` | `10-nuclei.md` (Passo 10.1) | nuclei | Revisar achados anteriores antes de rodar novamente; focar templates complementares (`-tags sqli,xss`) |
-| `wpscan.txt` | `03-injecao.md` (início — WPScan plugins) | sqlmap | Priorizar SQLi nos parâmetros dos plugins vulneráveis listados |
+| `nuclei.txt` | `12-fase6-validacao.md` (Passo 6A.1) | nuclei | Revisar achados anteriores antes de rodar novamente; focar templates complementares (`-tags sqli,xss`) |
+| `wpscan.txt` | `09-fase3-injecao.md` (início — WPScan plugins) | sqlmap | Priorizar SQLi nos parâmetros dos plugins vulneráveis listados |
 
 **Se completou tudo → Avance para Fase 6**
 

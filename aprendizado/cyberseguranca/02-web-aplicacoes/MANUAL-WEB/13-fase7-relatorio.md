@@ -1,49 +1,49 @@
-# Fase 12: Geração de Relatório
+## FASE 7 — Geração de Relatório
 
 **Tempo estimado:** 30-45 minutos
-**Objetivo:** Documentar TODAS as vulnerabilidades confirmadas em formato profissional para apresentação ao cliente ou equipe de desenvolvimento.
-**Por quê:** O relatório é o ÚNICO entregável que o cliente vê. Um relatório ruim pode fazer o cliente ignorar vulnerabilidades críticas. Um relatório bom gera ação imediata.
+**Objetivo:** Documentar TODAS as vulnerabilidades confirmadas em formato profissional para o cliente/equipe de desenvolvimento.
+**Por quê:** O relatório é o ÚNICO entregável que o cliente vê. Um relatório ruim faz o cliente ignorar vulns críticas; um bom gera ação imediata.
+
+> **📡 Herança:** tudo vem de `13-validacao/evidencias.md` e `13-validacao/findings-todos.txt` (Fase 6). Só entra no relatório o que foi **validado e reproduzível**.
 
 ---
 
-### Passo 12.1 — Criar Estrutura do Relatório
-
-**O que você vai fazer:** Criar o arquivo de relatório com a estrutura padrão.
+### Passo 7.1 — Criar Estrutura do Relatório
 
 ```bash
-cat > relatorio/final/RELATORIO-SEGURANCA.md << 'ENDOFFILE'
+mkdir -p 14-relatorio/final
+
+cat > 14-relatorio/final/RELATORIO-SEGURANCA.md << 'ENDOFFILE'
 # Relatório de Teste de Segurança Web
 
 ## Informações Gerais
-- **Alvo:** https://target.com
-- **Data do teste:** 2026-09-12
+- **Alvo:** https://evilcorp.com
+- **Data do teste:** [DATA]
 - **Tester:** [Seu Nome]
-- **Escopo:** Aplicação web completa (target.com e subdomínios)
+- **Escopo:** Aplicação web completa (evilcorp.com e subdomínios)
 - **Ferramentas:** Burp Suite Community, SQLMap, Nuclei, Hydra, ffuf
 - **Metodologia:** OWASP Testing Guide v4.2
 
 ## Resumo Executivo
-[Podem ser preenchidos depois — ver Passo 10.2]
+[Preencher — Passo 7.2]
 
 ## Vulnerabilidades Encontradas
-[Podem ser preenchidos depois — ver Passo 10.3]
+[Preencher — Passo 7.3]
 
 ## Detalhamento de Vulnerabilidades
-[Podem ser preenchidos depois — ver Passo 10.4]
+[Preencher — Passo 7.4]
 
 ## Recomendações
-[Podem ser preenchidos depois — ver Passo 10.5]
+[Preencher — Passo 7.5]
 
 ## Anexos
-[Podem ser preenchidos depois — ver Passo 10.6]
+[Preencher — Passo 7.6]
 ENDOFFILE
 ```
 
 ---
 
-### Passo 12.2 — Preencher Resumo Executivo
-
-**O que você vai fazer:** Escrever um resumo para executivos que não entendem de técnica.
+### Passo 7.2 — Preencher Resumo Executivo (sem jargão técnico)
 
 ```markdown
 ## Resumo Executivo
@@ -65,7 +65,7 @@ de qualquer novo deploy em produção.
 
 ---
 
-### Passo 12.3 — Criar Tabela de Vulnerabilidades
+### Passo 7.3 — Tabela de Vulnerabilidades
 
 ```markdown
 ## Vulnerabilidades Encontradas
@@ -82,9 +82,9 @@ de qualquer novo deploy em produção.
 
 ---
 
-### Passo 12.4 — Detalhar Cada Vulnerabilidade
+### Passo 7.4 — Detalhar Cada Vulnerabilidade
 
-Para cada vulnerabilidade da Fase 11, crie uma seção completa:
+Para cada item de `13-validacao/evidencias.md`:
 
 ```markdown
 ### 1. SQL Injection (Crítica)
@@ -99,9 +99,7 @@ de código SQL. Um atacante pode manipular queries para ler, modificar ou
 deletar dados do banco de dados.
 
 **Payload Utilizado:**
-```
 1' OR '1'='1--
-```
 
 **Evidência:**
 - Request original: `GET /api/users?id=1` → retorna 1 usuário
@@ -111,15 +109,15 @@ deletar dados do banco de dados.
 
 **Impacto:**
 - Leitura de dados sensíveis (usuários, senhas hashes, emails)
-- Possível execução de comandos no servidor de banco de dados
+- Possível execução de comandos no servidor de banco
 - Bypass de autenticação
 - Potencial takeover completo do banco de dados
 
 **Recomendação:**
 - Usar prepared statements/parameterized queries
-- Implementar validação de entrada (whitelist de caracteres)
-- Aplicar princípio do menor privilege no banco de dados
-- Implementar WAF com regras de SQLi
+- Validação de entrada (whitelist de caracteres)
+- Princípio do menor privilégio no banco
+- WAF com regras de SQLi
 
 **Referências:**
 - OWASP: https://owasp.org/www-community/attacks/SQL_Injection
@@ -129,7 +127,7 @@ deletar dados do banco de dados.
 
 ---
 
-### Passo 12.5 — Escrever Recomendações
+### Passo 7.5 — Recomendações
 
 ```markdown
 ## Recomendações
@@ -143,19 +141,19 @@ deletar dados do banco de dados.
 ### Preventivas (Curto prazo — 1-3 meses)
 1. Implementar WAF (Web Application Firewall)
 2. Adicionar headers de segurança (CSP, X-Frame-Options, HSTS)
-3. Implementar rate limiting em endpoints de login
-4. Conduct security code review em endpoints críticos
+3. Rate limiting em endpoints de login
+4. Security code review em endpoints críticos
 
 ### Detectivas (Médio prazo — 3-6 meses)
-1. Implementar logging de segurança (SIEM)
-2. Configurar monitoramento de intrusão
-3. Realizar testes de segurança periódicos (trimestrais)
-4. Implementar bug bounty program
+1. Logging de segurança (SIEM)
+2. Monitoramento de intrusão
+3. Testes de segurança periódicos (trimestrais)
+4. Bug bounty program
 ```
 
 ---
 
-### Passo 12.6 — Adicionar Anexos
+### Passo 7.6 — Adicionar Anexos
 
 ```markdown
 ## Anexos
@@ -168,61 +166,51 @@ deletar dados do banco de dados.
 ### Anexo B: Logs de Requisições
 - `request-response-sqli.txt` — Request/Response completo da SQLi
 - `request-response-xss.txt` — Request/Response completo do XSS
-- `request-response-ssrf.txt` — Request/Response completo do SSRF
 
 ### Anexo C: Ferramentas Utilizadas
-- Burp Suite Community 2025.x
-- SQLMap 1.8.x
-- Nuclei 3.x
-- Hydra 9.x
-- ffuf 2.x
+- Burp Suite Community 2025.x / SQLMap 1.8.x / Nuclei 3.x / Hydra 9.x / ffuf 2.x
 
 ### Anexo D: Metodologia
-- OWASP Testing Guide v4.2
-- PTES (Penetration Testing Execution Standard)
-- NIST SP 800-115
+- OWASP Testing Guide v4.2 / PTES / NIST SP 800-115
 ```
 
 ---
 
-### Passo 12.7 — Salvar Relatório Final
+### Passo 7.7 — Salvar Relatório Final
 
 ```bash
-mkdir -p relatorio/final
-
 # Copiar evidências
-cp relatorio/evidencias.md relatorio/final/ 2>/dev/null
-cp relatorio/*.txt relatorio/final/ 2>/dev/null
-cp relatorio/*.png relatorio/final/ 2>/dev/null
+cp 13-validacao/evidencias.md 14-relatorio/final/ 2>/dev/null
+cp 13-validacao/*.txt 14-relatorio/final/ 2>/dev/null
+cp *.png 14-relatorio/final/ 2>/dev/null
 
-# Verificar estrutura
-ls -la relatorio/final/
+ls -la 14-relatorio/final/
 ```
 
 ---
 
-## Checklist do Relatório
+### Checklist da Fase 7
 
-| # | Item | Status | ☑ |
-|---|------|--------|:---:|
-| 1 | Informações gerais preenchidas | — | [ ] |
-| 2 | Resumo executivo escrito (sem jargão técnico) | — | [ ] |
-| 3 | Tabela de vulnerabilidades criada | — | [ ] |
-| 4 | Cada vulnerabilidade detalhada | — | [ ] |
-| 5 | Recomendações claras e acionáveis | — | [ ] |
-| 6 | Anexos incluídos | — | [ ] |
-| 7 | Relatório revisado e formatado | — | [ ] |
+| # | Item | ☑ |
+|---|------|:---:|
+| 1 | Informações gerais preenchidas | [ ] |
+| 2 | Resumo executivo escrito (sem jargão) | [ ] |
+| 3 | Tabela de vulnerabilidades criada | [ ] |
+| 4 | Cada vulnerabilidade detalhada (payload, evidência, impacto, fix) | [ ] |
+| 5 | Recomendações corretivas/preventivas/detectivas | [ ] |
+| 6 | Anexos incluídos (screenshots, logs, ferramentas) | [ ] |
+| 7 | Relatório revisado e formatado | [ ] |
 
 ### ✅ Sinal de sucesso:
 - Relatório completo e profissional
-- TODAS as vulnerabilidades documentadas com evidências
+- TODAS as vulns documentadas com evidências e CVSS
 - Recomendações claras e acionáveis
 - Resumo executivo compreensível para não-técnicos
 
 ### ❌ Se falhou:
-- Se falta evidência → capture screenshots adicionais
-- Se severidade é duvidosa → recalcule com CVSS calculator
-- Se recomendações são vagas → seja específico sobre correções
+- Falta evidência → capture screenshots adicionais
+- Severidade duvidosa → recalcule no CVSS calculator
+- Recomendações vagas → seja específico sobre correções
 
 ### 🔗 O que este arquivo entrega ao cliente:
 | Seção | Para quem | Impacto |
@@ -236,8 +224,7 @@ ls -la relatorio/final/
 ---
 
 ## Próximos Passos
-→ Revisar `A-troubleshooting.md` para problemas comuns
-→ Consultar `B-referencia-rapida.md` para payloads
-→ Ver `C-quando-parar.md` para critérios de parada
-
----
+→ Revisar [18 — Troubleshooting](18-troubleshooting.md) para problemas comuns
+→ Consultar [19 — Referência Rápida](19-referencia-rapida.md) para payloads
+→ Ver [20 — Não Funcionou?](20-nao-funcionou.md) para critérios de parada
+→ De volta ao fluxo: [MANUAL-EXPLOR — Visão Geral](../../03-exploracao/MANUAL-EXPLOR/14-visao-geral.md)

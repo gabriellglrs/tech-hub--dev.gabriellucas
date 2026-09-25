@@ -397,9 +397,9 @@ ssl-cert: Subject: commonName=evilcorp.com
 ### 🔗 O que deste arquivo alimenta no Módulo 02 — Web & Aplicações:
 | Arquivo da Fase 2 | Usado no Módulo 02 | Ferramenta WEB | Para quê |
 |--------------------|--------------------|----------------|----------|
-| `vivos-filtrados.txt` | `01-setup-burp-proxy.md` (Scope), `02-recon-api.md` (subdomínios) | Burp Suite Target → Scope | Importar URLs vivas no escopo do Burp antes de qualquer teste |
-| `nmap-services.txt` | `03-injecao.md` (SQLMap) | sqlmap | Conexão direta ao banco se MySQL/PostgreSQL exposto na porta 3306/5432 |
-| `headers.txt` | `04-cliente.md` (XSS/Clickjacking) | Burp Repeater | Testar Clickjacking se `X-Frame-Options` ausente; XSS se `CSP` ausente |
+| `vivos-filtrados.txt` | `03-setup-ferramentas.md` (Escopo), `08-fase2-descoberta.md` (Passo 2.3) | Burp Suite Target → Scope | Importar URLs vivas no escopo do Burp antes de qualquer teste |
+| `nmap-services.txt` | `09-fase3-injecao.md` (Passo 3A.3 — SQLMap) | sqlmap | Conexão direta ao banco se MySQL/PostgreSQL exposto na porta 3306/5432 |
+| `headers.txt` | `10-fase4-cliente-auth.md` (Passos 4A/4C — XSS/Clickjacking) | Burp Repeater | Testar Clickjacking se `X-Frame-Options` ausente; XSS se `CSP` ausente |
 
 **Se completou tudo → Avance para Fase 3**
 

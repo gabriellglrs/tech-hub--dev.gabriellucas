@@ -50,15 +50,16 @@ Execute cada item abaixo ANTES de começar qualquer ataque. Marque com ☑ quand
 
 | # | O que fazer | Comando | Por quê | ☑ |
 |---|-------------|---------|---------|:---:|
-| 1 | Ter a estrutura do recon pronta | `ls ~/recon/targets/evilcorp/` | A Fase 1 importa dessas pastas | [ ] |
-| 2 | Criar as pastas da exploração | `mkdir -p 08-alimentacao 09-vetores 10-bruteforce 11-cracking 12-exploracao 13-validacao 14-relatorio` | Organizar tudo por fase | [ ] |
-| 3 | Entrar na pasta do alvo | `cd ~/recon/targets/evilcorp` | Todo trabalho ficará aqui | [ ] |
-| 4 | Atualizar sistema | `sudo apt update && sudo apt upgrade -y` | Ferramentas atualizadas | [ ] |
-| 5 | Instalar SecLists + rockyou | Veja [03-setup-ferramentas.md](03-setup-ferramentas.md) | Brute force sem wordlist = nada | [ ] |
-| 6 | Instalar Hydra/John/Hashcat/Metasploit | Veja [03-setup-ferramentas.md](03-setup-ferramentas.md) | Ferramentas centrais deste módulo | [ ] |
-| 7 | Rodar o checklist automático | Veja [04-checklist-setup.md](04-checklist-setup.md) | Garantir que TUDO funciona | [ ] |
-| 8 | Confirmar AUTORIZAÇÃO | Escrever em arquivo: alvos IN e OUT | Ilegal sem autorização por escrito | [ ] |
-| 9 | Ligar a VPN | `nordvpn connect && curl -s https://ifconfig.me` | Seu IP real não pode aparecer | [ ] |
+| 1 | Ter a estrutura do recon pronta | `ls ~/recon/targets/evilcorp/` | A Fase 1 importa dessas pastas (Módulo 01) | [ ] |
+| 2 | Ter os testes web prontos (Módulo 02) | `ls ~/recon/targets/evilcorp/09-descoberta/ 10-injecao/ 2>/dev/null` | A Fase 1 importa `logins-formularios.txt` e hashes do MANUAL-WEB | [ ] |
+| 3 | Criar as pastas da exploração | `mkdir -p 15-alimentacao 16-vetores 17-bruteforce 18-cracking 19-exploracao 20-validacao 21-relatorio` | Organizar tudo por fase | [ ] |
+| 4 | Entrar na pasta do alvo | `cd ~/recon/targets/evilcorp` | Todo trabalho ficará aqui | [ ] |
+| 5 | Atualizar sistema | `sudo apt update && sudo apt upgrade -y` | Ferramentas atualizadas | [ ] |
+| 6 | Instalar SecLists + rockyou | Veja [03-setup-ferramentas.md](03-setup-ferramentas.md) | Brute force sem wordlist = nada | [ ] |
+| 7 | Instalar Hydra/John/Hashcat/Metasploit | Veja [03-setup-ferramentas.md](03-setup-ferramentas.md) | Ferramentas centrais deste módulo | [ ] |
+| 8 | Rodar o checklist automático | Veja [04-checklist-setup.md](04-checklist-setup.md) | Garantir que TUDO funciona | [ ] |
+| 9 | Confirmar AUTORIZAÇÃO | Escrever em arquivo: alvos IN e OUT | Ilegal sem autorização por escrito | [ ] |
+| 10 | Ligar a VPN | `nordvpn connect && curl -s https://ifconfig.me` | Seu IP real não pode aparecer | [ ] |
 
 **Depois de criar as pastas, sua estrutura deve parecer:**
 ```
@@ -70,22 +71,29 @@ Execute cada item abaixo ANTES de começar qualquer ataque. Marque com ☑ quand
 ├── 05-vulns/            ← Módulo 01 (já feito)
 ├── 06-validacao/        ← Módulo 01 (já feito)
 ├── 07-relatorio/        ← Módulo 01 (já feito)
-├── 08-alimentacao/      ← Fase 1: importa dados dos módulos 01 e 02
-├── 09-vetores/          ← Fase 2: matriz de decisão de ataque
-├── 10-bruteforce/       ← Fase 3: saídas do Hydra
-├── 11-cracking/         ← Fase 4: hashes e resultados do John/Hashcat
-├── 12-exploracao/       ← Fase 5: logs do Metasploit, payloads, sessões
-├── 13-validacao/        ← Fase 6: evidências de acesso
-└── 14-relatorio/        ← Fase 7: relatório final de exploração
+├── 08-alimentacao/      ← Módulo 02 / MANUAL-WEB (se fez o módulo web)
+├── 09-descoberta/       ← Módulo 02 (logins-formularios.txt, parametros.txt)
+├── 10-injecao/          ← Módulo 02 (sqlmap-dump.txt)
+├── 11-cliente-auth/     ← Módulo 02
+├── 12-especializados/   ← Módulo 02
+├── 13-validacao/        ← Módulo 02 (evidencias.md)
+├── 14-relatorio/        ← Módulo 02 (RELATORIO-SEGURANCA.md)
+├── 15-alimentacao/      ← Fase 1: importa dados dos módulos 01 e 02
+├── 16-vetores/          ← Fase 2: matriz de decisão de ataque
+├── 17-bruteforce/       ← Fase 3: saídas do Hydra
+├── 18-cracking/         ← Fase 4: hashes e resultados do John/Hashcat
+├── 19-exploracao/       ← Fase 5: logs do Metasploit, payloads, sessões
+├── 20-validacao/        ← Fase 6: evidências de acesso
+└── 21-relatorio/        ← Fase 7: relatório final de exploração
 ```
 
 **Crie as subpastas agora:**
 ```bash
 cd ~/recon/targets/evilcorp
-mkdir -p 08-alimentacao 09-vetores 10-bruteforce 11-cracking 12-exploracao 13-validacao 14-relatorio
+mkdir -p 15-alimentacao 16-vetores 17-bruteforce 18-cracking 19-exploracao 20-validacao 21-relatorio
 ```
 
-> **Importante:** A exploração CONTINUA a árvore do recon (08 → 14). Assim todos os dados do mesmo alvo ficam num lugar só, e o Módulo 04 (pós-exploração) sabe exatamente onde procurar.
+> **Importante:** A exploração CONTINUA a árvore dos módulos anteriores — recon (01 → 07), web (08 → 14) e exploração (15 → 21). Assim todos os dados do mesmo alvo ficam num lugar só, e o Módulo 04 (pós-exploração) sabe exatamente onde procurar.
 
 ---
 

@@ -110,14 +110,24 @@ Ao final deste módulo, você será capaz de:
 
 ---
 
+## 🧭 Manual Operacional — MANUAL-WEB
+
+> 👉 **[MANUAL-WEB/](MANUAL-WEB/README.md)** — checklist passo a passo para executar um teste web COMPLETO em um alvo (7 fases: Alimentação → Descoberta → Injeção → Cliente/Auth → Especializados → Validação → Relatório).
+
+- Alimenta-se do **Módulo 01 (Recon)** e dos 18 arquivos de conteúdo deste módulo
+- Alimenta o **Módulo 03 (Exploração)** com `logins-formularios.txt`, hashes e vetores validados
+- Cada fase gera arquivos em `~/recon/targets/<alvo>/08-alimentacao/` … `14-relatorio/`
+
+---
+
 ## 🔗 Arquivos Complementares (Módulo 01)
 
 Estes arquivos do módulo 01 são **pré-requisitos** para este módulo:
 
 | Arquivo | Tópico | Relação com Módulo 02 |
 |:--------|:-------|:----------------------|
-| [01-reconhecimento/01-osint-basico.md](../01-reconhecimento/01-osint-basico.md) | OSINT básico | Encontrar targets |
-| [01-reconhecimento/08-enum-de-hosts.md](../01-reconhecimento/08-enum-de-hosts.md) | Nmap, enum hosts | Encontrar portas web |
+| [01-reconhecimento/01-osint-basico.md](../01-reconhecimento/02-osint-e-subdominios.md) | OSINT básico | Encontrar targets |
+| [01-reconhecimento/08-enum-de-hosts.md](../01-reconhecimento/17-banner-grabbing-e-servidores.md) | Nmap, enum hosts | Encontrar portas web |
 | [01-reconhecimento/14-discovery-de-conteudo.md](../01-reconhecimento/14-discovery-de-conteudo.md) | Gobuster, ffuf | Encontrar endpoints |
 
 ---
@@ -155,6 +165,7 @@ Estes arquivos do módulo 01 são **pré-requisitos** para este módulo:
 ## ✅ Checklist
 
 - [ ] Li todos os 18 arquivos do módulo
+- [ ] Executei o [MANUAL-WEB](MANUAL-WEB/README.md) do início ao relatório em um alvo/lab
 - [ ] Instalei Burp Suite e configurei o proxy
 - [ ] Completei os labs PortSwigger de cada tópico
 - [ ] Consigo testar uma web app completa (recon → exploitation → post-exploitation)

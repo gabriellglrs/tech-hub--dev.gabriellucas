@@ -377,12 +377,13 @@ GET /api/users?id=-1' UNION SELECT username,password FROM users-- HTTP/1.1
 
 Depois de dominar Burp Suite, você está pronto para:
 
-1. **02-sqli-avancado.md** — Usar Burp Repeater + SQLMap para SQL injection
-2. **04-xss-avancado.md** — Capturar XSS via Proxy, testar payloads no Repeater
-3. **06-ssrf.md** — Intercept requests com SSRF, modificar parâmetros de URL
-4. **11-jwt-attacks.md** — Decodificar e manipular JWT tokens no Decoder
-5. **12-oauth-attacks.md** — Intercept fluxos OAuth no Proxy
-6. **Qualquer outro módulo** — Burp Suite é a base para tudo
+1. **02-injecao-e-fuzzing.md** — Usar Burp Repeater + SQLMap para SQL injection
+2. **05-xss-avancado.md** — Capturar XSS via Proxy, testar payloads no Repeater
+3. **07-ssrf.md** — Intercept requests com SSRF, modificar parâmetros de URL
+4. **12-jwt-attacks.md** — Decodificar e manipular JWT tokens no Decoder
+5. **13-oauth-attacks.md** — Intercept fluxos OAuth no Proxy
+6. **[MANUAL-WEB/](MANUAL-WEB/README.md)** — Fluxo operacional completo (7 fases) com o Burp do início ao relatório
+7. **Qualquer outro módulo** — Burp Suite é a base para tudo
 
 ---
 

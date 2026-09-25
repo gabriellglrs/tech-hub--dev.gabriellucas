@@ -359,7 +359,7 @@ medusa -h target.com -u system -P /usr/share/wordlists/rockyou.txt -M oracle
 
 ---
 
-**Próximo:** [02-injecao-e-exfiltracao.md](02-injecao-e-exfiltracao.md)
+**Próximo:** [18-nuclei-web.md](18-nuclei-web.md)
 
 ---
 
@@ -414,4 +414,4 @@ PASSO 5: Verificar permissões → Testar escalada
 
 ---
 
-**Próximo:** [02-injecao-e-exfiltracao.md](02-injecao-e-exfiltracao.md)
+**Próximo:** [18-nuclei-web.md](18-nuclei-web.md)
