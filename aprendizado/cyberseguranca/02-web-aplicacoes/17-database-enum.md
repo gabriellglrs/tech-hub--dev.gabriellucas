@@ -32,7 +32,7 @@ Escalation (para outros bancos/servidores)
 | Banco | Porta padrão | Como atacar |
 |:---|:---|:---|
 | **MySQL** | 3306 | Brute force, SQL Injection |
-| **PostgreSQL** | 5432 | Brute force,命令执行 |
+| **PostgreSQL** | 5432 | Brute force, execução de comandos |
 | **MongoDB** | 27017 | Sem autenticação padrão |
 | **Redis** | 6379 | Sem autenticação padrão |
 | **MSSQL** | 1433 | Pass-the-hash |
@@ -44,7 +44,7 @@ Escalation (para outros bancos/servidores)
 | **sqlmap** | SQL Injection automático |
 | **Medusa** | Brute force em bancos |
 | **NoSQLMap** | Injeção em MongoDB |
-| **鸿客** | Análise de banco |
+| **Medusa** | Brute force em bancos |
 
 ## Instalação das Ferramentas
 

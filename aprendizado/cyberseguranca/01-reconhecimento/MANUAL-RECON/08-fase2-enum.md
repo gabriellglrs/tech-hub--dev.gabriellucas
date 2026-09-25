@@ -394,6 +394,13 @@ ssl-cert: Subject: commonName=evilcorp.com
 | `banners.txt` | Fase 6 | Validar versões de serviço |
 | `headers.txt` | Fase 3, 6 | Detectar WAF e validar headers |
 
+### 🔗 O que deste arquivo alimenta no Módulo 02 — Web & Aplicações:
+| Arquivo da Fase 2 | Usado no Módulo 02 | Ferramenta WEB | Para quê |
+|--------------------|--------------------|----------------|----------|
+| `vivos-filtrados.txt` | `01-setup-burp-proxy.md` (Scope), `02-recon-api.md` (subdomínios) | Burp Suite Target → Scope | Importar URLs vivas no escopo do Burp antes de qualquer teste |
+| `nmap-services.txt` | `03-injecao.md` (SQLMap) | sqlmap | Conexão direta ao banco se MySQL/PostgreSQL exposto na porta 3306/5432 |
+| `headers.txt` | `04-cliente.md` (XSS/Clickjacking) | Burp Repeater | Testar Clickjacking se `X-Frame-Options` ausente; XSS se `CSP` ausente |
+
 **Se completou tudo → Avance para Fase 3**
 
 ---
